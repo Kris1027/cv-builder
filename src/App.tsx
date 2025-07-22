@@ -1,5 +1,11 @@
+import InfoSection from './components/sections/info-section';
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <main>
+      <InfoSection />
+    </main>
+  );
 };
 
 export default App;
