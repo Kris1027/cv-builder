@@ -17,11 +17,22 @@ const App = () => {
       {/* CV Content */}
       <main id="cv-content" className="max-w-4xl mx-auto bg-white">
         <InfoSection />
-        <ExperienceSection />
-        <EducationSection />
-        <SkillsSection />
-        <LanguagesSection />
-        <InterestsSection />
+        
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4">
+          {/* Left column - Main content (Experience & Education) */}
+          <div className="lg:col-span-2 space-y-4">
+            <ExperienceSection />
+            <EducationSection />
+          </div>
+          
+          {/* Right column - Skills, Languages, Interests */}
+          <div className="space-y-4">
+            <SkillsSection />
+            <LanguagesSection />
+            <InterestsSection />
+          </div>
+        </div>
       </main>
     </div>
   );
