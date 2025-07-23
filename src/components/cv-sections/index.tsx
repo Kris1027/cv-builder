@@ -71,9 +71,10 @@ export function CVContact() {
 // CV Work Experience Component
 export function CVWorkExperience() {
   const { cvData } = useCVData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const validJobs = cvData.jobs?.filter(job => 
+  const currentContent = cvData.content?.[language];
+  const validJobs = currentContent?.jobs?.filter((job: any) => 
     job.company?.trim() || job.position?.trim() || job.period?.trim() || job.location?.trim()
   ) || [];
   
@@ -83,7 +84,7 @@ export function CVWorkExperience() {
     <div>
       <Heading>{t('workExperience')}</Heading>
       <div>
-        {validJobs.map((job, index) => (
+        {validJobs.map((job: any, index: number) => (
           <div key={index} className={index > 0 ? 'mt-4' : ''}>
             <div className='flex items-center gap-2 mb-2 print:mb-1'>
               <Subheading>{job.company}</Subheading>
@@ -94,7 +95,7 @@ export function CVWorkExperience() {
             </Info>
             {job.tasks && job.tasks.length > 0 && (
               <ul className='flex flex-col gap-0.5 my-1.5 mx-0 p-2 bg-slate-50 rounded-md border-l-4 border-blue-600 print:my-1 print:mx-0 print:p-1.5 print:gap-0.5 print:break-inside-avoid'>
-                {job.tasks.filter(task => task.trim()).map((task, taskIndex) => (
+                {job.tasks.filter((task: string) => task.trim()).map((task: string, taskIndex: number) => (
                   <li key={taskIndex} className="text-sm font-normal text-slate-800 flex items-start leading-tight before:content-['>'] before:text-sky-500 before:font-semibold before:mr-3 before:mt-0.5 before:flex-shrink-0 print:text-xs print:leading-tight">
                     <span className='pl-2'>{task}</span>
                   </li>
@@ -111,11 +112,12 @@ export function CVWorkExperience() {
 // CV Education Component
 export function CVEducation() {
   const { cvData } = useCVData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const hasEducation = cvData.education.profile?.trim() || 
-                      cvData.education.period?.trim() || 
-                      cvData.education.location?.trim();
+  const currentContent = cvData.content?.[language];
+  const hasEducation = currentContent?.education.profile?.trim() || 
+                      currentContent?.education.period?.trim() || 
+                      currentContent?.education.location?.trim();
   
   if (!hasEducation) return null;
 
@@ -123,9 +125,9 @@ export function CVEducation() {
     <div className="mt-4">
       <Heading>{t('education')}</Heading>
       <div>
-        <Subheading>{cvData.education.profile}</Subheading>
+        <Subheading>{currentContent.education.profile}</Subheading>
         <Info>
-          {cvData.education.period} | {cvData.education.location}
+          {currentContent.education.period} | {currentContent.education.location}
         </Info>
       </div>
     </div>
@@ -135,9 +137,10 @@ export function CVEducation() {
 // CV Skills Component
 export function CVSkills() {
   const { cvData } = useCVData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const validSkills = cvData.skills?.filter(skill => skill.trim()) || [];
+  const currentContent = cvData.content?.[language];
+  const validSkills = currentContent?.skills?.filter((skill: string) => skill.trim()) || [];
   
   if (validSkills.length === 0) return null;
 
@@ -145,7 +148,7 @@ export function CVSkills() {
     <section className='mb-4 print:mb-2'>
       <Heading>{t('skills')}</Heading>
       <ul className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 mt-2 print:gap-1 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]'>
-        {validSkills.map((skill, index) => (
+        {validSkills.map((skill: string, index: number) => (
           <li
             key={index}
             className='text-xs font-medium text-slate-800 bg-slate-50 py-1.5 px-2.5 rounded border-l-2 border-sky-500 transition-all duration-200 hover:bg-blue-600 hover:text-white hover:-translate-y-0.5 hover:shadow-lg print:text-[10px] print:py-1 print:px-1.5'
@@ -161,9 +164,10 @@ export function CVSkills() {
 // CV Languages Component
 export function CVLanguages() {
   const { cvData } = useCVData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const validLanguages = cvData.languages?.filter(lang => lang.name.trim()) || [];
+  const currentContent = cvData.content?.[language];
+  const validLanguages = currentContent?.languages?.filter((lang: any) => lang.name.trim()) || [];
   
   if (validLanguages.length === 0) return null;
 
@@ -171,7 +175,7 @@ export function CVLanguages() {
     <section className='mb-4 print:mb-2'>
       <Heading>{t('languages')}</Heading>
       <ul className='grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-2 mt-2 print:gap-1 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(110px,1fr))]'>
-        {validLanguages.map((language, index) => (
+        {validLanguages.map((language: any, index: number) => (
           <li
             key={index}
             className='text-xs font-medium text-slate-800 bg-slate-50 py-1.5 px-2.5 rounded border-l-2 border-purple-500 transition-all duration-200 hover:bg-purple-600 hover:text-white hover:-translate-y-0.5 hover:shadow-lg print:text-[10px] print:py-1 print:px-1.5 flex justify-between items-center'
@@ -190,9 +194,10 @@ export function CVLanguages() {
 // CV Interests Component
 export function CVInterests() {
   const { cvData } = useCVData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const validInterests = cvData.interests?.filter(interest => interest.trim()) || [];
+  const currentContent = cvData.content?.[language];
+  const validInterests = currentContent?.interests?.filter((interest: string) => interest.trim()) || [];
   
   if (validInterests.length === 0) return null;
 
@@ -200,7 +205,7 @@ export function CVInterests() {
     <section className='mb-4 print:mb-2'>
       <Heading>{t('interests')}</Heading>
       <ul className='grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 print:gap-1.5 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(100px,1fr))]'>
-        {validInterests.map((interest, index) => (
+        {validInterests.map((interest: string, index: number) => (
           <li
             key={index}
             className='text-xs font-medium text-white bg-gradient-to-br from-emerald-500 to-sky-500 py-2 px-3 rounded-full text-center transition-all duration-200 border-2 border-transparent relative overflow-hidden hover:-translate-y-0.5 hover:shadow-lg hover:border-blue-600 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-800 print:text-[10px] print:py-1 print:px-2'

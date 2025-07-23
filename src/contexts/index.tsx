@@ -45,6 +45,7 @@ interface CVDataContextType {
 }
 
 const exampleCVData: CVData = {
+  selectedLanguages: ['en', 'pl'],
   firstName: 'John',
   lastName: 'Doe',
   website: 'johndoe.dev',
@@ -55,54 +56,106 @@ const exampleCVData: CVData = {
   linkedinUrl: 'https://www.linkedin.com/in/john-doe-dev/',
   email: 'john.doe@example.com',
   phone: '+1 (555) 123-4567',
-  jobs: [
-    {
-      company: 'TechCorp Inc.',
-      position: 'Senior Software Engineer',
-      period: 'January 2023 - Present',
-      location: 'San Francisco, CA',
-      tasks: [
-        'Developing scalable web applications using React and TypeScript',
-        'Leading code reviews and mentoring junior developers',
-        'Architecting microservices with Node.js and Express',
-        'Implementing CI/CD pipelines and automated testing strategies',
-        'Optimizing application performance and user experience',
-        'Collaborating with product teams to define technical requirements'
-      ]
+  content: {
+    en: {
+      jobs: [
+        {
+          company: 'TechCorp Inc.',
+          position: 'Senior Software Engineer',
+          period: 'January 2023 - Present',
+          location: 'San Francisco, CA',
+          tasks: [
+            'Developing scalable web applications using React and TypeScript',
+            'Leading code reviews and mentoring junior developers',
+            'Architecting microservices with Node.js and Express',
+            'Implementing CI/CD pipelines and automated testing strategies',
+            'Optimizing application performance and user experience',
+            'Collaborating with product teams to define technical requirements'
+          ]
+        },
+        {
+          company: 'Digital Solutions Ltd.',
+          position: 'Full Stack Developer',
+          period: '2020 - 2022',
+          location: 'New York, NY',
+          tasks: [
+            'Built responsive web applications using modern JavaScript frameworks',
+            'Designed and implemented RESTful APIs with Node.js',
+            'Managed database operations with PostgreSQL and MongoDB',
+            'Collaborated with UX/UI designers to implement pixel-perfect designs',
+            'Participated in agile development processes and sprint planning',
+            'Maintained and improved existing codebase with 95% test coverage'
+          ]
+        }
+      ],
+      education: {
+        profile: 'Computer Science',
+        period: '2016 - 2020',
+        location: 'Stanford University, CA'
+      },
+      skills: [
+        'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Node.js',
+        'Express.js', 'MongoDB', 'PostgreSQL', 'Python', 'Git', 'Docker',
+        'AWS', 'REST APIs', 'GraphQL', 'Jest', 'Webpack', 'Linux'
+      ],
+      languages: [
+        { name: 'English', level: 'Native' },
+        { name: 'Spanish', level: 'C1' }
+      ],
+      interests: ['Photography', 'Reading', 'Technology', 'Cooking', 'Running', 'Hiking']
     },
-    {
-      company: 'Digital Solutions Ltd.',
-      position: 'Full Stack Developer',
-      period: '2020 - 2022',
-      location: 'New York, NY',
-      tasks: [
-        'Built responsive web applications using modern JavaScript frameworks',
-        'Designed and implemented RESTful APIs with Node.js',
-        'Managed database operations with PostgreSQL and MongoDB',
-        'Collaborated with UX/UI designers to implement pixel-perfect designs',
-        'Participated in agile development processes and sprint planning',
-        'Maintained and improved existing codebase with 95% test coverage'
-      ]
+    pl: {
+      jobs: [
+        {
+          company: 'TechCorp Inc.',
+          position: 'Starszy Inzynier Oprogramowania',
+          period: 'Styczen 2023 - Obecnie',
+          location: 'San Francisco, CA',
+          tasks: [
+            'Tworzenie skalowalnych aplikacji webowych przy uzyciu React i TypeScript',
+            'Prowadzenie przegladow kodu i mentoring mlodszych programistow',
+            'Projektowanie mikrouslug z Node.js i Express',
+            'Implementacja pipeline CI/CD i strategii automatycznych testow',
+            'Optymalizacja wydajnosci aplikacji i doswiadczenia uzytkownika',
+            'Wspolpraca z zespolami produktowymi w definiowaniu wymagan technicznych'
+          ]
+        },
+        {
+          company: 'Digital Solutions Ltd.',
+          position: 'Full Stack Developer',
+          period: '2020 - 2022',
+          location: 'New York, NY',
+          tasks: [
+            'Budowanie responsywnych aplikacji webowych przy uzyciu nowoczesnych frameworkow JavaScript',
+            'Projektowanie i implementacja RESTful API z Node.js',
+            'Zarzadzanie operacjami bazodanowymi z PostgreSQL i MongoDB',
+            'Wspolpraca z projektantami UX/UI w implementacji pixel-perfect designow',
+            'Uczestnictwo w procesach agile development i planowaniu sprintow',
+            'Utrzymanie i ulepszanie istniejacej bazy kodu z 95% pokryciem testami'
+          ]
+        }
+      ],
+      education: {
+        profile: 'Informatyka',
+        period: '2016 - 2020',
+        location: 'Stanford University, CA'
+      },
+      skills: [
+        'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Node.js',
+        'Express.js', 'MongoDB', 'PostgreSQL', 'Python', 'Git', 'Docker',
+        'AWS', 'REST APIs', 'GraphQL', 'Jest', 'Webpack', 'Linux'
+      ],
+      languages: [
+        { name: 'Angielski', level: 'Ojczysty' },
+        { name: 'Hiszpanski', level: 'C1' }
+      ],
+      interests: ['Fotografia', 'Czytanie', 'Technologia', 'Gotowanie', 'Bieganie', 'Wedrowki']
     }
-  ],
-  education: {
-    profile: 'Computer Science',
-    period: '2016 - 2020',
-    location: 'Stanford University, CA'
-  },
-  skills: [
-    'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Node.js',
-    'Express.js', 'MongoDB', 'PostgreSQL', 'Python', 'Git', 'Docker',
-    'AWS', 'REST APIs', 'GraphQL', 'Jest', 'Webpack', 'Linux'
-  ],
-  languages: [
-    { name: 'English', level: 'Native' },
-    { name: 'Spanish', level: 'C1' }
-  ],
-  interests: ['Photography', 'Reading', 'Technology', 'Cooking', 'Running', 'Hiking']
+  }
 };
 
 const blankCVData: CVData = {
+  selectedLanguages: ['en'],
   firstName: '',
   lastName: '',
   website: '',
@@ -113,25 +166,50 @@ const blankCVData: CVData = {
   linkedinUrl: '',
   email: '',
   phone: '',
-  jobs: [
-    {
-      company: '',
-      position: '',
-      period: '',
-      location: '',
-      tasks: ['']
+  content: {
+    en: {
+      jobs: [
+        {
+          company: '',
+          position: '',
+          period: '',
+          location: '',
+          tasks: ['']
+        }
+      ],
+      education: {
+        profile: '',
+        period: '',
+        location: ''
+      },
+      skills: [],
+      languages: [
+        { name: '', level: '' }
+      ],
+      interests: []
+    },
+    pl: {
+      jobs: [
+        {
+          company: '',
+          position: '',
+          period: '',
+          location: '',
+          tasks: ['']
+        }
+      ],
+      education: {
+        profile: '',
+        period: '',
+        location: ''
+      },
+      skills: [],
+      languages: [
+        { name: '', level: '' }
+      ],
+      interests: []
     }
-  ],
-  education: {
-    profile: '',
-    period: '',
-    location: ''
-  },
-  skills: [],
-  languages: [
-    { name: '', level: '' }
-  ],
-  interests: []
+  }
 };
 
 const CVDataContext = createContext<CVDataContextType | undefined>(undefined);

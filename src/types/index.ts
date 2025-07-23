@@ -4,11 +4,14 @@ export type Language = 'en' | 'pl';
 export type ViewMode = 'menu' | 'form' | 'example' | 'userCV';
 
 export interface CVData {
-  // Personal Information
+  // Language Selection
+  selectedLanguages: Language[];
+  
+  // Personal Information (same for all languages)
   firstName: string;
   lastName: string;
   
-  // Contact Information
+  // Contact Information (same for all languages)
   website: string;
   websiteUrl: string;
   github: string;
@@ -18,33 +21,36 @@ export interface CVData {
   email: string;
   phone: string;
   
-  // Work Experience
-  jobs: Array<{
-    company: string;
-    position: string;
-    period: string;
-    location: string;
-    tasks: string[];
+  // Language-specific content
+  content: Record<Language, {
+    // Work Experience
+    jobs: Array<{
+      company: string;
+      position: string;
+      period: string;
+      location: string;
+      tasks: string[];
+    }>;
+    
+    // Education
+    education: {
+      profile: string;
+      period: string;
+      location: string;
+    };
+    
+    // Skills
+    skills: string[];
+    
+    // Languages
+    languages: Array<{
+      name: string;
+      level: string;
+    }>;
+    
+    // Interests
+    interests: string[];
   }>;
-  
-  // Education
-  education: {
-    profile: string;
-    period: string;
-    location: string;
-  };
-  
-  // Skills
-  skills: string[];
-  
-  // Languages
-  languages: Array<{
-    name: string;
-    level: string;
-  }>;
-  
-  // Interests
-  interests: string[];
 }
 
 export interface Translations {
@@ -59,16 +65,16 @@ export interface Translations {
   languages: string;
   interests: string;
   
-  // Work Experience - Current Job
-  currentJobPosition: string;
-  currentJobPeriod: string;
-  currentJobLocation: string;
-  currentJobTask1: string;
-  currentJobTask2: string;
-  currentJobTask3: string;
-  currentJobTask4: string;
-  currentJobTask5: string;
-  currentJobTask6: string;
+  // Work Experience - Latest Job
+  latestJobPosition: string;
+  latestJobPeriod: string;
+  latestJobLocation: string;
+  latestJobTask1: string;
+  latestJobTask2: string;
+  latestJobTask3: string;
+  latestJobTask4: string;
+  latestJobTask5: string;
+  latestJobTask6: string;
   
   // Work Experience - Previous Job
   previousJobPosition: string;

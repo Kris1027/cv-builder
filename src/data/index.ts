@@ -13,16 +13,16 @@ export const translations: Record<Language, Translations> = {
     languages: 'Languages',
     interests: 'Interests',
     
-    // Work Experience - Current Job
-    currentJobPosition: 'Senior Software Engineer',
-    currentJobPeriod: 'January 2023 - Present',
-    currentJobLocation: 'San Francisco, CA',
-    currentJobTask1: 'Developing scalable web applications using React and TypeScript',
-    currentJobTask2: 'Leading code reviews and mentoring junior developers',
-    currentJobTask3: 'Architecting microservices with Node.js and Express',
-    currentJobTask4: 'Implementing CI/CD pipelines and automated testing strategies',
-    currentJobTask5: 'Optimizing application performance and user experience',
-    currentJobTask6: 'Collaborating with product teams to define technical requirements',
+    // Work Experience - Latest Job
+    latestJobPosition: 'Senior Software Engineer',
+    latestJobPeriod: 'January 2023 - Present',
+    latestJobLocation: 'San Francisco, CA',
+    latestJobTask1: 'Developing scalable web applications using React and TypeScript',
+    latestJobTask2: 'Leading code reviews and mentoring junior developers',
+    latestJobTask3: 'Architecting microservices with Node.js and Express',
+    latestJobTask4: 'Implementing CI/CD pipelines and automated testing strategies',
+    latestJobTask5: 'Optimizing application performance and user experience',
+    latestJobTask6: 'Collaborating with product teams to define technical requirements',
     
     // Work Experience - Previous Job
     previousJobPosition: 'Full Stack Developer',
@@ -67,16 +67,16 @@ export const translations: Record<Language, Translations> = {
     languages: 'Języki',
     interests: 'Zainteresowania',
     
-    // Work Experience - Current Job
-    currentJobPosition: 'Starszy Inżynier Oprogramowania',
-    currentJobPeriod: 'Styczeń 2023 - Obecnie',
-    currentJobLocation: 'San Francisco, CA',
-    currentJobTask1: 'Tworzenie skalowalnych aplikacji webowych przy użyciu React i TypeScript',
-    currentJobTask2: 'Prowadzenie przeglądów kodu i mentoring młodszych programistów',
-    currentJobTask3: 'Projektowanie mikrousług z Node.js i Express',
-    currentJobTask4: 'Implementacja pipeline CI/CD i strategii automatycznych testów',
-    currentJobTask5: 'Optymalizacja wydajności aplikacji i doświadczenia użytkownika',
-    currentJobTask6: 'Współpraca z zespołami produktowymi w definiowaniu wymagań technicznych',
+    // Work Experience - Latest Job
+    latestJobPosition: 'Starszy Inżynier Oprogramowania',
+    latestJobPeriod: 'Styczeń 2023 - Obecnie',
+    latestJobLocation: 'San Francisco, CA',
+    latestJobTask1: 'Tworzenie skalowalnych aplikacji webowych przy użyciu React i TypeScript',
+    latestJobTask2: 'Prowadzenie przeglądów kodu i mentoring młodszych programistów',
+    latestJobTask3: 'Projektowanie mikrousług z Node.js i Express',
+    latestJobTask4: 'Implementacja pipeline CI/CD i strategii automatycznych testów',
+    latestJobTask5: 'Optymalizacja wydajności aplikacji i doświadczenia użytkownika',
+    latestJobTask6: 'Współpraca z zespołami produktowymi w definiowaniu wymagań technicznych',
     
     // Work Experience - Previous Job
     previousJobPosition: 'Full Stack Developer',
