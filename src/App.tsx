@@ -1,41 +1,37 @@
-import EducationSection from './components/sections/education-section';
-import ExperienceSection from './components/sections/experience-section';
-import InfoSection from './components/sections/info-section';
-import InterestsSection from './components/sections/interests-section';
-import LanguagesSection from './components/sections/languages-section';
-import SkillsSection from './components/sections/skills-section';
-import PrintButton from './components/ui/print-button';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { LanguageSwitcher } from './components/layout/LanguageSwitcher';
+import { PrintButton } from './components/layout/PrintButton';
+import { Wrapper } from './components/layout/wrapper';
+import { Title } from './components/sections/title';
+import { Contact } from './components/sections/contact';
+import { WorkExperience } from './components/sections/work-experience';
+import { Education } from './components/sections/education';
+import { Skills } from './components/sections/skills';
+import { Languages } from './components/sections/languages';
+import { Interests } from './components/sections/interests';
 
-const App = () => {
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Export button - fixed position */}
-      <div className="fixed top-4 right-4 z-10 print:hidden">
-        <PrintButton />
-      </div>
-
-      {/* CV Content */}
-      <main id="cv-content" className="max-w-4xl mx-auto bg-white">
-        <InfoSection />
-        
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4">
-          {/* Left column - Main content (Experience & Education) */}
-          <div className="lg:col-span-2 space-y-4">
-            <ExperienceSection />
-            <EducationSection />
-          </div>
-          
-          {/* Right column - Skills, Languages, Interests */}
-          <div className="space-y-4">
-            <SkillsSection />
-            <LanguagesSection />
-            <InterestsSection />
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default App;
+export default function App() {
+    return (
+        <LanguageProvider>
+            <LanguageSwitcher />
+            <PrintButton />
+            <Wrapper>
+                <header className="flex flex-col gap-1.5 px-6 pt-3 pb-2.5 bg-gradient-to-br from-blue-600 to-blue-800 text-white relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-sky-500 after:to-emerald-500 print:px-6 print:pt-3 print:pb-2 print:gap-1 print:break-inside-avoid">
+                    <Title />
+                    <Contact />
+                </header>
+                <main className="grid grid-cols-2 gap-4 p-4 bg-white flex-1 overflow-visible print:p-4 print:gap-4 print:overflow-visible print:break-inside-avoid">
+                    <div>
+                        <WorkExperience />
+                        <Education />
+                    </div>
+                    <div>
+                        <Skills />
+                        <Languages />
+                        <Interests />
+                    </div>
+                </main>
+            </Wrapper>
+        </LanguageProvider>
+    );
+}
