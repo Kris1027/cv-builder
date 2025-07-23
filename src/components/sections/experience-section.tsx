@@ -1,8 +1,9 @@
+import Heading from '../ui/heading';
+
 const ExperienceSection = () => {
   return (
     <section className='p-4 space-y-1'>
-      <h2 className='text-xl uppercase text-blue-500'>Work Experience</h2>
-      <div className='h-1 bg-gradient-to-r from-blue-500 to-purple-500'></div>
+      <Heading title='Work Experience' />
 
       <article className='space-y-1'>
         <p className='flex items-center space-x-2'>
