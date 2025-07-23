@@ -13,7 +13,7 @@ export function WorkExperience() {
       <div>
         <div>
           <div className='flex items-center gap-2 mb-2 print:mb-1'>
-            <Subheading>M8B</Subheading>
+            <Subheading>TechCorp Inc.</Subheading>
             <Subtitle>| {t('m8bPosition')}</Subtitle>
           </div>
           <Info>
@@ -42,7 +42,7 @@ export function WorkExperience() {
         </div>
         <div>
           <div className='flex items-center gap-2 mb-2 print:mb-1'>
-            <Subheading>Van Gelder</Subheading>
+            <Subheading>Digital Solutions Ltd.</Subheading>
             <Subtitle>| {t('vanGelderPosition')}</Subtitle>
           </div>
           <Info>
