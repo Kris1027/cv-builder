@@ -1,8 +1,9 @@
 import Heading from '../ui/heading';
+import Section from '../ui/section';
 
 const ExperienceSection = () => {
   return (
-    <section className='p-4 space-y-1'>
+    <Section>
       <Heading title='Work Experience' />
 
       <article className='space-y-1'>
@@ -21,29 +22,15 @@ const ExperienceSection = () => {
         </p>
 
         <ul className='pl-4 bg-gray-100 border-l-4 border-l-blue-700 rounded-2xl space-y-1'>
-          <li className='flex items-center space-x-2'>
-            <span className='text-blue-500 font-bold'>&gt;</span>
-            <span className='text-gray-600'>your main responsibility</span>
-          </li>
-          <li className='flex items-center space-x-2'>
-            <span className='text-blue-500 font-bold'>&gt;</span>
-            <span className='text-gray-600'>your main responsibility</span>
-          </li>
-          <li className='flex items-center space-x-2'>
-            <span className='text-blue-500 font-bold'>&gt;</span>
-            <span className='text-gray-600'>your main responsibility</span>
-          </li>
-          <li className='flex items-center space-x-2'>
-            <span className='text-blue-500 font-bold'>&gt;</span>
-            <span className='text-gray-600'>your main responsibility</span>
-          </li>
-          <li className='flex items-center space-x-2'>
-            <span className='text-blue-500 font-bold'>&gt;</span>
-            <span className='text-gray-600'>your main responsibility</span>
-          </li>
+          {Array.from({ length: 5 }, (_, index) => (
+            <li key={index} className='text-gray-600 space-x-2'>
+              <span className='font-bold text-blue-400'>&gt;</span>
+              <span className='font-light'>Description of the task performed at the company.</span>
+            </li>
+          ))}
         </ul>
       </article>
-    </section>
+    </Section>
   );
 };
 
