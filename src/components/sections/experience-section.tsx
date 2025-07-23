@@ -1,3 +1,4 @@
+import DateLocation from '../ui/date-location';
 import Heading from '../ui/heading';
 import Section from '../ui/section';
 
@@ -13,13 +14,7 @@ const ExperienceSection = () => {
           <span className='text-blue-400'>Position</span>
         </p>
 
-        <p className='text-gray-400 space-x-2'>
-          <span>fromDate</span>
-          <span>-</span>
-          <span>toDate</span>
-          <span>|</span>
-          <span>location</span>
-        </p>
+        <DateLocation fromDate='Jan 2020' toDate='Present' location='City, Country' />
 
         <ul className='pl-4 bg-gray-100 border-l-4 border-l-blue-700 rounded-2xl space-y-1'>
           {Array.from({ length: 5 }, (_, index) => (
