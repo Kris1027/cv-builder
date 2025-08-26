@@ -8,31 +8,43 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <React.Fragment>
-      <nav className="bg-white shadow-md sticky top-0 z-50">
+      <nav className="bg-surface sticky top-0 z-50" style={{ boxShadow: 'var(--shadow-md)' }}>
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
+            <Link 
+              to="/" 
+              className="text-2xl font-bold transition-colors"
+              style={{ color: 'var(--color-primary)' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-primary-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-primary)'}
+            >
               CV Builder
             </Link>
             <div className="flex gap-6">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-                activeProps={{ className: 'text-blue-600' }}
+                className="text-secondary hover:text-primary font-medium transition-colors"
+                activeProps={{ 
+                  style: { color: 'var(--color-primary)' } 
+                }}
               >
                 Home
               </Link>
               <Link
                 to="/build-form"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-                activeProps={{ className: 'text-blue-600' }}
+                className="text-secondary hover:text-primary font-medium transition-colors"
+                activeProps={{ 
+                  style: { color: 'var(--color-primary)' } 
+                }}
               >
                 Build CV
               </Link>
               <Link
                 to="/preview"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-                activeProps={{ className: 'text-blue-600' }}
+                className="text-secondary hover:text-primary font-medium transition-colors"
+                activeProps={{ 
+                  style: { color: 'var(--color-primary)' } 
+                }}
               >
                 Preview
               </Link>
