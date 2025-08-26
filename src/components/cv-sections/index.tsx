@@ -81,23 +81,40 @@ export function CVWorkExperience() {
   if (validJobs.length === 0) return null;
 
   return (
-    <div>
+    <section className="animate-fadeIn">
       <Heading>{t('workExperience')}</Heading>
-      <div>
+      <div className="space-y-4 mt-3">
         {validJobs.map((job: any, index: number) => (
-          <div key={index} className={index > 0 ? 'mt-4' : ''}>
-            <div className='flex items-center gap-2 mb-2 print:mb-1'>
+          <div key={index} className="group relative transition-all duration-300 hover:translate-x-1">
+            <div className="absolute -left-3 top-2 w-2 h-2 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity print:hidden" />
+            <div className='flex flex-wrap items-baseline gap-2 mb-2 print:mb-1'>
               <Subheading>{job.company}</Subheading>
-              <Subtitle>| {job.position}</Subtitle>
+              {job.position && <Subtitle className="text-blue-600">• {job.position}</Subtitle>}
             </div>
-            <Info>
-              {job.period} | {job.location}
-            </Info>
-            {job.tasks && job.tasks.length > 0 && (
-              <ul className='flex flex-col gap-0.5 my-1.5 mx-0 p-2 bg-slate-50 rounded-md border-l-4 border-blue-600 print:my-1 print:mx-0 print:p-1.5 print:gap-0.5 print:break-inside-avoid'>
+            {(job.period || job.location) && (
+              <Info className="flex gap-2 text-gray-600">
+                {job.period && <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {job.period}
+                </span>}
+                {job.period && job.location && <span className="text-gray-400">|</span>}
+                {job.location && <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {job.location}
+                </span>}
+              </Info>
+            )}
+            {job.tasks && job.tasks.filter((task: string) => task.trim()).length > 0 && (
+              <ul className='flex flex-col gap-1 my-2 mx-0 p-3 bg-gradient-to-r from-slate-50 to-blue-50 rounded-lg border-l-4 border-blue-600 shadow-sm print:my-1 print:mx-0 print:p-2 print:gap-0.5 print:break-inside-avoid'>
                 {job.tasks.filter((task: string) => task.trim()).map((task: string, taskIndex: number) => (
-                  <li key={taskIndex} className="text-sm font-normal text-slate-800 flex items-start leading-tight before:content-['>'] before:text-sky-500 before:font-semibold before:mr-3 before:mt-0.5 before:flex-shrink-0 print:text-xs print:leading-tight">
-                    <span className='pl-2'>{task}</span>
+                  <li key={taskIndex} className="text-sm font-normal text-slate-700 flex items-start leading-relaxed group/item transition-colors hover:text-slate-900 print:text-xs print:leading-tight">
+                    <span className="text-blue-500 font-bold mr-2 mt-0.5 transition-transform group-hover/item:translate-x-1">›</span>
+                    <span>{task}</span>
                   </li>
                 ))}
               </ul>
@@ -105,7 +122,7 @@ export function CVWorkExperience() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -122,15 +139,32 @@ export function CVEducation() {
   if (!hasEducation) return null;
 
   return (
-    <div className="mt-4">
+    <section className="animate-fadeIn">
       <Heading>{t('education')}</Heading>
-      <div>
-        <Subheading>{currentContent.education.profile}</Subheading>
-        <Info>
-          {currentContent.education.period} | {currentContent.education.location}
-        </Info>
+      <div className="mt-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border-l-4 border-purple-600 shadow-sm transition-all duration-300 hover:shadow-md hover:translate-x-1 print:p-3">
+        {currentContent.education.profile && (
+          <Subheading className="text-purple-900">{currentContent.education.profile}</Subheading>
+        )}
+        {(currentContent.education.period || currentContent.education.location) && (
+          <Info className="flex gap-2 text-gray-600 mt-2">
+            {currentContent.education.period && <span className="flex items-center gap-1">
+              <svg className="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {currentContent.education.period}
+            </span>}
+            {currentContent.education.period && currentContent.education.location && <span className="text-gray-400">|</span>}
+            {currentContent.education.location && <span className="flex items-center gap-1">
+              <svg className="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {currentContent.education.location}
+            </span>}
+          </Info>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -145,18 +179,19 @@ export function CVSkills() {
   if (validSkills.length === 0) return null;
 
   return (
-    <section className='mb-4 print:mb-2'>
+    <section className='animate-fadeIn'>
       <Heading>{t('skills')}</Heading>
-      <ul className='grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 mt-2 print:gap-1 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]'>
+      <div className='flex flex-wrap gap-2 mt-3 print:gap-1 print:mt-2'>
         {validSkills.map((skill: string, index: number) => (
-          <li
+          <span
             key={index}
-            className='text-xs font-medium text-slate-800 bg-slate-50 py-1.5 px-2.5 rounded border-l-2 border-sky-500 transition-all duration-200 hover:bg-blue-600 hover:text-white hover:-translate-y-0.5 hover:shadow-lg print:text-[10px] print:py-1 print:px-1.5'
+            className='inline-flex items-center px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-100 rounded-full transition-all duration-300 hover:bg-blue-600 hover:text-white hover:scale-105 hover:shadow-md print:text-[10px] print:py-1 print:px-2'
           >
+            <span className="w-1.5 h-1.5 bg-current rounded-full mr-2 print:w-1 print:h-1" />
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
@@ -171,22 +206,31 @@ export function CVLanguages() {
   
   if (validLanguages.length === 0) return null;
 
+  const getLevelColor = (level: string) => {
+    const lowerLevel = level.toLowerCase();
+    if (lowerLevel.includes('native') || lowerLevel.includes('c2')) return 'bg-green-500';
+    if (lowerLevel.includes('c1') || lowerLevel.includes('advanced')) return 'bg-blue-500';
+    if (lowerLevel.includes('b2') || lowerLevel.includes('upper')) return 'bg-purple-500';
+    if (lowerLevel.includes('b1') || lowerLevel.includes('intermediate')) return 'bg-yellow-500';
+    return 'bg-gray-500';
+  };
+
   return (
-    <section className='mb-4 print:mb-2'>
+    <section className='animate-fadeIn'>
       <Heading>{t('languages')}</Heading>
-      <ul className='grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-2 mt-2 print:gap-1 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(110px,1fr))]'>
-        {validLanguages.map((language: any, index: number) => (
-          <li
+      <div className='space-y-2 mt-3 print:space-y-1 print:mt-2'>
+        {validLanguages.map((lang: any, index: number) => (
+          <div
             key={index}
-            className='text-xs font-medium text-slate-800 bg-slate-50 py-1.5 px-2.5 rounded border-l-2 border-purple-500 transition-all duration-200 hover:bg-purple-600 hover:text-white hover:-translate-y-0.5 hover:shadow-lg print:text-[10px] print:py-1 print:px-1.5 flex justify-between items-center'
+            className='flex items-center justify-between p-2.5 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg transition-all duration-300 hover:shadow-md hover:translate-x-1 print:p-2'
           >
-            <span>{language.name}</span>
-            <span className='text-[10px] font-bold text-purple-600 hover:text-white print:text-[8px]'>
-              {language.level}
+            <span className='text-sm font-medium text-gray-800 print:text-xs'>{lang.name}</span>
+            <span className={`px-2 py-0.5 text-[10px] font-bold text-white rounded-full ${getLevelColor(lang.level)} print:text-[8px] print:px-1.5`}>
+              {lang.level}
             </span>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
@@ -201,19 +245,31 @@ export function CVInterests() {
   
   if (validInterests.length === 0) return null;
 
+  const gradients = [
+    'from-emerald-400 to-cyan-400',
+    'from-purple-400 to-pink-400',
+    'from-yellow-400 to-orange-400',
+    'from-blue-400 to-indigo-400',
+    'from-rose-400 to-pink-400',
+    'from-teal-400 to-green-400',
+  ];
+
   return (
-    <section className='mb-4 print:mb-2'>
+    <section className='animate-fadeIn'>
       <Heading>{t('interests')}</Heading>
-      <ul className='grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-2 print:gap-1.5 print:mt-1 print:grid-cols-[repeat(auto-fit,minmax(100px,1fr))]'>
+      <div className='flex flex-wrap gap-2 mt-3 print:gap-1 print:mt-2'>
         {validInterests.map((interest: string, index: number) => (
-          <li
+          <span
             key={index}
-            className='text-xs font-medium text-white bg-gradient-to-br from-emerald-500 to-sky-500 py-2 px-3 rounded-full text-center transition-all duration-200 border-2 border-transparent relative overflow-hidden hover:-translate-y-0.5 hover:shadow-lg hover:border-blue-600 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-800 print:text-[10px] print:py-1 print:px-2'
+            className={`inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r ${gradients[index % gradients.length]} rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg print:text-[10px] print:py-1 print:px-2`}
           >
+            <svg className="w-3 h-3 mr-1.5 print:w-2 print:h-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
             {interest}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

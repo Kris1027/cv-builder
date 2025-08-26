@@ -1,21 +1,21 @@
 export function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-blue-600 text-base font-semibold uppercase tracking-wide mb-2.5 pb-1.5 border-b-2 border-blue-600 relative after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-10 after:h-0.5 after:bg-sky-500 print:text-sm print:mb-1.5 print:pb-1 print:break-after-avoid">
+    <h3 className="text-blue-600 text-base font-bold uppercase tracking-wider mb-3 pb-2 border-b-2 border-gradient-to-r from-blue-600 to-sky-500 relative after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-12 after:h-1 after:bg-gradient-to-r after:from-sky-500 after:to-emerald-500 after:rounded-full print:text-sm print:mb-2 print:pb-1 print:break-after-avoid">
       {children}
     </h3>
   );
 }
 
-export function Subheading({ children }: { children: React.ReactNode }) {
-  return <h4 className='text-sm font-semibold text-slate-800 mb-1'>{children}</h4>;
+export function Subheading({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <h4 className={`text-sm font-semibold text-slate-800 mb-1 ${className}`}>{children}</h4>;
 }
 
-export function Subtitle({ children }: { children: React.ReactNode }) {
-  return <h5 className='font-mono font-medium text-xs text-sky-500 ml-1.5'>{children}</h5>;
+export function Subtitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <h5 className={`font-medium text-xs text-sky-600 ${className}`}>{children}</h5>;
 }
 
-export function Info({ children }: { children: React.ReactNode }) {
+export function Info({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className='text-xs font-medium text-slate-600 mb-1 flex items-center gap-1'>{children}</p>
+    <p className={`text-xs font-medium text-slate-600 mb-1 ${className}`}>{children}</p>
   );
 }
