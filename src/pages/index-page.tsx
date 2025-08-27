@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, CheckCircle2, Download, Edit3 } from 'lucide-react';
@@ -19,11 +20,13 @@ export const IndexPage = () => {
             dream job.
           </p>
           <div className='flex flex-col gap-4 sm:flex-row sm:justify-center'>
-            <Button size='lg' className='group'>
-              <Edit3 className='mr-2 h-5 w-5' />
-              Start Building Your CV
-              <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
-            </Button>
+            <Link to='/builder'>
+              <Button size='lg' className='group'>
+                <Edit3 className='mr-2 h-5 w-5' />
+                Start Building Your CV
+                <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
+              </Button>
+            </Link>
             <Button size='lg' variant='outline'>
               <Download className='mr-2 h-5 w-5' />
               Preview CV Templates
@@ -105,10 +108,12 @@ export const IndexPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button size='lg' variant='secondary' className='group'>
-                Start Building Now
-                <ArrowRight className='ml-2 h-5 w-5 transition-transform group-hover:translate-x-1' />
-              </Button>
+              <Link to='/builder'>
+                <Button size='lg' variant='secondary' className='group'>
+                  Start Building Now
+                  <ArrowRight className='ml-2 h-5 w-5 transition-transform group-hover:translate-x-1' />
+                </Button>
+              </Link>
               <p className='mt-4 text-sm text-primary-foreground/80'>
                 No credit card required • 100% free forever
               </p>

@@ -1,7 +1,9 @@
 import { useForm } from '@tanstack/react-form';
+import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { ArrowLeft } from 'lucide-react';
 
 const BuilderPage = () => {
   const form = useForm({
@@ -127,8 +129,18 @@ const BuilderPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">Build Your CV</h1>
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <div className="container mx-auto py-8 px-4 max-w-4xl">
+        <div className="mb-8">
+          <Link to="/">
+            <Button variant="ghost" size="sm" className="mb-4">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+          </Link>
+          <h1 className="text-3xl font-bold mb-2">Build Your CV</h1>
+          <p className="text-muted-foreground">Fill in your details to create a professional CV</p>
+        </div>
 
       <form
         onSubmit={(e) => {
@@ -794,6 +806,7 @@ const BuilderPage = () => {
           </Button>
         </div>
       </form>
+      </div>
     </div>
   );
 };
