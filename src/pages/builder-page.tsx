@@ -82,26 +82,18 @@ const BuilderPage = () => {
     },
   });
 
-  // Create stable reference for setFieldValue with proper typing
-  type FormFieldName = 'experience' | 'education' | 'languages';
-  type FormFieldValue = Experience[] | Education[] | Language[];
-  
-  const setFieldValue = React.useCallback((field: FormFieldName, value: FormFieldValue) => {
-    form.setFieldValue(field, value);
-  }, [form]);
-
   // Update form values when state changes
   React.useEffect(() => {
-    setFieldValue('experience', experience);
-  }, [experience, setFieldValue]);
+    form.setFieldValue('experience', experience);
+  }, [experience, form]);
 
   React.useEffect(() => {
-    setFieldValue('education', education);
-  }, [education, setFieldValue]);
+    form.setFieldValue('education', education);
+  }, [education, form]);
 
   React.useEffect(() => {
-    setFieldValue('languages', languages);
-  }, [languages, setFieldValue]);
+    form.setFieldValue('languages', languages);
+  }, [languages, form]);
 
   // Experience handlers
   const addExperience = () => {
