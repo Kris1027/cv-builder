@@ -37,7 +37,7 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
                     onChange={(e) => f.handleChange(e.target.value)}
                   />
                   {f.state.meta.errors ? (
-                    <p className="text-red-500 text-sm mt-1">
+                    <p className="text-destructive text-sm mt-1">
                       {f.state.meta.errors.join(', ')}
                     </p>
                   ) : null}
@@ -68,7 +68,7 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
                     onChange={(e) => f.handleChange(e.target.value)}
                   />
                   {f.state.meta.errors ? (
-                    <p className="text-red-500 text-sm mt-1">
+                    <p className="text-destructive text-sm mt-1">
                       {f.state.meta.errors.join(', ')}
                     </p>
                   ) : null}
@@ -108,7 +108,7 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
                     onChange={(e) => f.handleChange(e.target.value)}
                   />
                   {f.state.meta.errors ? (
-                    <p className="text-red-500 text-sm mt-1">
+                    <p className="text-destructive text-sm mt-1">
                       {f.state.meta.errors.join(', ')}
                     </p>
                   ) : null}
@@ -183,7 +183,7 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
                   placeholder="e.g., Full Stack Developer"
                 />
                 {f.state.meta.errors ? (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-destructive text-sm mt-1">
                     {f.state.meta.errors.join(', ')}
                   </p>
                 ) : null}

@@ -53,13 +53,13 @@ export const SkillsSection = ({
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full"
+              className="flex items-center gap-1 px-3 py-1 bg-muted rounded-full"
             >
               <span className="text-sm">{skill}</span>
               <button
                 type="button"
                 onClick={() => removeSkill(index)}
-                className="text-gray-500 hover:text-red-500 ml-1"
+                className="text-muted-foreground hover:text-destructive ml-1"
               >
                 ×
               </button>
