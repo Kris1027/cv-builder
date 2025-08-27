@@ -1,17 +1,15 @@
 import { useForm } from '@tanstack/react-form';
 import { Link } from '@tanstack/react-router';
-import React from 'react';
-import { Button } from '../components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import {
-  PersonalInfoSection,
-  ExperienceSection,
-  EducationSection,
-  SkillsSection,
-  InterestsSection,
-  LanguagesSection
-} from '../components/cv-form';
-import type { CVFormInstance, Experience, Education, Language } from '@/types/form-types';
+import React from 'react';
+import { EducationSection } from '@/components/cv-form/education-section';
+import { ExperienceSection } from '@/components/cv-form/experience-section';
+import { InterestsSection } from '@/components/cv-form/interests-section';
+import { LanguagesSection } from '@/components/cv-form/languages-section';
+import { PersonalInfoSection } from '@/components/cv-form/personal-info-section';
+import { SkillsSection } from '@/components/cv-form/skills-section';
+import { Button } from '@/components/ui/button';
+import type { CVFormInstance, Education, Experience, Language } from '@/types/form-types';
 
 const BuilderPage = () => {
   // Initialize state for dynamic arrays using proper types
@@ -216,17 +214,17 @@ const BuilderPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <div className="container mx-auto py-8 px-4 max-w-4xl">
-        <div className="mb-8">
-          <Link to="/">
-            <Button variant="ghost" size="sm" className="mb-4">
-              <ArrowLeft className="mr-2 h-4 w-4" />
+    <div className='min-h-screen bg-gradient-to-b from-background to-muted/20'>
+      <div className='container mx-auto py-8 px-4 max-w-4xl'>
+        <div className='mb-8'>
+          <Link to='/'>
+            <Button variant='ghost' size='sm' className='mb-4'>
+              <ArrowLeft className='mr-2 h-4 w-4' />
               Back to Home
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold mb-2">Build Your CV</h1>
-          <p className="text-muted-foreground">Fill in your details to create a professional CV</p>
+          <h1 className='text-3xl font-bold mb-2'>Build Your CV</h1>
+          <p className='text-muted-foreground'>Fill in your details to create a professional CV</p>
         </div>
 
         <form
@@ -235,26 +233,26 @@ const BuilderPage = () => {
             e.stopPropagation();
             form.handleSubmit();
           }}
-          className="space-y-8"
+          className='space-y-8'
         >
           <PersonalInfoSection form={form as CVFormInstance} />
-          
-          <ExperienceSection 
+
+          <ExperienceSection
             form={formWithState as unknown as CVFormInstance}
             experience={experience}
-            addExperience={addExperience} 
+            addExperience={addExperience}
             removeExperience={removeExperience}
             updateExperience={updateExperience}
           />
-          
-          <EducationSection 
+
+          <EducationSection
             form={formWithState as unknown as CVFormInstance}
             education={education}
-            addEducation={addEducation} 
+            addEducation={addEducation}
             removeEducation={removeEducation}
             updateEducation={updateEducation}
           />
-          
+
           <SkillsSection
             skillInput={skillInput}
             setSkillInput={setSkillInput}
@@ -262,7 +260,7 @@ const BuilderPage = () => {
             addSkill={addSkill}
             removeSkill={removeSkill}
           />
-          
+
           <InterestsSection
             interestInput={interestInput}
             setInterestInput={setInterestInput}
@@ -270,7 +268,7 @@ const BuilderPage = () => {
             addInterest={addInterest}
             removeInterest={removeInterest}
           />
-          
+
           <LanguagesSection
             form={formWithState as unknown as CVFormInstance}
             languages={languages}
@@ -280,19 +278,15 @@ const BuilderPage = () => {
           />
 
           {/* Submit Button */}
-          <div className="flex gap-4">
+          <div className='flex gap-4'>
             <form.Subscribe>
               {(state) => (
-                <Button
-                  type="submit"
-                  disabled={state.isSubmitting}
-                  className="flex-1"
-                >
+                <Button type='submit' disabled={state.isSubmitting} className='flex-1'>
                   {state.isSubmitting ? 'Generating CV...' : 'Generate CV'}
                 </Button>
               )}
             </form.Subscribe>
-            <Button type="button" variant="outline" className="flex-1">
+            <Button type='button' variant='outline' className='flex-1'>
               Preview
             </Button>
           </div>
