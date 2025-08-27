@@ -43,8 +43,13 @@ export function DatePicker({
   const dateValue = React.useMemo(() => {
     if (!value) return undefined;
     if (value instanceof Date) return value;
-    // Handle YYYY-MM format
     if (typeof value === 'string' && value) {
+      // Try to parse as ISO string first
+      const isoDate = new Date(value);
+      if (!isNaN(isoDate.getTime())) {
+        return isoDate;
+      }
+      // Fallback: Handle YYYY-MM format
       const [year, month] = value.split('-').map(Number);
       if (year && month) {
         return new Date(year, month - 1, 1);
