@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Edit3, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Download, Edit3 } from 'lucide-react';
 
-export default function IndexPage() {
+export const IndexPage = () => {
   return (
     <div className='bg-gradient-to-b from-background to-muted/20'>
       {/* Hero Section */}
@@ -118,4 +118,6 @@ export default function IndexPage() {
       </section>
     </div>
   );
-}
+};
+
+export default IndexPage;
