@@ -1,12 +1,3 @@
-export interface ResumeDataProps {
-  personalInfo: PersonalInfoProps;
-  experience: ExperienceProps[];
-  education: EducationProps[];
-  languages: LanguageProps[];
-  skills: SkillProps[];
-  interests: InterestProps[];
-}
-
 export interface PersonalInfoProps {
   firstName: string;
   lastName: string;

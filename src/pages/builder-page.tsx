@@ -13,7 +13,17 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { languageLevels } from '@/lib/language-levels';
+import type {
+  EducationProps,
+  ExperienceProps,
+  InterestProps,
+  LanguageLevelProps,
+  LanguageProps,
+  PersonalInfoProps,
+  SkillProps,
+} from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
+import { Trash2 } from 'lucide-react';
 
 const BuilderPage = () => {
   const form = useForm({
@@ -28,8 +38,22 @@ const BuilderPage = () => {
         website: '',
         linkedin: '',
         github: '',
-      },
-      experience: {
+      } as PersonalInfoProps,
+      experiences: [] as ExperienceProps[],
+      educations: [] as EducationProps[],
+      skills: [] as SkillProps[],
+      languages: [] as LanguageProps[],
+      interests: [] as InterestProps[],
+    },
+    onSubmit: async ({ value }) => {
+      console.log('Form submitted:', value);
+    },
+  });
+
+  const addExperience = () => {
+    form.setFieldValue('experiences', [
+      ...form.getFieldValue('experiences'),
+      {
         company: '',
         position: '',
         startDate: '',
@@ -37,7 +61,21 @@ const BuilderPage = () => {
         current: false,
         description: '',
       },
-      education: {
+    ]);
+  };
+
+  const removeExperience = (index: number) => {
+    const experiences = form.getFieldValue('experiences');
+    form.setFieldValue(
+      'experiences',
+      experiences.filter((_: ExperienceProps, i: number) => i !== index)
+    );
+  };
+
+  const addEducation = () => {
+    form.setFieldValue('educations', [
+      ...form.getFieldValue('educations'),
+      {
         institution: '',
         degree: '',
         field: '',
@@ -45,21 +83,55 @@ const BuilderPage = () => {
         endDate: '',
         description: '',
       },
-      skills: {
-        name: '',
-      },
-      languages: {
-        language: '',
-        proficiency: '',
-      },
-      interests: {
-        name: '',
-      },
-    },
-    onSubmit: async ({ value }) => {
-      console.log('Form submitted:', value);
-    },
-  });
+    ]);
+  };
+
+  const removeEducation = (index: number) => {
+    const educations = form.getFieldValue('educations');
+    form.setFieldValue(
+      'educations',
+      educations.filter((_: EducationProps, i: number) => i !== index)
+    );
+  };
+
+  const addSkill = () => {
+    form.setFieldValue('skills', [...form.getFieldValue('skills'), { name: '' }]);
+  };
+
+  const removeSkill = (index: number) => {
+    const skills = form.getFieldValue('skills');
+    form.setFieldValue(
+      'skills',
+      skills.filter((_: SkillProps, i: number) => i !== index)
+    );
+  };
+
+  const addLanguage = () => {
+    form.setFieldValue('languages', [
+      ...form.getFieldValue('languages'),
+      { language: '', proficiency: 'A1' as LanguageLevelProps },
+    ]);
+  };
+
+  const removeLanguage = (index: number) => {
+    const languages = form.getFieldValue('languages');
+    form.setFieldValue(
+      'languages',
+      languages.filter((_: LanguageProps, i: number) => i !== index)
+    );
+  };
+
+  const addInterest = () => {
+    form.setFieldValue('interests', [...form.getFieldValue('interests'), { name: '' }]);
+  };
+
+  const removeInterest = (index: number) => {
+    const interests = form.getFieldValue('interests');
+    form.setFieldValue(
+      'interests',
+      interests.filter((_: InterestProps, i: number) => i !== index)
+    );
+  };
 
   return (
     <form
@@ -223,91 +295,120 @@ const BuilderPage = () => {
         <CardHeader>
           <CardTitle>Work Experience</CardTitle>
           <CardDescription>Add your professional experience</CardDescription>
+          <Button type='button' onClick={addExperience}>
+            Add Experience
+          </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='experience.company'>
+          <form.Field name='experiences'>
             {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Company</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+              <div className='space-y-4'>
+                {field.state.value.map((_, index) => (
+                  <div key={index} className='border p-4 rounded-lg space-y-4'>
+                    <div className='flex justify-between items-center'>
+                      <h4 className='font-medium'>Experience {index + 1}</h4>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        size='sm'
+                        onClick={() => removeExperience(index)}
+                      >
+                        <Trash2 className='h-4 w-4' />
+                      </Button>
+                    </div>
 
-          <form.Field name='experience.position'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Position</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`experiences[${index}].company`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Company</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='experience.startDate'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Start Date</Label>
-                <DatePicker
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onChange={(date) => field.handleChange(date ? date.toISOString() : '')}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`experiences[${index}].position`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Position</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='experience.endDate'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>End Date</Label>
-                <DatePicker
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onChange={(date) => field.handleChange(date ? date.toISOString() : '')}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`experiences[${index}].startDate`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Start Date</Label>
+                          <DatePicker
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onChange={(date) =>
+                              subField.handleChange(date ? date.toISOString() : '')
+                            }
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='experience.current'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Current</Label>
-                <Checkbox
-                  id={field.name}
-                  name={field.name}
-                  checked={field.state.value}
-                  onCheckedChange={(checked) => field.handleChange(!!checked)}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`experiences[${index}].endDate`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>End Date</Label>
+                          <DatePicker
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onChange={(date) =>
+                              subField.handleChange(date ? date.toISOString() : '')
+                            }
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='experience.description'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Description</Label>
-                <Textarea
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
+                    <form.Field name={`experiences[${index}].current`}>
+                      {(subField) => (
+                        <div className='flex items-center space-x-2'>
+                          <Checkbox
+                            id={subField.name}
+                            name={subField.name}
+                            checked={subField.state.value}
+                            onCheckedChange={(checked) => subField.handleChange(!!checked)}
+                          />
+                          <Label htmlFor={subField.name}>Currently working here</Label>
+                        </div>
+                      )}
+                    </form.Field>
+
+                    <form.Field name={`experiences[${index}].description`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Description</Label>
+                          <Textarea
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+                  </div>
+                ))}
               </div>
             )}
           </form.Field>
@@ -319,92 +420,121 @@ const BuilderPage = () => {
         <CardHeader>
           <CardTitle>Education</CardTitle>
           <CardDescription>Add your educational background</CardDescription>
+          <Button type='button' onClick={addEducation}>
+            Add Education
+          </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='education.institution'>
+          <form.Field name='educations'>
             {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Institution</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+              <div className='space-y-4'>
+                {field.state.value.map((_, index) => (
+                  <div key={index} className='border p-4 rounded-lg space-y-4'>
+                    <div className='flex justify-between items-center'>
+                      <h4 className='font-medium'>Education {index + 1}</h4>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        size='sm'
+                        onClick={() => removeEducation(index)}
+                      >
+                        <Trash2 className='h-4 w-4' />
+                      </Button>
+                    </div>
 
-          <form.Field name='education.degree'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Degree</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`educations[${index}].institution`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Institution</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='education.field'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Field of Study</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`educations[${index}].degree`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Degree</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='education.startDate'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Start Date</Label>
-                <DatePicker
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onChange={(date) => field.handleChange(date ? date.toISOString() : '')}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`educations[${index}].field`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Field of Study</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='education.endDate'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>End Date</Label>
-                <DatePicker
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onChange={(date) => field.handleChange(date ? date.toISOString() : '')}
-                />
-              </div>
-            )}
-          </form.Field>
+                    <form.Field name={`educations[${index}].startDate`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Start Date</Label>
+                          <DatePicker
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onChange={(date) =>
+                              subField.handleChange(date ? date.toISOString() : '')
+                            }
+                          />
+                        </div>
+                      )}
+                    </form.Field>
 
-          <form.Field name='education.description'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Description</Label>
-                <Textarea
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
+                    <form.Field name={`educations[${index}].endDate`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>End Date</Label>
+                          <DatePicker
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onChange={(date) =>
+                              subField.handleChange(date ? date.toISOString() : '')
+                            }
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+
+                    <form.Field name={`educations[${index}].description`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Description</Label>
+                          <Textarea
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+                  </div>
+                ))}
               </div>
             )}
           </form.Field>
@@ -416,19 +546,36 @@ const BuilderPage = () => {
         <CardHeader>
           <CardTitle>Skills</CardTitle>
           <CardDescription>Add your professional skills</CardDescription>
+          <Button type='button' onClick={addSkill}>
+            Add Skill
+          </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='skills.name'>
+          <form.Field name='skills'>
             {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Skill</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
+              <div className='space-y-2'>
+                {field.state.value.map((_, index) => (
+                  <div key={index} className='flex gap-2'>
+                    <form.Field name={`skills[${index}].name`}>
+                      {(subField) => (
+                        <Input
+                          placeholder='Enter skill'
+                          value={subField.state.value}
+                          onBlur={subField.handleBlur}
+                          onChange={(e) => subField.handleChange(e.target.value)}
+                        />
+                      )}
+                    </form.Field>
+                    <Button
+                      type='button'
+                      variant='ghost'
+                      size='sm'
+                      onClick={() => removeSkill(index)}
+                    >
+                      <Trash2 className='h-4 w-4' />
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </form.Field>
@@ -440,39 +587,69 @@ const BuilderPage = () => {
         <CardHeader>
           <CardTitle>Languages</CardTitle>
           <CardDescription>Add languages you speak</CardDescription>
+          <Button type='button' onClick={addLanguage}>
+            Add Language
+          </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='languages.language'>
+          <form.Field name='languages'>
             {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Language</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
+              <div className='space-y-4'>
+                {field.state.value.map((_, index) => (
+                  <div key={index} className='border p-4 rounded-lg space-y-4'>
+                    <div className='flex justify-between items-center'>
+                      <h4 className='font-medium'>Language {index + 1}</h4>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        size='sm'
+                        onClick={() => removeLanguage(index)}
+                      >
+                        <Trash2 className='h-4 w-4' />
+                      </Button>
+                    </div>
 
-          <form.Field name='languages.proficiency'>
-            {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Proficiency</Label>
-                <Select value={field.state.value} onValueChange={field.handleChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select proficiency' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {languageLevels.map((level) => (
-                      <SelectItem key={level.value} value={level.value}>
-                        {level.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                    <form.Field name={`languages[${index}].language`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Language</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+
+                    <form.Field name={`languages[${index}].proficiency`}>
+                      {(subField) => (
+                        <div>
+                          <Label htmlFor={subField.name}>Proficiency</Label>
+                          <Select
+                            value={subField.state.value}
+                            onValueChange={(value) =>
+                              subField.handleChange(value as LanguageLevelProps)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder='Select proficiency' />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {languageLevels.map((level) => (
+                                <SelectItem key={level.value} value={level.value}>
+                                  {level.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+                    </form.Field>
+                  </div>
+                ))}
               </div>
             )}
           </form.Field>
@@ -484,19 +661,36 @@ const BuilderPage = () => {
         <CardHeader>
           <CardTitle>Interests</CardTitle>
           <CardDescription>Add your personal interests and hobbies</CardDescription>
+          <Button type='button' onClick={addInterest}>
+            Add Interest
+          </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='interests.name'>
+          <form.Field name='interests'>
             {(field) => (
-              <div>
-                <Label htmlFor={field.name}>Interest</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
+              <div className='space-y-2'>
+                {field.state.value.map((_, index) => (
+                  <div key={index} className='flex gap-2'>
+                    <form.Field name={`interests[${index}].name`}>
+                      {(subField) => (
+                        <Input
+                          placeholder='Enter interest'
+                          value={subField.state.value}
+                          onBlur={subField.handleBlur}
+                          onChange={(e) => subField.handleChange(e.target.value)}
+                        />
+                      )}
+                    </form.Field>
+                    <Button
+                      type='button'
+                      variant='ghost'
+                      size='sm'
+                      onClick={() => removeInterest(index)}
+                    >
+                      <Trash2 className='h-4 w-4' />
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </form.Field>
