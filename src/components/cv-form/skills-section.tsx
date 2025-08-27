@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 interface SkillsSectionProps {
   skillInput: string;
@@ -26,7 +27,7 @@ export const SkillsSection = ({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-2">
-          <input
+          <Input
             type="text"
             placeholder="Enter a skill and press Enter"
             value={skillInput}
@@ -37,7 +38,7 @@ export const SkillsSection = ({
                 addSkill(skillInput);
               }
             }}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1"
           />
           <Button
             type="button"

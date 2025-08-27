@@ -1,5 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import type { EducationSectionProps, FieldApi, Education } from '@/types/form-types';
 
 export const EducationSection = ({ form, addEducation, removeEducation }: EducationSectionProps) => {
@@ -34,16 +37,15 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Institution
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -55,17 +57,16 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Degree
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
                         placeholder="e.g., Bachelor's, Master's"
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -78,17 +79,16 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                 const f = field as FieldApi<string>;
                 return (
                   <div>
-                    <label className="text-sm font-medium" htmlFor={f.name}>
+                    <Label htmlFor={f.name}>
                       Field of Study
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       id={f.name}
                       name={f.name}
                       value={f.state.value}
                       onBlur={f.handleBlur}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
                       placeholder="e.g., Computer Science"
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 );
@@ -101,17 +101,16 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Start Date
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         type="month"
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -123,17 +122,16 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         End Date
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         type="month"
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -146,10 +144,10 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                 const f = field as FieldApi<string>;
                 return (
                   <div>
-                    <label className="text-sm font-medium" htmlFor={f.name}>
+                    <Label htmlFor={f.name}>
                       Description
-                    </label>
-                    <textarea
+                    </Label>
+                    <Textarea
                       id={f.name}
                       name={f.name}
                       value={f.state.value}
@@ -157,7 +155,6 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                       onChange={(e) => f.handleChange(e.target.value)}
                       rows={2}
                       placeholder="Notable achievements, GPA, relevant coursework..."
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 );

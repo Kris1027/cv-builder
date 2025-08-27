@@ -1,4 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import type { FormSectionProps, FieldApi } from '@/types/form-types';
 
 export const PersonalInfoSection = ({ form }: FormSectionProps) => {
@@ -23,16 +26,15 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
               const f = field as FieldApi<string>;
               return (
                 <div>
-                  <label className="text-sm font-medium" htmlFor={f.name}>
+                  <Label htmlFor={f.name}>
                     First Name *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id={f.name}
                     name={f.name}
                     value={f.state.value}
                     onBlur={f.handleBlur}
                     onChange={(e) => f.handleChange(e.target.value)}
-                    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   {f.state.meta.errors ? (
                     <p className="text-red-500 text-sm mt-1">
@@ -55,16 +57,15 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
               const f = field as FieldApi<string>;
               return (
                 <div>
-                  <label className="text-sm font-medium" htmlFor={f.name}>
+                  <Label htmlFor={f.name}>
                     Last Name *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id={f.name}
                     name={f.name}
                     value={f.state.value}
                     onBlur={f.handleBlur}
                     onChange={(e) => f.handleChange(e.target.value)}
-                    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   {f.state.meta.errors ? (
                     <p className="text-red-500 text-sm mt-1">
@@ -95,17 +96,16 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
               const f = field as FieldApi<string>;
               return (
                 <div>
-                  <label className="text-sm font-medium" htmlFor={f.name}>
+                  <Label htmlFor={f.name}>
                     Email *
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id={f.name}
                     name={f.name}
                     type="email"
                     value={f.state.value}
                     onBlur={f.handleBlur}
                     onChange={(e) => f.handleChange(e.target.value)}
-                    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   {f.state.meta.errors ? (
                     <p className="text-red-500 text-sm mt-1">
@@ -122,17 +122,16 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
               const f = field as FieldApi<string>;
               return (
                 <div>
-                  <label className="text-sm font-medium" htmlFor={f.name}>
+                  <Label htmlFor={f.name}>
                     Phone
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id={f.name}
                     name={f.name}
                     type="tel"
                     value={f.state.value}
                     onBlur={f.handleBlur}
                     onChange={(e) => f.handleChange(e.target.value)}
-                    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               );
@@ -145,17 +144,16 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
             const f = field as FieldApi<string>;
             return (
               <div>
-                <label className="text-sm font-medium" htmlFor={f.name}>
+                <Label htmlFor={f.name}>
                   Location
-                </label>
-                <input
+                </Label>
+                <Input
                   id={f.name}
                   name={f.name}
                   value={f.state.value}
                   onBlur={f.handleBlur}
                   onChange={(e) => f.handleChange(e.target.value)}
                   placeholder="City, Country"
-                  className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             );
@@ -173,17 +171,16 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
             const f = field as FieldApi<string>;
             return (
               <div>
-                <label className="text-sm font-medium" htmlFor={f.name}>
+                <Label htmlFor={f.name}>
                   Professional Title *
-                </label>
-                <input
+                </Label>
+                <Input
                   id={f.name}
                   name={f.name}
                   value={f.state.value}
                   onBlur={f.handleBlur}
                   onChange={(e) => f.handleChange(e.target.value)}
                   placeholder="e.g., Full Stack Developer"
-                  className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {f.state.meta.errors ? (
                   <p className="text-red-500 text-sm mt-1">
@@ -200,10 +197,10 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
             const f = field as FieldApi<string>;
             return (
               <div>
-                <label className="text-sm font-medium" htmlFor={f.name}>
+                <Label htmlFor={f.name}>
                   Professional Summary
-                </label>
-                <textarea
+                </Label>
+                <Textarea
                   id={f.name}
                   name={f.name}
                   value={f.state.value}
@@ -211,7 +208,6 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
                   onChange={(e) => f.handleChange(e.target.value)}
                   rows={4}
                   placeholder="Brief overview of your professional background and goals..."
-                  className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             );

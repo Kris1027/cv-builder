@@ -1,5 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import type { ExperienceSectionProps, FieldApi, Experience } from '@/types/form-types';
 
 export const ExperienceSection = ({ form, addExperience, removeExperience }: ExperienceSectionProps) => {
@@ -34,16 +37,15 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Company
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -55,16 +57,15 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Position
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -78,17 +79,16 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                   const f = field as FieldApi<string>;
                   return (
                     <div>
-                      <label className="text-sm font-medium" htmlFor={f.name}>
+                      <Label htmlFor={f.name}>
                         Start Date
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         id={f.name}
                         name={f.name}
                         type="month"
                         value={f.state.value}
                         onBlur={f.handleBlur}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   );
@@ -109,9 +109,9 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                           onChange={(e) => f.handleChange(e.target.checked)}
                           className="mr-2"
                         />
-                        <label htmlFor={f.name} className="text-sm">
+                        <Label htmlFor={f.name}>
                           Current position
-                        </label>
+                        </Label>
                       </div>
                     );
                   }}
@@ -123,17 +123,16 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                       const f = field as FieldApi<string>;
                       return (
                         <div>
-                          <label className="text-sm font-medium" htmlFor={f.name}>
+                          <Label htmlFor={f.name}>
                             End Date
-                          </label>
-                          <input
+                          </Label>
+                          <Input
                             id={f.name}
                             name={f.name}
                             type="month"
                             value={f.state.value}
                             onBlur={f.handleBlur}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                       );
@@ -148,10 +147,10 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                 const f = field as FieldApi<string>;
                 return (
                   <div>
-                    <label className="text-sm font-medium" htmlFor={f.name}>
+                    <Label htmlFor={f.name}>
                       Description
-                    </label>
-                    <textarea
+                    </Label>
+                    <Textarea
                       id={f.name}
                       name={f.name}
                       value={f.state.value}
@@ -159,7 +158,6 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                       onChange={(e) => f.handleChange(e.target.value)}
                       rows={3}
                       placeholder="Describe your responsibilities and achievements..."
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 );

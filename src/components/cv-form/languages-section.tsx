@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import type { LanguagesSectionProps, FieldApi, Language } from '@/types/form-types';
 
 export const LanguagesSection = ({ form, addLanguage, removeLanguage }: LanguagesSectionProps) => {
@@ -19,16 +21,15 @@ export const LanguagesSection = ({ form, addLanguage, removeLanguage }: Language
                 const f = field as FieldApi<string>;
                 return (
                   <div className="flex-1">
-                    <label className="text-sm font-medium" htmlFor={f.name}>
+                    <Label htmlFor={f.name}>
                       Language
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                       id={f.name}
                       name={f.name}
                       value={f.state.value}
                       onBlur={f.handleBlur}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 );
@@ -40,15 +41,15 @@ export const LanguagesSection = ({ form, addLanguage, removeLanguage }: Language
                 const f = field as FieldApi<string>;
                 return (
                   <div className="flex-1">
-                    <label className="text-sm font-medium" htmlFor={f.name}>
+                    <Label htmlFor={f.name}>
                       Proficiency
-                    </label>
+                    </Label>
                     <select
                       id={f.name}
                       name={f.name}
                       value={f.state.value}
                       onChange={(e) => f.handleChange(e.target.value)}
-                      className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                     >
                       <option value="Beginner">Beginner</option>
                       <option value="Intermediate">Intermediate</option>
