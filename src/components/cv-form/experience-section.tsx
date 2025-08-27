@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { DatePicker } from '@/components/ui/date-picker';
 import type { ExperienceSectionProps } from '@/types/form-types';
 
 export const ExperienceSection = ({ 
@@ -83,15 +84,16 @@ export const ExperienceSection = ({
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center">
-                  <input
+                <div className="flex items-center space-x-2">
+                  <Checkbox
                     id={`experience-${index}-current`}
-                    type="checkbox"
                     checked={exp.current || false}
-                    onChange={(e) => updateExperience(index, 'current', e.target.checked)}
-                    className="mr-2"
+                    onCheckedChange={(checked) => updateExperience(index, 'current', !!checked)}
                   />
-                  <Label htmlFor={`experience-${index}-current`}>
+                  <Label 
+                    htmlFor={`experience-${index}-current`}
+                    className="text-sm font-normal cursor-pointer"
+                  >
                     Current position
                   </Label>
                 </div>
