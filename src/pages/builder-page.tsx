@@ -62,20 +62,20 @@ const BuilderPage = () => {
         linkedin: '',
         github: '',
       },
-      experience: experience,
-      education: education,
-      languages: languages,
+      experience,
+      education,
+      languages,
       skillsPlaceholder: '', // We'll manage skills separately
     },
     onSubmit: async ({ value }) => {
       // Combine form values with state values
       const finalData = {
         personalInfo: value.personalInfo,
-        experience: experience,
-        education: education,
-        languages: languages,
-        skills: skills,
-        interests: interests,
+        experience,
+        education,
+        languages,
+        skills,
+        interests,
       };
       console.log('CV Data:', finalData);
       // TODO: Handle CV generation/download
