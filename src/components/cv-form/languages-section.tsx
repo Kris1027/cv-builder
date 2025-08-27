@@ -2,6 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { LanguagesSectionProps } from '@/types/form-types';
 
 export const LanguagesSection = ({ 
@@ -36,17 +43,20 @@ export const LanguagesSection = ({
               <Label htmlFor={`language-${index}-proficiency`}>
                 Proficiency
               </Label>
-              <select
-                id={`language-${index}-proficiency`}
+              <Select
                 value={lang.proficiency || 'Beginner'}
-                onChange={(e) => updateLanguage(index, 'proficiency', e.target.value)}
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                onValueChange={(value) => updateLanguage(index, 'proficiency', value)}
               >
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-                <option value="Native">Native</option>
-              </select>
+                <SelectTrigger id={`language-${index}-proficiency`}>
+                  <SelectValue placeholder="Select proficiency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Beginner">Beginner</SelectItem>
+                  <SelectItem value="Intermediate">Intermediate</SelectItem>
+                  <SelectItem value="Advanced">Advanced</SelectItem>
+                  <SelectItem value="Native">Native</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {languages.length > 1 && (
