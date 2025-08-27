@@ -63,25 +63,35 @@ export interface CVFormValues {
   languages: Language[];
 }
 
-// For TanStack Form we use a generic type since the actual types are complex
-// This allows us to avoid 'any' in most places while still being practical
-export type CVFormInstance = {
+// Define a simplified form instance type that matches what we need
+// Using a flexible component type for Field to avoid complex generic constraints
+export interface CVFormInstance {
   state: {
     values: CVFormValues;
     isSubmitting: boolean;
     canSubmit: boolean;
+    errors?: Array<undefined | string>;
+    fieldMeta?: Record<string, unknown>;
   };
   Field: React.ComponentType<{
     name: string;
-    validators?: Record<string, unknown>;
-    children: (field: unknown) => React.ReactNode;
+    validators?: Record<string, (value: unknown) => string | undefined>;
+    children: (field: {
+      name: string;
+      state: FieldState;
+      handleChange: (value: unknown) => void;
+      handleBlur: () => void;
+    }) => React.ReactNode;
   }>;
   Subscribe: React.ComponentType<{
     children: (state: { isSubmitting: boolean; canSubmit: boolean }) => React.ReactNode;
   }>;
-  setFieldValue: (name: string, value: unknown) => void;
+  setFieldValue: <TField extends string>(
+    name: TField,
+    updater: ((prev: unknown) => unknown) | unknown
+  ) => void;
   handleSubmit: () => void;
-};
+}
 
 // Component props types  
 export interface FormSectionProps {

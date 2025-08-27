@@ -199,19 +199,6 @@ const BuilderPage = () => {
     setInterests(interests.filter((_, i) => i !== index));
   };
 
-  // Create a modified form object with state values
-  const formWithState = {
-    ...form,
-    state: {
-      ...form.state,
-      values: {
-        ...form.state.values,
-        experience: experience,
-        education: education,
-        languages: languages,
-      },
-    },
-  };
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-background to-muted/20'>
@@ -238,7 +225,7 @@ const BuilderPage = () => {
           <PersonalInfoSection form={form as CVFormInstance} />
 
           <ExperienceSection
-            form={formWithState as unknown as CVFormInstance}
+            form={form as CVFormInstance}
             experience={experience}
             addExperience={addExperience}
             removeExperience={removeExperience}
@@ -246,7 +233,7 @@ const BuilderPage = () => {
           />
 
           <EducationSection
-            form={formWithState as unknown as CVFormInstance}
+            form={form as CVFormInstance}
             education={education}
             addEducation={addEducation}
             removeEducation={removeEducation}
@@ -270,7 +257,7 @@ const BuilderPage = () => {
           />
 
           <LanguagesSection
-            form={formWithState as unknown as CVFormInstance}
+            form={form as CVFormInstance}
             languages={languages}
             addLanguage={addLanguage}
             removeLanguage={removeLanguage}
