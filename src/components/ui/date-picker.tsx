@@ -3,6 +3,13 @@ import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface DatePickerProps {
   value?: Date | string;
@@ -124,17 +131,21 @@ export function DatePicker({
             >
               <ChevronLeft className='h-4 w-4' />
             </Button>
-            <select
-              value={selectedYear}
-              onChange={(e) => handleYearChange(Number(e.target.value))}
-              className='flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
+            <Select
+              value={selectedYear.toString()}
+              onValueChange={(value) => handleYearChange(Number(value))}
             >
-              {Array.from({ length: toYear - fromYear + 1 }, (_, i) => fromYear + i).map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className='w-32'>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: toYear - fromYear + 1 }, (_, i) => fromYear + i).map((year) => (
+                  <SelectItem key={year} value={year.toString()}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button
               variant='ghost'
               size='icon'
