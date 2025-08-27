@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { DatePicker } from '@/components/ui/date-picker';
 import type { EducationSectionProps, FieldApi, Education } from '@/types/form-types';
 
 export const EducationSection = ({ form, addEducation, removeEducation }: EducationSectionProps) => {
@@ -104,13 +105,21 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                       <Label htmlFor={f.name}>
                         Start Date
                       </Label>
-                      <Input
+                      <DatePicker
                         id={f.name}
                         name={f.name}
-                        type="month"
                         value={f.state.value}
+                        onChange={(date) => {
+                          if (date) {
+                            const year = date.getFullYear();
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            f.handleChange(`${year}-${month}`);
+                          } else {
+                            f.handleChange('');
+                          }
+                        }}
                         onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
+                        placeholder="Select start date"
                       />
                     </div>
                   );
@@ -125,13 +134,21 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                       <Label htmlFor={f.name}>
                         End Date
                       </Label>
-                      <Input
+                      <DatePicker
                         id={f.name}
                         name={f.name}
-                        type="month"
                         value={f.state.value}
+                        onChange={(date) => {
+                          if (date) {
+                            const year = date.getFullYear();
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            f.handleChange(`${year}-${month}`);
+                          } else {
+                            f.handleChange('');
+                          }
+                        }}
                         onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
+                        placeholder="Select end date"
                       />
                     </div>
                   );
