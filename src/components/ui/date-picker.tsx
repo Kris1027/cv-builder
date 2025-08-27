@@ -70,7 +70,7 @@ export function DatePicker({
   }, [dateValue]);
 
   const handleMonthSelect = (month: number) => {
-    const newDate = new Date(selectedYear, month, 1);
+    const newDate = new Date(Date.UTC(selectedYear, month, 1));
     onChange?.(newDate);
     setIsOpen(false);
   };

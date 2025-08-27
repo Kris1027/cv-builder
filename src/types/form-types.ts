@@ -37,13 +37,22 @@ export interface EducationProps {
   description: string;
 }
 
-export interface LanguageProps {
-  language: string;
-  proficiency: string;
-}
-
 export interface SkillProps {
   name: string;
+}
+
+export type LanguageLevelProps = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2' | 'NATIVE';
+
+export interface LanguageProps {
+  language: string;
+  proficiency: LanguageLevelProps;
+}
+
+export interface LanguageProficiencyProps {
+  beginner: boolean;
+  intermediate: boolean;
+  advanced: boolean;
+  native: boolean;
 }
 
 export interface InterestProps {
