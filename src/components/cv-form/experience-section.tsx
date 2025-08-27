@@ -5,32 +5,63 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { ExperienceSectionProps } from '@/types/form-types';
+import { useState } from 'react';
 
-export const ExperienceSection = ({ 
-  experience, 
-  addExperience, 
-  removeExperience, 
-  updateExperience 
-}: ExperienceSectionProps) => {
+export const ExperienceSection = () => {
+  const addExperience = () => {
+    setExperience([
+      ...experience,
+      {
+        company: '',
+        position: '',
+        startDate: '',
+        endDate: '',
+        current: false,
+        description: '',
+      },
+    ]);
+  };
+
+  const removeExperience = (index: number) => {
+    setExperience(experience.filter((_, i) => i !== index));
+  };
+
+  const updateExperience = (index: number, field: keyof Experience, value: string | boolean) => {
+    const updatedExperience = [...experience];
+    updatedExperience[index] = {
+      ...updatedExperience[index],
+      [field]: value,
+    };
+    setExperience(updatedExperience);
+  };
+
+  const [experience, setExperience] = useState([
+    {
+      company: '',
+      position: '',
+      startDate: '',
+      endDate: '',
+      current: false,
+      description: '',
+    },
+  ]);
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Work Experience</CardTitle>
-        <CardDescription>
-          Add your professional experience
-        </CardDescription>
+        <CardDescription>Add your professional experience</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className='space-y-6'>
         {experience.map((exp, index) => (
-          <div key={index} className="p-4 border rounded-lg space-y-4">
-            <div className="flex justify-between items-start">
-              <h4 className="font-medium">Experience {index + 1}</h4>
+          <div key={index} className='p-4 border rounded-lg space-y-4'>
+            <div className='flex justify-between items-start'>
+              <h4 className='font-medium'>Experience {index + 1}</h4>
               {experience.length > 1 && (
                 <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
+                  type='button'
+                  variant='destructive'
+                  size='sm'
                   onClick={() => removeExperience(index)}
                 >
                   Remove
@@ -38,11 +69,9 @@ export const ExperienceSection = ({
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
-                <Label htmlFor={`experience-${index}-company`}>
-                  Company
-                </Label>
+                <Label htmlFor={`experience-${index}-company`}>Company</Label>
                 <Input
                   id={`experience-${index}-company`}
                   value={exp.company || ''}
@@ -51,9 +80,7 @@ export const ExperienceSection = ({
               </div>
 
               <div>
-                <Label htmlFor={`experience-${index}-position`}>
-                  Position
-                </Label>
+                <Label htmlFor={`experience-${index}-position`}>Position</Label>
                 <Input
                   id={`experience-${index}-position`}
                   value={exp.position || ''}
@@ -62,11 +89,9 @@ export const ExperienceSection = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
-                <Label htmlFor={`experience-${index}-startDate`}>
-                  Start Date
-                </Label>
+                <Label htmlFor={`experience-${index}-startDate`}>Start Date</Label>
                 <DatePicker
                   id={`experience-${index}-startDate`}
                   value={exp.startDate || ''}
@@ -79,20 +104,20 @@ export const ExperienceSection = ({
                       updateExperience(index, 'startDate', '');
                     }
                   }}
-                  placeholder="Select start date"
+                  placeholder='Select start date'
                 />
               </div>
 
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
+              <div className='space-y-2'>
+                <div className='flex items-center space-x-2'>
                   <Checkbox
                     id={`experience-${index}-current`}
                     checked={exp.current || false}
                     onCheckedChange={(checked) => updateExperience(index, 'current', !!checked)}
                   />
-                  <Label 
+                  <Label
                     htmlFor={`experience-${index}-current`}
-                    className="text-sm font-normal cursor-pointer"
+                    className='text-sm font-normal cursor-pointer'
                   >
                     Current position
                   </Label>
@@ -100,9 +125,7 @@ export const ExperienceSection = ({
 
                 {!exp.current && (
                   <div>
-                    <Label htmlFor={`experience-${index}-endDate`}>
-                      End Date
-                    </Label>
+                    <Label htmlFor={`experience-${index}-endDate`}>End Date</Label>
                     <DatePicker
                       id={`experience-${index}-endDate`}
                       value={exp.endDate || ''}
@@ -115,7 +138,7 @@ export const ExperienceSection = ({
                           updateExperience(index, 'endDate', '');
                         }
                       }}
-                      placeholder="Select end date"
+                      placeholder='Select end date'
                     />
                   </div>
                 )}
@@ -123,26 +146,19 @@ export const ExperienceSection = ({
             </div>
 
             <div>
-              <Label htmlFor={`experience-${index}-description`}>
-                Description
-              </Label>
+              <Label htmlFor={`experience-${index}-description`}>Description</Label>
               <Textarea
                 id={`experience-${index}-description`}
                 value={exp.description || ''}
                 onChange={(e) => updateExperience(index, 'description', e.target.value)}
                 rows={3}
-                placeholder="Describe your responsibilities and achievements..."
+                placeholder='Describe your responsibilities and achievements...'
               />
             </div>
           </div>
         ))}
 
-        <Button
-          type="button"
-          variant="outline"
-          onClick={addExperience}
-          className="w-full"
-        >
+        <Button type='button' variant='outline' onClick={addExperience} className='w-full'>
           Add Experience
         </Button>
       </CardContent>

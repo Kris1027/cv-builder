@@ -1,105 +1,25 @@
-import { useForm } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
-import React from 'react';
-import { EducationSection } from '@/components/cv-form/education-section';
-import { ExperienceSection } from '@/components/cv-form/experience-section';
-import { InterestsSection } from '@/components/cv-form/interests-section';
-import { LanguagesSection } from '@/components/cv-form/languages-section';
-import { PersonalInfoSection } from '@/components/cv-form/personal-info-section';
-import { SkillsSection } from '@/components/cv-form/skills-section';
 import { Button } from '@/components/ui/button';
-import type { CVFormInstance, Education, Experience, Language } from '@/types/form-types';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { DatePicker } from '@/components/ui/date-picker';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useForm } from '@tanstack/react-form';
 
 const BuilderPage = () => {
-  // Initialize state for dynamic arrays using proper types
-  const [experience, setExperience] = React.useState<Experience[]>([
-    {
-      company: '',
-      position: '',
-      startDate: '',
-      endDate: '',
-      current: false,
-      description: '',
-    },
-  ]);
-
-  const [education, setEducation] = React.useState<Education[]>([
-    {
-      institution: '',
-      degree: '',
-      field: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-    },
-  ]);
-
-  const [languages, setLanguages] = React.useState<Language[]>([
-    {
-      language: '',
-      proficiency: 'Beginner',
-    },
-  ]);
-
-  const [skills, setSkills] = React.useState<string[]>([]);
-  const [skillInput, setSkillInput] = React.useState('');
-
-  const [interests, setInterests] = React.useState<string[]>([]);
-  const [interestInput, setInterestInput] = React.useState('');
-
   const form = useForm({
     defaultValues: {
       personalInfo: {
         firstName: '',
         lastName: '',
-        email: '',
-        phone: '',
         location: '',
         title: '',
-        summary: '',
+        phone: '',
+        email: '',
         website: '',
         linkedin: '',
         github: '',
       },
-      experience,
-      education,
-      languages,
-      skillsPlaceholder: '', // We'll manage skills separately
-    },
-    onSubmit: async ({ value }) => {
-      // Combine form values with state values
-      const finalData = {
-        personalInfo: value.personalInfo,
-        experience,
-        education,
-        languages,
-        skills,
-        interests,
-      };
-      console.log('CV Data:', finalData);
-      // TODO: Handle CV generation/download
-    },
-  });
-
-  // Update form values when state changes
-  React.useEffect(() => {
-    form.setFieldValue('experience', experience);
-  }, [experience, form]);
-
-  React.useEffect(() => {
-    form.setFieldValue('education', education);
-  }, [education, form]);
-
-  React.useEffect(() => {
-    form.setFieldValue('languages', languages);
-  }, [languages, form]);
-
-  // Experience handlers
-  const addExperience = () => {
-    setExperience([
-      ...experience,
-      {
+      experience: {
         company: '',
         position: '',
         startDate: '',
@@ -107,179 +27,231 @@ const BuilderPage = () => {
         current: false,
         description: '',
       },
-    ]);
-  };
-
-  const removeExperience = (index: number) => {
-    setExperience(experience.filter((_, i) => i !== index));
-  };
-
-  const updateExperience = (index: number, field: keyof Experience, value: string | boolean) => {
-    const updatedExperience = [...experience];
-    updatedExperience[index] = {
-      ...updatedExperience[index],
-      [field]: value,
-    };
-    setExperience(updatedExperience);
-  };
-
-  // Education handlers
-  const addEducation = () => {
-    setEducation([
-      ...education,
-      {
-        institution: '',
-        degree: '',
-        field: '',
-        startDate: '',
-        endDate: '',
-        description: '',
-      },
-    ]);
-  };
-
-  const removeEducation = (index: number) => {
-    setEducation(education.filter((_, i) => i !== index));
-  };
-
-  const updateEducation = (index: number, field: keyof Education, value: string) => {
-    const updatedEducation = [...education];
-    updatedEducation[index] = {
-      ...updatedEducation[index],
-      [field]: value,
-    };
-    setEducation(updatedEducation);
-  };
-
-  // Languages handlers
-  const addLanguage = () => {
-    setLanguages([
-      ...languages,
-      {
-        language: '',
-        proficiency: 'Beginner',
-      },
-    ]);
-  };
-
-  const removeLanguage = (index: number) => {
-    setLanguages(languages.filter((_, i) => i !== index));
-  };
-
-  const updateLanguage = (index: number, field: keyof Language, value: string) => {
-    const updatedLanguages = [...languages];
-    updatedLanguages[index] = {
-      ...updatedLanguages[index],
-      [field]: value,
-    };
-    setLanguages(updatedLanguages);
-  };
-
-  // Skills handlers
-  const addSkill = (skill: string) => {
-    if (skill.trim() && !skills.includes(skill.trim())) {
-      setSkills([...skills, skill.trim()]);
-      setSkillInput('');
-    }
-  };
-
-  const removeSkill = (index: number) => {
-    setSkills(skills.filter((_, i) => i !== index));
-  };
-
-  // Interests handlers
-  const addInterest = (interest: string) => {
-    if (interest.trim() && !interests.includes(interest.trim())) {
-      setInterests([...interests, interest.trim()]);
-      setInterestInput('');
-    }
-  };
-
-  const removeInterest = (index: number) => {
-    setInterests(interests.filter((_, i) => i !== index));
-  };
-
+    },
+    onSubmit: async ({ value }) => {
+      console.log('Form submitted:', value);
+    },
+  });
 
   return (
-    <div className='min-h-screen bg-gradient-to-b from-background to-muted/20'>
-      <div className='container mx-auto py-8 px-4 max-w-4xl'>
-        <div className='mb-8'>
-          <Link to='/'>
-            <Button variant='ghost' size='sm' className='mb-4'>
-              <ArrowLeft className='mr-2 h-4 w-4' />
-              Back to Home
-            </Button>
-          </Link>
-          <h1 className='text-3xl font-bold mb-2'>Build Your CV</h1>
-          <p className='text-muted-foreground'>Fill in your details to create a professional CV</p>
-        </div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      {/* personal-info-section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Personal Information</CardTitle>
+          <CardDescription>Your basic contact information and professional summary</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form.Field name='personalInfo.firstName'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>First Name</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            form.handleSubmit();
-          }}
-          className='space-y-8'
-        >
-          <PersonalInfoSection form={form as CVFormInstance} />
+          <form.Field name='personalInfo.lastName'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Last Name</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          <ExperienceSection
-            form={form as CVFormInstance}
-            experience={experience}
-            addExperience={addExperience}
-            removeExperience={removeExperience}
-            updateExperience={updateExperience}
-          />
+          <form.Field name='personalInfo.location'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>location</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          <EducationSection
-            form={form as CVFormInstance}
-            education={education}
-            addEducation={addEducation}
-            removeEducation={removeEducation}
-            updateEducation={updateEducation}
-          />
+          <form.Field name='personalInfo.title'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Professional Title</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          <SkillsSection
-            skillInput={skillInput}
-            setSkillInput={setSkillInput}
-            skills={skills}
-            addSkill={addSkill}
-            removeSkill={removeSkill}
-          />
+          <form.Field name='personalInfo.phone'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Phone</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='tel'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          <InterestsSection
-            interestInput={interestInput}
-            setInterestInput={setInterestInput}
-            interests={interests}
-            addInterest={addInterest}
-            removeInterest={removeInterest}
-          />
+          <form.Field name='personalInfo.email'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Email</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='email'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          <LanguagesSection
-            form={form as CVFormInstance}
-            languages={languages}
-            addLanguage={addLanguage}
-            removeLanguage={removeLanguage}
-            updateLanguage={updateLanguage}
-          />
+          <form.Field name='personalInfo.website'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Website</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='url'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
 
-          {/* Submit Button */}
-          <div className='flex gap-4'>
-            <form.Subscribe>
-              {(state) => (
-                <Button type='submit' disabled={state.isSubmitting} className='flex-1'>
-                  {state.isSubmitting ? 'Generating CV...' : 'Generate CV'}
-                </Button>
-              )}
-            </form.Subscribe>
-            <Button type='button' variant='outline' className='flex-1'>
-              Preview
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+          <form.Field name='personalInfo.linkedin'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>LinkedIn</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='url'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
+
+          <form.Field name='personalInfo.github'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>GitHub</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='url'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
+        </CardContent>
+      </Card>
+
+      {/* experience-section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Work Experience</CardTitle>
+          <CardDescription>Add your professional experience</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form.Field name='experience.company'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Company</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
+
+          <form.Field name='experience.position'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Position</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
+
+          <form.Field name='experience.startDate'>
+            {(field) => (
+              <div>
+                <Label htmlFor={field.name}>Start Date</Label>
+                <DatePicker
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onChange={(date) => field.handleChange(date ? date.toISOString() : '')}
+                />
+              </div>
+            )}
+          </form.Field>
+        </CardContent>
+      </Card>
+
+      <form.Subscribe
+        selector={(state) => [state.canSubmit, state.isSubmitting]}
+        children={([canSubmit, isSubmitting]) => (
+          <Button type='submit' disabled={!canSubmit}>
+            {isSubmitting ? '...' : 'Submit'}
+          </Button>
+        )}
+      />
+    </form>
   );
 };
 
