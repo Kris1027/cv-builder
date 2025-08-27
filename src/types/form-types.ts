@@ -27,6 +27,9 @@ export interface PersonalInfo {
   location: string;
   title: string;
   summary: string;
+  website: string;
+  linkedin: string;
+  github: string;
 }
 
 export interface Experience {

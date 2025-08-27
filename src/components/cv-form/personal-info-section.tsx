@@ -192,6 +192,79 @@ export const PersonalInfoSection = ({ form }: FormSectionProps) => {
           }}
         </form.Field>
 
+        {/* Online Profiles Section */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-medium">Online Profiles</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <form.Field name="personalInfo.website">
+              {(field) => {
+                const f = field as FieldApi<string>;
+                return (
+                  <div>
+                    <Label htmlFor={f.name}>
+                      Website
+                    </Label>
+                    <Input
+                      id={f.name}
+                      name={f.name}
+                      type="url"
+                      value={f.state.value}
+                      onBlur={f.handleBlur}
+                      onChange={(e) => f.handleChange(e.target.value)}
+                      placeholder="https://example.com"
+                    />
+                  </div>
+                );
+              }}
+            </form.Field>
+
+            <form.Field name="personalInfo.linkedin">
+              {(field) => {
+                const f = field as FieldApi<string>;
+                return (
+                  <div>
+                    <Label htmlFor={f.name}>
+                      LinkedIn
+                    </Label>
+                    <Input
+                      id={f.name}
+                      name={f.name}
+                      type="url"
+                      value={f.state.value}
+                      onBlur={f.handleBlur}
+                      onChange={(e) => f.handleChange(e.target.value)}
+                      placeholder="linkedin.com/in/username"
+                    />
+                  </div>
+                );
+              }}
+            </form.Field>
+
+            <form.Field name="personalInfo.github">
+              {(field) => {
+                const f = field as FieldApi<string>;
+                return (
+                  <div>
+                    <Label htmlFor={f.name}>
+                      GitHub
+                    </Label>
+                    <Input
+                      id={f.name}
+                      name={f.name}
+                      type="url"
+                      value={f.state.value}
+                      onBlur={f.handleBlur}
+                      onChange={(e) => f.handleChange(e.target.value)}
+                      placeholder="github.com/username"
+                    />
+                  </div>
+                );
+              }}
+            </form.Field>
+          </div>
+        </div>
+
         <form.Field name="personalInfo.summary">
           {(field) => {
             const f = field as FieldApi<string>;
