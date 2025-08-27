@@ -39,13 +39,6 @@ export interface LanguageProps {
   proficiency: LanguageLevelProps;
 }
 
-export interface LanguageProficiencyProps {
-  beginner: boolean;
-  intermediate: boolean;
-  advanced: boolean;
-  native: boolean;
-}
-
 export interface InterestProps {
   name: string;
 }
