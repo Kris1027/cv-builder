@@ -11,8 +11,45 @@ import {
   InterestsSection,
   LanguagesSection
 } from '../components/cv-form';
-import type { CVFormInstance } from '@/types/form-types';
+import type { CVFormInstance, Experience, Education, Language } from '@/types/form-types';
+
 const BuilderPage = () => {
+  // Initialize state for dynamic arrays using proper types
+  const [experience, setExperience] = React.useState<Experience[]>([
+    {
+      company: '',
+      position: '',
+      startDate: '',
+      endDate: '',
+      current: false,
+      description: '',
+    },
+  ]);
+
+  const [education, setEducation] = React.useState<Education[]>([
+    {
+      institution: '',
+      degree: '',
+      field: '',
+      startDate: '',
+      endDate: '',
+      description: '',
+    },
+  ]);
+
+  const [languages, setLanguages] = React.useState<Language[]>([
+    {
+      language: '',
+      proficiency: 'Beginner',
+    },
+  ]);
+
+  const [skills, setSkills] = React.useState<string[]>([]);
+  const [skillInput, setSkillInput] = React.useState('');
+
+  const [interests, setInterests] = React.useState<string[]>([]);
+  const [interestInput, setInterestInput] = React.useState('');
+
   const form = useForm({
     defaultValues: {
       personalInfo: {
@@ -24,37 +61,18 @@ const BuilderPage = () => {
         title: '',
         summary: '',
       },
-      experience: [
-        {
-          company: '',
-          position: '',
-          startDate: '',
-          endDate: '',
-          current: false,
-          description: '',
-        },
-      ],
-      education: [
-        {
-          institution: '',
-          degree: '',
-          field: '',
-          startDate: '',
-          endDate: '',
-          description: '',
-        },
-      ],
+      experience: experience,
+      education: education,
+      languages: languages,
       skillsPlaceholder: '', // We'll manage skills separately
-      languages: [
-        {
-          language: '',
-          proficiency: 'Beginner',
-        },
-      ],
     },
     onSubmit: async ({ value }) => {
+      // Combine form values with state values
       const finalData = {
-        ...value,
+        personalInfo: value.personalInfo,
+        experience: experience,
+        education: education,
+        languages: languages,
         skills: skills,
         interests: interests,
       };
@@ -63,10 +81,26 @@ const BuilderPage = () => {
     },
   });
 
+  // Update form values when state changes
+  React.useEffect(() => {
+    form.setFieldValue('experience', experience);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experience]);
+
+  React.useEffect(() => {
+    form.setFieldValue('education', education);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [education]);
+
+  React.useEffect(() => {
+    form.setFieldValue('languages', languages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languages]);
+
   // Experience handlers
   const addExperience = () => {
-    form.setFieldValue('experience', [
-      ...form.state.values.experience,
+    setExperience([
+      ...experience,
       {
         company: '',
         position: '',
@@ -79,16 +113,22 @@ const BuilderPage = () => {
   };
 
   const removeExperience = (index: number) => {
-    form.setFieldValue(
-      'experience',
-      form.state.values.experience.filter((_, i) => i !== index)
-    );
+    setExperience(experience.filter((_, i) => i !== index));
+  };
+
+  const updateExperience = (index: number, field: keyof Experience, value: string | boolean) => {
+    const updatedExperience = [...experience];
+    updatedExperience[index] = {
+      ...updatedExperience[index],
+      [field]: value,
+    };
+    setExperience(updatedExperience);
   };
 
   // Education handlers
   const addEducation = () => {
-    form.setFieldValue('education', [
-      ...form.state.values.education,
+    setEducation([
+      ...education,
       {
         institution: '',
         degree: '',
@@ -101,16 +141,22 @@ const BuilderPage = () => {
   };
 
   const removeEducation = (index: number) => {
-    form.setFieldValue(
-      'education',
-      form.state.values.education.filter((_, i) => i !== index)
-    );
+    setEducation(education.filter((_, i) => i !== index));
+  };
+
+  const updateEducation = (index: number, field: keyof Education, value: string) => {
+    const updatedEducation = [...education];
+    updatedEducation[index] = {
+      ...updatedEducation[index],
+      [field]: value,
+    };
+    setEducation(updatedEducation);
   };
 
   // Languages handlers
   const addLanguage = () => {
-    form.setFieldValue('languages', [
-      ...form.state.values.languages,
+    setLanguages([
+      ...languages,
       {
         language: '',
         proficiency: 'Beginner',
@@ -119,16 +165,19 @@ const BuilderPage = () => {
   };
 
   const removeLanguage = (index: number) => {
-    form.setFieldValue(
-      'languages',
-      form.state.values.languages.filter((_, i) => i !== index)
-    );
+    setLanguages(languages.filter((_, i) => i !== index));
   };
 
-  // Skills state and handlers
-  const [skillInput, setSkillInput] = React.useState('');
-  const [skills, setSkills] = React.useState<string[]>([]);
+  const updateLanguage = (index: number, field: keyof Language, value: string) => {
+    const updatedLanguages = [...languages];
+    updatedLanguages[index] = {
+      ...updatedLanguages[index],
+      [field]: value,
+    };
+    setLanguages(updatedLanguages);
+  };
 
+  // Skills handlers
   const addSkill = (skill: string) => {
     if (skill.trim() && !skills.includes(skill.trim())) {
       setSkills([...skills, skill.trim()]);
@@ -140,10 +189,7 @@ const BuilderPage = () => {
     setSkills(skills.filter((_, i) => i !== index));
   };
 
-  // Interests state and handlers
-  const [interestInput, setInterestInput] = React.useState('');
-  const [interests, setInterests] = React.useState<string[]>([]);
-
+  // Interests handlers
   const addInterest = (interest: string) => {
     if (interest.trim() && !interests.includes(interest.trim())) {
       setInterests([...interests, interest.trim()]);
@@ -153,6 +199,20 @@ const BuilderPage = () => {
 
   const removeInterest = (index: number) => {
     setInterests(interests.filter((_, i) => i !== index));
+  };
+
+  // Create a modified form object with state values
+  const formWithState = {
+    ...form,
+    state: {
+      ...form.state,
+      values: {
+        ...form.state.values,
+        experience: experience,
+        education: education,
+        languages: languages,
+      },
+    },
   };
 
   return (
@@ -180,15 +240,19 @@ const BuilderPage = () => {
           <PersonalInfoSection form={form as CVFormInstance} />
           
           <ExperienceSection 
-            form={form as CVFormInstance} 
+            form={formWithState as unknown as CVFormInstance}
+            experience={experience}
             addExperience={addExperience} 
-            removeExperience={removeExperience} 
+            removeExperience={removeExperience}
+            updateExperience={updateExperience}
           />
           
           <EducationSection 
-            form={form as CVFormInstance} 
+            form={formWithState as unknown as CVFormInstance}
+            education={education}
             addEducation={addEducation} 
-            removeEducation={removeEducation} 
+            removeEducation={removeEducation}
+            updateEducation={updateEducation}
           />
           
           <SkillsSection
@@ -208,9 +272,11 @@ const BuilderPage = () => {
           />
           
           <LanguagesSection
-            form={form as CVFormInstance}
+            form={formWithState as unknown as CVFormInstance}
+            languages={languages}
             addLanguage={addLanguage}
             removeLanguage={removeLanguage}
+            updateLanguage={updateLanguage}
           />
 
           {/* Submit Button */}
@@ -219,7 +285,7 @@ const BuilderPage = () => {
               {(state) => (
                 <Button
                   type="submit"
-                  disabled={state.isSubmitting || !state.canSubmit}
+                  disabled={state.isSubmitting}
                   className="flex-1"
                 >
                   {state.isSubmitting ? 'Generating CV...' : 'Generate CV'}

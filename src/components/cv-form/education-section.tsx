@@ -4,9 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DatePicker } from '@/components/ui/date-picker';
-import type { EducationSectionProps, FieldApi, Education } from '@/types/form-types';
+import type { EducationSectionProps } from '@/types/form-types';
 
-export const EducationSection = ({ form, addEducation, removeEducation }: EducationSectionProps) => {
+export const EducationSection = ({ 
+  education, 
+  addEducation, 
+  removeEducation, 
+  updateEducation 
+}: EducationSectionProps) => {
   return (
     <Card>
       <CardHeader>
@@ -16,11 +21,11 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {form.state.values.education.map((_: Education, index: number) => (
+        {education.map((edu, index) => (
           <div key={index} className="p-4 border rounded-lg space-y-4">
             <div className="flex justify-between items-start">
               <h4 className="font-medium">Education {index + 1}</h4>
-              {form.state.values.education.length > 1 && (
+              {education.length > 1 && (
                 <Button
                   type="button"
                   variant="destructive"
@@ -33,150 +38,96 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <form.Field name={`education[${index}].institution`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Institution
-                      </Label>
-                      <Input
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`education-${index}-institution`}>
+                  Institution
+                </Label>
+                <Input
+                  id={`education-${index}-institution`}
+                  value={edu.institution || ''}
+                  onChange={(e) => updateEducation(index, 'institution', e.target.value)}
+                />
+              </div>
 
-              <form.Field name={`education[${index}].degree`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Degree
-                      </Label>
-                      <Input
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                        placeholder="e.g., Bachelor's, Master's"
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`education-${index}-degree`}>
+                  Degree
+                </Label>
+                <Input
+                  id={`education-${index}-degree`}
+                  value={edu.degree || ''}
+                  onChange={(e) => updateEducation(index, 'degree', e.target.value)}
+                  placeholder="e.g., Bachelor's, Master's"
+                />
+              </div>
             </div>
 
-            <form.Field name={`education[${index}].field`}>
-              {(field) => {
-                const f = field as FieldApi<string>;
-                return (
-                  <div>
-                    <Label htmlFor={f.name}>
-                      Field of Study
-                    </Label>
-                    <Input
-                      id={f.name}
-                      name={f.name}
-                      value={f.state.value}
-                      onBlur={f.handleBlur}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                      placeholder="e.g., Computer Science"
-                    />
-                  </div>
-                );
-              }}
-            </form.Field>
+            <div>
+              <Label htmlFor={`education-${index}-field`}>
+                Field of Study
+              </Label>
+              <Input
+                id={`education-${index}-field`}
+                value={edu.field || ''}
+                onChange={(e) => updateEducation(index, 'field', e.target.value)}
+                placeholder="e.g., Computer Science"
+              />
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <form.Field name={`education[${index}].startDate`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Start Date
-                      </Label>
-                      <DatePicker
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onChange={(date) => {
-                          if (date) {
-                            const year = date.getFullYear();
-                            const month = String(date.getMonth() + 1).padStart(2, '0');
-                            f.handleChange(`${year}-${month}`);
-                          } else {
-                            f.handleChange('');
-                          }
-                        }}
-                        onBlur={f.handleBlur}
-                        placeholder="Select start date"
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`education-${index}-startDate`}>
+                  Start Date
+                </Label>
+                <DatePicker
+                  id={`education-${index}-startDate`}
+                  value={edu.startDate || ''}
+                  onChange={(date) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      updateEducation(index, 'startDate', `${year}-${month}`);
+                    } else {
+                      updateEducation(index, 'startDate', '');
+                    }
+                  }}
+                  placeholder="Select start date"
+                />
+              </div>
 
-              <form.Field name={`education[${index}].endDate`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        End Date
-                      </Label>
-                      <DatePicker
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onChange={(date) => {
-                          if (date) {
-                            const year = date.getFullYear();
-                            const month = String(date.getMonth() + 1).padStart(2, '0');
-                            f.handleChange(`${year}-${month}`);
-                          } else {
-                            f.handleChange('');
-                          }
-                        }}
-                        onBlur={f.handleBlur}
-                        placeholder="Select end date"
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`education-${index}-endDate`}>
+                  End Date
+                </Label>
+                <DatePicker
+                  id={`education-${index}-endDate`}
+                  value={edu.endDate || ''}
+                  onChange={(date) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      updateEducation(index, 'endDate', `${year}-${month}`);
+                    } else {
+                      updateEducation(index, 'endDate', '');
+                    }
+                  }}
+                  placeholder="Select end date"
+                />
+              </div>
             </div>
 
-            <form.Field name={`education[${index}].description`}>
-              {(field) => {
-                const f = field as FieldApi<string>;
-                return (
-                  <div>
-                    <Label htmlFor={f.name}>
-                      Description
-                    </Label>
-                    <Textarea
-                      id={f.name}
-                      name={f.name}
-                      value={f.state.value}
-                      onBlur={f.handleBlur}
-                      onChange={(e) => f.handleChange(e.target.value)}
-                      rows={2}
-                      placeholder="Notable achievements, GPA, relevant coursework..."
-                    />
-                  </div>
-                );
-              }}
-            </form.Field>
+            <div>
+              <Label htmlFor={`education-${index}-description`}>
+                Description
+              </Label>
+              <Textarea
+                id={`education-${index}-description`}
+                value={edu.description || ''}
+                onChange={(e) => updateEducation(index, 'description', e.target.value)}
+                rows={2}
+                placeholder="Notable achievements, GPA, relevant coursework..."
+              />
+            </div>
           </div>
         ))}
 

@@ -2,9 +2,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { LanguagesSectionProps, FieldApi, Language } from '@/types/form-types';
+import type { LanguagesSectionProps } from '@/types/form-types';
 
-export const LanguagesSection = ({ form, addLanguage, removeLanguage }: LanguagesSectionProps) => {
+export const LanguagesSection = ({ 
+  languages, 
+  addLanguage, 
+  removeLanguage, 
+  updateLanguage 
+}: LanguagesSectionProps) => {
   return (
     <Card>
       <CardHeader>
@@ -14,54 +19,37 @@ export const LanguagesSection = ({ form, addLanguage, removeLanguage }: Language
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {form.state.values.languages.map((_: Language, index: number) => (
+        {languages.map((lang, index) => (
           <div key={index} className="flex gap-4 items-end">
-            <form.Field name={`languages[${index}].language`}>
-              {(field) => {
-                const f = field as FieldApi<string>;
-                return (
-                  <div className="flex-1">
-                    <Label htmlFor={f.name}>
-                      Language
-                    </Label>
-                    <Input
-                      id={f.name}
-                      name={f.name}
-                      value={f.state.value}
-                      onBlur={f.handleBlur}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                    />
-                  </div>
-                );
-              }}
-            </form.Field>
+            <div className="flex-1">
+              <Label htmlFor={`language-${index}-language`}>
+                Language
+              </Label>
+              <Input
+                id={`language-${index}-language`}
+                value={lang.language || ''}
+                onChange={(e) => updateLanguage(index, 'language', e.target.value)}
+              />
+            </div>
 
-            <form.Field name={`languages[${index}].proficiency`}>
-              {(field) => {
-                const f = field as FieldApi<string>;
-                return (
-                  <div className="flex-1">
-                    <Label htmlFor={f.name}>
-                      Proficiency
-                    </Label>
-                    <select
-                      id={f.name}
-                      name={f.name}
-                      value={f.state.value}
-                      onChange={(e) => f.handleChange(e.target.value)}
-                      className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                    >
-                      <option value="Beginner">Beginner</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Advanced">Advanced</option>
-                      <option value="Native">Native</option>
-                    </select>
-                  </div>
-                );
-              }}
-            </form.Field>
+            <div className="flex-1">
+              <Label htmlFor={`language-${index}-proficiency`}>
+                Proficiency
+              </Label>
+              <select
+                id={`language-${index}-proficiency`}
+                value={lang.proficiency || 'Beginner'}
+                onChange={(e) => updateLanguage(index, 'proficiency', e.target.value)}
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              >
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Native">Native</option>
+              </select>
+            </div>
 
-            {form.state.values.languages.length > 1 && (
+            {languages.length > 1 && (
               <Button
                 type="button"
                 variant="destructive"

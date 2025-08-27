@@ -4,9 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DatePicker } from '@/components/ui/date-picker';
-import type { ExperienceSectionProps, FieldApi, Experience } from '@/types/form-types';
+import type { ExperienceSectionProps } from '@/types/form-types';
 
-export const ExperienceSection = ({ form, addExperience, removeExperience }: ExperienceSectionProps) => {
+export const ExperienceSection = ({ 
+  experience, 
+  addExperience, 
+  removeExperience, 
+  updateExperience 
+}: ExperienceSectionProps) => {
   return (
     <Card>
       <CardHeader>
@@ -16,11 +21,11 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {form.state.values.experience.map((_: Experience, index: number) => (
+        {experience.map((exp, index) => (
           <div key={index} className="p-4 border rounded-lg space-y-4">
             <div className="flex justify-between items-start">
               <h4 className="font-medium">Experience {index + 1}</h4>
-              {form.state.values.experience.length > 1 && (
+              {experience.length > 1 && (
                 <Button
                   type="button"
                   variant="destructive"
@@ -33,153 +38,100 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <form.Field name={`experience[${index}].company`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Company
-                      </Label>
-                      <Input
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`experience-${index}-company`}>
+                  Company
+                </Label>
+                <Input
+                  id={`experience-${index}-company`}
+                  value={exp.company || ''}
+                  onChange={(e) => updateExperience(index, 'company', e.target.value)}
+                />
+              </div>
 
-              <form.Field name={`experience[${index}].position`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Position
-                      </Label>
-                      <Input
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onBlur={f.handleBlur}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => f.handleChange(e.target.value)}
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`experience-${index}-position`}>
+                  Position
+                </Label>
+                <Input
+                  id={`experience-${index}-position`}
+                  value={exp.position || ''}
+                  onChange={(e) => updateExperience(index, 'position', e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <form.Field name={`experience[${index}].startDate`}>
-                {(field) => {
-                  const f = field as FieldApi<string>;
-                  return (
-                    <div>
-                      <Label htmlFor={f.name}>
-                        Start Date
-                      </Label>
-                      <DatePicker
-                        id={f.name}
-                        name={f.name}
-                        value={f.state.value}
-                        onChange={(date) => {
-                          if (date) {
-                            const year = date.getFullYear();
-                            const month = String(date.getMonth() + 1).padStart(2, '0');
-                            f.handleChange(`${year}-${month}`);
-                          } else {
-                            f.handleChange('');
-                          }
-                        }}
-                        onBlur={f.handleBlur}
-                        placeholder="Select start date"
-                      />
-                    </div>
-                  );
-                }}
-              </form.Field>
+              <div>
+                <Label htmlFor={`experience-${index}-startDate`}>
+                  Start Date
+                </Label>
+                <DatePicker
+                  id={`experience-${index}-startDate`}
+                  value={exp.startDate || ''}
+                  onChange={(date) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      updateExperience(index, 'startDate', `${year}-${month}`);
+                    } else {
+                      updateExperience(index, 'startDate', '');
+                    }
+                  }}
+                  placeholder="Select start date"
+                />
+              </div>
 
               <div className="space-y-2">
-                <form.Field name={`experience[${index}].current`}>
-                  {(field) => {
-                    const f = field as FieldApi<boolean>;
-                    return (
-                      <div className="flex items-center">
-                        <input
-                          id={f.name}
-                          name={f.name}
-                          type="checkbox"
-                          checked={f.state.value}
-                          onChange={(e) => f.handleChange(e.target.checked)}
-                          className="mr-2"
-                        />
-                        <Label htmlFor={f.name}>
-                          Current position
-                        </Label>
-                      </div>
-                    );
-                  }}
-                </form.Field>
+                <div className="flex items-center">
+                  <input
+                    id={`experience-${index}-current`}
+                    type="checkbox"
+                    checked={exp.current || false}
+                    onChange={(e) => updateExperience(index, 'current', e.target.checked)}
+                    className="mr-2"
+                  />
+                  <Label htmlFor={`experience-${index}-current`}>
+                    Current position
+                  </Label>
+                </div>
 
-                {!form.state.values.experience[index].current && (
-                  <form.Field name={`experience[${index}].endDate`}>
-                    {(field) => {
-                      const f = field as FieldApi<string>;
-                      return (
-                        <div>
-                          <Label htmlFor={f.name}>
-                            End Date
-                          </Label>
-                          <DatePicker
-                            id={f.name}
-                            name={f.name}
-                            value={f.state.value}
-                            onChange={(date) => {
-                              if (date) {
-                                const year = date.getFullYear();
-                                const month = String(date.getMonth() + 1).padStart(2, '0');
-                                f.handleChange(`${year}-${month}`);
-                              } else {
-                                f.handleChange('');
-                              }
-                            }}
-                            onBlur={f.handleBlur}
-                            placeholder="Select end date"
-                          />
-                        </div>
-                      );
-                    }}
-                  </form.Field>
+                {!exp.current && (
+                  <div>
+                    <Label htmlFor={`experience-${index}-endDate`}>
+                      End Date
+                    </Label>
+                    <DatePicker
+                      id={`experience-${index}-endDate`}
+                      value={exp.endDate || ''}
+                      onChange={(date) => {
+                        if (date) {
+                          const year = date.getFullYear();
+                          const month = String(date.getMonth() + 1).padStart(2, '0');
+                          updateExperience(index, 'endDate', `${year}-${month}`);
+                        } else {
+                          updateExperience(index, 'endDate', '');
+                        }
+                      }}
+                      placeholder="Select end date"
+                    />
+                  </div>
                 )}
               </div>
             </div>
 
-            <form.Field name={`experience[${index}].description`}>
-              {(field) => {
-                const f = field as FieldApi<string>;
-                return (
-                  <div>
-                    <Label htmlFor={f.name}>
-                      Description
-                    </Label>
-                    <Textarea
-                      id={f.name}
-                      name={f.name}
-                      value={f.state.value}
-                      onBlur={f.handleBlur}
-                      onChange={(e) => f.handleChange(e.target.value)}
-                      rows={3}
-                      placeholder="Describe your responsibilities and achievements..."
-                    />
-                  </div>
-                );
-              }}
-            </form.Field>
+            <div>
+              <Label htmlFor={`experience-${index}-description`}>
+                Description
+              </Label>
+              <Textarea
+                id={`experience-${index}-description`}
+                value={exp.description || ''}
+                onChange={(e) => updateExperience(index, 'description', e.target.value)}
+                rows={3}
+                placeholder="Describe your responsibilities and achievements..."
+              />
+            </div>
           </div>
         ))}
 

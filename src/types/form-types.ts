@@ -86,16 +86,22 @@ export interface FormSectionProps {
 }
 
 export interface ExperienceSectionProps extends FormSectionProps {
+  experience: Experience[];
   addExperience: () => void;
   removeExperience: (index: number) => void;
+  updateExperience: (index: number, field: keyof Experience, value: string | boolean) => void;
 }
 
 export interface EducationSectionProps extends FormSectionProps {
+  education: Education[];
   addEducation: () => void;
   removeEducation: (index: number) => void;
+  updateEducation: (index: number, field: keyof Education, value: string) => void;
 }
 
 export interface LanguagesSectionProps extends FormSectionProps {
+  languages: Language[];
   addLanguage: () => void;
   removeLanguage: (index: number) => void;
+  updateLanguage: (index: number, field: keyof Language, value: string) => void;
 }
