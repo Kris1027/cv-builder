@@ -49,6 +49,7 @@ const BuilderPage = () => {
       const finalData = {
         ...value,
         skills: skills,
+        interests: interests,
       };
       console.log('CV Data:', finalData);
       // TODO: Handle CV generation/download
@@ -116,6 +117,8 @@ const BuilderPage = () => {
 
   const [skillInput, setSkillInput] = React.useState('');
   const [skills, setSkills] = React.useState<string[]>([]);
+  const [interestInput, setInterestInput] = React.useState('');
+  const [interests, setInterests] = React.useState<string[]>([]);
 
   const addSkill = (skill: string) => {
     if (skill.trim() && !skills.includes(skill.trim())) {
@@ -126,6 +129,17 @@ const BuilderPage = () => {
 
   const removeSkill = (index: number) => {
     setSkills(skills.filter((_, i) => i !== index));
+  };
+
+  const addInterest = (interest: string) => {
+    if (interest.trim() && !interests.includes(interest.trim())) {
+      setInterests([...interests, interest.trim()]);
+      setInterestInput('');
+    }
+  };
+
+  const removeInterest = (index: number) => {
+    setInterests(interests.filter((_, i) => i !== index));
   };
 
   return (
@@ -703,6 +717,58 @@ const BuilderPage = () => {
                   <button
                     type="button"
                     onClick={() => removeSkill(index)}
+                    className="text-gray-500 hover:text-red-500 ml-1"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Interests */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Interests</CardTitle>
+            <CardDescription>
+              Add your hobbies and interests
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Enter an interest and press Enter"
+                value={interestInput}
+                onChange={(e) => setInterestInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addInterest(interestInput);
+                  }
+                }}
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => addInterest(interestInput)}
+              >
+                Add
+              </Button>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {interests.map((interest, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full"
+                >
+                  <span className="text-sm">{interest}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeInterest(index)}
                     className="text-gray-500 hover:text-red-500 ml-1"
                   >
                     ×
