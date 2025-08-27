@@ -1,11 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface DatePickerProps {
@@ -20,6 +18,11 @@ interface DatePickerProps {
   toYear?: number;
 }
 
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
 export function DatePicker({
   value,
   onChange,
@@ -28,6 +31,8 @@ export function DatePicker({
   name,
   onBlur,
   disabled,
+  fromYear = 1960,
+  toYear = new Date().getFullYear() + 10,
 }: DatePickerProps) {
   // Convert string value to Date if needed
   const dateValue = React.useMemo(() => {
@@ -43,8 +48,54 @@ export function DatePicker({
     return undefined;
   }, [value]);
 
+  const [selectedMonth, setSelectedMonth] = React.useState(
+    dateValue ? dateValue.getMonth() : new Date().getMonth()
+  );
+  const [selectedYear, setSelectedYear] = React.useState(
+    dateValue ? dateValue.getFullYear() : new Date().getFullYear()
+  );
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  // Update selected month/year when value changes
+  React.useEffect(() => {
+    if (dateValue) {
+      setSelectedMonth(dateValue.getMonth());
+      setSelectedYear(dateValue.getFullYear());
+    }
+  }, [dateValue]);
+
+  const handleMonthSelect = (month: number) => {
+    const newDate = new Date(selectedYear, month, 1);
+    onChange?.(newDate);
+    setIsOpen(false);
+  };
+
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
+    // Don't close the popover when changing year
+  };
+
+  const incrementYear = () => {
+    if (selectedYear < toYear) {
+      setSelectedYear(selectedYear + 1);
+    }
+  };
+
+  const decrementYear = () => {
+    if (selectedYear > fromYear) {
+      setSelectedYear(selectedYear - 1);
+    }
+  };
+
+  const formatDisplay = () => {
+    if (dateValue) {
+      return `${months[dateValue.getMonth()]} ${dateValue.getFullYear()}`;
+    }
+    return placeholder;
+  };
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           id={id}
@@ -59,19 +110,60 @@ export function DatePicker({
           type='button'
         >
           <CalendarIcon className='mr-2 h-4 w-4' />
-          {dateValue ? format(dateValue, 'MMMM yyyy') : <span>{placeholder}</span>}
+          <span>{formatDisplay()}</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-auto p-0' align='start'>
-        <Calendar
-          mode='single'
-          selected={dateValue}
-          onSelect={onChange}
-          defaultMonth={dateValue || new Date()}
-          captionLayout='dropdown'
-          className='rounded-md border'
-          autoFocus
-        />
+      <PopoverContent className='w-auto p-4' align='start'>
+        <div className='space-y-4'>
+          {/* Year selector */}
+          <div className='flex items-center justify-between'>
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={decrementYear}
+              disabled={selectedYear <= fromYear}
+              type='button'
+            >
+              <ChevronLeft className='h-4 w-4' />
+            </Button>
+            <select
+              value={selectedYear}
+              onChange={(e) => handleYearChange(Number(e.target.value))}
+              className='flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
+            >
+              {Array.from({ length: toYear - fromYear + 1 }, (_, i) => fromYear + i).map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={incrementYear}
+              disabled={selectedYear >= toYear}
+              type='button'
+            >
+              <ChevronRight className='h-4 w-4' />
+            </Button>
+          </div>
+
+          {/* Month grid */}
+          <div className='grid grid-cols-3 gap-2'>
+            {months.map((month, index) => (
+              <Button
+                key={month}
+                variant={selectedMonth === index && dateValue ? 'default' : 'outline'}
+                size='sm'
+                onClick={() => handleMonthSelect(index)}
+                className='h-9'
+                type='button'
+              >
+                {month.slice(0, 3)}
+              </Button>
+            ))}
+          </div>
+        </div>
       </PopoverContent>
     </Popover>
   );
