@@ -63,7 +63,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
         github: '',
       } as PersonalInfoProps,
       experiences: [] as ExperienceProps[],
-      educations: [] as EducationProps[],
+      education: [] as EducationProps[],
       skills: [] as SkillProps[],
       languages: [] as LanguageProps[],
       interests: [] as InterestProps[],
@@ -104,8 +104,8 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   };
 
   const addEducation = () => {
-    form.setFieldValue('educations', [
-      ...form.getFieldValue('educations'),
+    form.setFieldValue('education', [
+      ...form.getFieldValue('education'),
       {
         institution: '',
         degree: '',
@@ -118,10 +118,10 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   };
 
   const removeEducation = (index: number) => {
-    const educations = form.getFieldValue('educations');
+    const education = form.getFieldValue('education');
     form.setFieldValue(
-      'educations',
-      educations.filter((_: EducationProps, i: number) => i !== index)
+      'education',
+      education.filter((_: EducationProps, i: number) => i !== index)
     );
   };
 
@@ -479,7 +479,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='educations'>
+          <form.Field name='education'>
             {(field) => (
               <div className='space-y-4'>
                 {field.state.value.map((_: EducationProps, index: number) => (
@@ -496,7 +496,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       </Button>
                     </div>
 
-                    <form.Field name={`educations[${index}].institution`}>
+                    <form.Field name={`education[${index}].institution`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Institution</Label>
@@ -511,7 +511,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].degree`}>
+                    <form.Field name={`education[${index}].degree`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Degree</Label>
@@ -526,7 +526,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].field`}>
+                    <form.Field name={`education[${index}].field`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Field of Study</Label>
@@ -541,7 +541,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].startDate`}>
+                    <form.Field name={`education[${index}].startDate`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Start Date</Label>
@@ -557,7 +557,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].endDate`}>
+                    <form.Field name={`education[${index}].endDate`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>End Date</Label>
@@ -573,7 +573,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].description`}>
+                    <form.Field name={`education[${index}].description`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Description</Label>

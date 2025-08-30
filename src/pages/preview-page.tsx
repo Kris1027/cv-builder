@@ -16,11 +16,11 @@ export function PreviewPage() {
     const storedData = localStorage.getItem('cvData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      // Transform the data to match CVData structure
+      // Ensure all arrays have default values
       const transformedData: CVData = {
         personalInfo: parsedData.personalInfo,
         experiences: parsedData.experiences || [],
-        education: parsedData.educations || [], // Note: form uses 'educations' but template expects 'education'
+        education: parsedData.education || [],
         skills: parsedData.skills || [],
         languages: parsedData.languages || [],
         interests: parsedData.interests || [],
