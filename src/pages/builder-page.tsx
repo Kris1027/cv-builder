@@ -23,8 +23,8 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
-import { Trash2 } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
+import { Trash2, ArrowLeft } from 'lucide-react';
+import { useNavigate, Link } from '@tanstack/react-router';
 
 interface BuilderPageProps {
   templateId?: string;
@@ -146,15 +146,38 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        form.handleSubmit();
-      }}
-    >
-      {/* personal-info-section */}
-      <Card>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
+      <div className="sticky top-0 z-10 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link to="/templates">
+                <Button variant="outline" size="sm" type="button">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Templates
+                </Button>
+              </Link>
+              <h1 className="text-xl font-semibold">Build Your CV</h1>
+            </div>
+            <div className="text-sm text-gray-600">
+              Template: <span className="font-medium capitalize">{templateId}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+          className="space-y-6"
+        >
+          {/* personal-info-section */}
+          <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
           <CardDescription>Your basic contact information and professional summary</CardDescription>
@@ -709,15 +732,17 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
         </CardContent>
       </Card>
 
-      <form.Subscribe
-        selector={(state) => [state.canSubmit, state.isSubmitting]}
-        children={([canSubmit, isSubmitting]) => (
-          <Button type='submit' disabled={!canSubmit}>
-            {isSubmitting ? '...' : 'Submit'}
-          </Button>
-        )}
-      />
-    </form>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Button type='submit' disabled={!canSubmit}>
+                {isSubmitting ? '...' : 'Submit'}
+              </Button>
+            )}
+          />
+        </form>
+      </div>
+    </div>
   );
 };
 

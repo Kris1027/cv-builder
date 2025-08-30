@@ -108,8 +108,8 @@ export function PreviewPage() {
       </div>
 
       {/* Template Preview */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-white shadow-xl rounded-lg overflow-hidden print:shadow-none print:rounded-none">
+      <div className="container mx-auto px-4 py-8" id="print-container">
+        <div id="cv-content" className="bg-white shadow-xl rounded-lg overflow-hidden">
           {templateId === 'modern' && <ModernTemplate data={cvData} />}
           {/* Add more templates here as they are created */}
         </div>
@@ -118,18 +118,30 @@ export function PreviewPage() {
       {/* Print Styles */}
       <style>{`
         @media print {
-          body * {
-            visibility: hidden;
+          @page {
+            size: A4;
+            margin: 10mm;
           }
-          .container > div:last-child,
-          .container > div:last-child * {
-            visibility: visible;
+          
+          /* Hide navigation and UI elements during print */
+          .print\\:hidden {
+            display: none !important;
           }
-          .container > div:last-child {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
+          
+          /* Reset container styles for print */
+          #print-container {
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+          }
+          
+          /* Clean CV content for print */
+          #cv-content {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            background: white !important;
           }
         }
       `}</style>

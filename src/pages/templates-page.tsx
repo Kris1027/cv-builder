@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye } from 'lucide-react';
+import { Eye, ArrowLeft } from 'lucide-react';
 
 const templates = [
   {
@@ -14,13 +14,31 @@ const templates = [
 
 export function TemplatesPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Choose Your CV Template</h1>
-        <p className="text-gray-600">
-          Select a template that best represents your professional style
-        </p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
+      <div className="sticky top-0 z-10 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link to="/">
+                <Button variant="outline" size="sm">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Home
+                </Button>
+              </Link>
+              <h1 className="text-xl font-semibold">CV Templates</h1>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Choose Your CV Template</h1>
+          <p className="text-gray-600">
+            Select a template that best represents your professional style
+          </p>
+        </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {templates.map((template) => (
@@ -47,6 +65,7 @@ export function TemplatesPage() {
             </CardContent>
           </Card>
         ))}
+      </div>
       </div>
     </div>
   );
