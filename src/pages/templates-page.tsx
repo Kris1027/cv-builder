@@ -2,21 +2,21 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Eye, ArrowLeft } from 'lucide-react';
-import modernTemplateImg from '@/assets/templates/modern-template.png';
-import businessTemplateImg from '@/assets/templates/business-template.png';
+import { ModernPreview } from '@/components/template-previews/modern-preview';
+import { BusinessPreview } from '@/components/template-previews/business-preview';
 
 const templates = [
   {
     id: 'modern',
     name: 'Modern Template',
     description: 'Clean and professional design with a blue header and organized sections',
-    image: modernTemplateImg,
+    Preview: ModernPreview,
   },
   {
     id: 'business',
     name: 'Business Template',
     description: 'Traditional and formal design perfect for corporate and executive positions',
-    image: businessTemplateImg,
+    Preview: BusinessPreview,
   },
 ];
 
@@ -57,14 +57,11 @@ export function TemplatesPage() {
             >
               {/* Image Section */}
               <Link to='/templates/$templateId' params={{ templateId: template.id }}>
-                <div className='aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100'>
-                  {/* Template Image */}
-                  <img
-                    src={template.image}
-                    alt={`${template.name} preview`}
-                    className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
-                    loading="lazy"
-                  />
+                <div className='aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 p-6'>
+                  {/* Template Preview SVG */}
+                  <div className='w-full h-full transition-transform duration-700 group-hover:scale-105'>
+                    <template.Preview />
+                  </div>
                   
                   {/* Gradient Overlay */}
                   <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
