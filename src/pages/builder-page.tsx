@@ -24,7 +24,7 @@ import type {
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
 import { Trash2, ArrowLeft } from 'lucide-react';
-import { useNavigate, Link } from '@tanstack/react-router';
+import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 
 interface BuilderPageProps {
   templateId?: string;
@@ -32,9 +32,24 @@ interface BuilderPageProps {
 
 const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const navigate = useNavigate();
+  const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
+  const isEditMode = search.edit === true;
   
-  const form = useForm({
-    defaultValues: {
+  // Get initial values - either from localStorage in edit mode or defaults
+  const getInitialValues = () => {
+    if (isEditMode) {
+      const storedData = localStorage.getItem('cvData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        return {
+          ...parsedData,
+          templateId: parsedData.templateId || templateId,
+        };
+      }
+    }
+    
+    // Return default values for new CV
+    return {
       templateId,
       personalInfo: {
         firstName: '',
@@ -52,11 +67,15 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       skills: [] as SkillProps[],
       languages: [] as LanguageProps[],
       interests: [] as InterestProps[],
-    },
+    };
+  };
+  
+  const form = useForm({
+    defaultValues: getInitialValues(),
     onSubmit: async ({ value }) => {
       console.log('Form submitted:', value);
-      // Store data in sessionStorage for preview page
-      sessionStorage.setItem('cvData', JSON.stringify(value));
+      // Store data in localStorage for persistence
+      localStorage.setItem('cvData', JSON.stringify(value));
       // Navigate to preview page with templateId
       navigate({ to: '/preview', search: { templateId: value.templateId } });
     },
@@ -338,7 +357,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           <form.Field name='experiences'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: ExperienceProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Experience {index + 1}</h4>
@@ -463,7 +482,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           <form.Field name='educations'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: EducationProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Education {index + 1}</h4>
@@ -589,7 +608,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           <form.Field name='skills'>
             {(field) => (
               <div className='space-y-2'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: SkillProps, index: number) => (
                   <div key={index} className='flex gap-2'>
                     <form.Field name={`skills[${index}].name`}>
                       {(subField) => (
@@ -630,7 +649,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           <form.Field name='languages'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: LanguageProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Language {index + 1}</h4>
@@ -704,7 +723,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
           <form.Field name='interests'>
             {(field) => (
               <div className='space-y-2'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: InterestProps, index: number) => (
                   <div key={index} className='flex gap-2'>
                     <form.Field name={`interests[${index}].name`}>
                       {(subField) => (

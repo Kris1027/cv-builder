@@ -12,8 +12,8 @@ export function PreviewPage() {
   const [cvData, setCvData] = useState<CVData | null>(null);
 
   useEffect(() => {
-    // Get data from sessionStorage
-    const storedData = sessionStorage.getItem('cvData');
+    // Get data from localStorage
+    const storedData = localStorage.getItem('cvData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
       // Transform the data to match CVData structure
@@ -61,7 +61,7 @@ export function PreviewPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/builder" search={{ templateId }}>
+              <Link to="/builder" search={{ templateId, edit: true }}>
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Editor
@@ -87,7 +87,7 @@ export function PreviewPage() {
                 <Download className="w-4 h-4 mr-2" />
                 Download PDF
               </Button>
-              <Link to="/builder" search={{ templateId }}>
+              <Link to="/builder" search={{ templateId, edit: true }}>
                 <Button size="sm" variant="default">
                   <Edit className="w-4 h-4 mr-2" />
                   Edit CV
