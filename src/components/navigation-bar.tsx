@@ -10,9 +10,14 @@ export const NavigationBar = () => {
           <FileText className='h-6 w-6' />
           <span className='font-bold'>CV Builder</span>
         </Link>
-        <Link to='/builder'>
-          <Button size='sm'>Create CV</Button>
-        </Link>
+        <div className='flex items-center space-x-4'>
+          <Link to='/templates'>
+            <Button variant='ghost' size='sm'>Templates</Button>
+          </Link>
+          <Link to='/builder'>
+            <Button size='sm'>Create CV</Button>
+          </Link>
+        </div>
       </div>
     </nav>
   );
