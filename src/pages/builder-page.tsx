@@ -24,10 +24,18 @@ import type {
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
 import { Trash2 } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 
-const BuilderPage = () => {
+interface BuilderPageProps {
+  templateId?: string;
+}
+
+const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
+  const navigate = useNavigate();
+  
   const form = useForm({
     defaultValues: {
+      templateId,
       personalInfo: {
         firstName: '',
         lastName: '',
@@ -47,6 +55,10 @@ const BuilderPage = () => {
     },
     onSubmit: async ({ value }) => {
       console.log('Form submitted:', value);
+      // Store data in sessionStorage for preview page
+      sessionStorage.setItem('cvData', JSON.stringify(value));
+      // Navigate to preview page with templateId
+      navigate({ to: '/preview', search: { templateId: value.templateId } });
     },
   });
 

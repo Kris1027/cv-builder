@@ -39,7 +39,7 @@ export function TemplatesPage() {
               <CardDescription>{template.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Link to={`/templates/${template.id}`}>
+              <Link to="/builder" search={{ templateId: template.id }}>
                 <Button className="w-full">
                   Use This Template
                 </Button>

@@ -20,17 +20,19 @@ export const IndexPage = () => {
             dream job.
           </p>
           <div className='flex flex-col gap-4 sm:flex-row sm:justify-center'>
-            <Link to='/builder'>
+            <Link to='/templates'>
               <Button size='lg' className='group'>
                 <Edit3 className='mr-2 h-5 w-5' />
                 Start Building Your CV
                 <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
               </Button>
             </Link>
-            <Button size='lg' variant='outline'>
-              <Download className='mr-2 h-5 w-5' />
-              Preview CV Templates
-            </Button>
+            <Link to='/templates'>
+              <Button size='lg' variant='outline'>
+                <Download className='mr-2 h-5 w-5' />
+                Preview CV Templates
+              </Button>
+            </Link>
           </div>
           <div className='mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground'>
             <div className='flex items-center gap-2'>
@@ -108,7 +110,7 @@ export const IndexPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Link to='/builder'>
+              <Link to='/templates'>
                 <Button size='lg' variant='secondary' className='group'>
                   Start Building Now
                   <ArrowRight className='ml-2 h-5 w-5 transition-transform group-hover:translate-x-1' />

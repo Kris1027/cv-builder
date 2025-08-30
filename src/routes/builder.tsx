@@ -6,5 +6,6 @@ export const Route = createFileRoute('/builder')({
 });
 
 function RouteComponent() {
-  return <BuilderPage />;
+  const { templateId } = Route.useSearch() as { templateId?: string };
+  return <BuilderPage templateId={templateId} />;
 }
