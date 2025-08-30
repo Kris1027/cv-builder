@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { TemplatePage } from '@/pages/template-page';
 
-export const Route = createFileRoute('/templates/$templateId')({
+export const Route = createFileRoute('/templates_/$templateId')({
   component: TemplatePage,
 });

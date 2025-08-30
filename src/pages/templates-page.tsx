@@ -25,12 +25,15 @@ export function TemplatesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {templates.map((template) => (
           <Card key={template.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center">
-              <div className="text-gray-400 text-center p-4">
-                <Eye className="w-12 h-12 mx-auto mb-2" />
-                <p>Template Preview</p>
+            <Link to={`/templates/${template.id}`}>
+              <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
+                <div className="text-gray-400 text-center p-4">
+                  <Eye className="w-12 h-12 mx-auto mb-2" />
+                  <p>Template Preview</p>
+                  <p className="text-sm mt-2">Click to preview</p>
+                </div>
               </div>
-            </div>
+            </Link>
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
               <CardDescription>{template.description}</CardDescription>

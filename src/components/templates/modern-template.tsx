@@ -1,5 +1,5 @@
 import type { CVData } from '@/data/sample-cv-data';
-import { Mail, Phone, Globe, Github, Linkedin, MapPin } from 'lucide-react';
+import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 
 interface ModernTemplateProps {
   data: CVData;
@@ -9,12 +9,15 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white shadow-lg max-w-[210mm] mx-auto">
+    <div className="bg-white max-w-[210mm] mx-auto">
       {/* Header Section */}
       <div className="bg-blue-600 text-white p-8">
         <h1 className="text-4xl font-bold mb-2">
           {personalInfo.firstName} {personalInfo.lastName}
         </h1>
+        {personalInfo.title && (
+          <p className="text-xl mb-4 opacity-95">{personalInfo.title}</p>
+        )}
         
         <div className="flex flex-wrap gap-6 mt-4 text-sm">
           {personalInfo.website && (

@@ -5,7 +5,7 @@ import { sampleCVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
 
 export function TemplatePage() {
-  const { templateId } = useParams({ from: '/templates/$templateId' });
+  const { templateId } = useParams({ from: '/templates_/$templateId' });
 
   const handlePrint = () => {
     window.print();
