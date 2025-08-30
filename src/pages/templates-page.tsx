@@ -10,6 +10,12 @@ const templates = [
     description: 'Clean and professional design with a blue header and organized sections',
     thumbnail: '/templates/modern-thumbnail.png',
   },
+  {
+    id: 'business',
+    name: 'Business Template',
+    description: 'Traditional and formal design perfect for corporate and executive positions',
+    thumbnail: '/templates/business-thumbnail.png',
+  },
 ];
 
 export function TemplatesPage() {
@@ -43,7 +49,7 @@ export function TemplatesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {templates.map((template) => (
           <Card key={template.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <Link to={`/templates/${template.id}`}>
+            <Link to="/templates/$templateId" params={{ templateId: template.id }}>
               <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
                 <div className="text-gray-400 text-center p-4">
                   <Eye className="w-12 h-12 mx-auto mb-2" />

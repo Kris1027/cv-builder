@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, CheckCircle2, Edit3 } from 'lucide-react';
 
 export const IndexPage = () => {

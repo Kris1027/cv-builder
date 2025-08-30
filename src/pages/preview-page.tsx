@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearch } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { ModernTemplate } from '@/components/templates/modern-template';
+import { BusinessTemplate } from '@/components/templates/business-template';
 import type { CVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
 
@@ -111,7 +112,7 @@ export function PreviewPage() {
       <div className="container mx-auto px-4 py-8" id="print-container">
         <div id="cv-content" className="bg-white shadow-xl rounded-lg overflow-hidden">
           {templateId === 'modern' && <ModernTemplate data={cvData} />}
-          {/* Add more templates here as they are created */}
+          {templateId === 'business' && <BusinessTemplate data={cvData} />}
         </div>
       </div>
 
