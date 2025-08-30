@@ -1,69 +1,142 @@
-# React + TypeScript + Vite
+# CV Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, intuitive CV builder application that helps users create professional resumes quickly and efficiently. Built with React, TypeScript, and modern web technologies.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multiple Professional Templates**: Choose from modern and business CV templates
+- **Real-time Preview**: See your CV changes instantly with live preview
+- **Comprehensive Form Builder**: Add personal information, experience, education, skills, languages, and interests
+- **Data Persistence**: Your CV data is saved locally for easy editing
+- **PDF Export**: Print or download your CV as a PDF
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **No Sign-up Required**: Start building your CV immediately without registration
+- **100% Free**: All features available at no cost
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Core Technologies
+- **React 19** - UI library for building user interfaces
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Fast build tool and development server
+- **TanStack Router** - Type-safe routing for React applications
+- **TanStack Form** - Powerful form management library
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### UI & Styling
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible UI components
+- **shadcn/ui components** - Pre-built UI components
+- **Lucide React** - Beautiful & consistent icons
+- **Class Variance Authority (CVA)** - Component variant management
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Additional Libraries
+- **date-fns** - Date utility library
+- **React Day Picker** - Date picker component
+- **clsx & tailwind-merge** - Utility for constructing className strings
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
+```
+cv-builder/
+├── src/
+│   ├── components/
+│   │   ├── templates/        # CV template components
+│   │   ├── template-previews/ # Template preview cards
+│   │   └── ui/               # Reusable UI components
+│   ├── pages/                # Page components
+│   │   ├── index-page.tsx    # Landing page
+│   │   ├── templates-page.tsx # Template selection
+│   │   ├── builder-page.tsx  # CV form builder
+│   │   └── preview-page.tsx  # CV preview & export
+│   ├── routes/               # Route definitions
+│   ├── lib/                  # Utilities and helpers
+│   └── types/                # TypeScript type definitions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
+- Node.js 18+ 
+- pnpm package manager
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/cv-builder.git
+cd cv-builder
 ```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Start the development server:
+```bash
+pnpm dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
+- `pnpm tsc --noEmit` - Type check without emitting files
+
+## How It Works
+
+1. **Template Selection**: Users start by choosing a CV template (Modern or Business)
+2. **Form Builder**: Fill in your information using the intuitive form interface:
+   - Personal Information (name, contact, social links)
+   - Work Experience (with date pickers and descriptions)
+   - Education background
+   - Skills list
+   - Languages with proficiency levels
+   - Personal interests
+3. **Live Preview**: View your CV in real-time as you make changes
+4. **Export Options**: Print or download your completed CV as PDF
+
+## Features in Detail
+
+### Smart Data Management
+- Data is automatically saved to localStorage when you submit the form
+- Edit mode: Access your saved CV data when clicking "Edit CV" from preview
+- New CV mode: Start fresh when selecting a template from the templates page
+
+### Template System
+- **Modern Template**: Clean, contemporary design with blue accents
+- **Business Template**: Traditional, formal layout for corporate positions
+- Easily extensible architecture for adding new templates
+
+### Form Validation & UX
+- Dynamic form fields - add/remove sections as needed
+- Date pickers for experience and education entries
+- Language proficiency levels (A1-C2 CEFR scale)
+- Current employment checkbox for work experience
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Future Enhancements
+
+- [ ] Additional CV templates
+- [ ] Multiple CV management
+- [ ] Cloud storage integration
+- [ ] AI-powered content suggestions
+- [ ] Multi-language support
+- [ ] Custom template builder
+- [ ] Import from LinkedIn
+- [ ] Cover letter builder
+
+## Support
+
+For issues, questions, or suggestions, please open an issue on GitHub.
