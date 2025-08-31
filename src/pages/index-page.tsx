@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, CheckCircle2, Download, Edit3 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Edit3 } from 'lucide-react';
 
 export const IndexPage = () => {
   return (
@@ -19,18 +18,14 @@ export const IndexPage = () => {
             Create professional resumes with our CV builder. Stand out from the crowd and land your
             dream job.
           </p>
-          <div className='flex flex-col gap-4 sm:flex-row sm:justify-center'>
-            <Link to='/builder'>
+          <div className='flex justify-center'>
+            <Link to='/templates'>
               <Button size='lg' className='group'>
                 <Edit3 className='mr-2 h-5 w-5' />
                 Start Building Your CV
                 <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
               </Button>
             </Link>
-            <Button size='lg' variant='outline'>
-              <Download className='mr-2 h-5 w-5' />
-              Preview CV Templates
-            </Button>
           </div>
           <div className='mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground'>
             <div className='flex items-center gap-2'>
@@ -50,77 +45,74 @@ export const IndexPage = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className='container mx-auto px-4 py-16'>
-        <div className='mx-auto max-w-6xl'>
-          <div className='mb-12 text-center'>
-            <h2 className='mb-4 text-3xl font-bold sm:text-4xl'>How It Works</h2>
-            <p className='text-lg text-muted-foreground'>
+      <section className='py-20'>
+        <div className='container mx-auto px-4'>
+          <div className='mx-auto max-w-2xl text-center mb-16'>
+            <h2 className='text-3xl font-bold mb-4'>How it works</h2>
+            <p className='text-muted-foreground'>
               Create your professional CV in three simple steps
             </p>
           </div>
-          <div className='grid gap-8 md:grid-cols-3'>
-            {/* Step 1 */}
-            <div className='relative'>
-              <div className='mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground'>
-                1
-              </div>
-              <h3 className='mb-2 text-xl font-semibold'>Choose Your Template</h3>
-              <p className='text-muted-foreground'>
-                Select from our professionally designed templates that suit your industry and style
-              </p>
-              <div className='absolute -right-4 top-8 hidden h-0.5 w-8 bg-gradient-to-r from-primary to-transparent md:block' />
-            </div>
 
-            {/* Step 2 */}
-            <div className='relative'>
-              <div className='mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground'>
-                2
+          <div className='mx-auto max-w-5xl'>
+            <div className='flex flex-col md:flex-row gap-8 md:gap-4 items-start justify-between'>
+              {/* Step 1 */}
+              <div className='flex-1 text-center relative'>
+                <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
+                  1
+                </div>
+                <h3 className='font-semibold mb-2'>Choose a template</h3>
+                <p className='text-muted-foreground text-sm'>
+                  Select from our collection of professional designs
+                </p>
+                {/* Connector Line for desktop */}
+                <div className='hidden md:block absolute top-5 left-[calc(50%+20px)] w-[calc(100%-40px)] h-px bg-border' />
               </div>
-              <h3 className='mb-2 text-xl font-semibold'>Fill In Your Details</h3>
-              <p className='text-muted-foreground'>
-                Add your information with our intuitive form builder and smart suggestions
-              </p>
-              <div className='absolute -right-4 top-8 hidden h-0.5 w-8 bg-gradient-to-r from-primary to-transparent md:block' />
-            </div>
 
-            {/* Step 3 */}
-            <div className='relative'>
-              <div className='mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground'>
-                3
+              {/* Step 2 */}
+              <div className='flex-1 text-center relative'>
+                <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
+                  2
+                </div>
+                <h3 className='font-semibold mb-2'>Fill in your details</h3>
+                <p className='text-muted-foreground text-sm'>
+                  Add your information using our simple form
+                </p>
+                {/* Connector Line for desktop */}
+                <div className='hidden md:block absolute top-5 left-[calc(50%+20px)] w-[calc(100%-40px)] h-px bg-border' />
               </div>
-              <h3 className='mb-2 text-xl font-semibold'>Download & Apply</h3>
-              <p className='text-muted-foreground'>
-                Export your CV as a PDF and start applying to your dream jobs immediately
-              </p>
+
+              {/* Step 3 */}
+              <div className='flex-1 text-center'>
+                <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
+                  3
+                </div>
+                <h3 className='font-semibold mb-2'>Download your CV</h3>
+                <p className='text-muted-foreground text-sm'>
+                  Export as PDF and start applying to jobs
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Simple Features */}
+          <div className='mx-auto max-w-3xl mt-20 grid grid-cols-3 gap-8 text-center'>
+            <div>
+              <p className='text-2xl font-bold mb-1'>5 min</p>
+              <p className='text-sm text-muted-foreground'>Average time</p>
+            </div>
+            <div>
+              <p className='text-2xl font-bold mb-1'>100%</p>
+              <p className='text-sm text-muted-foreground'>Free forever</p>
+            </div>
+            <div>
+              <p className='text-2xl font-bold mb-1'>ATS</p>
+              <p className='text-sm text-muted-foreground'>Optimized</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className='container mx-auto px-4 py-20'>
-        <div className='mx-auto max-w-4xl text-center'>
-          <Card className='bg-primary text-primary-foreground'>
-            <CardHeader>
-              <CardTitle className='text-3xl sm:text-4xl'>Ready to Build Your CV?</CardTitle>
-              <CardDescription className='text-lg text-primary-foreground/90'>
-                Join thousands of job seekers who have successfully landed their dream jobs
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link to='/builder'>
-                <Button size='lg' variant='secondary' className='group'>
-                  Start Building Now
-                  <ArrowRight className='ml-2 h-5 w-5 transition-transform group-hover:translate-x-1' />
-                </Button>
-              </Link>
-              <p className='mt-4 text-sm text-primary-foreground/80'>
-                No credit card required • 100% free forever
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
     </div>
   );
 };

@@ -23,11 +23,37 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
-import { Trash2 } from 'lucide-react';
+import { Trash2, ArrowLeft } from 'lucide-react';
+import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 
-const BuilderPage = () => {
-  const form = useForm({
-    defaultValues: {
+interface BuilderPageProps {
+  templateId?: string;
+}
+
+const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
+  const navigate = useNavigate();
+  const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
+  const isEditMode = search.edit === true;
+  
+  // Use search param if available, otherwise fall back to prop
+  const activeTemplateId = search.templateId || templateId;
+  
+  // Get initial values - either from localStorage in edit mode or defaults
+  const getInitialValues = () => {
+    if (isEditMode) {
+      const storedData = localStorage.getItem('cvData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        return {
+          ...parsedData,
+          templateId: parsedData.templateId || activeTemplateId,
+        };
+      }
+    }
+    
+    // Return default values for new CV
+    return {
+      templateId: activeTemplateId,
       personalInfo: {
         firstName: '',
         lastName: '',
@@ -40,13 +66,21 @@ const BuilderPage = () => {
         github: '',
       } as PersonalInfoProps,
       experiences: [] as ExperienceProps[],
-      educations: [] as EducationProps[],
+      education: [] as EducationProps[],
       skills: [] as SkillProps[],
       languages: [] as LanguageProps[],
       interests: [] as InterestProps[],
-    },
+    };
+  };
+  
+  const form = useForm({
+    defaultValues: getInitialValues(),
     onSubmit: async ({ value }) => {
       console.log('Form submitted:', value);
+      // Store data in localStorage for persistence
+      localStorage.setItem('cvData', JSON.stringify(value));
+      // Navigate to preview page with templateId
+      navigate({ to: '/preview', search: { templateId: value.templateId } });
     },
   });
 
@@ -73,8 +107,8 @@ const BuilderPage = () => {
   };
 
   const addEducation = () => {
-    form.setFieldValue('educations', [
-      ...form.getFieldValue('educations'),
+    form.setFieldValue('education', [
+      ...form.getFieldValue('education'),
       {
         institution: '',
         degree: '',
@@ -87,10 +121,10 @@ const BuilderPage = () => {
   };
 
   const removeEducation = (index: number) => {
-    const educations = form.getFieldValue('educations');
+    const education = form.getFieldValue('education');
     form.setFieldValue(
-      'educations',
-      educations.filter((_: EducationProps, i: number) => i !== index)
+      'education',
+      education.filter((_: EducationProps, i: number) => i !== index)
     );
   };
 
@@ -134,15 +168,38 @@ const BuilderPage = () => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        form.handleSubmit();
-      }}
-    >
-      {/* personal-info-section */}
-      <Card>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
+      <div className="sticky top-0 z-10 bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link to="/templates">
+                <Button variant="outline" size="sm" type="button">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Templates
+                </Button>
+              </Link>
+              <h1 className="text-xl font-semibold">Build Your CV</h1>
+            </div>
+            <div className="text-sm text-gray-600">
+              Template: <span className="font-medium capitalize">{activeTemplateId}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+          className="space-y-6"
+        >
+          {/* personal-info-section */}
+          <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
           <CardDescription>Your basic contact information and professional summary</CardDescription>
@@ -303,7 +360,7 @@ const BuilderPage = () => {
           <form.Field name='experiences'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: ExperienceProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Experience {index + 1}</h4>
@@ -425,10 +482,10 @@ const BuilderPage = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <form.Field name='educations'>
+          <form.Field name='education'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: EducationProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Education {index + 1}</h4>
@@ -442,7 +499,7 @@ const BuilderPage = () => {
                       </Button>
                     </div>
 
-                    <form.Field name={`educations[${index}].institution`}>
+                    <form.Field name={`education[${index}].institution`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Institution</Label>
@@ -457,7 +514,7 @@ const BuilderPage = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].degree`}>
+                    <form.Field name={`education[${index}].degree`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Degree</Label>
@@ -472,7 +529,7 @@ const BuilderPage = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].field`}>
+                    <form.Field name={`education[${index}].field`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Field of Study</Label>
@@ -487,7 +544,7 @@ const BuilderPage = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].startDate`}>
+                    <form.Field name={`education[${index}].startDate`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Start Date</Label>
@@ -503,7 +560,7 @@ const BuilderPage = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].endDate`}>
+                    <form.Field name={`education[${index}].endDate`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>End Date</Label>
@@ -519,7 +576,7 @@ const BuilderPage = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name={`educations[${index}].description`}>
+                    <form.Field name={`education[${index}].description`}>
                       {(subField) => (
                         <div>
                           <Label htmlFor={subField.name}>Description</Label>
@@ -554,7 +611,7 @@ const BuilderPage = () => {
           <form.Field name='skills'>
             {(field) => (
               <div className='space-y-2'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: SkillProps, index: number) => (
                   <div key={index} className='flex gap-2'>
                     <form.Field name={`skills[${index}].name`}>
                       {(subField) => (
@@ -595,7 +652,7 @@ const BuilderPage = () => {
           <form.Field name='languages'>
             {(field) => (
               <div className='space-y-4'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: LanguageProps, index: number) => (
                   <div key={index} className='border p-4 rounded-lg space-y-4'>
                     <div className='flex justify-between items-center'>
                       <h4 className='font-medium'>Language {index + 1}</h4>
@@ -669,7 +726,7 @@ const BuilderPage = () => {
           <form.Field name='interests'>
             {(field) => (
               <div className='space-y-2'>
-                {field.state.value.map((_, index) => (
+                {field.state.value.map((_: InterestProps, index: number) => (
                   <div key={index} className='flex gap-2'>
                     <form.Field name={`interests[${index}].name`}>
                       {(subField) => (
@@ -697,15 +754,17 @@ const BuilderPage = () => {
         </CardContent>
       </Card>
 
-      <form.Subscribe
-        selector={(state) => [state.canSubmit, state.isSubmitting]}
-        children={([canSubmit, isSubmitting]) => (
-          <Button type='submit' disabled={!canSubmit}>
-            {isSubmitting ? '...' : 'Submit'}
-          </Button>
-        )}
-      />
-    </form>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Button type='submit' disabled={!canSubmit}>
+                {isSubmitting ? '...' : 'Submit'}
+              </Button>
+            )}
+          />
+        </form>
+      </div>
+    </div>
   );
 };
 
