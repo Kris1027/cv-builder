@@ -35,6 +35,9 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
   const isEditMode = search.edit === true;
   
+  // Use search param if available, otherwise fall back to prop
+  const activeTemplateId = search.templateId || templateId;
+  
   // Get initial values - either from localStorage in edit mode or defaults
   const getInitialValues = () => {
     if (isEditMode) {
@@ -43,14 +46,14 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
         const parsedData = JSON.parse(storedData);
         return {
           ...parsedData,
-          templateId: parsedData.templateId || templateId,
+          templateId: parsedData.templateId || activeTemplateId,
         };
       }
     }
     
     // Return default values for new CV
     return {
-      templateId,
+      templateId: activeTemplateId,
       personalInfo: {
         firstName: '',
         lastName: '',
@@ -180,7 +183,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
               <h1 className="text-xl font-semibold">Build Your CV</h1>
             </div>
             <div className="text-sm text-gray-600">
-              Template: <span className="font-medium capitalize">{templateId}</span>
+              Template: <span className="font-medium capitalize">{activeTemplateId}</span>
             </div>
           </div>
         </div>
