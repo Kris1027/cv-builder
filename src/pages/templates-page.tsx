@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Eye, ArrowLeft } from 'lucide-react';
 import { ModernPreview } from '@/components/template-previews/modern-preview';
 import { BusinessPreview } from '@/components/template-previews/business-preview';
+import { VeterinaryPreview } from '@/components/template-previews/veterinary-preview';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const templates = [
@@ -18,6 +19,12 @@ const templates = [
     name: 'Executive Template',
     description: 'Modern minimalist design with Montserrat font for senior professionals',
     Preview: BusinessPreview,
+  },
+  {
+    id: 'veterinary',
+    name: 'Veterinary Template',
+    description: 'Professional medical design with caring touches for animal healthcare specialists',
+    Preview: VeterinaryPreview,
   },
 ];
 

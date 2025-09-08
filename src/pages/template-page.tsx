@@ -2,6 +2,7 @@ import { useParams, Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
+import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { sampleCVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -23,6 +24,8 @@ export function TemplatePage() {
         return 'Developer Template';
       case 'business':
         return 'Executive Template';
+      case 'veterinary':
+        return 'Veterinary Template';
       default:
         return 'Template';
     }
@@ -34,6 +37,8 @@ export function TemplatePage() {
         return <ModernTemplate data={sampleCVData} />;
       case 'business':
         return <BusinessTemplate data={sampleCVData} />;
+      case 'veterinary':
+        return <VeterinaryTemplate data={sampleCVData} />;
       default:
         return (
           <div className="text-center py-8">

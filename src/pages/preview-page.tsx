@@ -3,6 +3,7 @@ import { Link, useSearch } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
+import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import type { CVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -117,6 +118,7 @@ export function PreviewPage() {
         <div id="cv-content" className="bg-white text-gray-900 shadow-xl rounded-lg overflow-hidden">
           {templateId === 'modern' && <ModernTemplate data={cvData} />}
           {templateId === 'business' && <BusinessTemplate data={cvData} />}
+          {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
         </div>
       </div>
 
