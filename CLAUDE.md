@@ -196,3 +196,100 @@ All form data is stored in localStorage under the key `cvData` with the followin
 - Build directory: `dist/`
 - Assets are code-split and optimized
 - CSS is extracted and minified
+
+## CV Templates Update (2025-09-08)
+
+### Template System Overhaul
+The application now features three specialized CV templates, each targeting specific professional fields with unique designs and typography.
+
+### 1. Developer Template (formerly Modern Template)
+**Target Audience**: Software developers, programmers, tech professionals
+
+**Design Features**:
+- **Font**: JetBrains Mono (monospace font popular in IDEs)
+- **Color Scheme**: Purple to blue gradient header
+- **Section Headers**: Prefixed with `//` comment style
+- **Skills Section**: Renamed to "TECH STACK" with terminal-style dark background and green text
+- **Unique Elements**: Code-inspired styling throughout
+
+**File Locations**:
+- Template: `/src/components/templates/modern-template.tsx`
+- Preview: `/src/components/template-previews/modern-preview.tsx`
+
+### 2. Executive Template (formerly Business Template)
+**Target Audience**: Senior professionals, executives, corporate leaders
+
+**Design Features**:
+- **Font**: Montserrat (modern, clean sans-serif)
+- **Color Scheme**: Sophisticated gray palette with gradient header
+- **Typography**: Mix of font weights (light/bold contrast)
+- **Section Headers**: Uppercase with wide letter-spacing (tracking-[0.2em])
+- **Skills**: Modern pill-style badges with subtle borders
+
+**File Locations**:
+- Template: `/src/components/templates/business-template.tsx`
+- Preview: `/src/components/template-previews/business-preview.tsx`
+
+### 3. Veterinary Template (NEW)
+**Target Audience**: Veterinarians, animal healthcare professionals
+
+**Design Features**:
+- **Fonts**: 
+  - Lato for body text (clean, friendly, professional)
+  - Merriweather for headings (trustworthy serif)
+- **Color Scheme**: Emerald/teal (medical, nature-inspired)
+- **Unique Elements**:
+  - Stethoscope icon in header
+  - "Dr." prefix automatically added to name
+  - Timeline visualization for clinical experience
+  - Colored section boxes (emerald for skills, teal for languages, orange for interests)
+  - Visual language proficiency indicators (dots)
+- **Section Names**:
+  - "Clinical Experience" instead of "Work Experience"
+  - "Clinical Skills" instead of "Skills"
+  - "Education & Training"
+  - "Special Interests"
+
+**File Locations**:
+- Template: `/src/components/templates/veterinary-template.tsx`
+- Preview: `/src/components/template-previews/veterinary-preview.tsx`
+
+### Font Management
+**Current Google Fonts imports** (`/src/index.css`):
+```css
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+```
+
+**Font Usage**:
+- Atkinson Hyperlegible: UI elements
+- JetBrains Mono & Fira Code: Developer template
+- Montserrat & Poppins: Executive template
+- Lato & Merriweather: Veterinary template
+
+### Template Selection Flow
+1. User visits `/templates` page
+2. Sees three template options with preview cards
+3. Can preview full template at `/templates/{templateId}`
+4. Can use template in builder at `/builder?templateId={templateId}`
+5. Final CV preview at `/preview?templateId={templateId}`
+
+### Important Implementation Notes
+- **CV Background**: All CV templates maintain white background regardless of dark mode
+- **Dark Mode**: Only affects UI elements around CV, never the CV content itself
+- **Print Styles**: All templates optimized for printing with proper page breaks
+- **Language Proficiency**: Uses European framework (A1, A2, B1, B2, C1, C2, NATIVE)
+
+### Files Modified/Created
+- `/src/components/templates/modern-template.tsx` - Updated to Developer template
+- `/src/components/templates/business-template.tsx` - Updated to Executive template
+- `/src/components/templates/veterinary-template.tsx` - NEW
+- `/src/components/template-previews/veterinary-preview.tsx` - NEW
+- `/src/pages/templates-page.tsx` - Added veterinary template
+- `/src/pages/template-page.tsx` - Added veterinary template support
+- `/src/pages/preview-page.tsx` - Added veterinary template support
+- `/src/index.css` - Added new Google Fonts
+- `/src/hooks/use-theme.ts` - NEW (separated from theme-context)
+- `/src/types/theme-context-types.ts` - NEW (separated from theme-context)
