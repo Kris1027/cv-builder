@@ -15,8 +15,8 @@ const templates = [
   },
   {
     id: 'business',
-    name: 'Business Template',
-    description: 'Traditional and formal design perfect for corporate and executive positions',
+    name: 'Executive Template',
+    description: 'Modern minimalist design with Montserrat font for senior professionals',
     Preview: BusinessPreview,
   },
 ];

@@ -22,7 +22,7 @@ export function TemplatePage() {
       case 'modern':
         return 'Developer Template';
       case 'business':
-        return 'Business Template';
+        return 'Executive Template';
       default:
         return 'Template';
     }

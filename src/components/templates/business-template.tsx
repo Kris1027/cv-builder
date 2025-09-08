@@ -9,18 +9,18 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-serif">
-      {/* Header Section - More formal and traditional */}
-      <div className="border-b-2 border-gray-800 pb-4 mb-6 px-8 pt-8">
-        <h1 className="text-4xl font-bold text-center mb-2 tracking-wide">
-          {personalInfo.firstName} {personalInfo.lastName}
+    <div className="bg-white max-w-[210mm] mx-auto font-['Montserrat'] text-gray-800">
+      {/* Header Section - Modern Executive Style */}
+      <div className="bg-gradient-to-b from-gray-50 to-white pb-6 mb-6 px-8 pt-8">
+        <h1 className="text-4xl font-light text-center mb-2 tracking-wider uppercase">
+          {personalInfo.firstName} <span className="font-bold">{personalInfo.lastName}</span>
         </h1>
         {personalInfo.title && (
-          <p className="text-center text-lg text-gray-700 mb-4">{personalInfo.title}</p>
+          <p className="text-center text-lg text-gray-600 mb-4 font-light tracking-wide">{personalInfo.title}</p>
         )}
         
         {/* Contact Information - Horizontal layout */}
-        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 font-light border-t border-gray-200 pt-4">
           {personalInfo.phone && (
             <span className="flex items-center gap-1">
               <Phone className="w-3 h-3" />
@@ -51,22 +51,22 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
       <div className="px-8 pb-8">
         {/* Professional Experience */}
         <section className="mb-6">
-          <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-4">
+          <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
             Professional Experience
           </h2>
           <div className="space-y-4">
             {experiences.map((exp, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-between items-baseline mb-1">
-                  <h3 className="font-bold text-base">
-                    {exp.position} | {exp.company}
+                  <h3 className="font-semibold text-base">
+                    <span className="text-gray-900">{exp.position}</span> <span className="text-gray-400 font-light">|</span> <span className="font-bold text-gray-700">{exp.company}</span>
                   </h3>
-                  <span className="text-sm text-gray-600 italic">
+                  <span className="text-sm text-gray-500 font-light">
                     {formatDate(exp.startDate)} – {exp.current ? 'Present' : formatDate(exp.endDate)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">{personalInfo.location}</p>
-                <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{personalInfo.location}</p>
+                <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 font-light">
                   {exp.description}
                 </div>
               </div>
@@ -77,23 +77,23 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
         {/* Education */}
         {education.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
               Education
             </h2>
             <div className="space-y-3">
               {education.map((edu, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-baseline mb-1">
-                    <h3 className="font-bold text-base">
-                      {edu.degree} in {edu.field}
+                    <h3 className="font-semibold text-base">
+                      <span className="text-gray-900">{edu.degree}</span> <span className="text-gray-500 font-light">in</span> <span className="font-bold text-gray-700">{edu.field}</span>
                     </h3>
-                    <span className="text-sm text-gray-600 italic">
+                    <span className="text-sm text-gray-500 font-light">
                       {formatDate(edu.startDate)} – {formatDate(edu.endDate)}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-700">{edu.institution}</p>
+                  <p className="text-sm text-gray-600 font-medium">{edu.institution}</p>
                   {edu.description && (
-                    <p className="text-sm text-gray-600 mt-1">{edu.description}</p>
+                    <p className="text-sm text-gray-600 mt-1 font-light">{edu.description}</p>
                   )}
                 </div>
               ))}
@@ -105,14 +105,13 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
         <div className="grid grid-cols-2 gap-8">
           {/* Skills */}
           <section className="mb-6">
-            <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
               Core Competencies
             </h2>
-            <div className="text-sm">
+            <div className="flex flex-wrap gap-2">
               {skills.map((skill, index) => (
-                <span key={index}>
+                <span key={index} className="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium text-gray-700 border border-gray-200">
                   {skill.name}
-                  {index < skills.length - 1 && ' • '}
                 </span>
               ))}
             </div>
@@ -121,14 +120,14 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
           {/* Languages */}
           {languages.length > 0 && (
             <section className="mb-6">
-              <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-4">
+              <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
                 Languages
               </h2>
               <div className="space-y-1">
                 {languages.map((lang, index) => (
                   <div key={index} className="flex justify-between text-sm">
-                    <span>{lang.language}</span>
-                    <span className="text-gray-600">
+                    <span className="font-medium">{lang.language}</span>
+                    <span className="text-gray-500 font-light">
                       {lang.proficiency === 'NATIVE' ? 'Native' : lang.proficiency}
                     </span>
                   </div>
@@ -141,10 +140,10 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
         {/* Interests - Optional, more subtle */}
         {interests.length > 0 && (
           <section className="mt-6">
-            <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
               Interests
             </h2>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-600 font-light">
               {interests.map((interest) => interest.name).join(' • ')}
             </p>
           </section>
