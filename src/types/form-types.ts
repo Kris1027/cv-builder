@@ -42,3 +42,14 @@ export interface LanguageProps {
 export interface InterestProps {
   name: string;
 }
+
+// Form values type for the entire CV form
+export interface CVFormValues {
+  templateId: string;
+  personalInfo: PersonalInfoProps;
+  experiences: ExperienceProps[];
+  education: EducationProps[];
+  skills: SkillProps[];
+  languages: LanguageProps[];
+  interests: InterestProps[];
+}
