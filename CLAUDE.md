@@ -77,6 +77,55 @@ All form data is stored in localStorage under the key `cvData` with the followin
 ```
 
 ## Recent Updates (2025-09-08)
+
+### Dark Mode Implementation ✅
+**Added comprehensive dark mode support with modern UX best practices:**
+
+1. **Theme System**:
+   - Created `/contexts/theme-context.tsx` - Theme provider with React Context
+   - Supports three modes: Light, Dark, System (auto-detect)
+   - Persists user preference in localStorage
+   - Automatically detects and follows system preference changes
+   - Updates meta theme-color for mobile browsers
+
+2. **Theme Toggle Component**:
+   - Created `/components/theme-toggle.tsx` - Elegant dropdown menu toggle
+   - Shows current mode with check mark
+   - Smooth icon transitions between sun/moon
+   - Accessible with keyboard navigation
+   - Added to all major pages: builder, templates, template preview, CV preview
+
+3. **Dark Mode Styling**:
+   - Updated all pages and components with dark mode classes
+   - **CRITICAL**: CV templates always remain on white background
+     - Only UI elements around CV change with dark mode
+     - CV content background stays white for professional appearance and printing
+     - Ensures CVs are always printable regardless of theme
+   - Consistent color scheme across components
+   - Smooth transitions when switching themes
+   - Proper contrast ratios for accessibility
+
+4. **Pages Updated**:
+   - `/pages/builder-page.tsx` - Full dark mode for form and UI
+   - `/pages/template-page.tsx` - Dark UI, white CV background
+   - `/pages/templates-page.tsx` - Dark UI for card gallery
+   - `/pages/preview-page.tsx` - Dark UI, white CV background
+   - All 6 form section components with dark mode support
+
+5. **UI Components Added**:
+   - `/components/ui/dropdown-menu.tsx` - Radix UI dropdown component
+   - Full dark mode support in dropdown menus
+
+6. **Best Practices Implemented**:
+   - System preference detection
+   - Smooth transitions (no flash)
+   - Persistent user choice
+   - Responsive to system changes
+   - Accessible theme switcher
+   - Consistent dark palette
+   - Print-friendly CV templates (always white)
+
+## Recent Updates (2025-09-08)
 1. **Refactored form sections** into separate component files for better maintainability
 2. **Modernized UI/UX** with:
    - Gradient backgrounds and card designs

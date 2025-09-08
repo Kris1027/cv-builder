@@ -17,15 +17,15 @@ interface ExperienceSectionProps {
 
 export const ExperienceSection = ({ form, addExperience, removeExperience }: ExperienceSectionProps) => {
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-      <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 rounded-t-lg">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
+      <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-t-lg">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-green-600" />
-              <CardTitle className="text-xl">Work Experience</CardTitle>
+              <Briefcase className="w-5 h-5 text-green-600 dark:text-green-400" />
+              <CardTitle className="text-xl dark:text-gray-100">Work Experience</CardTitle>
             </div>
-            <CardDescription className="mt-1">Add your professional experience</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">Add your professional experience</CardDescription>
           </div>
           <Button 
             type='button' 
@@ -42,16 +42,16 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
           {(field) => (
             <div className='space-y-6'>
               {field.state.value.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                  <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
                   <p>No experience added yet</p>
                   <p className="text-sm mt-1">Click "Add Experience" to get started</p>
                 </div>
               )}
               {field.state.value.map((_: ExperienceProps, index: number) => (
-                <div key={index} className='bg-gradient-to-r from-gray-50 to-white p-6 rounded-xl space-y-4 border border-gray-200 hover:shadow-md transition-shadow'>
+                <div key={index} className='bg-gradient-to-r from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl space-y-4 border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow'>
                   <div className='flex justify-between items-center mb-4'>
-                    <h4 className='font-semibold text-lg text-gray-700'>Experience {index + 1}</h4>
+                    <h4 className='font-semibold text-lg text-gray-700 dark:text-gray-300'>Experience {index + 1}</h4>
                     <Button
                       type='button'
                       variant='ghost'
@@ -134,7 +134,7 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
 
                   <form.Field name={`experiences[${index}].current`}>
                     {(subField) => (
-                      <div className='flex items-center space-x-2 p-3 bg-blue-50 rounded-lg'>
+                      <div className='flex items-center space-x-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
                         <Checkbox
                           id={subField.name}
                           name={subField.name}
@@ -142,7 +142,7 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                           onCheckedChange={(checked) => subField.handleChange(!!checked)}
                           className='border-blue-400'
                         />
-                        <Label htmlFor={subField.name} className='text-blue-700 cursor-pointer'>
+                        <Label htmlFor={subField.name} className='text-blue-700 dark:text-blue-400 cursor-pointer'>
                           Currently working here
                         </Label>
                       </div>

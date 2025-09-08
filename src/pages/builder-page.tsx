@@ -5,6 +5,7 @@ import { EducationSection } from '@/components/form-sections/education-section';
 import { SkillsSection } from '@/components/form-sections/skills-section';
 import { LanguagesSection } from '@/components/form-sections/languages-section';
 import { InterestsSection } from '@/components/form-sections/interests-section';
+import { ThemeToggle } from '@/components/theme-toggle';
 import type {
   EducationProps,
   ExperienceProps,
@@ -234,14 +235,14 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
       {/* Navigation Bar */}
-      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b shadow-sm">
+      <div className="sticky top-0 z-10 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/templates">
-                <Button variant="outline" size="sm" type="button" className="hover:bg-gray-100 transition-colors">
+                <Button variant="outline" size="sm" type="button" className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Templates
                 </Button>
@@ -250,27 +251,29 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                 Build Your CV
               </h1>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={handleManualSave}
                 disabled={isSaving}
-                className="hover:bg-gray-100 transition-colors"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <Save className="w-4 h-4 mr-2" />
                 {isSaving ? 'Saving...' : 'Save'}
               </Button>
               {lastSaved && (
-                <div className="flex items-center gap-2 text-sm text-green-600">
+                <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />
-                  <span>Saved {lastSaved.toLocaleTimeString()}</span>
+                  <span className="hidden sm:inline">Saved {lastSaved.toLocaleTimeString()}</span>
                 </div>
               )}
-              <div className="text-sm text-gray-600 px-3 py-1 bg-gray-100 rounded-full">
-                Template: <span className="font-medium capitalize">{activeTemplateId}</span>
+              <div className="text-sm text-gray-600 dark:text-gray-400 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                <span className="hidden sm:inline">Template: </span>
+                <span className="font-medium capitalize">{activeTemplateId}</span>
               </div>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -278,18 +281,18 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
 
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Progress Indicator */}
-        <div className="mb-8 bg-white p-4 rounded-xl shadow-sm">
+        <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm dark:shadow-gray-900/50 transition-colors">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">Form Progress</span>
-            <span className="text-sm font-bold text-gray-600">{calculateProgress()}%</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Form Progress</span>
+            <span className="text-sm font-bold text-gray-600 dark:text-gray-400">{calculateProgress()}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
               className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all duration-500 ease-out"
               style={{ width: `${calculateProgress()}%` }}
             />
           </div>
-          <div className="mt-2 text-xs text-gray-500">
+          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
             {calculateProgress() === 100 
               ? "Great! Your CV is complete. Click 'Preview CV' to see the result."
               : "Complete all sections to maximize your CV's impact."}

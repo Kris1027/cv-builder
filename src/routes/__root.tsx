@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { ThemeProvider } from '@/contexts/theme-context';
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -7,10 +7,12 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <React.Fragment>
-      <main className="flex-1">
-        <Outlet />
-      </main>
-    </React.Fragment>
+    <ThemeProvider defaultTheme='system'>
+      <div className='min-h-screen bg-background text-foreground transition-colors'>
+        <main className='flex-1'>
+          <Outlet />
+        </main>
+      </div>
+    </ThemeProvider>
   );
 }

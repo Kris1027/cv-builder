@@ -4,6 +4,7 @@ export function BusinessPreview() {
       viewBox="0 0 210 297"
       className="w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ isolation: 'isolate' }}
     >
       {/* Background */}
       <rect width="210" height="297" fill="white" />

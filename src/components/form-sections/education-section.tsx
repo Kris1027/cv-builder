@@ -16,15 +16,15 @@ interface EducationSectionProps {
 
 export const EducationSection = ({ form, addEducation, removeEducation }: EducationSectionProps) => {
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-      <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-lg">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
+      <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-t-lg">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <GraduationCap className="w-5 h-5 text-purple-600" />
-              <CardTitle className="text-xl">Education</CardTitle>
+              <GraduationCap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <CardTitle className="text-xl dark:text-gray-100">Education</CardTitle>
             </div>
-            <CardDescription className="mt-1">Add your educational background</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">Add your educational background</CardDescription>
           </div>
           <Button 
             type='button' 
@@ -41,16 +41,16 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
           {(field) => (
             <div className='space-y-6'>
               {field.state.value.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                  <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
                   <p>No education added yet</p>
                   <p className="text-sm mt-1">Click "Add Education" to get started</p>
                 </div>
               )}
               {field.state.value.map((_: EducationProps, index: number) => (
-                <div key={index} className='bg-gradient-to-r from-purple-50/50 to-white p-6 rounded-xl space-y-4 border border-gray-200 hover:shadow-md transition-shadow'>
+                <div key={index} className='bg-gradient-to-r from-purple-50/50 to-white dark:from-purple-900/10 dark:to-gray-800/50 p-6 rounded-xl space-y-4 border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow'>
                   <div className='flex justify-between items-center mb-4'>
-                    <h4 className='font-semibold text-lg text-gray-700'>Education {index + 1}</h4>
+                    <h4 className='font-semibold text-lg text-gray-700 dark:text-gray-300'>Education {index + 1}</h4>
                     <Button
                       type='button'
                       variant='ghost'

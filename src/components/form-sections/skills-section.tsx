@@ -30,15 +30,15 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
   };
 
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-      <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-t-lg">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
+      <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-t-lg">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Code className="w-5 h-5 text-orange-600" />
-              <CardTitle className="text-xl">Skills</CardTitle>
+              <Code className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+              <CardTitle className="text-xl dark:text-gray-100">Skills</CardTitle>
             </div>
-            <CardDescription className="mt-1">Add your professional skills and competencies</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">Add your professional skills and competencies</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -67,8 +67,8 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
             {(field) => (
               <div>
                 {field.state.value.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <Code className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <Code className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
                     <p>No skills added yet</p>
                     <p className="text-sm mt-1">Start typing above to add skills</p>
                   </div>
@@ -77,9 +77,9 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
                     {field.state.value.map((skill: SkillProps, index: number) => (
                       <div
                         key={index}
-                        className='group flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-full hover:shadow-md transition-all'
+                        className='group flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-900/20 dark:to-yellow-900/20 border border-orange-200 dark:border-orange-800 rounded-full hover:shadow-md dark:hover:shadow-gray-900/50 transition-all'
                       >
-                        <span className='text-sm font-medium text-gray-700'>{skill.name}</span>
+                        <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>{skill.name}</span>
                         <button
                           type='button'
                           onClick={() => removeSkill(index)}

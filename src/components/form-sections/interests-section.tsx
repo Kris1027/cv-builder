@@ -30,15 +30,15 @@ export const InterestsSection = ({ form, removeInterest }: InterestsSectionProps
   };
 
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-      <CardHeader className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-t-lg">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
+      <CardHeader className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-t-lg">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-rose-600" />
-              <CardTitle className="text-xl">Interests & Hobbies</CardTitle>
+              <Heart className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+              <CardTitle className="text-xl dark:text-gray-100">Interests & Hobbies</CardTitle>
             </div>
-            <CardDescription className="mt-1">Add your personal interests and hobbies</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">Add your personal interests and hobbies</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -67,8 +67,8 @@ export const InterestsSection = ({ form, removeInterest }: InterestsSectionProps
             {(field) => (
               <div>
                 {field.state.value.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
                     <p>No interests added yet</p>
                     <p className="text-sm mt-1">Share what you're passionate about</p>
                   </div>
@@ -77,9 +77,9 @@ export const InterestsSection = ({ form, removeInterest }: InterestsSectionProps
                     {field.state.value.map((interest: InterestProps, index: number) => (
                       <div
                         key={index}
-                        className='group flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-rose-100 to-pink-100 border border-rose-200 rounded-full hover:shadow-md transition-all'
+                        className='group flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-rose-100 to-pink-100 dark:from-rose-900/20 dark:to-pink-900/20 border border-rose-200 dark:border-rose-800 rounded-full hover:shadow-md dark:hover:shadow-gray-900/50 transition-all'
                       >
-                        <span className='text-sm font-medium text-gray-700'>{interest.name}</span>
+                        <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>{interest.name}</span>
                         <button
                           type='button'
                           onClick={() => removeInterest(index)}

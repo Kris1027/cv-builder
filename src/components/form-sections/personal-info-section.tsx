@@ -12,13 +12,13 @@ interface PersonalInfoSectionProps {
 
 export const PersonalInfoSection = ({ form, validationErrors, setValidationErrors }: PersonalInfoSectionProps) => {
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-      <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-t-lg">
         <div className="flex items-center gap-2">
-          <User className="w-5 h-5 text-blue-600" />
-          <CardTitle className="text-xl">Personal Information</CardTitle>
+          <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <CardTitle className="text-xl dark:text-gray-100">Personal Information</CardTitle>
         </div>
-        <CardDescription>Your basic contact information and professional summary</CardDescription>
+        <CardDescription className="dark:text-gray-400">Your basic contact information and professional summary</CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
