@@ -3,8 +3,10 @@ import { Link, useSearch } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
+import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import type { CVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export function PreviewPage() {
   const search = useSearch({ from: '/preview' }) as { templateId?: string };
@@ -41,8 +43,8 @@ export function PreviewPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">No CV data found</h1>
-          <p className="text-gray-600 mb-4">Please fill out the form first to preview your CV.</p>
+          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">No CV data found</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Please fill out the form first to preview your CV.</p>
           <Link to="/templates">
             <Button>
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -55,19 +57,19 @@ export function PreviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Actions Bar */}
-      <div className="sticky top-0 z-10 bg-white border-b shadow-sm print:hidden">
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm print:hidden">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/builder" search={{ templateId, edit: true }}>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="dark:hover:bg-gray-800">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Editor
                 </Button>
               </Link>
-              <h1 className="text-xl font-semibold">Your CV Preview</h1>
+              <h1 className="text-xl font-semibold dark:text-gray-100">Your CV Preview</h1>
             </div>
             
             <div className="flex items-center gap-3">
@@ -75,6 +77,7 @@ export function PreviewPage() {
                 variant="outline" 
                 size="sm"
                 onClick={handlePrint}
+                className="dark:hover:bg-gray-800"
               >
                 <FileText className="w-4 h-4 mr-2" />
                 Print
@@ -83,6 +86,7 @@ export function PreviewPage() {
                 variant="outline" 
                 size="sm"
                 onClick={handleDownloadPDF}
+                className="dark:hover:bg-gray-800"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download PDF
@@ -93,6 +97,7 @@ export function PreviewPage() {
                   Edit CV
                 </Button>
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -100,9 +105,9 @@ export function PreviewPage() {
 
       {/* Success Message */}
       <div className="container mx-auto px-4 py-4 print:hidden">
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <p className="text-green-800 font-medium">🎉 Congratulations! Your CV is ready.</p>
-          <p className="text-green-700 text-sm mt-1">
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+          <p className="text-green-800 dark:text-green-300 font-medium">🎉 Congratulations! Your CV is ready.</p>
+          <p className="text-green-700 dark:text-green-400 text-sm mt-1">
             You can now print it, download as PDF, or continue editing.
           </p>
         </div>
@@ -110,9 +115,10 @@ export function PreviewPage() {
 
       {/* Template Preview */}
       <div className="container mx-auto px-4 py-8" id="print-container">
-        <div id="cv-content" className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <div id="cv-content" className="bg-white text-gray-900 shadow-xl rounded-lg overflow-hidden">
           {templateId === 'modern' && <ModernTemplate data={cvData} />}
           {templateId === 'business' && <BusinessTemplate data={cvData} />}
+          {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
         </div>
       </div>
 
