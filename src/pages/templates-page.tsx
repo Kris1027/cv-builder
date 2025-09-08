@@ -9,8 +9,8 @@ import { ThemeToggle } from '@/components/theme-toggle';
 const templates = [
   {
     id: 'modern',
-    name: 'Modern Template',
-    description: 'Clean and professional design with a blue header and organized sections',
+    name: 'Developer Template',
+    description: 'Tech-focused design with monospace font and developer-friendly styling',
     Preview: ModernPreview,
   },
   {

@@ -20,7 +20,7 @@ export function TemplatePage() {
   const getTemplateName = () => {
     switch (templateId) {
       case 'modern':
-        return 'Modern Template';
+        return 'Developer Template';
       case 'business':
         return 'Business Template';
       default:
