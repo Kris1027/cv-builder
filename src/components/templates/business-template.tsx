@@ -1,5 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin } from 'lucide-react';
+import { formatLinkedinDisplay } from '@/lib/utils';
 
 interface BusinessTemplateProps {
   data: CVData;
@@ -22,28 +23,28 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
         {/* Contact Information - Horizontal layout */}
         <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 font-light border-t border-gray-200 pt-4">
           {personalInfo.phone && (
-            <span className="flex items-center gap-1">
+            <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-1 hover:underline">
               <Phone className="w-3 h-3" />
               {personalInfo.phone}
-            </span>
+            </a>
           )}
           {personalInfo.email && (
-            <span className="flex items-center gap-1">
+            <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-1 hover:underline">
               <Mail className="w-3 h-3" />
               {personalInfo.email}
-            </span>
+            </a>
           )}
           {personalInfo.location && (
-            <span className="flex items-center gap-1">
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
               <MapPin className="w-3 h-3" />
               {personalInfo.location}
-            </span>
+            </a>
           )}
           {personalInfo.linkedin && (
-            <span className="flex items-center gap-1">
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
               <Globe className="w-3 h-3" />
-              {personalInfo.linkedin}
-            </span>
+              {formatLinkedinDisplay(personalInfo.linkedin)}
+            </a>
           )}
         </div>
       </div>
@@ -65,7 +66,7 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
                     {formatDate(exp.startDate)} – {exp.current ? 'Present' : formatDate(exp.endDate)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{personalInfo.location}</p>
+                {exp.location && <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{exp.location}</p>}
                 <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 font-light">
                   {exp.description}
                 </div>

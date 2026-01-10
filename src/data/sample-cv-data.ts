@@ -25,6 +25,7 @@ export const sampleCVData: CVData = {
     {
       company: 'TechCorp Solutions',
       position: 'Senior Full Stack Developer',
+      location: 'San Francisco, CA',
       startDate: '2022-03',
       endDate: '',
       current: true,
@@ -38,6 +39,7 @@ export const sampleCVData: CVData = {
     {
       company: 'Digital Innovations Inc',
       position: 'Full Stack Developer',
+      location: 'Austin, TX',
       startDate: '2019-06',
       endDate: '2022-02',
       current: false,

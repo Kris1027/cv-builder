@@ -13,6 +13,7 @@ export interface PersonalInfoProps {
 export interface ExperienceProps {
   company: string;
   position: string;
+  location: string;
   startDate: string;
   endDate: string;
   current: boolean;

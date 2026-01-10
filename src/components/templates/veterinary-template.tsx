@@ -1,5 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from 'lucide-react';
+import { formatLinkedinDisplay } from '@/lib/utils';
 
 interface VeterinaryTemplateProps {
   data: CVData;
@@ -28,28 +29,28 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
         {/* Contact Information - Clean layout */}
         <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
           {personalInfo.phone && (
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm">
+            <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-shadow">
               <Phone className="w-3 h-3 text-emerald-600" />
               {personalInfo.phone}
-            </span>
+            </a>
           )}
           {personalInfo.email && (
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm">
+            <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-shadow">
               <Mail className="w-3 h-3 text-emerald-600" />
               {personalInfo.email}
-            </span>
+            </a>
           )}
           {personalInfo.location && (
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm">
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-shadow">
               <MapPin className="w-3 h-3 text-emerald-600" />
               {personalInfo.location}
-            </span>
+            </a>
           )}
           {personalInfo.linkedin && (
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm">
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-shadow">
               <Globe className="w-3 h-3 text-emerald-600" />
-              {personalInfo.linkedin}
-            </span>
+              {formatLinkedinDisplay(personalInfo.linkedin)}
+            </a>
           )}
         </div>
       </div>
@@ -76,7 +77,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                       </h3>
                       <p className="text-emerald-600 font-medium">{exp.company}</p>
                       <p className="text-sm text-gray-500">
-                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)} • {personalInfo.location}
+                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` • ${exp.location}`}
                       </p>
                     </div>
                     <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">

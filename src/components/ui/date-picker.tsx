@@ -21,6 +21,7 @@ interface DatePickerProps {
   disabled?: boolean;
   fromYear?: number;
   toYear?: number;
+  yearOnly?: boolean;
 }
 
 const months = [
@@ -38,6 +39,7 @@ export function DatePicker({
   disabled,
   fromYear = 1960,
   toYear = new Date().getFullYear() + 10,
+  yearOnly = false,
 }: DatePickerProps) {
   // Convert string value to Date if needed
   const dateValue = React.useMemo(() => {
@@ -82,23 +84,44 @@ export function DatePicker({
 
   const handleYearChange = (year: number) => {
     setSelectedYear(year);
-    // Don't close the popover when changing year
+    // In yearOnly mode, select the year immediately
+    if (yearOnly) {
+      const newDate = new Date(Date.UTC(year, 0, 1));
+      onChange?.(newDate);
+      setIsOpen(false);
+    }
+    // Don't close the popover when changing year in month+year mode
   };
 
   const incrementYear = () => {
     if (selectedYear < toYear) {
-      setSelectedYear(selectedYear + 1);
+      const newYear = selectedYear + 1;
+      setSelectedYear(newYear);
+      if (yearOnly) {
+        const newDate = new Date(Date.UTC(newYear, 0, 1));
+        onChange?.(newDate);
+        setIsOpen(false);
+      }
     }
   };
 
   const decrementYear = () => {
     if (selectedYear > fromYear) {
-      setSelectedYear(selectedYear - 1);
+      const newYear = selectedYear - 1;
+      setSelectedYear(newYear);
+      if (yearOnly) {
+        const newDate = new Date(Date.UTC(newYear, 0, 1));
+        onChange?.(newDate);
+        setIsOpen(false);
+      }
     }
   };
 
   const formatDisplay = () => {
     if (dateValue) {
+      if (yearOnly) {
+        return dateValue.getFullYear().toString();
+      }
       return `${months[dateValue.getMonth()]} ${dateValue.getFullYear()}`;
     }
     return placeholder;
@@ -162,21 +185,23 @@ export function DatePicker({
             </Button>
           </div>
 
-          {/* Month grid */}
-          <div className='grid grid-cols-3 gap-2'>
-            {months.map((month, index) => (
-              <Button
-                key={month}
-                variant={selectedMonth === index && dateValue ? 'default' : 'outline'}
-                size='sm'
-                onClick={() => handleMonthSelect(index)}
-                className='h-9'
-                type='button'
-              >
-                {month.slice(0, 3)}
-              </Button>
-            ))}
-          </div>
+          {/* Month grid - only shown when not in yearOnly mode */}
+          {!yearOnly && (
+            <div className='grid grid-cols-3 gap-2'>
+              {months.map((month, index) => (
+                <Button
+                  key={month}
+                  variant={selectedMonth === index && dateValue ? 'default' : 'outline'}
+                  size='sm'
+                  onClick={() => handleMonthSelect(index)}
+                  className='h-9'
+                  type='button'
+                >
+                  {month.slice(0, 3)}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
       </PopoverContent>
     </Popover>

@@ -125,15 +125,16 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
 
   const addExperience = () => {
     form.setFieldValue('experiences', [
-      ...form.getFieldValue('experiences'),
       {
         company: '',
         position: '',
+        location: '',
         startDate: '',
         endDate: '',
         current: false,
         description: '',
       },
+      ...form.getFieldValue('experiences'),
     ]);
   };
 
@@ -143,6 +144,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       'experiences',
       experiences.filter((_: ExperienceProps, i: number) => i !== index)
     );
+  };
+
+  const reorderExperiences = (oldIndex: number, newIndex: number) => {
+    const experiences = [...form.getFieldValue('experiences')];
+    const [removed] = experiences.splice(oldIndex, 1);
+    experiences.splice(newIndex, 0, removed);
+    form.setFieldValue('experiences', experiences);
   };
 
   const addEducation = () => {
@@ -167,6 +175,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     );
   };
 
+  const reorderEducation = (oldIndex: number, newIndex: number) => {
+    const education = [...form.getFieldValue('education')];
+    const [removed] = education.splice(oldIndex, 1);
+    education.splice(newIndex, 0, removed);
+    form.setFieldValue('education', education);
+  };
+
   const addSkill = () => {
     form.setFieldValue('skills', [...form.getFieldValue('skills'), { name: '' }]);
   };
@@ -177,6 +192,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       'skills',
       skills.filter((_: SkillProps, i: number) => i !== index)
     );
+  };
+
+  const reorderSkills = (oldIndex: number, newIndex: number) => {
+    const skills = [...form.getFieldValue('skills')];
+    const [removed] = skills.splice(oldIndex, 1);
+    skills.splice(newIndex, 0, removed);
+    form.setFieldValue('skills', skills);
   };
 
   const addLanguage = () => {
@@ -194,6 +216,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     );
   };
 
+  const reorderLanguages = (oldIndex: number, newIndex: number) => {
+    const languages = [...form.getFieldValue('languages')];
+    const [removed] = languages.splice(oldIndex, 1);
+    languages.splice(newIndex, 0, removed);
+    form.setFieldValue('languages', languages);
+  };
+
   const addInterest = () => {
     form.setFieldValue('interests', [...form.getFieldValue('interests'), { name: '' }]);
   };
@@ -204,6 +233,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       'interests',
       interests.filter((_: InterestProps, i: number) => i !== index)
     );
+  };
+
+  const reorderInterests = (oldIndex: number, newIndex: number) => {
+    const interests = [...form.getFieldValue('interests')];
+    const [removed] = interests.splice(oldIndex, 1);
+    interests.splice(newIndex, 0, removed);
+    form.setFieldValue('interests', interests);
   };
 
   // Calculate form progress
@@ -319,6 +355,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addExperience={addExperience}
             removeExperience={removeExperience}
+            reorderExperiences={reorderExperiences}
           />
 
           {/* Education Section */}
@@ -326,6 +363,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addEducation={addEducation}
             removeEducation={removeEducation}
+            reorderEducation={reorderEducation}
           />
 
           {/* Skills Section */}
@@ -333,6 +371,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addSkill={addSkill}
             removeSkill={removeSkill}
+            reorderSkills={reorderSkills}
           />
 
           {/* Languages Section */}
@@ -340,6 +379,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addLanguage={addLanguage}
             removeLanguage={removeLanguage}
+            reorderLanguages={reorderLanguages}
           />
 
           {/* Interests Section */}
@@ -347,6 +387,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addInterest={addInterest}
             removeInterest={removeInterest}
+            reorderInterests={reorderInterests}
           />
 
           {/* Submit Button */}

@@ -1,5 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
+import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay } from '@/lib/utils';
 
 interface ModernTemplateProps {
   data: CVData;
@@ -21,43 +22,43 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
         
         <div className="flex flex-wrap gap-6 mt-4 text-sm font-normal">
           {personalInfo.website && (
-            <div className="flex items-center gap-2">
+            <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
               <Globe className="w-4 h-4" />
-              <span>{personalInfo.website}</span>
-            </div>
+              <span>{formatWebsiteDisplay(personalInfo.website)}</span>
+            </a>
           )}
           {personalInfo.github && (
-            <div className="flex items-center gap-2">
+            <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
               <Github className="w-4 h-4" />
-              <span>{personalInfo.github}</span>
-            </div>
+              <span>{formatGithubDisplay(personalInfo.github)}</span>
+            </a>
           )}
           {personalInfo.linkedin && (
-            <div className="flex items-center gap-2">
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
               <Linkedin className="w-4 h-4" />
-              <span>{personalInfo.linkedin}</span>
-            </div>
+              <span>{formatLinkedinDisplay(personalInfo.linkedin)}</span>
+            </a>
           )}
         </div>
         
         <div className="flex flex-wrap gap-6 mt-2 text-sm font-normal">
           {personalInfo.email && (
-            <div className="flex items-center gap-2">
+            <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-2 hover:underline">
               <Mail className="w-4 h-4" />
               <span>{personalInfo.email}</span>
-            </div>
+            </a>
           )}
           {personalInfo.phone && (
-            <div className="flex items-center gap-2">
+            <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-2 hover:underline">
               <Phone className="w-4 h-4" />
               <span>{personalInfo.phone}</span>
-            </div>
+            </a>
           )}
           {personalInfo.location && (
-            <div className="flex items-center gap-2">
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
               <MapPin className="w-4 h-4" />
               <span>{personalInfo.location}</span>
-            </div>
+            </a>
           )}
         </div>
       </div>
@@ -80,7 +81,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
                           {exp.company} <span className="text-purple-600">| {exp.position}</span>
                         </h3>
                         <p className="text-gray-600 text-sm font-light">
-                          {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)} | {personalInfo.location}
+                          {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` | ${exp.location}`}
                         </p>
                       </div>
                     </div>
