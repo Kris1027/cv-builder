@@ -228,6 +228,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     );
   };
 
+  const reorderInterests = (oldIndex: number, newIndex: number) => {
+    const interests = [...form.getFieldValue('interests')];
+    const [removed] = interests.splice(oldIndex, 1);
+    interests.splice(newIndex, 0, removed);
+    form.setFieldValue('interests', interests);
+  };
+
   // Calculate form progress
   const calculateProgress = () => {
     const values = form.state.values;
@@ -372,6 +379,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addInterest={addInterest}
             removeInterest={removeInterest}
+            reorderInterests={reorderInterests}
           />
 
           {/* Submit Button */}
