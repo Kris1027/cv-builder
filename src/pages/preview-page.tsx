@@ -5,13 +5,15 @@ import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import type { CVData } from '@/data/sample-cv-data';
-import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
+import { ArrowLeft, Download, FileText, Edit, Loader2 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 
 export function PreviewPage() {
   const search = useSearch({ from: '/preview' }) as { templateId?: string };
   const templateId = search.templateId || 'modern';
   const [cvData, setCvData] = useState<CVData | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     // Get data from localStorage
@@ -35,8 +37,23 @@ export function PreviewPage() {
     window.print();
   };
 
-  const handleDownloadPDF = () => {
-    window.print();
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('cv-content');
+    if (!element || !cvData) return;
+
+    setIsExporting(true);
+    try {
+      const filename = generateCVFilename(
+        cvData.personalInfo?.firstName,
+        cvData.personalInfo?.lastName
+      );
+      await exportToPDF(element, { filename });
+    } catch (error) {
+      console.error('Failed to export PDF:', error);
+      alert('Failed to export PDF. Please try again or use the Print option.');
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   if (!cvData) {
@@ -82,14 +99,19 @@ export function PreviewPage() {
                 <FileText className="w-4 h-4 mr-2" />
                 Print
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={handleDownloadPDF}
+                disabled={isExporting}
                 className="dark:hover:bg-gray-800"
               >
-                <Download className="w-4 h-4 mr-2" />
-                Download PDF
+                {isExporting ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4 mr-2" />
+                )}
+                {isExporting ? 'Exporting...' : 'Download PDF'}
               </Button>
               <Link to="/builder" search={{ templateId, edit: true }}>
                 <Button size="sm" variant="default">
