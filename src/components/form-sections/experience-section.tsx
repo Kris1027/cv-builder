@@ -175,12 +175,32 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                           name={subField.name}
                           value={subField.state.value}
                           onBlur={subField.handleBlur}
-                          onChange={(e) => subField.handleChange(e.target.value)}
-                          placeholder='Describe your responsibilities and achievements...'
+                          onChange={(e) => {
+                            let value = e.target.value;
+                            // Add bullet point at the start if empty and user starts typing
+                            if (value.length === 1 && value !== '•') {
+                              value = '• ' + value;
+                            }
+                            subField.handleChange(value);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              const target = e.target as HTMLTextAreaElement;
+                              const { selectionStart, selectionEnd, value } = target;
+                              const newValue = value.substring(0, selectionStart) + '\n• ' + value.substring(selectionEnd);
+                              subField.handleChange(newValue);
+                              // Set cursor position after the bullet point
+                              setTimeout(() => {
+                                target.selectionStart = target.selectionEnd = selectionStart + 3;
+                              }, 0);
+                            }
+                          }}
+                          placeholder='Start typing to add your first point...'
                           className='focus:ring-green-500 min-h-[120px] resize-none'
                         />
                         <p className="text-xs text-gray-500">
-                          Tip: Use bullet points to highlight key achievements
+                          Bullet points are added automatically
                         </p>
                       </div>
                     )}
