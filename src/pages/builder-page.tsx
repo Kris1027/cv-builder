@@ -125,7 +125,6 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
 
   const addExperience = () => {
     form.setFieldValue('experiences', [
-      ...form.getFieldValue('experiences'),
       {
         company: '',
         position: '',
@@ -135,6 +134,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
         current: false,
         description: '',
       },
+      ...form.getFieldValue('experiences'),
     ]);
   };
 
@@ -144,6 +144,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       'experiences',
       experiences.filter((_: ExperienceProps, i: number) => i !== index)
     );
+  };
+
+  const reorderExperiences = (oldIndex: number, newIndex: number) => {
+    const experiences = [...form.getFieldValue('experiences')];
+    const [removed] = experiences.splice(oldIndex, 1);
+    experiences.splice(newIndex, 0, removed);
+    form.setFieldValue('experiences', experiences);
   };
 
   const addEducation = () => {
@@ -320,6 +327,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addExperience={addExperience}
             removeExperience={removeExperience}
+            reorderExperiences={reorderExperiences}
           />
 
           {/* Education Section */}
