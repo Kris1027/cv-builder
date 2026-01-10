@@ -209,6 +209,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     );
   };
 
+  const reorderLanguages = (oldIndex: number, newIndex: number) => {
+    const languages = [...form.getFieldValue('languages')];
+    const [removed] = languages.splice(oldIndex, 1);
+    languages.splice(newIndex, 0, removed);
+    form.setFieldValue('languages', languages);
+  };
+
   const addInterest = () => {
     form.setFieldValue('interests', [...form.getFieldValue('interests'), { name: '' }]);
   };
@@ -357,6 +364,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addLanguage={addLanguage}
             removeLanguage={removeLanguage}
+            reorderLanguages={reorderLanguages}
           />
 
           {/* Interests Section */}
