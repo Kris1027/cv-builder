@@ -66,7 +66,7 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
                     {formatDate(exp.startDate)} – {exp.current ? 'Present' : formatDate(exp.endDate)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{personalInfo.location}</p>
+                {exp.location && <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{exp.location}</p>}
                 <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 font-light">
                   {exp.description}
                 </div>

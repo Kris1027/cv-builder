@@ -129,6 +129,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       {
         company: '',
         position: '',
+        location: '',
         startDate: '',
         endDate: '',
         current: false,

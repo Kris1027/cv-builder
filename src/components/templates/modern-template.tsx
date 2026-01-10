@@ -81,7 +81,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
                           {exp.company} <span className="text-purple-600">| {exp.position}</span>
                         </h3>
                         <p className="text-gray-600 text-sm font-light">
-                          {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)} | {personalInfo.location}
+                          {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` | ${exp.location}`}
                         </p>
                       </div>
                     </div>

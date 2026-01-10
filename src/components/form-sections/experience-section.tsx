@@ -98,6 +98,23 @@ export const ExperienceSection = ({ form, addExperience, removeExperience }: Exp
                       )}
                     </form.Field>
 
+                    <form.Field name={`experiences[${index}].location`}>
+                      {(subField) => (
+                        <div className='space-y-2'>
+                          <Label htmlFor={subField.name}>Location</Label>
+                          <Input
+                            id={subField.name}
+                            name={subField.name}
+                            value={subField.state.value}
+                            onBlur={subField.handleBlur}
+                            onChange={(e) => subField.handleChange(e.target.value)}
+                            placeholder='City, Country'
+                            className='focus:ring-green-500'
+                          />
+                        </div>
+                      )}
+                    </form.Field>
+
                     <form.Field name={`experiences[${index}].startDate`}>
                       {(subField) => (
                         <div className='space-y-2'>

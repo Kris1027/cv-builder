@@ -77,7 +77,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                       </h3>
                       <p className="text-emerald-600 font-medium">{exp.company}</p>
                       <p className="text-sm text-gray-500">
-                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)} • {personalInfo.location}
+                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` • ${exp.location}`}
                       </p>
                     </div>
                     <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
