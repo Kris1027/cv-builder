@@ -205,6 +205,16 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
                 }
                 subField.handleChange(value);
               }}
+              onPaste={(e) => {
+                // Handle pasting into empty field - add bullet point
+                if (!subField.state.value || subField.state.value.length === 0) {
+                  const pastedText = e.clipboardData.getData('text');
+                  if (pastedText && !pastedText.trimStart().startsWith('•')) {
+                    e.preventDefault();
+                    subField.handleChange('• ' + pastedText.trimStart());
+                  }
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -212,10 +222,10 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
                   const { selectionStart, selectionEnd, value } = target;
                   const newValue = value.substring(0, selectionStart) + '\n• ' + value.substring(selectionEnd);
                   subField.handleChange(newValue);
-                  // Set cursor position after the bullet point
-                  setTimeout(() => {
+                  // Set cursor position after the bullet point (requestAnimationFrame ensures DOM has updated)
+                  requestAnimationFrame(() => {
                     target.selectionStart = target.selectionEnd = selectionStart + 3;
-                  }, 0);
+                  });
                 }
               }}
               placeholder='Start typing to add your first point...'
