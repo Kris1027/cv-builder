@@ -118,7 +118,7 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                       <form.Field name={`education[${index}].startDate`}>
                         {(subField) => (
                           <div className='space-y-2'>
-                            <Label htmlFor={subField.name}>Start Date</Label>
+                            <Label htmlFor={subField.name}>Start Year</Label>
                             <DatePicker
                               id={subField.name}
                               name={subField.name}
@@ -126,6 +126,8 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                               onChange={(date) =>
                                 subField.handleChange(date ? date.toISOString() : '')
                               }
+                              yearOnly
+                              placeholder='Select year'
                             />
                           </div>
                         )}
@@ -134,7 +136,7 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                       <form.Field name={`education[${index}].endDate`}>
                         {(subField) => (
                           <div className='space-y-2'>
-                            <Label htmlFor={subField.name}>End Date</Label>
+                            <Label htmlFor={subField.name}>End Year</Label>
                             <DatePicker
                               id={subField.name}
                               name={subField.name}
@@ -142,6 +144,8 @@ export const EducationSection = ({ form, addEducation, removeEducation }: Educat
                               onChange={(date) =>
                                 subField.handleChange(date ? date.toISOString() : '')
                               }
+                              yearOnly
+                              placeholder='Select year'
                             />
                           </div>
                         )}
