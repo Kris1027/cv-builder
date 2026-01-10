@@ -187,6 +187,13 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     );
   };
 
+  const reorderSkills = (oldIndex: number, newIndex: number) => {
+    const skills = [...form.getFieldValue('skills')];
+    const [removed] = skills.splice(oldIndex, 1);
+    skills.splice(newIndex, 0, removed);
+    form.setFieldValue('skills', skills);
+  };
+
   const addLanguage = () => {
     form.setFieldValue('languages', [
       ...form.getFieldValue('languages'),
@@ -342,6 +349,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
             form={form}
             addSkill={addSkill}
             removeSkill={removeSkill}
+            reorderSkills={reorderSkills}
           />
 
           {/* Languages Section */}

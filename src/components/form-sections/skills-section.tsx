@@ -2,18 +2,95 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import type { SkillProps } from '@/types/form-types';
-import { Plus, Code, X } from 'lucide-react';
+import { Plus, Code, X, GripVertical } from 'lucide-react';
 import { useState } from 'react';
 import type { FormApi } from '@/types/form-component-types';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  horizontalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface SkillsSectionProps {
   form: FormApi;
   addSkill: () => void;
   removeSkill: (index: number) => void;
+  reorderSkills: (oldIndex: number, newIndex: number) => void;
 }
 
-export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
+interface SortableSkillItemProps {
+  id: string;
+  index: number;
+  skill: SkillProps;
+  removeSkill: (index: number) => void;
+}
+
+const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`group flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-900/20 dark:to-yellow-900/20 border border-orange-200 dark:border-orange-800 rounded-full hover:shadow-md dark:hover:shadow-gray-900/50 transition-all ${isDragging ? 'shadow-lg opacity-90' : ''}`}
+    >
+      <button
+        type='button'
+        className='cursor-grab active:cursor-grabbing p-0.5 hover:bg-orange-200 dark:hover:bg-orange-800/50 rounded transition-colors touch-none'
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical className='h-3 w-3 text-gray-400' />
+      </button>
+      <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>{skill.name}</span>
+      <button
+        type='button'
+        onClick={() => removeSkill(index)}
+        className='opacity-0 group-hover:opacity-100 transition-opacity'
+      >
+        <X className='h-3 w-3 text-red-500 hover:text-red-700' />
+      </button>
+    </div>
+  );
+};
+
+export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectionProps) => {
   const [skillInput, setSkillInput] = useState('');
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handleAddSkill = () => {
     if (skillInput.trim()) {
@@ -29,6 +106,20 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
     }
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const skills = form.getFieldValue('skills') as SkillProps[];
+      const oldIndex = skills.findIndex((_, i) => `skill-${i}` === active.id);
+      const newIndex = skills.findIndex((_, i) => `skill-${i}` === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        reorderSkills(oldIndex, newIndex);
+      }
+    }
+  };
+
   return (
     <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
       <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-t-lg">
@@ -38,7 +129,7 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
               <Code className="w-5 h-5 text-orange-600 dark:text-orange-400" />
               <CardTitle className="text-xl dark:text-gray-100">Skills</CardTitle>
             </div>
-            <CardDescription className="mt-1 dark:text-gray-400">Add your professional skills and competencies</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">Add your professional skills (drag to reorder)</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -73,23 +164,28 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
                     <p className="text-sm mt-1">Start typing above to add skills</p>
                   </div>
                 ) : (
-                  <div className='flex flex-wrap gap-2'>
-                    {field.state.value.map((skill: SkillProps, index: number) => (
-                      <div
-                        key={index}
-                        className='group flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-orange-100 to-yellow-100 dark:from-orange-900/20 dark:to-yellow-900/20 border border-orange-200 dark:border-orange-800 rounded-full hover:shadow-md dark:hover:shadow-gray-900/50 transition-all'
-                      >
-                        <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>{skill.name}</span>
-                        <button
-                          type='button'
-                          onClick={() => removeSkill(index)}
-                          className='opacity-0 group-hover:opacity-100 transition-opacity'
-                        >
-                          <X className='h-3 w-3 text-red-500 hover:text-red-700' />
-                        </button>
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <SortableContext
+                      items={field.state.value.map((_: SkillProps, index: number) => `skill-${index}`)}
+                      strategy={horizontalListSortingStrategy}
+                    >
+                      <div className='flex flex-wrap gap-2'>
+                        {field.state.value.map((skill: SkillProps, index: number) => (
+                          <SortableSkillItem
+                            key={`skill-${index}`}
+                            id={`skill-${index}`}
+                            index={index}
+                            skill={skill}
+                            removeSkill={removeSkill}
+                          />
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </SortableContext>
+                  </DndContext>
                 )}
               </div>
             )}
@@ -97,7 +193,7 @@ export const SkillsSection = ({ form, removeSkill }: SkillsSectionProps) => {
 
           {form.getFieldValue('skills').length > 0 && (
             <p className="text-xs text-gray-500 mt-4">
-              Tip: Add skills relevant to your target position. Include both technical and soft skills.
+              Tip: Drag skills to reorder them. Add skills relevant to your target position.
             </p>
           )}
         </div>
