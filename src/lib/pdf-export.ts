@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf';
 // A4 dimensions in mm
 const A4_WIDTH_MM = 210;
 const A4_HEIGHT_MM = 297;
+const PAGE_TOP_MARGIN_MM = 8; // Top margin for pages after the first (matches section spacing)
 
 interface LinkInfo {
     url: string;
@@ -11,6 +12,11 @@ interface LinkInfo {
     y: number;
     width: number;
     height: number;
+}
+
+interface SectionBoundary {
+    top: number;
+    bottom: number;
 }
 
 export interface PDFExportOptions {
@@ -46,14 +52,89 @@ function extractLinks(element: HTMLElement): LinkInfo[] {
     return links;
 }
 
+function extractSectionBoundaries(element: HTMLElement): SectionBoundary[] {
+    const sections: SectionBoundary[] = [];
+    const sectionElements = element.querySelectorAll('section');
+    const elementRect = element.getBoundingClientRect();
+
+    sectionElements.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        sections.push({
+            top: rect.top - elementRect.top,
+            bottom: rect.bottom - elementRect.top,
+        });
+    });
+
+    sections.sort((a, b) => a.top - b.top);
+    return sections;
+}
+
+function calculatePageBreaks(
+    totalHeightPx: number,
+    pageHeightPx: number,
+    sections: SectionBoundary[]
+): number[] {
+    const breaks: number[] = [];
+    let currentPageEnd = pageHeightPx;
+
+    while (currentPageEnd < totalHeightPx) {
+        let bestBreak = currentPageEnd;
+
+        for (const section of sections) {
+            // If section straddles the page break
+            if (section.top < currentPageEnd && section.bottom > currentPageEnd) {
+                // Move break point to just before this section starts
+                // Only if the section fits on a single page
+                const sectionHeight = section.bottom - section.top;
+                const previousBreak = breaks.length > 0 ? breaks[breaks.length - 1] : 0;
+                if (sectionHeight <= pageHeightPx && section.top > previousBreak) {
+                    bestBreak = section.top;
+                }
+                break;
+            }
+        }
+
+        breaks.push(bestBreak);
+        currentPageEnd = bestBreak + pageHeightPx;
+    }
+
+    return breaks;
+}
+
+function cropCanvas(
+    sourceCanvas: HTMLCanvasElement,
+    startY: number,
+    height: number
+): string {
+    const croppedCanvas = document.createElement('canvas');
+    croppedCanvas.width = sourceCanvas.width;
+    croppedCanvas.height = height;
+
+    const ctx = croppedCanvas.getContext('2d');
+    if (ctx) {
+        // Fill with white background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, croppedCanvas.width, height);
+        // Draw the cropped portion
+        ctx.drawImage(
+            sourceCanvas,
+            0, startY, sourceCanvas.width, height,
+            0, 0, sourceCanvas.width, height
+        );
+    }
+
+    return croppedCanvas.toDataURL('image/png');
+}
+
 export async function exportToPDF(
     element: HTMLElement,
     options: PDFExportOptions = {}
 ): Promise<void> {
     const { filename = 'cv.pdf', scale = 2, singlePage = false } = options;
 
-    // Extract links before rendering to canvas
+    // Extract links and section boundaries before rendering to canvas
     const links = extractLinks(element);
+    const sections = extractSectionBoundaries(element);
 
     // Get element dimensions for scaling calculations
     const elementWidth = element.scrollWidth;
@@ -108,44 +189,86 @@ export async function exportToPDF(
         // Single page but content fits - just add it
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
     } else {
-        // Multi page: split across pages as before
-        let heightLeft = imgHeight;
-        let position = 0;
+        // Multi page: split across pages with section-aware breaks
+        // Calculate page height in canvas pixels
+        const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
 
-        // Add first page
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        // Calculate optimal page breaks that don't split sections
+        const pageBreaks = calculatePageBreaks(canvas.height, pageHeightPx, sections.map(s => ({
+            top: s.top * scale,
+            bottom: s.bottom * scale
+        })));
 
-        // Add additional pages if needed
-        while (heightLeft > 0) {
-            position = heightLeft - imgHeight;
-            pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
+        // Add all break points including start (0) for easier iteration
+        const allBreaks = [0, ...pageBreaks, canvas.height];
+
+        // Render each page with cropped content
+        for (let i = 0; i < allBreaks.length - 1; i++) {
+            const startY = allBreaks[i];
+            const endY = allBreaks[i + 1];
+            const cropHeight = endY - startY;
+
+            // Create cropped image for this page
+            const croppedImgData = cropCanvas(canvas, startY, cropHeight);
+
+            // Calculate the height this crop takes in mm
+            const cropHeightMm = (cropHeight / canvas.height) * imgHeight;
+
+            if (i > 0) {
+                pdf.addPage();
+            }
+
+            // Add the cropped image - with top margin on subsequent pages
+            const topMargin = i > 0 ? PAGE_TOP_MARGIN_MM : 0;
+            pdf.addImage(croppedImgData, 'PNG', 0, topMargin, imgWidth, cropHeightMm);
         }
     }
 
     // Add clickable links to the PDF
+    // For multi-page, recalculate breaks for link positioning
+    const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
+    const scaledSections = sections.map(s => ({
+        top: s.top * scale,
+        bottom: s.bottom * scale
+    }));
+    const linkPageBreaks = singlePage ? [] : calculatePageBreaks(canvas.height, pageHeightPx, scaledSections);
+    const linkAllBreaks = [0, ...linkPageBreaks];
+
     links.forEach((link) => {
         // Convert pixel coordinates to mm
         const linkX = link.x * scaleX + linkXOffset;
-        const linkY = link.y * scaleY;
         const linkWidth = link.width * scaleX;
         const linkHeight = link.height * scaleY;
 
         // For single page, all links are on page 1
         if (singlePage) {
+            const linkY = link.y * scaleY;
             pdf.setPage(1);
             pdf.link(linkX, linkY, linkWidth, linkHeight, { url: link.url });
         } else {
-            // Determine which page this link is on
-            const pageNumber = Math.floor(linkY / pageHeight) + 1;
-            const yOnPage = linkY - (pageNumber - 1) * pageHeight;
+            // Determine which page this link is on using the calculated page breaks
+            const linkYPx = link.y * scale; // Position in canvas pixels
+            let pageNumber = 1;
+            let pageStartPx = 0;
+
+            for (let i = 0; i < linkAllBreaks.length; i++) {
+                if (linkYPx >= linkAllBreaks[i]) {
+                    pageNumber = i + 1;
+                    pageStartPx = linkAllBreaks[i];
+                }
+            }
+
+            // Calculate Y position relative to page start, converted to mm
+            const yOnPagePx = linkYPx - pageStartPx;
+            const yOnPage = (yOnPagePx / canvas.height) * imgHeight;
+            // Add top margin offset for pages after the first
+            const topMarginOffset = pageNumber > 1 ? PAGE_TOP_MARGIN_MM : 0;
+            const finalY = yOnPage + topMarginOffset;
 
             // Only add link if it's on a valid page
             if (pageNumber <= pdf.getNumberOfPages()) {
                 pdf.setPage(pageNumber);
-                pdf.link(linkX, yOnPage, linkWidth, linkHeight, { url: link.url });
+                pdf.link(linkX, finalY, linkWidth, linkHeight, { url: link.url });
             }
         }
     });
