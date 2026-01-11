@@ -102,8 +102,8 @@ export function TemplatePage() {
       </div>
 
       {/* Template Preview */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50 rounded-lg overflow-hidden print:shadow-none print:rounded-none">
+      <div className="py-8">
+        <div className="bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50 overflow-hidden print:shadow-none max-w-[210mm] mx-auto">
           {renderTemplate()}
         </div>
       </div>

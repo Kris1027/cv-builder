@@ -10,7 +10,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-['Lato'] text-gray-800">
+    <div className="bg-white font-['Lato'] text-gray-800">
       {/* Header Section - Medical/Veterinary Style */}
       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-b-3 border-emerald-600 pb-6 pt-8 px-8">
         <div className="flex items-center justify-center mb-3">
@@ -105,7 +105,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                       </h3>
                       <p className="text-gray-700 font-medium">{edu.institution}</p>
                       <p className="text-sm text-gray-500">
-                        {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
+                        {formatYear(edu.startDate)} - {formatYear(edu.endDate)}
                       </p>
                       {edu.description && (
                         <p className="text-sm text-gray-600 mt-2">{edu.description}</p>
@@ -199,7 +199,13 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   const [year, month] = dateString.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   return `${months[parseInt(month) - 1]} ${year}`;
+}
+
+function formatYear(dateString: string): string {
+  if (!dateString) return '';
+  const [year] = dateString.split('-');
+  return year;
 }

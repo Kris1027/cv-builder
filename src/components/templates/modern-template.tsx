@@ -10,7 +10,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-['JetBrains_Mono'] text-gray-800">
+    <div className="bg-white font-['JetBrains_Mono'] text-gray-800">
       {/* Header Section - Developer Style */}
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8">
         <h1 className="text-4xl font-bold mb-2">
@@ -106,7 +106,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
                         {edu.field}
                       </h3>
                       <p className="text-gray-700">
-                        {formatDate(edu.startDate)} - {formatDate(edu.endDate)} | {edu.institution}
+                        {formatYear(edu.startDate)} - {formatYear(edu.endDate)} | {edu.institution}
                       </p>
                       {edu.description && (
                         <p className="text-gray-700 text-sm mt-2">{edu.description}</p>
@@ -184,7 +184,13 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   const [year, month] = dateString.split('-');
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+  const months = ['January', 'February', 'March', 'April', 'May', 'June',
                   'July', 'August', 'September', 'October', 'November', 'December'];
   return `${months[parseInt(month) - 1]} ${year}`;
+}
+
+function formatYear(dateString: string): string {
+  if (!dateString) return '';
+  const [year] = dateString.split('-');
+  return year;
 }

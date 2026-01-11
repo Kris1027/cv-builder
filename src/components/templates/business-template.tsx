@@ -10,7 +10,7 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-['Montserrat'] text-gray-800">
+    <div className="bg-white font-['Montserrat'] text-gray-800">
       {/* Header Section - Modern Executive Style */}
       <div className="bg-gradient-to-b from-gray-50 to-white pb-6 mb-6 px-8 pt-8">
         <h1 className="text-4xl font-light text-center mb-2 tracking-wider uppercase">
@@ -89,7 +89,7 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
                       <span className="text-gray-900">{edu.degree}</span> <span className="text-gray-500 font-light">in</span> <span className="font-bold text-gray-700">{edu.field}</span>
                     </h3>
                     <span className="text-sm text-gray-500 font-light">
-                      {formatDate(edu.startDate)} – {formatDate(edu.endDate)}
+                      {formatYear(edu.startDate)} – {formatYear(edu.endDate)}
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 font-medium">{edu.institution}</p>
@@ -157,7 +157,13 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   const [year, month] = dateString.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   return `${months[parseInt(month) - 1]} ${year}`;
+}
+
+function formatYear(dateString: string): string {
+  if (!dateString) return '';
+  const [year] = dateString.split('-');
+  return year;
 }
