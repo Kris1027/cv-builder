@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link, useSearch } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
+import { ScaleToFitContainer } from '@/components/scale-to-fit-container';
 import type { CVData } from '@/data/sample-cv-data';
-import { ArrowLeft, Download, FileText, Edit, Loader2 } from 'lucide-react';
+import { ArrowLeft, Download, FileText, Edit, Loader2, FileDown, Files } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 
@@ -14,6 +15,12 @@ export function PreviewPage() {
   const templateId = search.templateId || 'modern';
   const [cvData, setCvData] = useState<CVData | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [singlePageMode, setSinglePageMode] = useState(false);
+  const [scaleInfo, setScaleInfo] = useState({ scale: 1, isScaled: false, atMinScale: false });
+
+  const handleScaleChange = useCallback((scale: number, isScaled: boolean, atMinScale: boolean) => {
+    setScaleInfo({ scale, isScaled, atMinScale });
+  }, []);
 
   useEffect(() => {
     // Get data from localStorage
@@ -43,11 +50,30 @@ export function PreviewPage() {
 
     setIsExporting(true);
     try {
+      // Temporarily disable CSS transform scaling for accurate capture
+      const scaledParent = element.parentElement;
+      const originalTransform = scaledParent?.style.transform;
+      const originalWidth = scaledParent?.style.width;
+
+      if (scaledParent && singlePageMode) {
+        scaledParent.style.transform = 'none';
+        scaledParent.style.width = '';
+      }
+
       const filename = generateCVFilename(
         cvData.personalInfo?.firstName,
         cvData.personalInfo?.lastName
       );
-      await exportToPDF(element, { filename });
+      await exportToPDF(element, {
+        filename,
+        singlePage: singlePageMode,
+      });
+
+      // Restore the transform after capture
+      if (scaledParent && singlePageMode) {
+        scaledParent.style.transform = originalTransform || '';
+        scaledParent.style.width = originalWidth || '';
+      }
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again or use the Print option.');
@@ -90,8 +116,37 @@ export function PreviewPage() {
             </div>
             
             <div className="flex items-center gap-3">
-              <Button 
-                variant="outline" 
+              {/* Page Mode Toggle */}
+              <div className="flex items-center border rounded-lg overflow-hidden dark:border-gray-700">
+                <Button
+                  variant={!singlePageMode ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setSinglePageMode(false)}
+                  className={`rounded-none border-0 ${!singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
+                >
+                  <Files className="w-4 h-4 mr-1" />
+                  Multi
+                </Button>
+                <Button
+                  variant={singlePageMode ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setSinglePageMode(true)}
+                  className={`rounded-none border-0 ${singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
+                >
+                  <FileDown className="w-4 h-4 mr-1" />
+                  Single
+                </Button>
+              </div>
+
+              {/* Scale indicator */}
+              {singlePageMode && scaleInfo.isScaled && (
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {Math.round(scaleInfo.scale * 100)}%
+                </span>
+              )}
+
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={handlePrint}
                 className="dark:hover:bg-gray-800"
@@ -135,13 +190,31 @@ export function PreviewPage() {
         </div>
       </div>
 
+      {/* Warning for minimum scale */}
+      {singlePageMode && scaleInfo.atMinScale && (
+        <div className="container mx-auto px-4 print:hidden">
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
+            <p className="text-amber-800 dark:text-amber-300 font-medium">Content is very long</p>
+            <p className="text-amber-700 dark:text-amber-400 text-sm mt-1">
+              Your CV has been scaled to the minimum (50%). Consider reducing content for better readability.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Template Preview */}
       <div className="py-8" id="print-container">
-        <div id="cv-content" className="bg-white text-gray-900 shadow-xl overflow-hidden max-w-[210mm] mx-auto">
-          {templateId === 'modern' && <ModernTemplate data={cvData} />}
-          {templateId === 'business' && <BusinessTemplate data={cvData} />}
-          {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
-        </div>
+        <ScaleToFitContainer
+          enabled={singlePageMode}
+          onScaleChange={handleScaleChange}
+          className="max-w-[210mm] mx-auto"
+        >
+          <div id="cv-content" className="bg-white text-gray-900 shadow-xl overflow-hidden">
+            {templateId === 'modern' && <ModernTemplate data={cvData} />}
+            {templateId === 'business' && <BusinessTemplate data={cvData} />}
+            {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
+          </div>
+        </ScaleToFitContainer>
       </div>
 
       {/* Print Styles */}

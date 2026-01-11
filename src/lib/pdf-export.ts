@@ -16,6 +16,7 @@ interface LinkInfo {
 export interface PDFExportOptions {
     filename?: string;
     scale?: number;
+    singlePage?: boolean;
 }
 
 function extractLinks(element: HTMLElement): LinkInfo[] {
@@ -49,7 +50,7 @@ export async function exportToPDF(
     element: HTMLElement,
     options: PDFExportOptions = {}
 ): Promise<void> {
-    const { filename = 'cv.pdf', scale = 2 } = options;
+    const { filename = 'cv.pdf', scale = 2, singlePage = false } = options;
 
     // Extract links before rendering to canvas
     const links = extractLinks(element);
@@ -68,13 +69,9 @@ export async function exportToPDF(
         height: elementHeight,
     });
 
-    // Calculate dimensions to fit A4
+    // Calculate dimensions to fit A4 width
     const imgWidth = A4_WIDTH_MM;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    // Calculate scale factor from pixels to mm
-    const scaleX = imgWidth / elementWidth;
-    const scaleY = imgHeight / elementHeight;
 
     // Create PDF document
     const pdf = new jsPDF({
@@ -83,42 +80,73 @@ export async function exportToPDF(
         format: 'a4',
     });
 
-    // If content is taller than one page, we need multiple pages
     const pageHeight = A4_HEIGHT_MM;
-    let heightLeft = imgHeight;
-    let position = 0;
 
     // Convert canvas to image data
     const imgData = canvas.toDataURL('image/png');
 
-    // Add first page
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+    // Calculate scale factors for link positioning
+    let scaleX = imgWidth / elementWidth;
+    let scaleY = imgHeight / elementHeight;
+    let linkXOffset = 0;
 
-    // Add additional pages if needed
-    while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
+    if (singlePage && imgHeight > A4_HEIGHT_MM) {
+        // Single page: scale to fit within A4 maintaining aspect ratio
+        const fitScale = A4_HEIGHT_MM / imgHeight;
+        const finalWidth = imgWidth * fitScale;
+        const finalHeight = A4_HEIGHT_MM;
+
+        // Center horizontally
+        linkXOffset = (A4_WIDTH_MM - finalWidth) / 2;
+
+        pdf.addImage(imgData, 'PNG', linkXOffset, 0, finalWidth, finalHeight);
+
+        // Update scale factors for links
+        scaleX = finalWidth / elementWidth;
+        scaleY = finalHeight / elementHeight;
+    } else if (singlePage) {
+        // Single page but content fits - just add it
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    } else {
+        // Multi page: split across pages as before
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        // Add first page
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
+
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
     }
 
     // Add clickable links to the PDF
     links.forEach((link) => {
         // Convert pixel coordinates to mm
-        const linkX = link.x * scaleX;
+        const linkX = link.x * scaleX + linkXOffset;
         const linkY = link.y * scaleY;
         const linkWidth = link.width * scaleX;
         const linkHeight = link.height * scaleY;
 
-        // Determine which page this link is on
-        const pageNumber = Math.floor(linkY / pageHeight) + 1;
-        const yOnPage = linkY - (pageNumber - 1) * pageHeight;
+        // For single page, all links are on page 1
+        if (singlePage) {
+            pdf.setPage(1);
+            pdf.link(linkX, linkY, linkWidth, linkHeight, { url: link.url });
+        } else {
+            // Determine which page this link is on
+            const pageNumber = Math.floor(linkY / pageHeight) + 1;
+            const yOnPage = linkY - (pageNumber - 1) * pageHeight;
 
-        // Only add link if it's on a valid page
-        if (pageNumber <= pdf.getNumberOfPages()) {
-            pdf.setPage(pageNumber);
-            pdf.link(linkX, yOnPage, linkWidth, linkHeight, { url: link.url });
+            // Only add link if it's on a valid page
+            if (pageNumber <= pdf.getNumberOfPages()) {
+                pdf.setPage(pageNumber);
+                pdf.link(linkX, yOnPage, linkWidth, linkHeight, { url: link.url });
+            }
         }
     });
 
