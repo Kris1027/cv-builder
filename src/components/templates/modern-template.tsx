@@ -10,7 +10,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-['JetBrains_Mono'] text-gray-800">
+    <div className="bg-white font-['JetBrains_Mono'] text-gray-800">
       {/* Header Section - Developer Style */}
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8">
         <h1 className="text-4xl font-bold mb-2">

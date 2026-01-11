@@ -136,8 +136,8 @@ export function PreviewPage() {
       </div>
 
       {/* Template Preview */}
-      <div className="container mx-auto px-4 py-8" id="print-container">
-        <div id="cv-content" className="bg-white text-gray-900 shadow-xl rounded-lg overflow-hidden">
+      <div className="py-8" id="print-container">
+        <div id="cv-content" className="bg-white text-gray-900 shadow-xl overflow-hidden max-w-[210mm] mx-auto">
           {templateId === 'modern' && <ModernTemplate data={cvData} />}
           {templateId === 'business' && <BusinessTemplate data={cvData} />}
           {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}

@@ -10,7 +10,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (
-    <div className="bg-white max-w-[210mm] mx-auto font-['Lato'] text-gray-800">
+    <div className="bg-white font-['Lato'] text-gray-800">
       {/* Header Section - Medical/Veterinary Style */}
       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-b-3 border-emerald-600 pb-6 pt-8 px-8">
         <div className="flex items-center justify-center mb-3">
