@@ -49,16 +49,31 @@ export function PreviewPage() {
     if (!element || !cvData) return;
 
     setIsExporting(true);
-    try {
-      // Temporarily disable CSS transform scaling for accurate capture
-      const scaledParent = element.parentElement;
-      const originalTransform = scaledParent?.style.transform;
-      const originalWidth = scaledParent?.style.width;
 
+    // Store original styles for restoration
+    const scaledParent = element.parentElement;
+    const originalStyles = scaledParent ? {
+      transform: scaledParent.style.transform,
+      width: scaledParent.style.width,
+    } : null;
+
+    const disableScaling = () => {
       if (scaledParent && singlePageMode) {
         scaledParent.style.transform = 'none';
         scaledParent.style.width = '';
       }
+    };
+
+    const restoreScaling = () => {
+      if (scaledParent && singlePageMode && originalStyles) {
+        scaledParent.style.transform = originalStyles.transform;
+        scaledParent.style.width = originalStyles.width;
+      }
+    };
+
+    try {
+      // Temporarily disable CSS transform scaling for accurate capture
+      disableScaling();
 
       const filename = generateCVFilename(
         cvData.personalInfo?.firstName,
@@ -68,16 +83,11 @@ export function PreviewPage() {
         filename,
         singlePage: singlePageMode,
       });
-
-      // Restore the transform after capture
-      if (scaledParent && singlePageMode) {
-        scaledParent.style.transform = originalTransform || '';
-        scaledParent.style.width = originalWidth || '';
-      }
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again or use the Print option.');
     } finally {
+      restoreScaling();
       setIsExporting(false);
     }
   };

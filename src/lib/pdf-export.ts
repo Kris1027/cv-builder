@@ -171,6 +171,13 @@ export async function exportToPDF(
     let scaleY = imgHeight / elementHeight;
     let linkXOffset = 0;
 
+    // Calculate page height in canvas pixels and scale section boundaries
+    const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
+    const scaledSections = sections.map(s => ({
+        top: s.top * scale,
+        bottom: s.bottom * scale,
+    }));
+
     if (singlePage && imgHeight > A4_HEIGHT_MM) {
         // Single page: scale to fit within A4 maintaining aspect ratio
         const fitScale = A4_HEIGHT_MM / imgHeight;
@@ -190,14 +197,8 @@ export async function exportToPDF(
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
     } else {
         // Multi page: split across pages with section-aware breaks
-        // Calculate page height in canvas pixels
-        const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
-
         // Calculate optimal page breaks that don't split sections
-        const pageBreaks = calculatePageBreaks(canvas.height, pageHeightPx, sections.map(s => ({
-            top: s.top * scale,
-            bottom: s.bottom * scale
-        })));
+        const pageBreaks = calculatePageBreaks(canvas.height, pageHeightPx, scaledSections);
 
         // Add all break points including start (0) for easier iteration
         const allBreaks = [0, ...pageBreaks, canvas.height];
@@ -225,12 +226,6 @@ export async function exportToPDF(
     }
 
     // Add clickable links to the PDF
-    // For multi-page, recalculate breaks for link positioning
-    const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
-    const scaledSections = sections.map(s => ({
-        top: s.top * scale,
-        bottom: s.bottom * scale
-    }));
     const linkPageBreaks = singlePage ? [] : calculatePageBreaks(canvas.height, pageHeightPx, scaledSections);
     const linkAllBreaks = [0, ...linkPageBreaks];
 
