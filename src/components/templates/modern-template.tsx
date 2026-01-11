@@ -106,7 +106,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
                         {edu.field}
                       </h3>
                       <p className="text-gray-700">
-                        {formatDate(edu.startDate)} - {formatDate(edu.endDate)} | {edu.institution}
+                        {formatYear(edu.startDate)} - {formatYear(edu.endDate)} | {edu.institution}
                       </p>
                       {edu.description && (
                         <p className="text-gray-700 text-sm mt-2">{edu.description}</p>
@@ -184,7 +184,13 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   const [year, month] = dateString.split('-');
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+  const months = ['January', 'February', 'March', 'April', 'May', 'June',
                   'July', 'August', 'September', 'October', 'November', 'December'];
   return `${months[parseInt(month) - 1]} ${year}`;
+}
+
+function formatYear(dateString: string): string {
+  if (!dateString) return '';
+  const [year] = dateString.split('-');
+  return year;
 }
