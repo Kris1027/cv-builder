@@ -1,11 +1,23 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Eye, ArrowLeft } from 'lucide-react';
+import { Eye, ArrowLeft, RotateCcw, FileCheck, AlertTriangle } from 'lucide-react';
 import { DeveloperPreview } from '@/components/template-previews/developer-preview';
 import { ExecutivePreview } from '@/components/template-previews/executive-preview';
 import { VeterinaryPreview } from '@/components/template-previews/veterinary-preview';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { useState, useEffect } from 'react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const templates = [
   {
@@ -29,6 +41,43 @@ const templates = [
 ];
 
 export function TemplatesPage() {
+  const [hasSavedData, setHasSavedData] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('cvData');
+    const savedTime = localStorage.getItem('cvData_lastSaved');
+
+    if (savedData) {
+      setHasSavedData(true);
+      if (savedTime) {
+        setLastSaved(new Date(savedTime));
+      }
+    }
+  }, []);
+
+  const handleReset = () => {
+    localStorage.removeItem('cvData');
+    localStorage.removeItem('cvData_backup');
+    localStorage.removeItem('cvData_lastSaved');
+    setHasSavedData(false);
+    setLastSaved(null);
+  };
+
+  const formatSavedTime = (date: Date) => {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'just now';
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+    return date.toLocaleDateString();
+  };
+
   return (
     <div className='min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors'>
       {/* Navigation Bar */}
@@ -56,6 +105,61 @@ export function TemplatesPage() {
             Select a template that best represents your professional style
           </p>
         </div>
+
+        {/* Saved Data Info */}
+        {hasSavedData && (
+          <div className='mb-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50'>
+                  <FileCheck className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+                </div>
+                <div>
+                  <p className='font-medium text-blue-800 dark:text-blue-300'>You have saved CV data</p>
+                  {lastSaved && (
+                    <p className='text-sm text-blue-600 dark:text-blue-400'>
+                      Last saved {formatSavedTime(lastSaved)}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    className='hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors'
+                  >
+                    <RotateCcw className='w-4 h-4 mr-2' />
+                    Reset
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <div className='flex items-center gap-3'>
+                      <div className='flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30'>
+                        <AlertTriangle className='h-5 w-5 text-red-600 dark:text-red-400' />
+                      </div>
+                      <AlertDialogTitle>Reset CV Data</AlertDialogTitle>
+                    </div>
+                    <AlertDialogDescription className='pt-2'>
+                      Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleReset}
+                      className='bg-red-600 hover:bg-red-700 focus:ring-red-600'
+                    >
+                      Reset All Data
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
+        )}
 
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           {templates.map((template, index) => (
