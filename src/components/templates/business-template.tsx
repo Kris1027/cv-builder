@@ -1,6 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin } from 'lucide-react';
-import { formatLinkedinDisplay } from '@/lib/utils';
+import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 
 interface BusinessTemplateProps {
   data: CVData;
@@ -22,10 +22,10 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
         
         {/* Contact Information - Horizontal layout */}
         <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 font-light border-t border-gray-200 pt-4">
-          {personalInfo.phone && (
-            <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-1 hover:underline">
-              <Phone className="w-3 h-3" />
-              {personalInfo.phone}
+          {personalInfo.location && (
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
+              <MapPin className="w-3 h-3" />
+              {personalInfo.location}
             </a>
           )}
           {personalInfo.email && (
@@ -34,10 +34,10 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
               {personalInfo.email}
             </a>
           )}
-          {personalInfo.location && (
-            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline">
-              <MapPin className="w-3 h-3" />
-              {personalInfo.location}
+          {personalInfo.phone && (
+            <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-1 hover:underline">
+              <Phone className="w-3 h-3" />
+              {formatPolishPhone(personalInfo.phone)}
             </a>
           )}
           {personalInfo.linkedin && (

@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { User, AlertCircle } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
+import { formatPolishPhone } from '@/lib/utils';
 
 interface PersonalInfoSectionProps {
   form: FormApi;
@@ -20,7 +21,8 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
         </div>
         <CardDescription className="dark:text-gray-400">Your basic contact information and professional summary</CardDescription>
       </CardHeader>
-      <CardContent className="pt-6">
+      <CardContent className="pt-6 space-y-6">
+        {/* Row 1: First Name, Last Name */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <form.Field name='personalInfo.firstName'>
             {(field) => (
@@ -81,7 +83,10 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
               </div>
             )}
           </form.Field>
+        </div>
 
+        {/* Row 2: Location, Email, Phone */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <form.Field name='personalInfo.location'>
             {(field) => (
               <div className="space-y-2">
@@ -93,41 +98,6 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="New York, NY"
-                  className="focus:ring-blue-500"
-                />
-              </div>
-            )}
-          </form.Field>
-
-          <form.Field name='personalInfo.title'>
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor={field.name}>Professional Title</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Software Engineer"
-                  className="focus:ring-blue-500"
-                />
-              </div>
-            )}
-          </form.Field>
-
-          <form.Field name='personalInfo.phone'>
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor={field.name}>Phone</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  type='tel'
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="+1 (555) 123-4567"
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -165,6 +135,47 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
             )}
           </form.Field>
 
+          <form.Field name='personalInfo.phone'>
+            {(field) => (
+              <div className="space-y-2">
+                <Label htmlFor={field.name}>Phone</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  type='tel'
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(formatPolishPhone(e.target.value))}
+                  placeholder="+48 123 456 789"
+                  className="focus:ring-blue-500"
+                />
+              </div>
+            )}
+          </form.Field>
+        </div>
+
+        {/* Row 3: Professional Title (full width) */}
+        <div className="grid grid-cols-1 gap-6">
+          <form.Field name='personalInfo.title'>
+            {(field) => (
+              <div className="space-y-2">
+                <Label htmlFor={field.name}>Professional Title</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="Software Engineer"
+                  className="focus:ring-blue-500"
+                />
+              </div>
+            )}
+          </form.Field>
+        </div>
+
+        {/* Row 4: Website, LinkedIn, GitHub */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <form.Field name='personalInfo.website'>
             {(field) => (
               <div className="space-y-2">

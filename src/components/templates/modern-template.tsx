@@ -1,6 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
-import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay } from '@/lib/utils';
+import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 
 interface ModernTemplateProps {
   data: CVData;
@@ -42,6 +42,12 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
         </div>
         
         <div className="flex flex-wrap gap-6 mt-2 text-sm font-normal">
+          {personalInfo.location && (
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
+              <MapPin className="w-4 h-4" />
+              <span>{personalInfo.location}</span>
+            </a>
+          )}
           {personalInfo.email && (
             <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-2 hover:underline">
               <Mail className="w-4 h-4" />
@@ -51,13 +57,7 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
           {personalInfo.phone && (
             <a href={`tel:${personalInfo.phone}`} className="flex items-center gap-2 hover:underline">
               <Phone className="w-4 h-4" />
-              <span>{personalInfo.phone}</span>
-            </a>
-          )}
-          {personalInfo.location && (
-            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
-              <MapPin className="w-4 h-4" />
-              <span>{personalInfo.location}</span>
+              <span>{formatPolishPhone(personalInfo.phone)}</span>
             </a>
           )}
         </div>
