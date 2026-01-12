@@ -648,17 +648,14 @@ export async function extractCVDataFromMetadata(file: File): Promise<CVFormValue
 
 /**
  * Main function to load CV from PDF file
- * First tries to read embedded metadata, falls back to text extraction
+ * Only works with PDFs created by this app (with embedded metadata)
  */
 export async function loadCVFromPDF(file: File): Promise<CVFormValues> {
-  // First, try to get CV data from PDF metadata
   const metadataResult = await extractCVDataFromMetadata(file);
   if (metadataResult) {
     return metadataResult;
   }
 
-  // Fallback to text extraction (for PDFs not created by this app)
-  const text = await extractTextFromPDF(file);
-  const template = detectTemplate(text);
-  return parseCVFromText(text, template);
+  // PDF doesn't have embedded CV data - not created by this app
+  throw new Error('This PDF was not created by CV Builder. The Load PDF feature only works with PDFs exported from this application.');
 }

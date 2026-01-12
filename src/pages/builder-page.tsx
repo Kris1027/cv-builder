@@ -16,7 +16,7 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
-import { ArrowLeft, CheckCircle, Save, RotateCcw, AlertTriangle, Upload } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Save, RotateCcw, AlertTriangle, Upload, FileWarning } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -47,6 +47,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   });
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoadingPDF, setIsLoadingPDF] = useState(false);
+  const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Use search param if available, otherwise fall back to prop
@@ -169,8 +170,8 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       setValidationErrors({});
     } catch (error) {
       console.error('Error loading PDF:', error);
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      alert(`Failed to load CV from PDF: ${errorMessage}`);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setPdfLoadError(errorMessage);
     } finally {
       setIsLoadingPDF(false);
       // Reset file input so the same file can be selected again
@@ -410,6 +411,29 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+
+              {/* PDF Load Error Dialog */}
+              <AlertDialog open={!!pdfLoadError} onOpenChange={(open) => !open && setPdfLoadError(null)}>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
+                        <FileWarning className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                      </div>
+                      <AlertDialogTitle>Unable to Load PDF</AlertDialogTitle>
+                    </div>
+                    <AlertDialogDescription className="pt-2">
+                      {pdfLoadError}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction onClick={() => setPdfLoadError(null)}>
+                      OK
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
               {lastSaved && (
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />
