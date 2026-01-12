@@ -16,8 +16,20 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
-import { ArrowLeft, CheckCircle, Save } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { ArrowLeft, CheckCircle, Save, RotateCcw, AlertTriangle, Upload, FileWarning } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useState, useRef } from 'react';
+import { loadCVFromPDF } from '@/lib/pdf-parser';
 import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 
 interface BuilderPageProps {
@@ -31,6 +43,9 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [isLoadingPDF, setIsLoadingPDF] = useState(false);
+  const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Use search param if available, otherwise fall back to prop
   const activeTemplateId = search.templateId || templateId;
@@ -93,7 +108,9 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       setIsSaving(true);
       // Store data in localStorage for persistence
       localStorage.setItem('cvData', JSON.stringify(value));
-      setLastSaved(new Date());
+      const now = new Date();
+      localStorage.setItem('cvData_lastSaved', now.toISOString());
+      setLastSaved(now);
       setIsSaving(false);
       
       // Navigate to preview page with templateId
@@ -101,26 +118,64 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     },
   });
   
-  // Auto-save functionality
-  useEffect(() => {
-    const autoSave = setInterval(() => {
-      const formData = form.state.values;
-      localStorage.setItem('cvData', JSON.stringify(formData));
-      localStorage.setItem('cvData_backup', JSON.stringify(formData));
-      setLastSaved(new Date());
-    }, 30000); // Auto-save every 30 seconds
-    
-    return () => clearInterval(autoSave);
-  }, [form.state.values]);
-
+  
   // Manual save function
   const handleManualSave = () => {
     setIsSaving(true);
     const formData = form.state.values;
     localStorage.setItem('cvData', JSON.stringify(formData));
     localStorage.setItem('cvData_backup', JSON.stringify(formData));
-    setLastSaved(new Date());
+    const now = new Date();
+    localStorage.setItem('cvData_lastSaved', now.toISOString());
+    setLastSaved(now);
     setTimeout(() => setIsSaving(false), 500);
+  };
+
+  // Reset form function
+  const handleReset = () => {
+    localStorage.removeItem('cvData');
+    localStorage.removeItem('cvData_backup');
+    localStorage.removeItem('cvData_lastSaved');
+    setLastSaved(null);
+    setValidationErrors({});
+    form.reset();
+  };
+
+  // Load CV from PDF
+  const handleLoadPDF = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsLoadingPDF(true);
+    try {
+      const cvData = await loadCVFromPDF(file);
+
+      // Update form with parsed data
+      form.setFieldValue('templateId', cvData.templateId);
+      form.setFieldValue('personalInfo', cvData.personalInfo);
+      form.setFieldValue('experiences', cvData.experiences);
+      form.setFieldValue('education', cvData.education);
+      form.setFieldValue('skills', cvData.skills);
+      form.setFieldValue('languages', cvData.languages);
+      form.setFieldValue('interests', cvData.interests);
+
+      // Save to localStorage
+      localStorage.setItem('cvData', JSON.stringify(cvData));
+      const now = new Date();
+      localStorage.setItem('cvData_lastSaved', now.toISOString());
+      setLastSaved(now);
+      setValidationErrors({});
+    } catch (error) {
+      console.error('Error loading PDF:', error);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setPdfLoadError(errorMessage);
+    } finally {
+      setIsLoadingPDF(false);
+      // Reset file input so the same file can be selected again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
   };
 
   const addExperience = () => {
@@ -288,6 +343,25 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
               </h1>
             </div>
             <div className="flex items-center gap-3">
+              {/* Hidden file input for PDF loading */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleLoadPDF}
+                accept=".pdf"
+                className="hidden"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isLoadingPDF}
+                className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors"
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                {isLoadingPDF ? 'Loading...' : 'Load PDF'}
+              </Button>
               <Button
                 type="button"
                 variant="outline"
@@ -299,6 +373,64 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                 <Save className="w-4 h-4 mr-2" />
                 {isSaving ? 'Saving...' : 'Save'}
               </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors"
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Reset
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+                        <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                      </div>
+                      <AlertDialogTitle>Reset CV Data</AlertDialogTitle>
+                    </div>
+                    <AlertDialogDescription className="pt-2">
+                      Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleReset}
+                      className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                    >
+                      Reset All Data
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              {/* PDF Load Error Dialog */}
+              <AlertDialog open={!!pdfLoadError} onOpenChange={(open) => !open && setPdfLoadError(null)}>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
+                        <FileWarning className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                      </div>
+                      <AlertDialogTitle>Unable to Load PDF</AlertDialogTitle>
+                    </div>
+                    <AlertDialogDescription className="pt-2">
+                      {pdfLoadError}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction onClick={() => setPdfLoadError(null)}>
+                      OK
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
               {lastSaved && (
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />

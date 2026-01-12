@@ -4,15 +4,11 @@ import { ModernTemplate } from '@/components/templates/modern-template';
 import { BusinessTemplate } from '@/components/templates/business-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { sampleCVData } from '@/data/sample-cv-data';
-import { ArrowLeft, Download, FileText, Edit } from 'lucide-react';
+import { ArrowLeft, Download, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 export function TemplatePage() {
   const { templateId } = useParams({ from: '/templates_/$templateId' });
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleDownloadPDF = () => {
     window.print();
@@ -71,17 +67,8 @@ export function TemplatePage() {
             </div>
             
             <div className="flex items-center gap-3">
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={handlePrint}
-                className="dark:hover:bg-gray-800"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                Print
-              </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={handleDownloadPDF}
                 className="dark:hover:bg-gray-800"

@@ -23,6 +23,7 @@ export interface PDFExportOptions {
     filename?: string;
     scale?: number;
     singlePage?: boolean;
+    cvData?: string; // JSON string of CV data to embed in PDF
 }
 
 function extractLinks(element: HTMLElement): LinkInfo[] {
@@ -130,7 +131,7 @@ export async function exportToPDF(
     element: HTMLElement,
     options: PDFExportOptions = {}
 ): Promise<void> {
-    const { filename = 'cv.pdf', scale = 2, singlePage = false } = options;
+    const { filename = 'cv.pdf', scale = 2, singlePage = false, cvData } = options;
 
     // Extract links and section boundaries before rendering to canvas
     const links = extractLinks(element);
@@ -267,6 +268,16 @@ export async function exportToPDF(
             }
         }
     });
+
+    // Embed CV data as custom metadata if provided
+    if (cvData) {
+        pdf.setProperties({
+            title: filename.replace('.pdf', ''),
+            subject: 'CV/Resume',
+            creator: 'CV Builder App',
+            keywords: cvData, // Store JSON data in keywords field
+        });
+    }
 
     // Save the PDF
     pdf.save(filename);
