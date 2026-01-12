@@ -657,5 +657,5 @@ export async function loadCVFromPDF(file: File): Promise<CVFormValues> {
   }
 
   // PDF doesn't have embedded CV data - not created by this app
-  throw new Error('This PDF was not created by CV Builder. The Load PDF feature only works with PDFs exported from this application.');
+  throw new Error('This PDF was not created by CV Builder. Only PDFs exported from this application can be loaded. You can fill out the form manually instead.');
 }

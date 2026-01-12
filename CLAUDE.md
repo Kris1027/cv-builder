@@ -301,15 +301,15 @@ Added ability to load CV data from a previously saved PDF file back into the for
 
 ### Implementation Details
 
-**Library**: `pdf-parse` v2.4.5
-- Pure TypeScript, browser-compatible PDF parsing library
+**Library**: `pdfjs-dist` v5.4.530
+- Mozilla's PDF.js library for the browser
 - Uses web workers for performance
-- Extracts text content from PDF files
+- Extracts text content and metadata from PDF files
 
 **Architecture**:
-1. **PDF Text Extraction**: Uses pdf-parse to extract raw text from PDF
-2. **Template Detection**: Identifies which template was used based on section markers
-3. **Text Parsing**: Regex-based parsing to extract structured data from text
+1. **PDF Metadata Extraction**: Uses pdfjs-dist to extract CV data from PDF metadata (Keywords field)
+2. **Fallback Text Parsing**: If no metadata found, extracts raw text for parsing
+3. **Template Detection**: Identifies which template was used based on section markers
 4. **Form Population**: Updates TanStack Form fields with parsed data
 
 ### Template Detection Logic
@@ -351,5 +351,5 @@ Added ability to load CV data from a previously saved PDF file back into the for
 ### Dependencies Added
 ```json
 {
-  "pdf-parse": "^2.4.5"
+  "pdfjs-dist": "^5.4.530"
 }
