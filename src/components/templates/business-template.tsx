@@ -88,7 +88,7 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
                 <div key={index}>
                   <div className="flex justify-between items-baseline mb-1">
                     <h3 className="font-semibold text-base">
-                      <span className="text-gray-900">{edu.degree}</span> <span className="text-gray-500 font-light">in</span> <span className="font-bold text-gray-700">{edu.field}</span>
+                      <span className="text-gray-900">{edu.degree}</span> <span className="font-bold text-gray-700">{edu.field}</span>
                     </h3>
                     <span className="text-sm text-gray-500 font-light">
                       {formatYear(edu.startDate)} – {formatYear(edu.endDate)}

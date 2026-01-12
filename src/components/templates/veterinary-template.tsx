@@ -103,7 +103,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                   {education.map((edu, index) => (
                     <div key={index} className="border-l-2 border-emerald-200 pl-4">
                       <h3 className="font-bold text-emerald-600">
-                        {edu.degree} in {edu.field}
+                        {edu.degree} {edu.field}
                       </h3>
                       <p className="text-gray-700 font-medium">{edu.institution}</p>
                       <p className="text-sm text-gray-500">
