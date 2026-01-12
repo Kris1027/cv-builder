@@ -16,7 +16,18 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
-import { ArrowLeft, CheckCircle, Save } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Save, RotateCcw, AlertTriangle } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 
@@ -29,7 +40,10 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
   const isEditMode = search.edit === true;
   const [isSaving, setIsSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [lastSaved, setLastSaved] = useState<Date | null>(() => {
+    const stored = localStorage.getItem('cvData_lastSaved');
+    return stored ? new Date(stored) : null;
+  });
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   
   // Use search param if available, otherwise fall back to prop
@@ -93,7 +107,9 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       setIsSaving(true);
       // Store data in localStorage for persistence
       localStorage.setItem('cvData', JSON.stringify(value));
-      setLastSaved(new Date());
+      const now = new Date();
+      localStorage.setItem('cvData_lastSaved', now.toISOString());
+      setLastSaved(now);
       setIsSaving(false);
       
       // Navigate to preview page with templateId
@@ -107,9 +123,11 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       const formData = form.state.values;
       localStorage.setItem('cvData', JSON.stringify(formData));
       localStorage.setItem('cvData_backup', JSON.stringify(formData));
-      setLastSaved(new Date());
+      const now = new Date();
+      localStorage.setItem('cvData_lastSaved', now.toISOString());
+      setLastSaved(now);
     }, 30000); // Auto-save every 30 seconds
-    
+
     return () => clearInterval(autoSave);
   }, [form.state.values]);
 
@@ -119,8 +137,20 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
     const formData = form.state.values;
     localStorage.setItem('cvData', JSON.stringify(formData));
     localStorage.setItem('cvData_backup', JSON.stringify(formData));
-    setLastSaved(new Date());
+    const now = new Date();
+    localStorage.setItem('cvData_lastSaved', now.toISOString());
+    setLastSaved(now);
     setTimeout(() => setIsSaving(false), 500);
+  };
+
+  // Reset form function
+  const handleReset = () => {
+    localStorage.removeItem('cvData');
+    localStorage.removeItem('cvData_backup');
+    localStorage.removeItem('cvData_lastSaved');
+    setLastSaved(null);
+    setValidationErrors({});
+    form.reset();
   };
 
   const addExperience = () => {
@@ -299,6 +329,41 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
                 <Save className="w-4 h-4 mr-2" />
                 {isSaving ? 'Saving...' : 'Save'}
               </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors"
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Reset
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+                        <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                      </div>
+                      <AlertDialogTitle>Reset CV Data</AlertDialogTitle>
+                    </div>
+                    <AlertDialogDescription className="pt-2">
+                      Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleReset}
+                      className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                    >
+                      Reset All Data
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
               {lastSaved && (
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />
