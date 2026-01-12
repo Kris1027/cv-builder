@@ -139,7 +139,7 @@ export async function exportToPDF(
         scale = 2,
         singlePage = false,
         cvData,
-        imageQuality = 0.92, // High quality JPEG (reduces file size by ~80% vs PNG)
+        imageQuality = 0.92, // High quality JPEG (significantly reduces file size compared to PNG)
         compression = 'MEDIUM' // jsPDF compression level
     } = options;
 
