@@ -24,6 +24,8 @@ export interface PDFExportOptions {
     scale?: number;
     singlePage?: boolean;
     cvData?: string; // JSON string of CV data to embed in PDF
+    imageQuality?: number; // JPEG quality 0-1 (default 0.92)
+    compression?: 'NONE' | 'FAST' | 'MEDIUM' | 'SLOW'; // Image compression level (default 'MEDIUM')
 }
 
 function extractLinks(element: HTMLElement): LinkInfo[] {
@@ -105,7 +107,8 @@ function calculatePageBreaks(
 function cropCanvas(
     sourceCanvas: HTMLCanvasElement,
     startY: number,
-    height: number
+    height: number,
+    quality: number = 0.92
 ): string {
     const croppedCanvas = document.createElement('canvas');
     croppedCanvas.width = sourceCanvas.width;
@@ -124,14 +127,21 @@ function cropCanvas(
         );
     }
 
-    return croppedCanvas.toDataURL('image/png');
+    return croppedCanvas.toDataURL('image/jpeg', quality);
 }
 
 export async function exportToPDF(
     element: HTMLElement,
     options: PDFExportOptions = {}
 ): Promise<void> {
-    const { filename = 'cv.pdf', scale = 2, singlePage = false, cvData } = options;
+    const {
+        filename = 'cv.pdf',
+        scale = 2,
+        singlePage = false,
+        cvData,
+        imageQuality = 0.92, // High quality JPEG (reduces file size by ~80% vs PNG)
+        compression = 'MEDIUM' // jsPDF compression level
+    } = options;
 
     // Extract links and section boundaries before rendering to canvas
     const links = extractLinks(element);
@@ -164,8 +174,8 @@ export async function exportToPDF(
 
     const pageHeight = A4_HEIGHT_MM;
 
-    // Convert canvas to image data
-    const imgData = canvas.toDataURL('image/png');
+    // Convert canvas to JPEG image data (much smaller than PNG)
+    const imgData = canvas.toDataURL('image/jpeg', imageQuality);
 
     // Calculate scale factors for link positioning
     let scaleX = imgWidth / elementWidth;
@@ -188,14 +198,14 @@ export async function exportToPDF(
         // Center horizontally
         linkXOffset = (A4_WIDTH_MM - finalWidth) / 2;
 
-        pdf.addImage(imgData, 'PNG', linkXOffset, 0, finalWidth, finalHeight);
+        pdf.addImage(imgData, 'JPEG', linkXOffset, 0, finalWidth, finalHeight, undefined, compression);
 
         // Update scale factors for links
         scaleX = finalWidth / elementWidth;
         scaleY = finalHeight / elementHeight;
     } else if (singlePage) {
         // Single page but content fits - just add it
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, compression);
     } else {
         // Multi page: split across pages with section-aware breaks
         // Calculate optimal page breaks that don't split sections
@@ -210,8 +220,8 @@ export async function exportToPDF(
             const endY = allBreaks[i + 1];
             const cropHeight = endY - startY;
 
-            // Create cropped image for this page
-            const croppedImgData = cropCanvas(canvas, startY, cropHeight);
+            // Create cropped JPEG image for this page
+            const croppedImgData = cropCanvas(canvas, startY, cropHeight, imageQuality);
 
             // Calculate the height this crop takes in mm
             const cropHeightMm = (cropHeight / canvas.height) * imgHeight;
@@ -222,7 +232,7 @@ export async function exportToPDF(
 
             // Add the cropped image - with top margin on subsequent pages
             const topMargin = i > 0 ? PAGE_TOP_MARGIN_MM : 0;
-            pdf.addImage(croppedImgData, 'PNG', 0, topMargin, imgWidth, cropHeightMm);
+            pdf.addImage(croppedImgData, 'JPEG', 0, topMargin, imgWidth, cropHeightMm, undefined, compression);
         }
     }
 

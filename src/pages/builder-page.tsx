@@ -38,8 +38,7 @@ interface BuilderPageProps {
 
 const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const navigate = useNavigate();
-  const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
-  const isEditMode = search.edit === true;
+  const search = useSearch({ from: '/builder' }) as { templateId?: string };
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -50,19 +49,17 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   // Use search param if available, otherwise fall back to prop
   const activeTemplateId = search.templateId || templateId;
   
-  // Get initial values - either from localStorage in edit mode or defaults
+  // Get initial values - load from localStorage if available, otherwise defaults
   const getInitialValues = () => {
-    if (isEditMode) {
-      const storedData = localStorage.getItem('cvData');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        return {
-          ...parsedData,
-          templateId: parsedData.templateId || activeTemplateId,
-        };
-      }
+    const storedData = localStorage.getItem('cvData');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      return {
+        ...parsedData,
+        templateId: parsedData.templateId || activeTemplateId,
+      };
     }
-    
+
     // Return default values for new CV
     return {
       templateId: activeTemplateId,
@@ -159,11 +156,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       form.setFieldValue('languages', cvData.languages);
       form.setFieldValue('interests', cvData.interests);
 
-      // Save to localStorage
-      localStorage.setItem('cvData', JSON.stringify(cvData));
-      const now = new Date();
-      localStorage.setItem('cvData_lastSaved', now.toISOString());
-      setLastSaved(now);
+      // Clear validation errors - user can manually save when ready
       setValidationErrors({});
     } catch (error) {
       console.error('Error loading PDF:', error);
