@@ -28,7 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { loadCVFromPDF } from '@/lib/pdf-parser';
 import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 
@@ -48,6 +48,20 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   
   // Use search param if available, otherwise fall back to prop
   const activeTemplateId = search.templateId || templateId;
+
+  // Convert template ID to display name
+  const getTemplateName = (id: string) => {
+    switch (id) {
+      case 'modern':
+        return 'Developer Template';
+      case 'business':
+        return 'Executive Template';
+      case 'veterinary':
+        return 'Veterinary Template';
+      default:
+        return id;
+    }
+  };
   
   // Get initial values - load from localStorage if available, otherwise defaults
   const getInitialValues = () => {
@@ -56,7 +70,8 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       const parsedData = JSON.parse(storedData);
       return {
         ...parsedData,
-        templateId: parsedData.templateId || activeTemplateId,
+        // Always use URL templateId when explicitly provided, otherwise fall back to stored value
+        templateId: search.templateId || parsedData.templateId || activeTemplateId,
       };
     }
 
@@ -114,8 +129,14 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
       navigate({ to: '/preview', search: { templateId: value.templateId } });
     },
   });
-  
-  
+
+  // Sync form templateId when URL parameter changes
+  useEffect(() => {
+    if (search.templateId && form.getFieldValue('templateId') !== search.templateId) {
+      form.setFieldValue('templateId', search.templateId);
+    }
+  }, [search.templateId, form]);
+
   // Manual save function
   const handleManualSave = () => {
     setIsSaving(true);
@@ -432,7 +453,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
               )}
               <div className="text-sm text-gray-600 dark:text-gray-400 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
                 <span className="hidden sm:inline">Template: </span>
-                <span className="font-medium capitalize">{activeTemplateId}</span>
+                <span className="font-medium">{getTemplateName(activeTemplateId)}</span>
               </div>
               <ThemeToggle />
             </div>
