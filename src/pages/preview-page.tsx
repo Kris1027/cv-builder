@@ -6,7 +6,7 @@ import { BusinessTemplate } from '@/components/templates/business-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { ScaleToFitContainer } from '@/components/scale-to-fit-container';
 import type { CVData } from '@/data/sample-cv-data';
-import { ArrowLeft, Download, FileText, Edit, Loader2, FileDown, Files } from 'lucide-react';
+import { ArrowLeft, Download, Edit, Loader2, FileDown, Files } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 
@@ -39,10 +39,6 @@ export function PreviewPage() {
       setCvData(transformedData);
     }
   }, []);
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleDownloadPDF = async () => {
     const element = document.getElementById('cv-content');
@@ -85,7 +81,7 @@ export function PreviewPage() {
       });
     } catch (error) {
       console.error('Failed to export PDF:', error);
-      alert('Failed to export PDF. Please try again or use the Print option.');
+      alert('Failed to export PDF. Please try again.');
     } finally {
       restoreScaling();
       setIsExporting(false);
@@ -158,15 +154,6 @@ export function PreviewPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handlePrint}
-                className="dark:hover:bg-gray-800"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                Print
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
                 onClick={handleDownloadPDF}
                 disabled={isExporting}
                 className="dark:hover:bg-gray-800"
@@ -195,7 +182,7 @@ export function PreviewPage() {
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
           <p className="text-green-800 dark:text-green-300 font-medium">🎉 Congratulations! Your CV is ready.</p>
           <p className="text-green-700 dark:text-green-400 text-sm mt-1">
-            You can now print it, download as PDF, or continue editing.
+            You can now download as PDF or continue editing.
           </p>
         </div>
       </div>
