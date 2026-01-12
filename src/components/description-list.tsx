@@ -14,7 +14,7 @@ export function DescriptionList({ description, className = '' }: DescriptionList
       {lines.map((line, index) => {
         const trimmedLine = line.trim();
         // Check if line starts with a bullet point (•, -, *, ‣, ◦, ⁃, ∙)
-        const bulletMatch = trimmedLine.match(/^([\-*\u2022\u2023\u25E6\u2043\u2219])\s*/);
+        const bulletMatch = trimmedLine.match(/^([-*\u2022\u2023\u25E6\u2043\u2219])\s*/);
 
         if (bulletMatch) {
           const bullet = bulletMatch[1];

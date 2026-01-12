@@ -54,20 +54,20 @@ export function parseCVFromText(text: string, templateId: TemplateType): CVFormV
   const lines = text.split(/\n|\s{2,}/).map(l => l.trim()).filter(l => l.length > 0);
 
   if (templateId === 'modern') {
-    return parseModernTemplate(lines, text);
+    return parseModernTemplate(lines);
   } else if (templateId === 'business') {
-    return parseBusinessTemplate(lines, text);
+    return parseBusinessTemplate(lines);
   } else if (templateId === 'veterinary') {
-    return parseVeterinaryTemplate(lines, text);
+    return parseVeterinaryTemplate(lines);
   }
 
-  return parseModernTemplate(lines, text);
+  return parseModernTemplate(lines);
 }
 
 /**
  * Parse the Developer (modern) template format
  */
-function parseModernTemplate(lines: string[], _fullText: string): CVFormValues {
+function parseModernTemplate(lines: string[]): CVFormValues {
   const result = createEmptyCV('modern');
 
   // Find section markers
@@ -123,7 +123,7 @@ function parseModernTemplate(lines: string[], _fullText: string): CVFormValues {
 /**
  * Parse the Executive (business) template format
  */
-function parseBusinessTemplate(lines: string[], _fullText: string): CVFormValues {
+function parseBusinessTemplate(lines: string[]): CVFormValues {
   const result = createEmptyCV('business');
 
   // Find section markers (uppercase headers)
@@ -179,7 +179,7 @@ function parseBusinessTemplate(lines: string[], _fullText: string): CVFormValues
 /**
  * Parse the Veterinary template format
  */
-function parseVeterinaryTemplate(lines: string[], _fullText: string): CVFormValues {
+function parseVeterinaryTemplate(lines: string[]): CVFormValues {
   const result = createEmptyCV('veterinary');
 
   // Find section markers
