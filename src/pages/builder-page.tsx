@@ -41,10 +41,7 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   const search = useSearch({ from: '/builder' }) as { templateId?: string; edit?: boolean };
   const isEditMode = search.edit === true;
   const [isSaving, setIsSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(() => {
-    const stored = localStorage.getItem('cvData_lastSaved');
-    return stored ? new Date(stored) : null;
-  });
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoadingPDF, setIsLoadingPDF] = useState(false);
   const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);

@@ -85,7 +85,27 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           </form.Field>
         </div>
 
-        {/* Row 2: Location, Email, Phone */}
+        {/* Row 2: Professional Title (full width) */}
+        <div className="grid grid-cols-1 gap-6">
+          <form.Field name='personalInfo.title'>
+            {(field) => (
+              <div className="space-y-2">
+                <Label htmlFor={field.name}>Professional Title</Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="Software Engineer"
+                  className="focus:ring-blue-500"
+                />
+              </div>
+            )}
+          </form.Field>
+        </div>
+
+        {/* Row 3: Location, Email, Phone */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <form.Field name='personalInfo.location'>
             {(field) => (
@@ -154,26 +174,6 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   }}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="+48 123 456 789"
-                  className="focus:ring-blue-500"
-                />
-              </div>
-            )}
-          </form.Field>
-        </div>
-
-        {/* Row 3: Professional Title (full width) */}
-        <div className="grid grid-cols-1 gap-6">
-          <form.Field name='personalInfo.title'>
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor={field.name}>Professional Title</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Software Engineer"
                   className="focus:ring-blue-500"
                 />
               </div>
