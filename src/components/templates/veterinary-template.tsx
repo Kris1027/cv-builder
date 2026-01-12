@@ -1,6 +1,7 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from 'lucide-react';
 import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
+import { DescriptionList } from '@/components/description-list';
 
 interface VeterinaryTemplateProps {
   data: CVData;
@@ -80,9 +81,10 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                         {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` • ${exp.location}`}
                       </p>
                     </div>
-                    <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                      {exp.description}
-                    </div>
+                    <DescriptionList
+                      description={exp.description}
+                      className="text-sm text-gray-700 leading-relaxed"
+                    />
                   </div>
                 ))}
               </div>

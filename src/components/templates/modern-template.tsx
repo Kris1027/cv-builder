@@ -1,6 +1,7 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
+import { DescriptionList } from '@/components/description-list';
 
 interface ModernTemplateProps {
   data: CVData;
@@ -85,9 +86,10 @@ export function ModernTemplate({ data }: ModernTemplateProps) {
                         </p>
                       </div>
                     </div>
-                    <div className="text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">
-                      {exp.description}
-                    </div>
+                    <DescriptionList
+                      description={exp.description}
+                      className="text-gray-700 text-sm leading-relaxed"
+                    />
                   </div>
                 ))}
               </div>

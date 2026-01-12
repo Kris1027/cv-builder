@@ -1,6 +1,7 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
+import { DescriptionList } from '@/components/description-list';
 
 interface BusinessTemplateProps {
   data: CVData;
@@ -67,9 +68,10 @@ export function BusinessTemplate({ data }: BusinessTemplateProps) {
                   </span>
                 </div>
                 {exp.location && <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{exp.location}</p>}
-                <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 font-light">
-                  {exp.description}
-                </div>
+                <DescriptionList
+                  description={exp.description}
+                  className="text-sm leading-relaxed text-gray-700 font-light"
+                />
               </div>
             ))}
           </div>
