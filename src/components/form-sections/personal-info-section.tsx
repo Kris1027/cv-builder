@@ -144,8 +144,15 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   name={field.name}
                   type='tel'
                   value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(formatPolishPhone(e.target.value))}
+                  onBlur={(e) => {
+                    field.handleBlur();
+                    // Format on blur only if there are digits
+                    const digits = e.target.value.replace(/\D/g, '');
+                    if (digits.length > 0) {
+                      field.handleChange(formatPolishPhone(e.target.value));
+                    }
+                  }}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="+48 123 456 789"
                   className="focus:ring-blue-500"
                 />

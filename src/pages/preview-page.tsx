@@ -78,6 +78,7 @@ export function PreviewPage() {
       await exportToPDF(element, {
         filename,
         singlePage: singlePageMode,
+        cvData: JSON.stringify(cvData),
       });
     } catch (error) {
       console.error('Failed to export PDF:', error);
