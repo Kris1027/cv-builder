@@ -43,7 +43,7 @@ src/
 
 ## Key Features
 - **Multi-section CV Form**: Personal info, experience, education, skills, languages, interests
-- **Template Support**: Multiple CV templates (modern, business)
+- **Template Support**: Multiple CV templates (developer, default, veterinary)
 - **Auto-save**: Saves to localStorage every 30 seconds
 - **Form Validation**: Required field validation with error messages
 - **Progress Tracking**: Visual progress indicator showing form completion
@@ -202,7 +202,7 @@ All form data is stored in localStorage under the key `cvData` with the followin
 ### Template System Overhaul
 The application now features three specialized CV templates, each targeting specific professional fields with unique designs and typography.
 
-### 1. Developer Template (formerly Modern Template)
+### 1. Developer Template
 **Target Audience**: Software developers, programmers, tech professionals
 
 **Design Features**:
@@ -213,11 +213,12 @@ The application now features three specialized CV templates, each targeting spec
 - **Unique Elements**: Code-inspired styling throughout
 
 **File Locations**:
-- Template: `/src/components/templates/modern-template.tsx`
-- Preview: `/src/components/template-previews/modern-preview.tsx`
+- Template: `/src/components/templates/developer-template.tsx`
+- Preview: `/src/components/template-previews/developer-preview.tsx`
+- Preview Image: `/src/assets/templates/developer-template.png`
 
-### 2. Executive Template (formerly Business Template)
-**Target Audience**: Senior professionals, executives, corporate leaders
+### 2. Default Template
+**Target Audience**: Professionals across all industries
 
 **Design Features**:
 - **Font**: Montserrat (modern, clean sans-serif)
@@ -227,8 +228,9 @@ The application now features three specialized CV templates, each targeting spec
 - **Skills**: Modern pill-style badges with subtle borders
 
 **File Locations**:
-- Template: `/src/components/templates/business-template.tsx`
-- Preview: `/src/components/template-previews/business-preview.tsx`
+- Template: `/src/components/templates/default-template.tsx`
+- Preview: `/src/components/template-previews/default-preview.tsx`
+- Preview Image: `/src/assets/templates/default-template.png`
 
 ### 3. Veterinary Template (NEW)
 **Target Audience**: Veterinarians, animal healthcare professionals
@@ -283,8 +285,8 @@ The application now features three specialized CV templates, each targeting spec
 - **Language Proficiency**: Uses European framework (A1, A2, B1, B2, C1, C2, NATIVE)
 
 ### Files Modified/Created
-- `/src/components/templates/modern-template.tsx` - Updated to Developer template
-- `/src/components/templates/business-template.tsx` - Updated to Executive template
+- `/src/components/templates/developer-template.tsx` - Developer template
+- `/src/components/templates/default-template.tsx` - Default template
 - `/src/components/templates/veterinary-template.tsx` - NEW
 - `/src/components/template-previews/veterinary-preview.tsx` - NEW
 - `/src/pages/templates-page.tsx` - Added veterinary template
@@ -313,8 +315,8 @@ Added ability to load CV data from a previously saved PDF file back into the for
 4. **Form Population**: Updates TanStack Form fields with parsed data
 
 ### Template Detection Logic
-- **Developer (modern)**: Contains `// WORK EXPERIENCE`, `// TECH STACK`
-- **Executive (business)**: Contains `PROFESSIONAL EXPERIENCE`, `CORE COMPETENCIES`
+- **Developer**: Contains `// WORK EXPERIENCE`, `// TECH STACK`
+- **Default**: Contains `PROFESSIONAL EXPERIENCE`, `CORE COMPETENCIES`
 - **Veterinary**: Contains `CLINICAL EXPERIENCE`, `CLINICAL SKILLS`
 
 ### Parsed Data Fields

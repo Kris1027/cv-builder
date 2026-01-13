@@ -3,11 +3,11 @@ import { Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 
-interface BusinessTemplateProps {
+interface DefaultTemplateProps {
   data: CVData;
 }
 
-export function BusinessTemplate({ data }: BusinessTemplateProps) {
+export function DefaultTemplate({ data }: DefaultTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (

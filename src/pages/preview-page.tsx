@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useSearch } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { ModernTemplate } from '@/components/templates/modern-template';
-import { BusinessTemplate } from '@/components/templates/business-template';
+import { DeveloperTemplate } from '@/components/templates/developer-template';
+import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { ScaleToFitContainer } from '@/components/scale-to-fit-container';
 import type { CVData } from '@/data/sample-cv-data';
@@ -12,7 +12,7 @@ import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 
 export function PreviewPage() {
   const search = useSearch({ from: '/preview' }) as { templateId?: string };
-  const templateId = search.templateId || 'modern';
+  const templateId = search.templateId || 'developer';
   const [cvData, setCvData] = useState<CVData | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [singlePageMode, setSinglePageMode] = useState(false);
@@ -208,8 +208,8 @@ export function PreviewPage() {
           className="max-w-[210mm] mx-auto"
         >
           <div id="cv-content" className="bg-white text-gray-900 shadow-xl overflow-hidden">
-            {templateId === 'modern' && <ModernTemplate data={cvData} />}
-            {templateId === 'business' && <BusinessTemplate data={cvData} />}
+            {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
+            {templateId === 'default' && <DefaultTemplate data={cvData} />}
             {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
           </div>
         </ScaleToFitContainer>

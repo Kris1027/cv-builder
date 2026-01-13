@@ -3,11 +3,11 @@ import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 
-interface ModernTemplateProps {
+interface DeveloperTemplateProps {
   data: CVData;
 }
 
-export function ModernTemplate({ data }: ModernTemplateProps) {
+export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
   const { personalInfo, experiences, education, skills, languages, interests } = data;
 
   return (

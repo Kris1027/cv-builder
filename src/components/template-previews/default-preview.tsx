@@ -1,4 +1,4 @@
-export function ExecutivePreview() {
+export function DefaultPreview() {
   return (
     <svg
       viewBox="0 0 210 297"

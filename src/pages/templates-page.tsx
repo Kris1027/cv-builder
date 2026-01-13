@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Eye, ArrowLeft, RotateCcw, FileCheck, AlertTriangle } from 'lucide-react';
 import { DeveloperPreview } from '@/components/template-previews/developer-preview';
-import { ExecutivePreview } from '@/components/template-previews/executive-preview';
+import { DefaultPreview } from '@/components/template-previews/default-preview';
 import { VeterinaryPreview } from '@/components/template-previews/veterinary-preview';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useState, useEffect } from 'react';
@@ -21,16 +21,16 @@ import {
 
 const templates = [
   {
-    id: 'modern',
+    id: 'developer',
     name: 'Developer Template',
     description: 'Tech-focused design with monospace font and developer-friendly styling',
     Preview: DeveloperPreview,
   },
   {
-    id: 'business',
-    name: 'Executive Template',
-    description: 'Modern minimalist design with Montserrat font for senior professionals',
-    Preview: ExecutivePreview,
+    id: 'default',
+    name: 'Default Template',
+    description: 'Modern minimalist design with Montserrat font for professionals',
+    Preview: DefaultPreview,
   },
   {
     id: 'veterinary',

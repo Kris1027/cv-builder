@@ -1,7 +1,7 @@
 import { useParams, Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { ModernTemplate } from '@/components/templates/modern-template';
-import { BusinessTemplate } from '@/components/templates/business-template';
+import { DeveloperTemplate } from '@/components/templates/developer-template';
+import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { sampleCVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, Edit } from 'lucide-react';
@@ -16,10 +16,10 @@ export function TemplatePage() {
 
   const getTemplateName = () => {
     switch (templateId) {
-      case 'modern':
+      case 'developer':
         return 'Developer Template';
-      case 'business':
-        return 'Executive Template';
+      case 'default':
+        return 'Default Template';
       case 'veterinary':
         return 'Veterinary Template';
       default:
@@ -29,10 +29,10 @@ export function TemplatePage() {
 
   const renderTemplate = () => {
     switch (templateId) {
-      case 'modern':
-        return <ModernTemplate data={sampleCVData} />;
-      case 'business':
-        return <BusinessTemplate data={sampleCVData} />;
+      case 'developer':
+        return <DeveloperTemplate data={sampleCVData} />;
+      case 'default':
+        return <DefaultTemplate data={sampleCVData} />;
       case 'veterinary':
         return <VeterinaryTemplate data={sampleCVData} />;
       default:
