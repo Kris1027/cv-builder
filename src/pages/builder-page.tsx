@@ -442,7 +442,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogAction onClick={() => setPdfLoadError(null)}>
-                      OK
+                      {t('dialogs.pdfError.ok')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

@@ -39,7 +39,7 @@ export function TemplatePage() {
       default:
         return (
           <div className="text-center py-8">
-            <h1 className="text-2xl font-bold mb-4">Template not found</h1>
+            <h1 className="text-2xl font-bold mb-4">{t('templates.notFound')}</h1>
             <Link to="/templates">
               <Button>
                 <ArrowLeft className="w-4 h-4 mr-2" />

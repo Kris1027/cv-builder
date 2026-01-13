@@ -52,7 +52,8 @@
     "veterinary": {
       "name": "Szablon weterynaryjny",
       "description": "Profesjonalny medyczny design z ciepłymi akcentami dla specjalistów opieki nad zwierzętami"
-    }
+    },
+    "notFound": "Nie znaleziono szablonu"
   },
   "savedData": {
     "title": "Masz zapisane dane CV",
@@ -128,7 +129,8 @@
     "field": "Informatyka",
     "skill": "Wpisz umiejętność",
     "interest": "Wpisz zainteresowanie",
-    "language": "Język"
+    "language": "Język",
+    "selectProficiency": "Wybierz poziom"
   },
   "sections": {
     "personalInfo": {
@@ -190,7 +192,8 @@
       "confirm": "Resetuj wszystkie dane"
     },
     "pdfError": {
-      "title": "Nie można wczytać PDF"
+      "title": "Nie można wczytać PDF",
+      "ok": "OK"
     }
   },
   "preview": {
@@ -266,5 +269,9 @@
     "9": "Paź",
     "10": "Lis",
     "11": "Gru"
+  },
+  "accessibility": {
+    "toggleLanguage": "Zmień język",
+    "toggleTheme": "Zmień motyw"
   }
 }

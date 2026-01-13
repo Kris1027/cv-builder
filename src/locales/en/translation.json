@@ -52,7 +52,8 @@
     "veterinary": {
       "name": "Veterinary Template",
       "description": "Professional medical design with caring touches for animal healthcare specialists"
-    }
+    },
+    "notFound": "Template not found"
   },
   "savedData": {
     "title": "You have saved CV data",
@@ -128,7 +129,8 @@
     "field": "Computer Science",
     "skill": "Enter a skill",
     "interest": "Enter an interest",
-    "language": "Language"
+    "language": "Language",
+    "selectProficiency": "Select proficiency"
   },
   "sections": {
     "personalInfo": {
@@ -190,7 +192,8 @@
       "confirm": "Reset All Data"
     },
     "pdfError": {
-      "title": "Unable to Load PDF"
+      "title": "Unable to Load PDF",
+      "ok": "OK"
     }
   },
   "preview": {
@@ -266,5 +269,9 @@
     "9": "Oct",
     "10": "Nov",
     "11": "Dec"
+  },
+  "accessibility": {
+    "toggleLanguage": "Toggle language",
+    "toggleTheme": "Toggle theme"
   }
 }

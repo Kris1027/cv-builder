@@ -15,7 +15,7 @@ const languages = [
 ];
 
 export const LanguageToggle = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const LanguageToggle = () => {
           className="h-9 w-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           <Languages className="h-4 w-4" />
-          <span className="sr-only">Toggle language</span>
+          <span className="sr-only">{t('accessibility.toggleLanguage')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">

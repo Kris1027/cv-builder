@@ -124,7 +124,7 @@ const SortableLanguageItem = ({ id, index, form, removeLanguage }: SortableLangu
                 }
               >
                 <SelectTrigger className='focus:ring-cyan-500'>
-                  <SelectValue placeholder='Select proficiency' />
+                  <SelectValue placeholder={t('placeholders.selectProficiency')} />
                 </SelectTrigger>
                 <SelectContent>
                   {languageLevels.map((level) => (
