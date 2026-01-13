@@ -36,7 +36,7 @@ interface BuilderPageProps {
   templateId?: string;
 }
 
-const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
+const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   const navigate = useNavigate();
   const search = useSearch({ from: '/builder' }) as { templateId?: string };
   const [isSaving, setIsSaving] = useState(false);
@@ -52,10 +52,10 @@ const BuilderPage = ({ templateId = 'modern' }: BuilderPageProps) => {
   // Convert template ID to display name
   const getTemplateName = (id: string) => {
     switch (id) {
-      case 'modern':
+      case 'developer':
         return 'Developer Template';
-      case 'business':
-        return 'Executive Template';
+      case 'default':
+        return 'Default Template';
       case 'veterinary':
         return 'Veterinary Template';
       default:

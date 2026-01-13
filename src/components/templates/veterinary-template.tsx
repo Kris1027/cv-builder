@@ -19,7 +19,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
             <Stethoscope className="w-6 h-6 text-emerald-600" />
           </div>
           <h1 className="text-3xl font-['Merriweather'] font-light">
-            Dr. <span className="font-bold">{personalInfo.firstName} {personalInfo.lastName}</span>
+            <span className="font-bold">{personalInfo.firstName} {personalInfo.lastName}</span>
           </h1>
         </div>
         
@@ -60,12 +60,12 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
         <div className="grid grid-cols-[1fr,380px] gap-8">
           {/* Left Column - Main Content */}
           <div className="space-y-6">
-            {/* Clinical Experience */}
+            {/* Work Experience */}
             <section>
               <div className="flex items-center gap-2 mb-4">
                 <Briefcase className="w-5 h-5 text-emerald-600" />
                 <h2 className="text-xl font-['Merriweather'] font-bold text-emerald-700">
-                  Clinical Experience
+                  Work Experience
                 </h2>
               </div>
               <div className="border-l-2 border-emerald-200 pl-4 space-y-6">
@@ -121,10 +121,10 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
 
           {/* Right Column - Skills & Additional Info */}
           <div className="space-y-6">
-            {/* Clinical Skills */}
+            {/* Skills */}
             <section className="bg-emerald-50 rounded-lg p-5">
               <h2 className="text-lg font-['Merriweather'] font-bold text-emerald-700 mb-4">
-                Clinical Skills
+                Skills
               </h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, index) => (

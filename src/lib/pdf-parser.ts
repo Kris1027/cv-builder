@@ -4,7 +4,7 @@ import type { CVFormValues, LanguageLevelProps } from '@/types/form-types';
 // Set up the worker for pdfjs-dist - use local worker file from public folder
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
-type TemplateType = 'modern' | 'business' | 'veterinary';
+type TemplateType = 'developer' | 'default' | 'veterinary';
 
 /**
  * Extract text content from a PDF file
@@ -31,20 +31,20 @@ export async function extractTextFromPDF(file: File): Promise<string> {
  * Detect which template was used to generate the PDF
  */
 export function detectTemplate(text: string): TemplateType {
-  // Developer template (modern) uses // prefixes
+  // Developer template uses // prefixes
   if (text.includes('// WORK EXPERIENCE') || text.includes('// TECH STACK')) {
-    return 'modern';
+    return 'developer';
   }
-  // Veterinary template uses Clinical terminology
-  if (text.includes('CLINICAL EXPERIENCE') || text.includes('CLINICAL SKILLS')) {
+  // Veterinary template uses Special Interests section
+  if (text.includes('SPECIAL INTERESTS')) {
     return 'veterinary';
   }
-  // Executive template (business) uses Professional Experience
+  // Default template uses Professional Experience
   if (text.includes('PROFESSIONAL EXPERIENCE') || text.includes('CORE COMPETENCIES')) {
-    return 'business';
+    return 'default';
   }
-  // Default to modern if can't detect
-  return 'modern';
+  // Default to developer if can't detect
+  return 'developer';
 }
 
 /**
@@ -53,22 +53,22 @@ export function detectTemplate(text: string): TemplateType {
 export function parseCVFromText(text: string, templateId: TemplateType): CVFormValues {
   const lines = text.split(/\n|\s{2,}/).map(l => l.trim()).filter(l => l.length > 0);
 
-  if (templateId === 'modern') {
-    return parseModernTemplate(lines);
-  } else if (templateId === 'business') {
-    return parseBusinessTemplate(lines);
+  if (templateId === 'developer') {
+    return parseDeveloperTemplate(lines);
+  } else if (templateId === 'default') {
+    return parseDefaultTemplate(lines);
   } else if (templateId === 'veterinary') {
     return parseVeterinaryTemplate(lines);
   }
 
-  return parseModernTemplate(lines);
+  return parseDeveloperTemplate(lines);
 }
 
 /**
- * Parse the Developer (modern) template format
+ * Parse the Developer template format
  */
-function parseModernTemplate(lines: string[]): CVFormValues {
-  const result = createEmptyCV('modern');
+function parseDeveloperTemplate(lines: string[]): CVFormValues {
+  const result = createEmptyCV('developer');
 
   // Find section markers
   const workExpIndex = lines.findIndex(l => l.includes('// WORK EXPERIENCE'));
@@ -121,10 +121,10 @@ function parseModernTemplate(lines: string[]): CVFormValues {
 }
 
 /**
- * Parse the Executive (business) template format
+ * Parse the Default template format
  */
-function parseBusinessTemplate(lines: string[]): CVFormValues {
-  const result = createEmptyCV('business');
+function parseDefaultTemplate(lines: string[]): CVFormValues {
+  const result = createEmptyCV('default');
 
   // Find section markers (uppercase headers)
   const profExpIndex = lines.findIndex(l => l === 'Professional Experience' || l === 'PROFESSIONAL EXPERIENCE');
@@ -183,26 +183,22 @@ function parseVeterinaryTemplate(lines: string[]): CVFormValues {
   const result = createEmptyCV('veterinary');
 
   // Find section markers
-  const clinicalExpIndex = lines.findIndex(l => l.includes('CLINICAL EXPERIENCE'));
-  const educationIndex = lines.findIndex(l => l.includes('EDUCATION') && !l.includes('CLINICAL'));
-  const skillsIndex = lines.findIndex(l => l.includes('CLINICAL SKILLS'));
+  const workExpIndex = lines.findIndex(l => l.includes('Work Experience'));
+  const educationIndex = lines.findIndex(l => l.includes('Education') || l.includes('EDUCATION'));
+  const skillsIndex = lines.findIndex(l => l === 'Skills' || l === 'SKILLS');
   const languagesIndex = lines.findIndex(l => l === 'Languages' || l === 'LANGUAGES');
   const interestsIndex = lines.findIndex(l => l.includes('SPECIAL INTERESTS') || l === 'Interests');
 
-  // Parse header (remove Dr. prefix if present)
-  if (clinicalExpIndex > 0) {
-    const headerLines = lines.slice(0, clinicalExpIndex);
+  // Parse header
+  if (workExpIndex > 0) {
+    const headerLines = lines.slice(0, workExpIndex);
     result.personalInfo = parseHeaderInfo(headerLines);
-    // Remove "Dr." prefix if present
-    if (result.personalInfo.firstName.startsWith('Dr.')) {
-      result.personalInfo.firstName = result.personalInfo.firstName.replace('Dr.', '').trim();
-    }
   }
 
-  // Parse clinical experience
-  if (clinicalExpIndex >= 0) {
-    const endIndex = findNextSection([educationIndex, skillsIndex, languagesIndex, interestsIndex], clinicalExpIndex, lines.length);
-    const expLines = lines.slice(clinicalExpIndex + 1, endIndex);
+  // Parse work experience
+  if (workExpIndex >= 0) {
+    const endIndex = findNextSection([educationIndex, skillsIndex, languagesIndex, interestsIndex], workExpIndex, lines.length);
+    const expLines = lines.slice(workExpIndex + 1, endIndex);
     result.experiences = parseExperiences(expLines);
   }
 
