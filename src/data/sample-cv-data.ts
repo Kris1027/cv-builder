@@ -9,6 +9,7 @@ export interface CVData {
   interests: InterestProps[];
 }
 
+// Developer-focused sample data (for Developer template)
 export const sampleCVData: CVData = {
   personalInfo: {
     firstName: 'John',
@@ -93,5 +94,97 @@ export const sampleCVData: CVData = {
     { name: 'Photography' },
     { name: 'Hiking' },
     { name: 'Chess' },
+  ],
+};
+
+// Generic professional sample data (for Default template)
+export const sampleDefaultCVData: CVData = {
+  personalInfo: {
+    firstName: 'Sarah',
+    lastName: 'Mitchell',
+    location: 'Chicago, IL',
+    title: 'Marketing Manager',
+    phone: '+1 312 555 0456',
+    email: 'sarah.mitchell@email.com',
+    website: '',
+    linkedin: 'sarah-mitchell',
+    github: '',
+  },
+  experiences: [
+    {
+      company: 'Global Brands Inc',
+      position: 'Marketing Manager',
+      location: 'Chicago, IL',
+      startDate: '2021-01',
+      endDate: '',
+      current: true,
+      description: `• Managing marketing campaigns across digital and traditional channels
+• Leading a team of 5 marketing specialists and coordinating with external agencies
+• Developing brand strategies that increased market share by 15%
+• Overseeing annual marketing budget of $2M and optimizing ROI
+• Analyzing market trends and competitor activities to inform strategy
+• Building partnerships with key stakeholders and media outlets`,
+    },
+    {
+      company: 'Creative Solutions Agency',
+      position: 'Senior Marketing Specialist',
+      location: 'Milwaukee, WI',
+      startDate: '2018-03',
+      endDate: '2020-12',
+      current: false,
+      description: `• Executed integrated marketing campaigns for B2B and B2C clients
+• Managed social media presence and content calendar for multiple brands
+• Coordinated events and trade shows with attendance of 500+ participants
+• Created marketing materials including brochures, presentations, and reports
+• Conducted customer research and developed buyer personas
+• Achieved 25% increase in lead generation through targeted campaigns`,
+    },
+    {
+      company: 'Retail Dynamics',
+      position: 'Marketing Coordinator',
+      location: 'Madison, WI',
+      startDate: '2015-06',
+      endDate: '2018-02',
+      current: false,
+      description: `• Supported marketing team in campaign planning and execution
+• Managed email marketing campaigns with 50,000+ subscriber base
+• Coordinated with design team to produce promotional materials
+• Tracked and reported on campaign performance metrics`,
+    },
+  ],
+  education: [
+    {
+      institution: 'University of Wisconsin',
+      degree: 'Bachelor of Arts',
+      field: 'Business Administration & Marketing',
+      startDate: '2011-09',
+      endDate: '2015-05',
+      description: '',
+    },
+  ],
+  skills: [
+    { name: 'Marketing Strategy' },
+    { name: 'Brand Management' },
+    { name: 'Digital Marketing' },
+    { name: 'Social Media' },
+    { name: 'Content Creation' },
+    { name: 'Market Research' },
+    { name: 'Project Management' },
+    { name: 'Team Leadership' },
+    { name: 'Budget Management' },
+    { name: 'Analytics' },
+    { name: 'CRM Systems' },
+    { name: 'Public Relations' },
+  ],
+  languages: [
+    { language: 'English', proficiency: 'NATIVE' },
+    { language: 'French', proficiency: 'B1' },
+  ],
+  interests: [
+    { name: 'Travel' },
+    { name: 'Photography' },
+    { name: 'Volunteering' },
+    { name: 'Cooking' },
+    { name: 'Reading' },
   ],
 };

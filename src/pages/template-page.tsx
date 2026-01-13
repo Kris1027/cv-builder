@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { DeveloperTemplate } from '@/components/templates/developer-template';
 import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
-import { sampleCVData } from '@/data/sample-cv-data';
+import { sampleCVData, sampleDefaultCVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -28,7 +28,7 @@ export function TemplatePage() {
       case 'developer':
         return <DeveloperTemplate data={sampleCVData} />;
       case 'default':
-        return <DefaultTemplate data={sampleCVData} />;
+        return <DefaultTemplate data={sampleDefaultCVData} />;
       case 'veterinary':
         return <VeterinaryTemplate data={sampleCVData} />;
       default:
