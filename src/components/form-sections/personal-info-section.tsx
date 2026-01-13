@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { User, AlertCircle } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
 import { formatPolishPhone } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface PersonalInfoSectionProps {
   form: FormApi;
@@ -12,14 +13,16 @@ interface PersonalInfoSectionProps {
 }
 
 export const PersonalInfoSection = ({ form, validationErrors, setValidationErrors }: PersonalInfoSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0 dark:bg-gray-800 dark:shadow-gray-900/50">
       <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-t-lg">
         <div className="flex items-center gap-2">
           <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <CardTitle className="text-xl dark:text-gray-100">Personal Information</CardTitle>
+          <CardTitle className="text-xl dark:text-gray-100">{t('sections.personalInfo.title')}</CardTitle>
         </div>
-        <CardDescription className="dark:text-gray-400">Your basic contact information and professional summary</CardDescription>
+        <CardDescription className="dark:text-gray-400">{t('sections.personalInfo.description')}</CardDescription>
       </CardHeader>
       <CardContent className="pt-6 space-y-6">
         {/* Row 1: First Name, Last Name */}
@@ -28,7 +31,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
             {(field) => (
               <div className="space-y-2">
                 <Label htmlFor={field.name} className="flex items-center gap-1">
-                  First Name <span className="text-red-500">*</span>
+                  {t('form.firstName')} <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id={field.name}
@@ -41,7 +44,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                       setValidationErrors({ ...validationErrors, firstName: '' });
                     }
                   }}
-                  placeholder="John"
+                  placeholder={t('placeholders.firstName')}
                   className={`transition-all ${validationErrors['firstName'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
                 {validationErrors['firstName'] && (
@@ -58,7 +61,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
             {(field) => (
               <div className="space-y-2">
                 <Label htmlFor={field.name} className="flex items-center gap-1">
-                  Last Name <span className="text-red-500">*</span>
+                  {t('form.lastName')} <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id={field.name}
@@ -71,7 +74,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                       setValidationErrors({ ...validationErrors, lastName: '' });
                     }
                   }}
-                  placeholder="Doe"
+                  placeholder={t('placeholders.lastName')}
                   className={`transition-all ${validationErrors['lastName'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
                 {validationErrors['lastName'] && (
@@ -90,14 +93,14 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.title'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>Professional Title</Label>
+                <Label htmlFor={field.name}>{t('form.professionalTitle')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Software Engineer"
+                  placeholder={t('placeholders.professionalTitle')}
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -110,14 +113,14 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.location'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>Location</Label>
+                <Label htmlFor={field.name}>{t('form.location')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="New York, NY"
+                  placeholder={t('placeholders.location')}
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -128,7 +131,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
             {(field) => (
               <div className="space-y-2">
                 <Label htmlFor={field.name} className="flex items-center gap-1">
-                  Email <span className="text-red-500">*</span>
+                  {t('form.email')} <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id={field.name}
@@ -142,7 +145,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                       setValidationErrors({ ...validationErrors, email: '' });
                     }
                   }}
-                  placeholder="john.doe@example.com"
+                  placeholder={t('placeholders.email')}
                   className={`transition-all ${validationErrors['email'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
                 {validationErrors['email'] && (
@@ -158,7 +161,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.phone'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>Phone</Label>
+                <Label htmlFor={field.name}>{t('form.phone')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -173,7 +176,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                     }
                   }}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="+48 123 456 789"
+                  placeholder={t('placeholders.phone')}
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -186,7 +189,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.website'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>Website</Label>
+                <Label htmlFor={field.name}>{t('form.website')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -194,7 +197,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="https://johndoe.com"
+                  placeholder={t('placeholders.website')}
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -204,7 +207,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.linkedin'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>LinkedIn</Label>
+                <Label htmlFor={field.name}>{t('form.linkedin')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -212,7 +215,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="https://linkedin.com/in/johndoe"
+                  placeholder={t('placeholders.linkedin')}
                   className="focus:ring-blue-500"
                 />
               </div>
@@ -222,7 +225,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
           <form.Field name='personalInfo.github'>
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor={field.name}>GitHub</Label>
+                <Label htmlFor={field.name}>{t('form.github')}</Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -230,7 +233,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="https://github.com/johndoe"
+                  placeholder={t('placeholders.github')}
                   className="focus:ring-blue-500"
                 />
               </div>

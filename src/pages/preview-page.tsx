@@ -8,9 +8,12 @@ import { ScaleToFitContainer } from '@/components/scale-to-fit-container';
 import type { CVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Download, Edit, Loader2, FileDown, Files } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
+import { useTranslation } from 'react-i18next';
 
 export function PreviewPage() {
+  const { t } = useTranslation();
   const search = useSearch({ from: '/preview' }) as { templateId?: string };
   const templateId = search.templateId || 'developer';
   const [cvData, setCvData] = useState<CVData | null>(null);
@@ -82,7 +85,7 @@ export function PreviewPage() {
       });
     } catch (error) {
       console.error('Failed to export PDF:', error);
-      alert('Failed to export PDF. Please try again.');
+      alert(t('preview.exportError'));
     } finally {
       restoreScaling();
       setIsExporting(false);
@@ -93,12 +96,12 @@ export function PreviewPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">No CV data found</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">Please fill out the form first to preview your CV.</p>
+          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">{t('preview.noData')}</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('preview.noDataHint')}</p>
           <Link to="/templates">
             <Button>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Start Building Your CV
+              {t('preview.startBuilding')}
             </Button>
           </Link>
         </div>
@@ -116,12 +119,12 @@ export function PreviewPage() {
               <Link to="/builder" search={{ templateId, edit: true }}>
                 <Button variant="outline" size="sm" className="dark:hover:bg-gray-800">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Editor
+                  {t('nav.backToEditor')}
                 </Button>
               </Link>
-              <h1 className="text-xl font-semibold dark:text-gray-100">Your CV Preview</h1>
+              <h1 className="text-xl font-semibold dark:text-gray-100">{t('preview.title')}</h1>
             </div>
-            
+
             <div className="flex items-center gap-3">
               {/* Page Mode Toggle */}
               <div className="flex items-center border rounded-lg overflow-hidden dark:border-gray-700">
@@ -132,7 +135,7 @@ export function PreviewPage() {
                   className={`rounded-none border-0 ${!singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
                 >
                   <Files className="w-4 h-4 mr-1" />
-                  Multi
+                  {t('preview.multiPage')}
                 </Button>
                 <Button
                   variant={singlePageMode ? 'default' : 'ghost'}
@@ -141,7 +144,7 @@ export function PreviewPage() {
                   className={`rounded-none border-0 ${singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
                 >
                   <FileDown className="w-4 h-4 mr-1" />
-                  Single
+                  {t('preview.singlePage')}
                 </Button>
               </div>
 
@@ -164,14 +167,15 @@ export function PreviewPage() {
                 ) : (
                   <Download className="w-4 h-4 mr-2" />
                 )}
-                {isExporting ? 'Exporting...' : 'Download PDF'}
+                {isExporting ? t('preview.exporting') : t('preview.downloadPdf')}
               </Button>
               <Link to="/builder" search={{ templateId, edit: true }}>
                 <Button size="sm" variant="default">
                   <Edit className="w-4 h-4 mr-2" />
-                  Edit CV
+                  {t('preview.editCv')}
                 </Button>
               </Link>
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </div>
@@ -181,9 +185,9 @@ export function PreviewPage() {
       {/* Success Message */}
       <div className="container mx-auto px-4 py-4 print:hidden">
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-          <p className="text-green-800 dark:text-green-300 font-medium">🎉 Congratulations! Your CV is ready.</p>
+          <p className="text-green-800 dark:text-green-300 font-medium">{t('preview.success.title')}</p>
           <p className="text-green-700 dark:text-green-400 text-sm mt-1">
-            You can now download as PDF or continue editing.
+            {t('preview.success.subtitle')}
           </p>
         </div>
       </div>
@@ -192,9 +196,9 @@ export function PreviewPage() {
       {singlePageMode && scaleInfo.atMinScale && (
         <div className="container mx-auto px-4 print:hidden">
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
-            <p className="text-amber-800 dark:text-amber-300 font-medium">Content is very long</p>
+            <p className="text-amber-800 dark:text-amber-300 font-medium">{t('preview.contentWarning.title')}</p>
             <p className="text-amber-700 dark:text-amber-400 text-sm mt-1">
-              Your CV has been scaled to the minimum (50%). Consider reducing content for better readability.
+              {t('preview.contentWarning.subtitle')}
             </p>
           </div>
         </div>
@@ -222,19 +226,19 @@ export function PreviewPage() {
             size: A4;
             margin: 10mm;
           }
-          
+
           /* Hide navigation and UI elements during print */
           .print\\:hidden {
             display: none !important;
           }
-          
+
           /* Reset container styles for print */
           #print-container {
             margin: 0 !important;
             padding: 0 !important;
             max-width: 100% !important;
           }
-          
+
           /* Clean CV content for print */
           #cv-content {
             margin: 0 !important;

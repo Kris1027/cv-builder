@@ -6,6 +6,7 @@ import { SkillsSection } from '@/components/form-sections/skills-section';
 import { LanguagesSection } from '@/components/form-sections/languages-section';
 import { InterestsSection } from '@/components/form-sections/interests-section';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import type {
   EducationProps,
   ExperienceProps,
@@ -31,12 +32,14 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import { loadCVFromPDF } from '@/lib/pdf-parser';
 import { useNavigate, Link, useSearch } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 interface BuilderPageProps {
   templateId?: string;
 }
 
 const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const search = useSearch({ from: '/builder' }) as { templateId?: string };
   const [isSaving, setIsSaving] = useState(false);
@@ -45,7 +48,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   const [isLoadingPDF, setIsLoadingPDF] = useState(false);
   const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   // Use search param if available, otherwise fall back to prop
   const activeTemplateId = search.templateId || templateId;
 
@@ -53,16 +56,16 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   const getTemplateName = (id: string) => {
     switch (id) {
       case 'developer':
-        return 'Developer Template';
+        return t('templates.developer.name');
       case 'default':
-        return 'Default Template';
+        return t('templates.default.name');
       case 'veterinary':
-        return 'Veterinary Template';
+        return t('templates.veterinary.name');
       default:
         return id;
     }
   };
-  
+
   // Get initial values - load from localStorage if available, otherwise defaults
   const getInitialValues = () => {
     const storedData = localStorage.getItem('cvData');
@@ -96,27 +99,27 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
       interests: [] as InterestProps[],
     };
   };
-  
+
   const form = useForm({
     defaultValues: getInitialValues(),
     onSubmit: async ({ value }) => {
       // Validate required fields
       const errors: Record<string, string> = {};
-      
-      if (!value.personalInfo.firstName) errors['firstName'] = 'First name is required';
-      if (!value.personalInfo.lastName) errors['lastName'] = 'Last name is required';
-      if (!value.personalInfo.email) errors['email'] = 'Email is required';
+
+      if (!value.personalInfo.firstName) errors['firstName'] = t('validation.firstNameRequired');
+      if (!value.personalInfo.lastName) errors['lastName'] = t('validation.lastNameRequired');
+      if (!value.personalInfo.email) errors['email'] = t('validation.emailRequired');
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.personalInfo.email)) {
-        errors['email'] = 'Please enter a valid email address';
+        errors['email'] = t('validation.invalidEmail');
       }
-      
+
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
         // Scroll to the first error
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
-      
+
       setIsSaving(true);
       // Store data in localStorage for persistence
       localStorage.setItem('cvData', JSON.stringify(value));
@@ -124,7 +127,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
       localStorage.setItem('cvData_lastSaved', now.toISOString());
       setLastSaved(now);
       setIsSaving(false);
-      
+
       // Navigate to preview page with templateId
       navigate({ to: '/preview', search: { templateId: value.templateId } });
     },
@@ -315,27 +318,27 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   const calculateProgress = () => {
     const values = form.state.values;
     let progress = 0;
-    
+
     // Personal info (30%)
     if (values.personalInfo.firstName) progress += 10;
     if (values.personalInfo.lastName) progress += 10;
     if (values.personalInfo.email) progress += 10;
-    
+
     // Experience (25%)
     if (values.experiences.length > 0) progress += 25;
-    
+
     // Education (20%)
     if (values.education.length > 0) progress += 20;
-    
+
     // Skills (15%)
     if (values.skills.length > 0) progress += 15;
-    
+
     // Languages (5%)
     if (values.languages.length > 0) progress += 5;
-    
+
     // Interests (5%)
     if (values.interests.length > 0) progress += 5;
-    
+
     return Math.min(progress, 100);
   };
 
@@ -349,11 +352,11 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
               <Link to="/templates">
                 <Button variant="outline" size="sm" type="button" className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Templates
+                  {t('nav.backToTemplates')}
                 </Button>
               </Link>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Build Your CV
+                {t('builder.title')}
               </h1>
             </div>
             <div className="flex items-center gap-3">
@@ -374,7 +377,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors"
               >
                 <Upload className="w-4 h-4 mr-2" />
-                {isLoadingPDF ? 'Loading...' : 'Load PDF'}
+                {isLoadingPDF ? t('builder.loading') : t('builder.loadPdf')}
               </Button>
               <Button
                 type="button"
@@ -385,7 +388,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {isSaving ? 'Saving...' : 'Save'}
+                {isSaving ? t('builder.saving') : t('builder.save')}
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -396,7 +399,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     className="hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
-                    Reset
+                    {t('builder.reset')}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -405,19 +408,19 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
                         <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
                       </div>
-                      <AlertDialogTitle>Reset CV Data</AlertDialogTitle>
+                      <AlertDialogTitle>{t('dialogs.reset.title')}</AlertDialogTitle>
                     </div>
                     <AlertDialogDescription className="pt-2">
-                      Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.
+                      {t('dialogs.reset.description')}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t('dialogs.reset.cancel')}</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleReset}
                       className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
                     >
-                      Reset All Data
+                      {t('dialogs.reset.confirm')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -431,7 +434,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
                         <FileWarning className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                       </div>
-                      <AlertDialogTitle>Unable to Load PDF</AlertDialogTitle>
+                      <AlertDialogTitle>{t('dialogs.pdfError.title')}</AlertDialogTitle>
                     </div>
                     <AlertDialogDescription className="pt-2">
                       {pdfLoadError}
@@ -448,13 +451,14 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
               {lastSaved && (
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />
-                  <span className="hidden sm:inline">Saved {lastSaved.toLocaleTimeString()}</span>
+                  <span className="hidden sm:inline">{t('builder.saved', { time: lastSaved.toLocaleTimeString() })}</span>
                 </div>
               )}
               <div className="text-sm text-gray-600 dark:text-gray-400 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
-                <span className="hidden sm:inline">Template: </span>
+                <span className="hidden sm:inline">{t('builder.template')}: </span>
                 <span className="font-medium">{getTemplateName(activeTemplateId)}</span>
               </div>
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </div>
@@ -465,7 +469,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         {/* Progress Indicator */}
         <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm dark:shadow-gray-900/50 transition-colors">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Form Progress</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('builder.progress.title')}</span>
             <span className="text-sm font-bold text-gray-600 dark:text-gray-400">{calculateProgress()}%</span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
@@ -475,12 +479,12 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             />
           </div>
           <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            {calculateProgress() === 100 
-              ? "Great! Your CV is complete. Click 'Preview CV' to see the result."
-              : "Complete all sections to maximize your CV's impact."}
+            {calculateProgress() === 100
+              ? t('builder.progress.complete')
+              : t('builder.progress.incomplete')}
           </div>
         </div>
-        
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -490,7 +494,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
           className="space-y-8"
         >
           {/* Personal Information Section */}
-          <PersonalInfoSection 
+          <PersonalInfoSection
             form={form}
             validationErrors={validationErrors}
             setValidationErrors={setValidationErrors}
@@ -540,19 +544,19 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
           <div className="flex justify-between items-center pt-6">
             <div className="text-sm text-gray-500">
               {validationErrors && Object.keys(validationErrors).length > 0 && (
-                <span className="text-red-500">Please fix the errors above before proceeding.</span>
+                <span className="text-red-500">{t('builder.validation.fixErrors')}</span>
               )}
             </div>
             <form.Subscribe
               selector={(state) => [state.canSubmit, state.isSubmitting]}
               children={([canSubmit, isSubmitting]) => (
-                <Button 
-                  type='submit' 
+                <Button
+                  type='submit'
                   disabled={!canSubmit || calculateProgress() < 30}
                   size="lg"
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all"
                 >
-                  {isSubmitting ? 'Processing...' : 'Preview CV →'}
+                  {isSubmitting ? t('builder.processing') : `${t('builder.previewCv')} →`}
                 </Button>
               )}
             />

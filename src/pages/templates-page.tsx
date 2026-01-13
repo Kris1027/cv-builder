@@ -6,7 +6,9 @@ import { DeveloperPreview } from '@/components/template-previews/developer-previ
 import { DefaultPreview } from '@/components/template-previews/default-preview';
 import { VeterinaryPreview } from '@/components/template-previews/veterinary-preview';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,25 +24,26 @@ import {
 const templates = [
   {
     id: 'developer',
-    name: 'Developer Template',
-    description: 'Tech-focused design with monospace font and developer-friendly styling',
+    nameKey: 'templates.developer.name',
+    descriptionKey: 'templates.developer.description',
     Preview: DeveloperPreview,
   },
   {
     id: 'default',
-    name: 'Default Template',
-    description: 'Modern minimalist design with Montserrat font for professionals',
+    nameKey: 'templates.default.name',
+    descriptionKey: 'templates.default.description',
     Preview: DefaultPreview,
   },
   {
     id: 'veterinary',
-    name: 'Veterinary Template',
-    description: 'Professional medical design with caring touches for animal healthcare specialists',
+    nameKey: 'templates.veterinary.name',
+    descriptionKey: 'templates.veterinary.description',
     Preview: VeterinaryPreview,
   },
 ];
 
 export function TemplatesPage() {
+  const { t } = useTranslation();
   const [hasSavedData, setHasSavedData] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
@@ -71,10 +74,16 @@ export function TemplatesPage() {
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return 'just now';
-    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+    if (diffMins < 1) return t('savedData.justNow');
+    if (diffMins < 60) return diffMins === 1
+      ? t('savedData.minuteAgo', { count: diffMins })
+      : t('savedData.minutesAgo', { count: diffMins });
+    if (diffHours < 24) return diffHours === 1
+      ? t('savedData.hourAgo', { count: diffHours })
+      : t('savedData.hoursAgo', { count: diffHours });
+    if (diffDays < 7) return diffDays === 1
+      ? t('savedData.dayAgo', { count: diffDays })
+      : t('savedData.daysAgo', { count: diffDays });
     return date.toLocaleDateString();
   };
 
@@ -88,21 +97,24 @@ export function TemplatesPage() {
               <Link to='/'>
                 <Button variant='outline' size='sm' className='dark:hover:bg-gray-800'>
                   <ArrowLeft className='w-4 h-4 mr-2' />
-                  Back to Home
+                  {t('nav.backToHome')}
                 </Button>
               </Link>
-              <h1 className='text-xl font-semibold dark:text-gray-100'>CV Templates</h1>
+              <h1 className='text-xl font-semibold dark:text-gray-100'>{t('templates.title')}</h1>
             </div>
-            <ThemeToggle />
+            <div className='flex items-center gap-2'>
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>
 
       <div className='container mx-auto px-4 py-8'>
         <div className='mb-8'>
-          <h1 className='text-3xl font-bold mb-2 dark:text-gray-100'>Choose Your CV Template</h1>
+          <h1 className='text-3xl font-bold mb-2 dark:text-gray-100'>{t('templates.pageTitle')}</h1>
           <p className='text-gray-600 dark:text-gray-400'>
-            Select a template that best represents your professional style
+            {t('templates.pageSubtitle')}
           </p>
         </div>
 
@@ -115,10 +127,10 @@ export function TemplatesPage() {
                   <FileCheck className='h-5 w-5 text-blue-600 dark:text-blue-400' />
                 </div>
                 <div>
-                  <p className='font-medium text-blue-800 dark:text-blue-300'>You have saved CV data</p>
+                  <p className='font-medium text-blue-800 dark:text-blue-300'>{t('savedData.title')}</p>
                   {lastSaved && (
                     <p className='text-sm text-blue-600 dark:text-blue-400'>
-                      Last saved {formatSavedTime(lastSaved)}
+                      {t('savedData.lastSaved', { time: formatSavedTime(lastSaved) })}
                     </p>
                   )}
                 </div>
@@ -131,7 +143,7 @@ export function TemplatesPage() {
                     className='hover:bg-red-50 hover:text-red-600 hover:border-red-300 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors'
                   >
                     <RotateCcw className='w-4 h-4 mr-2' />
-                    Reset
+                    {t('builder.reset')}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -140,19 +152,19 @@ export function TemplatesPage() {
                       <div className='flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30'>
                         <AlertTriangle className='h-5 w-5 text-red-600 dark:text-red-400' />
                       </div>
-                      <AlertDialogTitle>Reset CV Data</AlertDialogTitle>
+                      <AlertDialogTitle>{t('dialogs.reset.title')}</AlertDialogTitle>
                     </div>
                     <AlertDialogDescription className='pt-2'>
-                      Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.
+                      {t('dialogs.reset.description')}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t('dialogs.reset.cancel')}</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleReset}
                       className='bg-red-600 hover:bg-red-700 focus:ring-red-600'
                     >
-                      Reset All Data
+                      {t('dialogs.reset.confirm')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -175,54 +187,54 @@ export function TemplatesPage() {
                   <div className='w-full h-full transition-transform duration-500 group-hover:scale-110 text-gray-900'>
                     <template.Preview />
                   </div>
-                  
+
                   {/* Gradient Overlay */}
                   <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
-                  
+
                   {/* Preview Button - appears on hover */}
                   <div className='absolute inset-0 flex items-center justify-center'>
                     <div className='transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500'>
                       <div className='bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg'>
                         <Eye className='w-4 h-4 text-gray-700' />
-                        <span className='text-sm font-medium text-gray-700'>Preview</span>
+                        <span className='text-sm font-medium text-gray-700'>{t('templates.preview')}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </Link>
-              
+
               {/* Card Header with Title */}
               <CardHeader className='pb-2 pt-3'>
                 <h3 className='text-base font-semibold text-gray-900 dark:text-gray-100'>
-                  {template.name}
+                  {t(template.nameKey)}
                 </h3>
               </CardHeader>
-              
+
               {/* Card Content with Description */}
               <CardContent className='pt-0 pb-3'>
                 <p className='text-xs text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2'>
-                  {template.description}
+                  {t(template.descriptionKey)}
                 </p>
               </CardContent>
-              
+
               {/* Card Footer with Action Buttons */}
               <CardFooter className='flex gap-2 pt-0 pb-3'>
                 <Link to='/templates/$templateId' params={{ templateId: template.id }} className='flex-1'>
-                  <Button 
-                    variant='outline' 
+                  <Button
+                    variant='outline'
                     className='w-full group/btn hover:bg-gray-50 dark:hover:bg-gray-800'
                     size='sm'
                   >
                     <Eye className='w-3.5 h-3.5 mr-1.5 transition-transform group-hover/btn:scale-110' />
-                    <span className='text-xs'>Preview</span>
+                    <span className='text-xs'>{t('templates.preview')}</span>
                   </Button>
                 </Link>
                 <Link to='/builder' search={{ templateId: template.id }} className='flex-1'>
-                  <Button 
+                  <Button
                     className='w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-sm hover:shadow-md transition-all'
                     size='sm'
                   >
-                    <span className='text-xs'>Use Template</span>
+                    <span className='text-xs'>{t('templates.useTemplate')}</span>
                   </Button>
                 </Link>
               </CardFooter>
