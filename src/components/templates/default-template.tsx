@@ -2,13 +2,28 @@ import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
+import { useTranslation } from 'react-i18next';
 
 interface DefaultTemplateProps {
   data: CVData;
 }
 
 export function DefaultTemplate({ data }: DefaultTemplateProps) {
+  const { t } = useTranslation();
   const { personalInfo, experiences, education, skills, languages, interests } = data;
+
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year, month] = dateString.split('-');
+    const monthKey = `monthsShort.${parseInt(month) - 1}`;
+    return `${t(monthKey)} ${year}`;
+  };
+
+  const formatYear = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year] = dateString.split('-');
+    return year;
+  };
 
   return (
     <div className="bg-white font-['Montserrat'] text-gray-800">
@@ -20,7 +35,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
         {personalInfo.title && (
           <p className="text-center text-lg text-gray-600 mb-4 font-light tracking-wide">{personalInfo.title}</p>
         )}
-        
+
         {/* Contact Information - Horizontal layout */}
         <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 font-light border-t border-gray-200 pt-4">
           {personalInfo.location && (
@@ -54,7 +69,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
         {/* Professional Experience */}
         <section className="mb-6">
           <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
-            Professional Experience
+            {t('cv.professionalExperience')}
           </h2>
           <div className="space-y-4">
             {experiences.map((exp, index) => (
@@ -64,7 +79,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
                     <span className="text-gray-900">{exp.position}</span> <span className="text-gray-400 font-light">|</span> <span className="font-bold text-gray-700">{exp.company}</span>
                   </h3>
                   <span className="text-sm text-gray-500 font-light">
-                    {formatDate(exp.startDate)} – {exp.current ? 'Present' : formatDate(exp.endDate)}
+                    {formatDate(exp.startDate)} – {exp.current ? t('cv.present') : formatDate(exp.endDate)}
                   </span>
                 </div>
                 {exp.location && <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wider">{exp.location}</p>}
@@ -81,7 +96,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
         {education.length > 0 && (
           <section className="mb-6">
             <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
-              Education
+              {t('cv.education')}
             </h2>
             <div className="space-y-3">
               {education.map((edu, index) => (
@@ -109,7 +124,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
           {/* Skills */}
           <section className="mb-6">
             <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
-              Core Competencies
+              {t('cv.coreCompetencies')}
             </h2>
             <div className="flex flex-wrap gap-2">
               {skills.map((skill, index) => (
@@ -124,14 +139,14 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
           {languages.length > 0 && (
             <section className="mb-6">
               <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
-                Languages
+                {t('cv.languages')}
               </h2>
               <div className="space-y-1">
                 {languages.map((lang, index) => (
                   <div key={index} className="flex justify-between text-sm">
                     <span className="font-medium">{lang.language}</span>
                     <span className="text-gray-500 font-light">
-                      {lang.proficiency === 'NATIVE' ? 'Native' : lang.proficiency}
+                      {lang.proficiency === 'NATIVE' ? t('proficiency.NATIVE') : lang.proficiency}
                     </span>
                   </div>
                 ))}
@@ -144,7 +159,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
         {interests.length > 0 && (
           <section className="mt-6">
             <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-900 pb-2 mb-4">
-              Interests
+              {t('cv.interests')}
             </h2>
             <p className="text-sm text-gray-600 font-light">
               {interests.map((interest) => interest.name).join(' • ')}
@@ -154,18 +169,4 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
       </div>
     </div>
   );
-}
-
-function formatDate(dateString: string): string {
-  if (!dateString) return '';
-  const [year, month] = dateString.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${months[parseInt(month) - 1]} ${year}`;
-}
-
-function formatYear(dateString: string): string {
-  if (!dateString) return '';
-  const [year] = dateString.split('-');
-  return year;
 }

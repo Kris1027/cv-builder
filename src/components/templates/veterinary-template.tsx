@@ -2,13 +2,28 @@ import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from 'lucide-react';
 import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
+import { useTranslation } from 'react-i18next';
 
 interface VeterinaryTemplateProps {
   data: CVData;
 }
 
 export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
+  const { t } = useTranslation();
   const { personalInfo, experiences, education, skills, languages, interests } = data;
+
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year, month] = dateString.split('-');
+    const monthKey = `monthsShort.${parseInt(month) - 1}`;
+    return `${t(monthKey)} ${year}`;
+  };
+
+  const formatYear = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year] = dateString.split('-');
+    return year;
+  };
 
   return (
     <div className="bg-white font-['Lato'] text-gray-800">
@@ -22,11 +37,11 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
             <span className="font-bold">{personalInfo.firstName} {personalInfo.lastName}</span>
           </h1>
         </div>
-        
+
         {personalInfo.title && (
           <p className="text-center text-lg text-emerald-700 mb-4 font-medium">{personalInfo.title}</p>
         )}
-        
+
         {/* Contact Information - Clean layout */}
         <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
           {personalInfo.location && (
@@ -65,7 +80,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
               <div className="flex items-center gap-2 mb-4">
                 <Briefcase className="w-5 h-5 text-emerald-600" />
                 <h2 className="text-xl font-['Merriweather'] font-bold text-emerald-700">
-                  Work Experience
+                  {t('cv.workExperience')}
                 </h2>
               </div>
               <div className="border-l-2 border-emerald-200 pl-4 space-y-6">
@@ -78,7 +93,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                       </h3>
                       <p className="text-emerald-600 font-medium">{exp.company}</p>
                       <p className="text-sm text-gray-500">
-                        {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` • ${exp.location}`}
+                        {formatDate(exp.startDate)} - {exp.current ? t('cv.present') : formatDate(exp.endDate)}{exp.location && ` • ${exp.location}`}
                       </p>
                     </div>
                     <DescriptionList
@@ -96,7 +111,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                 <div className="flex items-center gap-2 mb-4">
                   <Award className="w-5 h-5 text-emerald-600" />
                   <h2 className="text-xl font-['Merriweather'] font-bold text-emerald-700">
-                    Education & Training
+                    {t('cv.educationTraining')}
                   </h2>
                 </div>
                 <div className="space-y-4">
@@ -124,7 +139,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
             {/* Skills */}
             <section className="bg-emerald-50 rounded-lg p-5">
               <h2 className="text-lg font-['Merriweather'] font-bold text-emerald-700 mb-4">
-                Skills
+                {t('cv.skills')}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, index) => (
@@ -142,7 +157,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
             {languages.length > 0 && (
               <section className="bg-teal-50 rounded-lg p-5">
                 <h2 className="text-lg font-['Merriweather'] font-bold text-teal-700 mb-4">
-                  Languages
+                  {t('cv.languages')}
                 </h2>
                 <div className="space-y-3">
                   {languages.map((lang, index) => (
@@ -153,9 +168,9 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                           <div
                             key={level}
                             className={`w-2 h-2 rounded-full ${
-                              level <= (lang.proficiency === 'NATIVE' ? 5 : 
+                              level <= (lang.proficiency === 'NATIVE' ? 5 :
                                        lang.proficiency === 'C2' ? 5 :
-                                       lang.proficiency === 'C1' ? 4 : 
+                                       lang.proficiency === 'C1' ? 4 :
                                        lang.proficiency === 'B2' ? 3 :
                                        lang.proficiency === 'B1' ? 2 :
                                        lang.proficiency === 'A2' ? 2 : 1)
@@ -176,7 +191,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                 <div className="flex items-center gap-2 mb-4">
                   <Heart className="w-4 h-4 text-orange-600" />
                   <h2 className="text-lg font-['Merriweather'] font-bold text-orange-700">
-                    Special Interests
+                    {t('cv.specialInterests')}
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -196,18 +211,4 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
       </div>
     </div>
   );
-}
-
-function formatDate(dateString: string): string {
-  if (!dateString) return '';
-  const [year, month] = dateString.split('-');
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${months[parseInt(month) - 1]} ${year}`;
-}
-
-function formatYear(dateString: string): string {
-  if (!dateString) return '';
-  const [year] = dateString.split('-');
-  return year;
 }

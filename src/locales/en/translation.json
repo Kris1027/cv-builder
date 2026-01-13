@@ -1,0 +1,277 @@
+{
+  "nav": {
+    "backToTemplates": "Back to Templates",
+    "backToHome": "Back to Home",
+    "backToEditor": "Back to Editor"
+  },
+  "home": {
+    "hero": {
+      "title": "Build Your Perfect CV in",
+      "titleHighlight": "Minutes",
+      "subtitle": "Create professional resumes with our CV builder. Stand out from the crowd and land your dream job.",
+      "cta": "Start Building Your CV"
+    },
+    "features": {
+      "noSignup": "No sign-up required",
+      "free": "100% Free",
+      "exportPdf": "Export to PDF"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Create your professional CV in three simple steps",
+      "step1Title": "Choose a template",
+      "step1Desc": "Select from our collection of professional designs",
+      "step2Title": "Fill in your details",
+      "step2Desc": "Add your information using our simple form",
+      "step3Title": "Download your CV",
+      "step3Desc": "Export as PDF and start applying to jobs"
+    },
+    "stats": {
+      "avgTime": "5 min",
+      "avgTimeLabel": "Average time",
+      "freeForever": "100%",
+      "freeForeverLabel": "Free forever",
+      "languages": "PL/EN",
+      "languagesLabel": "Language support"
+    }
+  },
+  "templates": {
+    "title": "CV Templates",
+    "pageTitle": "Choose Your CV Template",
+    "pageSubtitle": "Select a template that best represents your professional style",
+    "preview": "Preview",
+    "useTemplate": "Use Template",
+    "developer": {
+      "name": "Developer Template",
+      "description": "Tech-focused design with monospace font and developer-friendly styling"
+    },
+    "default": {
+      "name": "Default Template",
+      "description": "Modern minimalist design with Montserrat font for professionals"
+    },
+    "veterinary": {
+      "name": "Veterinary Template",
+      "description": "Professional medical design with caring touches for animal healthcare specialists"
+    },
+    "notFound": "Template not found"
+  },
+  "savedData": {
+    "title": "You have saved CV data",
+    "lastSaved": "Last saved {{time}}",
+    "justNow": "just now",
+    "minuteAgo": "{{count}} minute ago",
+    "minutesAgo": "{{count}} minutes ago",
+    "hourAgo": "{{count}} hour ago",
+    "hoursAgo": "{{count}} hours ago",
+    "dayAgo": "{{count}} day ago",
+    "daysAgo": "{{count}} days ago"
+  },
+  "builder": {
+    "title": "Build Your CV",
+    "template": "Template",
+    "loadPdf": "Load PDF",
+    "loading": "Loading...",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved {{time}}",
+    "reset": "Reset",
+    "previewCv": "Preview CV",
+    "processing": "Processing...",
+    "progress": {
+      "title": "Form Progress",
+      "complete": "Great! Your CV is complete. Click 'Preview CV' to see the result.",
+      "incomplete": "Complete all sections to maximize your CV's impact."
+    },
+    "validation": {
+      "fixErrors": "Please fix the errors above before proceeding."
+    }
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "website": "Website",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "professionalTitle": "Professional Title",
+    "company": "Company",
+    "position": "Position",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "currentlyWorking": "Currently working here",
+    "description": "Description",
+    "institution": "Institution",
+    "degree": "Degree",
+    "field": "Field of Study",
+    "language": "Language",
+    "proficiency": "Proficiency",
+    "skill": "Skill",
+    "interest": "Interest"
+  },
+  "placeholders": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "+48 123 456 789",
+    "location": "New York, NY",
+    "website": "https://johndoe.com",
+    "linkedin": "https://linkedin.com/in/johndoe",
+    "github": "https://github.com/johndoe",
+    "professionalTitle": "Software Engineer",
+    "company": "Company Name",
+    "position": "Job Title",
+    "locationJob": "City, Country",
+    "description": "Start typing to add your first point...",
+    "institution": "University Name",
+    "degree": "Bachelor's Degree",
+    "field": "Computer Science",
+    "skill": "Enter a skill",
+    "interest": "Enter an interest",
+    "language": "Language",
+    "selectProficiency": "Select proficiency"
+  },
+  "sections": {
+    "personalInfo": {
+      "title": "Personal Information",
+      "description": "Your basic contact information and professional summary"
+    },
+    "experience": {
+      "title": "Work Experience",
+      "description": "Add your professional experience (drag to reorder)",
+      "add": "Add Experience",
+      "empty": "No experience added yet",
+      "emptyHint": "Click \"Add Experience\" to get started",
+      "item": "Experience {{number}}",
+      "bulletHint": "Bullet points are added automatically"
+    },
+    "education": {
+      "title": "Education",
+      "description": "Add your educational background (drag to reorder)",
+      "add": "Add Education",
+      "empty": "No education added yet",
+      "emptyHint": "Click \"Add Education\" to get started",
+      "item": "Education {{number}}"
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "Add your professional skills (drag to reorder)",
+      "add": "Add Skill",
+      "empty": "No skills added yet",
+      "emptyHint": "Click \"Add Skill\" to get started"
+    },
+    "languages": {
+      "title": "Languages",
+      "description": "Add languages you speak (drag to reorder)",
+      "add": "Add Language",
+      "empty": "No languages added yet",
+      "emptyHint": "Click \"Add Language\" to get started",
+      "item": "Language {{number}}"
+    },
+    "interests": {
+      "title": "Interests",
+      "description": "Add your hobbies and interests (drag to reorder)",
+      "add": "Add Interest",
+      "empty": "No interests added yet",
+      "emptyHint": "Click \"Add Interest\" to get started"
+    }
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "invalidEmail": "Please enter a valid email address",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required",
+    "emailRequired": "Email is required"
+  },
+  "dialogs": {
+    "reset": {
+      "title": "Reset CV Data",
+      "description": "Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.",
+      "cancel": "Cancel",
+      "confirm": "Reset All Data"
+    },
+    "pdfError": {
+      "title": "Unable to Load PDF",
+      "ok": "OK"
+    }
+  },
+  "preview": {
+    "title": "Your CV Preview",
+    "noData": "No CV data found",
+    "noDataHint": "Please fill out the form first to preview your CV.",
+    "startBuilding": "Start Building Your CV",
+    "multiPage": "Multi",
+    "singlePage": "Single",
+    "downloadPdf": "Download PDF",
+    "exporting": "Exporting...",
+    "editCv": "Edit CV",
+    "success": {
+      "title": "Congratulations! Your CV is ready.",
+      "subtitle": "You can now download as PDF or continue editing."
+    },
+    "contentWarning": {
+      "title": "Content is very long",
+      "subtitle": "Your CV has been scaled to the minimum (50%). Consider reducing content for better readability."
+    },
+    "exportError": "Failed to export PDF. Please try again."
+  },
+  "proficiency": {
+    "A1": "A1 - Beginner",
+    "A2": "A2 - Elementary",
+    "B1": "B1 - Intermediate",
+    "B2": "B2 - Upper Intermediate",
+    "C1": "C1 - Advanced",
+    "C2": "C2 - Proficient",
+    "NATIVE": "Native"
+  },
+  "cv": {
+    "workExperience": "Work Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "languages": "Languages",
+    "interests": "Interests",
+    "techStack": "Tech Stack",
+    "professionalExperience": "Professional Experience",
+    "coreCompetencies": "Core Competencies",
+    "educationTraining": "Education & Training",
+    "specialInterests": "Special Interests",
+    "present": "Present"
+  },
+  "language": {
+    "en": "English",
+    "pl": "Polski"
+  },
+  "months": {
+    "0": "January",
+    "1": "February",
+    "2": "March",
+    "3": "April",
+    "4": "May",
+    "5": "June",
+    "6": "July",
+    "7": "August",
+    "8": "September",
+    "9": "October",
+    "10": "November",
+    "11": "December"
+  },
+  "monthsShort": {
+    "0": "Jan",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Apr",
+    "4": "May",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Oct",
+    "10": "Nov",
+    "11": "Dec"
+  },
+  "accessibility": {
+    "toggleLanguage": "Toggle language",
+    "toggleTheme": "Toggle theme"
+  }
+}

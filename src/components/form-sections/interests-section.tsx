@@ -5,6 +5,7 @@ import type { InterestProps } from '@/types/form-types';
 import { Plus, Heart, X, GripVertical } from 'lucide-react';
 import { useState } from 'react';
 import type { FormApi } from '@/types/form-component-types';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   closestCenter,
@@ -79,6 +80,7 @@ const SortableInterestItem = ({ id, index, interest, removeInterest }: SortableI
 };
 
 export const InterestsSection = ({ form, removeInterest, reorderInterests }: InterestsSectionProps) => {
+  const { t } = useTranslation();
   const [interestInput, setInterestInput] = useState('');
 
   const sensors = useSensors(
@@ -127,9 +129,9 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
           <div>
             <div className="flex items-center gap-2">
               <Heart className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-              <CardTitle className="text-xl dark:text-gray-100">Interests & Hobbies</CardTitle>
+              <CardTitle className="text-xl dark:text-gray-100">{t('sections.interests.title')}</CardTitle>
             </div>
-            <CardDescription className="mt-1 dark:text-gray-400">Add your personal interests (drag to reorder)</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">{t('sections.interests.description')}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -137,7 +139,7 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
         <div className="space-y-4">
           <div className="flex gap-2">
             <Input
-              placeholder="Type an interest and press Enter or click Add"
+              placeholder={t('placeholders.interest')}
               value={interestInput}
               onChange={(e) => setInterestInput(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -150,7 +152,7 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
               className="bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add
+              {t('sections.interests.add')}
             </Button>
           </div>
 
@@ -160,8 +162,8 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
                 {field.state.value.length === 0 ? (
                   <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                    <p>No interests added yet</p>
-                    <p className="text-sm mt-1">Share what you're passionate about</p>
+                    <p>{t('sections.interests.empty')}</p>
+                    <p className="text-sm mt-1">{t('sections.interests.emptyHint')}</p>
                   </div>
                 ) : (
                   <DndContext
@@ -190,12 +192,6 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
               </div>
             )}
           </form.Field>
-
-          {form.getFieldValue('interests').length > 0 && (
-            <p className="text-xs text-gray-500 mt-4">
-              Tip: Drag to reorder. Interests can help show your personality and make connections with interviewers.
-            </p>
-          )}
         </div>
       </CardContent>
     </Card>

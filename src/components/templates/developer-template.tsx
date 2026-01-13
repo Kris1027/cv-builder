@@ -2,13 +2,28 @@ import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
+import { useTranslation } from 'react-i18next';
 
 interface DeveloperTemplateProps {
   data: CVData;
 }
 
 export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
+  const { t } = useTranslation();
   const { personalInfo, experiences, education, skills, languages, interests } = data;
+
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year, month] = dateString.split('-');
+    const monthKey = `months.${parseInt(month) - 1}`;
+    return `${t(monthKey)} ${year}`;
+  };
+
+  const formatYear = (dateString: string): string => {
+    if (!dateString) return '';
+    const [year] = dateString.split('-');
+    return year;
+  };
 
   return (
     <div className="bg-white font-['JetBrains_Mono'] text-gray-800">
@@ -20,7 +35,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
         {personalInfo.title && (
           <p className="text-xl mb-4 opacity-95 font-normal">{personalInfo.title}</p>
         )}
-        
+
         <div className="flex flex-wrap gap-6 mt-4 text-sm font-normal">
           {personalInfo.website && (
             <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
@@ -41,7 +56,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             </a>
           )}
         </div>
-        
+
         <div className="flex flex-wrap gap-6 mt-2 text-sm font-normal">
           {personalInfo.location && (
             <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(personalInfo.location)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:underline">
@@ -71,7 +86,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             {/* Work Experience */}
             <section>
               <h2 className="text-xl font-semibold text-purple-600 border-b-2 border-purple-600 pb-2 mb-4">
-                // WORK EXPERIENCE
+                // {t('cv.workExperience').toUpperCase()}
               </h2>
               <div className="space-y-6">
                 {experiences.map((exp, index) => (
@@ -82,7 +97,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
                           {exp.company} <span className="text-purple-600">| {exp.position}</span>
                         </h3>
                         <p className="text-gray-600 text-sm font-light">
-                          {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}{exp.location && ` | ${exp.location}`}
+                          {formatDate(exp.startDate)} - {exp.current ? t('cv.present') : formatDate(exp.endDate)}{exp.location && ` | ${exp.location}`}
                         </p>
                       </div>
                     </div>
@@ -99,7 +114,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             {education.length > 0 && (
               <section>
                 <h2 className="text-xl font-semibold text-purple-600 border-b-2 border-purple-600 pb-2 mb-4">
-                  // EDUCATION
+                  // {t('cv.education').toUpperCase()}
                 </h2>
                 <div className="space-y-4">
                   {education.map((edu, index) => (
@@ -125,7 +140,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             {/* Skills */}
             <section>
               <h2 className="text-xl font-semibold text-purple-600 border-b-2 border-purple-600 pb-2 mb-4">
-                // TECH STACK
+                // {t('cv.techStack').toUpperCase()}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, index) => (
@@ -143,14 +158,14 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             {languages.length > 0 && (
               <section>
                 <h2 className="text-xl font-semibold text-purple-600 border-b-2 border-purple-600 pb-2 mb-4">
-                  // LANGUAGES
+                  // {t('cv.languages').toUpperCase()}
                 </h2>
                 <div className="space-y-3">
                   {languages.map((lang, index) => (
                     <div key={index} className="flex justify-between items-center">
                       <span className="font-medium text-gray-800">{lang.language}</span>
                       <span className="text-purple-600">
-                        {lang.proficiency === 'NATIVE' ? 'Native' : lang.proficiency}
+                        {lang.proficiency === 'NATIVE' ? t('proficiency.NATIVE') : lang.proficiency}
                       </span>
                     </div>
                   ))}
@@ -162,7 +177,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
             {interests.length > 0 && (
               <section>
                 <h2 className="text-xl font-semibold text-purple-600 border-b-2 border-purple-600 pb-2 mb-4">
-                  // INTERESTS
+                  // {t('cv.interests').toUpperCase()}
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   {interests.map((interest, index) => (
@@ -181,18 +196,4 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
       </div>
     </div>
   );
-}
-
-function formatDate(dateString: string): string {
-  if (!dateString) return '';
-  const [year, month] = dateString.split('-');
-  const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                  'July', 'August', 'September', 'October', 'November', 'December'];
-  return `${months[parseInt(month) - 1]} ${year}`;
-}
-
-function formatYear(dateString: string): string {
-  if (!dateString) return '';
-  const [year] = dateString.split('-');
-  return year;
 }

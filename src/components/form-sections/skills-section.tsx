@@ -5,6 +5,7 @@ import type { SkillProps } from '@/types/form-types';
 import { Plus, Code, X, GripVertical } from 'lucide-react';
 import { useState } from 'react';
 import type { FormApi } from '@/types/form-component-types';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   closestCenter,
@@ -79,6 +80,7 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
 };
 
 export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectionProps) => {
+  const { t } = useTranslation();
   const [skillInput, setSkillInput] = useState('');
 
   const sensors = useSensors(
@@ -127,9 +129,9 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
           <div>
             <div className="flex items-center gap-2">
               <Code className="w-5 h-5 text-orange-600 dark:text-orange-400" />
-              <CardTitle className="text-xl dark:text-gray-100">Skills</CardTitle>
+              <CardTitle className="text-xl dark:text-gray-100">{t('sections.skills.title')}</CardTitle>
             </div>
-            <CardDescription className="mt-1 dark:text-gray-400">Add your professional skills (drag to reorder)</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">{t('sections.skills.description')}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -137,7 +139,7 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
         <div className="space-y-4">
           <div className="flex gap-2">
             <Input
-              placeholder="Type a skill and press Enter or click Add"
+              placeholder={t('placeholders.skill')}
               value={skillInput}
               onChange={(e) => setSkillInput(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -150,7 +152,7 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
               className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add
+              {t('sections.skills.add')}
             </Button>
           </div>
 
@@ -160,8 +162,8 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
                 {field.state.value.length === 0 ? (
                   <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <Code className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                    <p>No skills added yet</p>
-                    <p className="text-sm mt-1">Start typing above to add skills</p>
+                    <p>{t('sections.skills.empty')}</p>
+                    <p className="text-sm mt-1">{t('sections.skills.emptyHint')}</p>
                   </div>
                 ) : (
                   <DndContext
@@ -190,12 +192,6 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
               </div>
             )}
           </form.Field>
-
-          {form.getFieldValue('skills').length > 0 && (
-            <p className="text-xs text-gray-500 mt-4">
-              Tip: Drag skills to reorder them. Add skills relevant to your target position.
-            </p>
-          )}
         </div>
       </CardContent>
     </Card>

@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import type { ExperienceProps } from '@/types/form-types';
 import { Trash2, Plus, Briefcase, GripVertical } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   closestCenter,
@@ -40,6 +41,7 @@ interface SortableExperienceItemProps {
 }
 
 const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableExperienceItemProps) => {
+  const { t } = useTranslation();
   const {
     attributes,
     listeners,
@@ -72,7 +74,9 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
           >
             <GripVertical className='h-5 w-5 text-gray-400' />
           </button>
-          <h4 className='font-semibold text-lg text-gray-700 dark:text-gray-300'>Experience {index + 1}</h4>
+          <h4 className='font-semibold text-lg text-gray-700 dark:text-gray-300'>
+            {t('sections.experience.item', { number: index + 1 })}
+          </h4>
         </div>
         <Button
           type='button'
@@ -89,14 +93,14 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
         <form.Field name={`experiences[${index}].company`}>
           {(subField) => (
             <div className='space-y-2'>
-              <Label htmlFor={subField.name}>Company</Label>
+              <Label htmlFor={subField.name}>{t('form.company')}</Label>
               <Input
                 id={subField.name}
                 name={subField.name}
                 value={subField.state.value}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
-                placeholder='Company Name'
+                placeholder={t('placeholders.company')}
                 className='focus:ring-green-500'
               />
             </div>
@@ -106,14 +110,14 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
         <form.Field name={`experiences[${index}].position`}>
           {(subField) => (
             <div className='space-y-2'>
-              <Label htmlFor={subField.name}>Position</Label>
+              <Label htmlFor={subField.name}>{t('form.position')}</Label>
               <Input
                 id={subField.name}
                 name={subField.name}
                 value={subField.state.value}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
-                placeholder='Job Title'
+                placeholder={t('placeholders.position')}
                 className='focus:ring-green-500'
               />
             </div>
@@ -123,14 +127,14 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
         <form.Field name={`experiences[${index}].location`}>
           {(subField) => (
             <div className='space-y-2'>
-              <Label htmlFor={subField.name}>Location</Label>
+              <Label htmlFor={subField.name}>{t('form.location')}</Label>
               <Input
                 id={subField.name}
                 name={subField.name}
                 value={subField.state.value}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
-                placeholder='City, Country'
+                placeholder={t('placeholders.locationJob')}
                 className='focus:ring-green-500'
               />
             </div>
@@ -140,7 +144,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
         <form.Field name={`experiences[${index}].startDate`}>
           {(subField) => (
             <div className='space-y-2'>
-              <Label htmlFor={subField.name}>Start Date</Label>
+              <Label htmlFor={subField.name}>{t('form.startDate')}</Label>
               <DatePicker
                 id={subField.name}
                 name={subField.name}
@@ -156,7 +160,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
         <form.Field name={`experiences[${index}].endDate`}>
           {(subField) => (
             <div className='space-y-2'>
-              <Label htmlFor={subField.name}>End Date</Label>
+              <Label htmlFor={subField.name}>{t('form.endDate')}</Label>
               <DatePicker
                 id={subField.name}
                 name={subField.name}
@@ -182,7 +186,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               className='border-blue-400'
             />
             <Label htmlFor={subField.name} className='text-blue-700 dark:text-blue-400 cursor-pointer'>
-              Currently working here
+              {t('form.currentlyWorking')}
             </Label>
           </div>
         )}
@@ -191,7 +195,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
       <form.Field name={`experiences[${index}].description`}>
         {(subField) => (
           <div className='space-y-2'>
-            <Label htmlFor={subField.name}>Description</Label>
+            <Label htmlFor={subField.name}>{t('form.description')}</Label>
             <Textarea
               id={subField.name}
               name={subField.name}
@@ -228,11 +232,11 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
                   });
                 }
               }}
-              placeholder='Start typing to add your first point...'
+              placeholder={t('placeholders.description')}
               className='focus:ring-green-500 min-h-[120px] resize-none'
             />
             <p className="text-xs text-gray-500">
-              Bullet points are added automatically
+              {t('sections.experience.bulletHint')}
             </p>
           </div>
         )}
@@ -242,6 +246,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
 };
 
 export const ExperienceSection = ({ form, addExperience, removeExperience, reorderExperiences }: ExperienceSectionProps) => {
+  const { t } = useTranslation();
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -274,9 +279,9 @@ export const ExperienceSection = ({ form, addExperience, removeExperience, reord
           <div>
             <div className="flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-green-600 dark:text-green-400" />
-              <CardTitle className="text-xl dark:text-gray-100">Work Experience</CardTitle>
+              <CardTitle className="text-xl dark:text-gray-100">{t('sections.experience.title')}</CardTitle>
             </div>
-            <CardDescription className="mt-1 dark:text-gray-400">Add your professional experience (drag to reorder)</CardDescription>
+            <CardDescription className="mt-1 dark:text-gray-400">{t('sections.experience.description')}</CardDescription>
           </div>
           <Button
             type='button'
@@ -284,7 +289,7 @@ export const ExperienceSection = ({ form, addExperience, removeExperience, reord
             className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-md hover:shadow-lg transition-all"
           >
             <Plus className="w-4 h-4 mr-2" />
-            Add Experience
+            {t('sections.experience.add')}
           </Button>
         </div>
       </CardHeader>
@@ -295,8 +300,8 @@ export const ExperienceSection = ({ form, addExperience, removeExperience, reord
               {field.state.value.length === 0 && (
                 <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                   <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                  <p>No experience added yet</p>
-                  <p className="text-sm mt-1">Click "Add Experience" to get started</p>
+                  <p>{t('sections.experience.empty')}</p>
+                  <p className="text-sm mt-1">{t('sections.experience.emptyHint')}</p>
                 </div>
               )}
               {field.state.value.length > 0 && (
