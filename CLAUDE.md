@@ -242,13 +242,12 @@ The application now features three specialized CV templates, each targeting spec
 - **Color Scheme**: Emerald/teal (medical, nature-inspired)
 - **Unique Elements**:
   - Stethoscope icon in header
-  - "Dr." prefix automatically added to name
-  - Timeline visualization for clinical experience
+  - Timeline visualization for work experience
   - Colored section boxes (emerald for skills, teal for languages, orange for interests)
   - Visual language proficiency indicators (dots)
 - **Section Names**:
-  - "Clinical Experience" instead of "Work Experience"
-  - "Clinical Skills" instead of "Skills"
+  - "Work Experience"
+  - "Skills"
   - "Education & Training"
   - "Special Interests"
 
@@ -317,7 +316,7 @@ Added ability to load CV data from a previously saved PDF file back into the for
 ### Template Detection Logic
 - **Developer**: Contains `// WORK EXPERIENCE`, `// TECH STACK`
 - **Default**: Contains `PROFESSIONAL EXPERIENCE`, `CORE COMPETENCIES`
-- **Veterinary**: Contains `CLINICAL EXPERIENCE`, `CLINICAL SKILLS`
+- **Veterinary**: Contains `SPECIAL INTERESTS`
 
 ### Parsed Data Fields
 - Personal info: name, title, email, phone, location, website, GitHub, LinkedIn

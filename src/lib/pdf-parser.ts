@@ -35,8 +35,8 @@ export function detectTemplate(text: string): TemplateType {
   if (text.includes('// WORK EXPERIENCE') || text.includes('// TECH STACK')) {
     return 'developer';
   }
-  // Veterinary template uses Clinical terminology
-  if (text.includes('CLINICAL EXPERIENCE') || text.includes('CLINICAL SKILLS')) {
+  // Veterinary template uses Special Interests section
+  if (text.includes('SPECIAL INTERESTS')) {
     return 'veterinary';
   }
   // Default template uses Professional Experience
@@ -183,26 +183,22 @@ function parseVeterinaryTemplate(lines: string[]): CVFormValues {
   const result = createEmptyCV('veterinary');
 
   // Find section markers
-  const clinicalExpIndex = lines.findIndex(l => l.includes('CLINICAL EXPERIENCE'));
-  const educationIndex = lines.findIndex(l => l.includes('EDUCATION') && !l.includes('CLINICAL'));
-  const skillsIndex = lines.findIndex(l => l.includes('CLINICAL SKILLS'));
+  const workExpIndex = lines.findIndex(l => l.includes('Work Experience'));
+  const educationIndex = lines.findIndex(l => l.includes('Education') || l.includes('EDUCATION'));
+  const skillsIndex = lines.findIndex(l => l === 'Skills' || l === 'SKILLS');
   const languagesIndex = lines.findIndex(l => l === 'Languages' || l === 'LANGUAGES');
   const interestsIndex = lines.findIndex(l => l.includes('SPECIAL INTERESTS') || l === 'Interests');
 
-  // Parse header (remove Dr. prefix if present)
-  if (clinicalExpIndex > 0) {
-    const headerLines = lines.slice(0, clinicalExpIndex);
+  // Parse header
+  if (workExpIndex > 0) {
+    const headerLines = lines.slice(0, workExpIndex);
     result.personalInfo = parseHeaderInfo(headerLines);
-    // Remove "Dr." prefix if present
-    if (result.personalInfo.firstName.startsWith('Dr.')) {
-      result.personalInfo.firstName = result.personalInfo.firstName.replace('Dr.', '').trim();
-    }
   }
 
-  // Parse clinical experience
-  if (clinicalExpIndex >= 0) {
-    const endIndex = findNextSection([educationIndex, skillsIndex, languagesIndex, interestsIndex], clinicalExpIndex, lines.length);
-    const expLines = lines.slice(clinicalExpIndex + 1, endIndex);
+  // Parse work experience
+  if (workExpIndex >= 0) {
+    const endIndex = findNextSection([educationIndex, skillsIndex, languagesIndex, interestsIndex], workExpIndex, lines.length);
+    const expLines = lines.slice(workExpIndex + 1, endIndex);
     result.experiences = parseExperiences(expLines);
   }
 
