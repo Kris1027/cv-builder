@@ -116,8 +116,8 @@ export const IndexPage = () => {
               <p className='text-sm text-muted-foreground'>{t('home.stats.freeForeverLabel')}</p>
             </div>
             <div>
-              <p className='text-2xl font-bold mb-1'>{t('home.stats.ats')}</p>
-              <p className='text-sm text-muted-foreground'>{t('home.stats.atsLabel')}</p>
+              <p className='text-2xl font-bold mb-1'>{t('home.stats.languages')}</p>
+              <p className='text-sm text-muted-foreground'>{t('home.stats.languagesLabel')}</p>
             </div>
           </div>
         </div>
