@@ -9,7 +9,7 @@ export const IndexPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='bg-gradient-to-b from-background to-muted/20'>
+    <div className='min-h-screen bg-gradient-to-b from-background to-muted/20'>
       {/* Language and Theme Toggle */}
       <div className='absolute top-4 right-4 flex items-center gap-2'>
         <LanguageToggle />
