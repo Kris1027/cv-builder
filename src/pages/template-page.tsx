@@ -4,15 +4,11 @@ import { DeveloperTemplate } from '@/components/templates/developer-template';
 import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { sampleCVData } from '@/data/sample-cv-data';
-import { ArrowLeft, Download, Edit } from 'lucide-react';
+import { ArrowLeft, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 export function TemplatePage() {
   const { templateId } = useParams({ from: '/templates_/$templateId' });
-
-  const handleDownloadPDF = () => {
-    window.print();
-  };
 
   const getTemplateName = () => {
     switch (templateId) {
@@ -67,15 +63,6 @@ export function TemplatePage() {
             </div>
             
             <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDownloadPDF}
-                className="dark:hover:bg-gray-800"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Download PDF
-              </Button>
               <Link to="/builder" search={{ templateId }}>
                 <Button size="sm">
                   <Edit className="w-4 h-4 mr-2" />
@@ -90,32 +77,10 @@ export function TemplatePage() {
 
       {/* Template Preview */}
       <div className="py-8">
-        <div className="bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50 overflow-hidden print:shadow-none max-w-[210mm] mx-auto">
+        <div className="bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50 overflow-hidden max-w-[210mm] mx-auto">
           {renderTemplate()}
         </div>
       </div>
-
-      {/* Print Styles */}
-      <style>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          .container > div:last-child,
-          .container > div:last-child * {
-            visibility: visible;
-          }
-          .container > div:last-child {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-          .sticky {
-            display: none !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
