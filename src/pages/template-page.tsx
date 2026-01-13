@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { DeveloperTemplate } from '@/components/templates/developer-template';
 import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
-import { sampleCVData, sampleDefaultCVData } from '@/data/sample-cv-data';
+import { sampleCVData, sampleDefaultCVData, sampleVeterinaryCVData } from '@/data/sample-cv-data';
 import { ArrowLeft, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -30,7 +30,7 @@ export function TemplatePage() {
       case 'default':
         return <DefaultTemplate data={sampleDefaultCVData} />;
       case 'veterinary':
-        return <VeterinaryTemplate data={sampleCVData} />;
+        return <VeterinaryTemplate data={sampleVeterinaryCVData} />;
       default:
         return (
           <div className="text-center py-8">

@@ -188,3 +188,103 @@ export const sampleDefaultCVData: CVData = {
     { name: 'Reading' },
   ],
 };
+
+// Veterinary professional sample data (for Veterinary template)
+export const sampleVeterinaryCVData: CVData = {
+  personalInfo: {
+    firstName: 'Emily',
+    lastName: 'Roberts',
+    location: 'Denver, CO',
+    title: 'Veterinarian',
+    phone: '+1 303 555 0789',
+    email: 'emily.roberts@email.com',
+    website: '',
+    linkedin: 'emily-roberts-dvm',
+    github: '',
+  },
+  experiences: [
+    {
+      company: 'Mountain View Animal Hospital',
+      position: 'Senior Veterinarian',
+      location: 'Denver, CO',
+      startDate: '2020-08',
+      endDate: '',
+      current: true,
+      description: `• Providing comprehensive medical care for small animals including dogs, cats, and exotic pets
+• Performing surgical procedures including spays, neuters, and soft tissue surgeries
+• Diagnosing and treating complex medical conditions using advanced diagnostic equipment
+• Mentoring veterinary students and junior staff members
+• Building long-term relationships with pet owners and providing client education
+• Managing emergency cases and critical care patients`,
+    },
+    {
+      company: 'Paws & Claws Veterinary Clinic',
+      position: 'Associate Veterinarian',
+      location: 'Boulder, CO',
+      startDate: '2017-06',
+      endDate: '2020-07',
+      current: false,
+      description: `• Conducted routine wellness exams and vaccination programs
+• Performed dental procedures and preventive care treatments
+• Managed chronic disease cases including diabetes and kidney disease
+• Collaborated with specialists for advanced treatment referrals
+• Implemented clinic protocols for improved patient outcomes
+• Participated in community outreach and pet adoption events`,
+    },
+    {
+      company: 'Colorado State Veterinary Hospital',
+      position: 'Veterinary Intern',
+      location: 'Fort Collins, CO',
+      startDate: '2016-06',
+      endDate: '2017-05',
+      current: false,
+      description: `• Rotated through various specialty departments including surgery, internal medicine, and emergency
+• Assisted in complex surgical procedures and post-operative care
+• Gained experience with large animal and equine medicine
+• Participated in clinical research projects`,
+    },
+  ],
+  education: [
+    {
+      institution: 'Colorado State University',
+      degree: 'Doctor of Veterinary Medicine',
+      field: 'DVM',
+      startDate: '2012-08',
+      endDate: '2016-05',
+      description: '',
+    },
+    {
+      institution: 'University of Colorado',
+      degree: 'Bachelor of Science',
+      field: 'Animal Science',
+      startDate: '2008-09',
+      endDate: '2012-05',
+      description: '',
+    },
+  ],
+  skills: [
+    { name: 'Small Animal Medicine' },
+    { name: 'Surgery' },
+    { name: 'Dentistry' },
+    { name: 'Radiology' },
+    { name: 'Ultrasound' },
+    { name: 'Emergency Care' },
+    { name: 'Anesthesia' },
+    { name: 'Client Communication' },
+    { name: 'Laboratory Diagnostics' },
+    { name: 'Exotic Animal Care' },
+    { name: 'Pain Management' },
+    { name: 'Preventive Medicine' },
+  ],
+  languages: [
+    { language: 'English', proficiency: 'NATIVE' },
+    { language: 'Spanish', proficiency: 'B2' },
+  ],
+  interests: [
+    { name: 'Animal Rescue' },
+    { name: 'Hiking' },
+    { name: 'Wildlife Conservation' },
+    { name: 'Horse Riding' },
+    { name: 'Nature Photography' },
+  ],
+};
