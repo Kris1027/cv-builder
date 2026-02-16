@@ -23,7 +23,6 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - [How It Works](#how-it-works)
 - [Templates](#templates)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
 - [License](#license)
 - [Support](#support)
 
@@ -128,10 +127,6 @@ src/
 ├── routes/                # TanStack Router route definitions
 └── types/                 # TypeScript type definitions
 ```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 

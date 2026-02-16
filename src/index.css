@@ -217,8 +217,15 @@
 
 @keyframes grow-width {
   from {
-    width: 0%;
+    opacity: 0.9;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+.root-transition {
+  view-transition-name: root;
 }
 
 /* ===== Utility Classes ===== */

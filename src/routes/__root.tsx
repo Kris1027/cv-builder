@@ -8,7 +8,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <ThemeProvider defaultTheme='system'>
-      <div className='min-h-screen bg-background text-foreground transition-colors' style={{ viewTransitionName: 'root' }}>
+      <div className='min-h-screen bg-background text-foreground transition-colors root-transition'>
         <main className='flex-1'>
           <Outlet />
         </main>
