@@ -185,7 +185,7 @@ export function PreviewPage() {
 
       {/* Success Message */}
       <div className="container mx-auto px-4 py-4 print:hidden">
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+        <div className="animate-fade-in-up bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
           <p className="text-green-800 dark:text-green-300 font-medium">{t('preview.success.title')}</p>
           <p className="text-green-700 dark:text-green-400 text-sm mt-1">
             {t('preview.success.subtitle')}
@@ -212,7 +212,7 @@ export function PreviewPage() {
           onScaleChange={handleScaleChange}
           className="max-w-[210mm] mx-auto"
         >
-          <div id="cv-content" className="bg-white text-gray-900 shadow-xl overflow-hidden">
+          <div id="cv-content" className="animate-fade-in-scale delay-1 bg-white text-gray-900 shadow-xl overflow-hidden">
             {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
             {templateId === 'default' && <DefaultTemplate data={cvData} />}
             {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
