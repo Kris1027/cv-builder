@@ -96,7 +96,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.institution')}
@@ -113,7 +113,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.degree')}
@@ -130,7 +130,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.field')}
@@ -148,7 +148,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
                 <DatePicker
                   id={subField.name}
                   name={subField.name}
-                  value={subField.state.value}
+                  value={subField.state.value as string}
                   onChange={(date) =>
                     subField.handleChange(date ? date.toISOString() : '')
                   }
@@ -166,7 +166,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
                 <DatePicker
                   id={subField.name}
                   name={subField.name}
-                  value={subField.state.value}
+                  value={subField.state.value as string}
                   onChange={(date) =>
                     subField.handleChange(date ? date.toISOString() : '')
                   }
@@ -186,7 +186,7 @@ const SortableEducationItem = ({ id, index, form, removeEducation }: SortableEdu
             <Textarea
               id={subField.name}
               name={subField.name}
-              value={subField.state.value}
+              value={subField.state.value as string}
               onBlur={subField.handleBlur}
               onChange={(e) => subField.handleChange(e.target.value)}
               placeholder='GPA, relevant coursework, achievements...'
@@ -249,41 +249,44 @@ export const EducationSection = ({ form, addEducation, removeEducation, reorderE
       </CardHeader>
       <CardContent className="pt-6">
         <form.Field name='education'>
-          {(field) => (
-            <div className='space-y-6'>
-              {field.state.value.length === 0 && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                  <p>{t('sections.education.empty')}</p>
-                  <p className="text-sm mt-1">{t('sections.education.emptyHint')}</p>
-                </div>
-              )}
-              {field.state.value.length > 0 && (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext
-                    items={field.state.value.map((_: EducationProps, index: number) => `education-${index}`)}
-                    strategy={verticalListSortingStrategy}
+          {(field) => {
+            const educationItems = field.state.value as EducationProps[];
+            return (
+              <div className='space-y-6'>
+                {educationItems.length === 0 && (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                    <p>{t('sections.education.empty')}</p>
+                    <p className="text-sm mt-1">{t('sections.education.emptyHint')}</p>
+                  </div>
+                )}
+                {educationItems.length > 0 && (
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
                   >
-                    <div className='space-y-6'>
-                      {field.state.value.map((_: EducationProps, index: number) => (
-                        <SortableEducationItem
-                          key={`education-${index}`}
-                          id={`education-${index}`}
-                          index={index}
-                          form={form}
-                          removeEducation={removeEducation}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-              )}
-            </div>
-          )}
+                    <SortableContext
+                      items={educationItems.map((_: EducationProps, index: number) => `education-${index}`)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className='space-y-6'>
+                        {educationItems.map((_: EducationProps, index: number) => (
+                          <SortableEducationItem
+                            key={`education-${index}`}
+                            id={`education-${index}`}
+                            index={index}
+                            form={form}
+                            removeEducation={removeEducation}
+                          />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
+            );
+          }}
         </form.Field>
       </CardContent>
     </Card>

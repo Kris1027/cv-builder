@@ -40,6 +40,7 @@ src/
 │   ├── templates-page.tsx # Template gallery
 │   └── template-page.tsx  # Single template preview
 ├── routes/                # TanStack Router route definitions
+├── schemas/               # Zod validation schemas (cv-schema)
 └── types/                 # TypeScript types (form-types, form-component-types, theme)
 ```
 
@@ -61,6 +62,7 @@ src/
 - **Routing**: TanStack Router
 - **Forms**: TanStack Form
 - **Styling**: Tailwind CSS
+- **Validation**: Zod (schemas) + TanStack Form validators
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
 
@@ -91,9 +93,14 @@ Types defined in `/src/types/form-types.ts`:
 
 ### Validation
 
-- First Name, Last Name, Email: required
-- Email: must be valid format
-- All other fields: optional
+- Centralized Zod schemas in `/src/schemas/cv-schema.ts` — single source of truth
+- Wired into TanStack Form via `validators: { onChange: cvFormSchema }`
+- Field errors exposed via `field.state.meta.errors` and rendered inline using `<FieldError>` component (`/src/components/ui/field-error.tsx`)
+- Error messages are i18n keys (e.g., `validation.firstNameRequired`) translated at render time
+- Errors display only after field is touched (`isTouched` check)
+- Required fields: First Name, Last Name, Email
+- Email: must be valid format (Zod `.email()`)
+- All other fields: optional (validated as strings/booleans/enums per schema)
 
 ### Form Component Types
 

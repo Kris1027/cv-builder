@@ -97,7 +97,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.company')}
@@ -114,7 +114,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.position')}
@@ -131,7 +131,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.locationJob')}
@@ -148,7 +148,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               <DatePicker
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onChange={(date) =>
                   subField.handleChange(date ? date.toISOString() : '')
                 }
@@ -164,11 +164,11 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               <DatePicker
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onChange={(date) =>
                   subField.handleChange(date ? date.toISOString() : '')
                 }
-                disabled={form.getFieldValue(`experiences[${index}].current`)}
+                disabled={form.getFieldValue(`experiences[${index}].current`) as boolean}
               />
             </div>
           )}
@@ -181,7 +181,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
             <Checkbox
               id={subField.name}
               name={subField.name}
-              checked={subField.state.value}
+              checked={subField.state.value as boolean}
               onCheckedChange={(checked) => subField.handleChange(!!checked)}
               className='border-blue-400'
             />
@@ -199,7 +199,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
             <Textarea
               id={subField.name}
               name={subField.name}
-              value={subField.state.value}
+              value={subField.state.value as string}
               onBlur={subField.handleBlur}
               onChange={(e) => {
                 let value = e.target.value;
@@ -211,7 +211,7 @@ const SortableExperienceItem = ({ id, index, form, removeExperience }: SortableE
               }}
               onPaste={(e) => {
                 // Handle pasting into empty field - add bullet point
-                if (!subField.state.value || subField.state.value.length === 0) {
+                if (!(subField.state.value as string) || (subField.state.value as string).length === 0) {
                   const pastedText = e.clipboardData.getData('text');
                   if (pastedText && !pastedText.trimStart().startsWith('•')) {
                     e.preventDefault();
@@ -295,41 +295,44 @@ export const ExperienceSection = ({ form, addExperience, removeExperience, reord
       </CardHeader>
       <CardContent className="pt-6">
         <form.Field name='experiences'>
-          {(field) => (
-            <div className='space-y-6'>
-              {field.state.value.length === 0 && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                  <p>{t('sections.experience.empty')}</p>
-                  <p className="text-sm mt-1">{t('sections.experience.emptyHint')}</p>
-                </div>
-              )}
-              {field.state.value.length > 0 && (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext
-                    items={field.state.value.map((_: ExperienceProps, index: number) => `experience-${index}`)}
-                    strategy={verticalListSortingStrategy}
+          {(field) => {
+            const experiences = field.state.value as ExperienceProps[];
+            return (
+              <div className='space-y-6'>
+                {experiences.length === 0 && (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                    <p>{t('sections.experience.empty')}</p>
+                    <p className="text-sm mt-1">{t('sections.experience.emptyHint')}</p>
+                  </div>
+                )}
+                {experiences.length > 0 && (
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
                   >
-                    <div className='space-y-6'>
-                      {field.state.value.map((_: ExperienceProps, index: number) => (
-                        <SortableExperienceItem
-                          key={`experience-${index}`}
-                          id={`experience-${index}`}
-                          index={index}
-                          form={form}
-                          removeExperience={removeExperience}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-              )}
-            </div>
-          )}
+                    <SortableContext
+                      items={experiences.map((_: ExperienceProps, index: number) => `experience-${index}`)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className='space-y-6'>
+                        {experiences.map((_: ExperienceProps, index: number) => (
+                          <SortableExperienceItem
+                            key={`experience-${index}`}
+                            id={`experience-${index}`}
+                            index={index}
+                            form={form}
+                            removeExperience={removeExperience}
+                          />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
+            );
+          }}
         </form.Field>
       </CardContent>
     </Card>
