@@ -68,6 +68,21 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     }
   };
 
+  // Default values for nested objects to backfill missing keys from older saves
+  const emptyPersonalInfo: PersonalInfoProps = {
+    firstName: '',
+    lastName: '',
+    location: '',
+    title: '',
+    phone: '',
+    email: '',
+    website: '',
+    linkedin: '',
+    github: '',
+  };
+
+  const emptyGdprConsent = { enabled: false, companyName: '' };
+
   // Get initial values - load from localStorage if available, otherwise defaults
   const getInitialValues = () => {
     const storedData = localStorage.getItem('cvData');
@@ -77,31 +92,29 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         ...parsedData,
         // Always use URL templateId when explicitly provided, otherwise fall back to stored value
         templateId: search.templateId || parsedData.templateId || activeTemplateId,
-        // Ensure gdprConsent has defaults for older saved data
-        gdprConsent: parsedData.gdprConsent ?? { enabled: false, companyName: '' },
+        // Deep-merge personalInfo to backfill missing keys from older saves
+        personalInfo: { ...emptyPersonalInfo, ...parsedData.personalInfo },
+        // Ensure arrays default to empty if missing from older saves
+        experiences: parsedData.experiences ?? [],
+        education: parsedData.education ?? [],
+        skills: parsedData.skills ?? [],
+        languages: parsedData.languages ?? [],
+        interests: parsedData.interests ?? [],
+        // Deep-merge gdprConsent to backfill missing keys from older saves
+        gdprConsent: { ...emptyGdprConsent, ...parsedData.gdprConsent },
       };
     }
 
     // Return default values for new CV
     return {
       templateId: activeTemplateId,
-      personalInfo: {
-        firstName: '',
-        lastName: '',
-        location: '',
-        title: '',
-        phone: '',
-        email: '',
-        website: '',
-        linkedin: '',
-        github: '',
-      } as PersonalInfoProps,
+      personalInfo: emptyPersonalInfo as PersonalInfoProps,
       experiences: [] as ExperienceProps[],
       education: [] as EducationProps[],
       skills: [] as SkillProps[],
       languages: [] as LanguageProps[],
       interests: [] as InterestProps[],
-      gdprConsent: { enabled: false, companyName: '' },
+      gdprConsent: emptyGdprConsent,
     };
   };
 
@@ -161,14 +174,19 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     try {
       const cvData = await loadCVFromPDF(file);
 
-      // Update form with parsed data
+      // Normalize PDF data by merging with defaults to backfill missing keys
+      const normalizedPersonalInfo = { ...emptyPersonalInfo, ...cvData.personalInfo };
+      const normalizedGdprConsent = { ...emptyGdprConsent, ...cvData.gdprConsent };
+
+      // Update form with normalized data
       form.setFieldValue('templateId', cvData.templateId);
-      form.setFieldValue('personalInfo', cvData.personalInfo);
-      form.setFieldValue('experiences', cvData.experiences);
-      form.setFieldValue('education', cvData.education);
-      form.setFieldValue('skills', cvData.skills);
-      form.setFieldValue('languages', cvData.languages);
-      form.setFieldValue('interests', cvData.interests);
+      form.setFieldValue('personalInfo', normalizedPersonalInfo);
+      form.setFieldValue('experiences', cvData.experiences ?? []);
+      form.setFieldValue('education', cvData.education ?? []);
+      form.setFieldValue('skills', cvData.skills ?? []);
+      form.setFieldValue('languages', cvData.languages ?? []);
+      form.setFieldValue('interests', cvData.interests ?? []);
+      form.setFieldValue('gdprConsent', normalizedGdprConsent);
 
       // PDF loaded - user can manually save when ready
     } catch (error) {
