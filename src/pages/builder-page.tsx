@@ -76,6 +76,8 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         ...parsedData,
         // Always use URL templateId when explicitly provided, otherwise fall back to stored value
         templateId: search.templateId || parsedData.templateId || activeTemplateId,
+        // Ensure gdprConsent has defaults for older saved data
+        gdprConsent: parsedData.gdprConsent ?? { enabled: false, companyName: '' },
       };
     }
 
