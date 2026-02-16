@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ShieldCheck } from 'lucide-react';
@@ -25,13 +26,12 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
         <div className="space-y-4">
           <form.Field name="gdprConsent.enabled">
             {(field) => (
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
+              <div className="flex items-center space-x-2">
+                <Checkbox
                   id="gdpr-enabled"
                   checked={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700"
+                  onCheckedChange={(checked) => field.handleChange(!!checked)}
+                  className="border-green-400"
                 />
                 <Label htmlFor="gdpr-enabled" className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
                   {t('sections.gdprConsent.enable')}
