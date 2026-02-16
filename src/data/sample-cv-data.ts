@@ -1,4 +1,4 @@
-import type { PersonalInfoProps, ExperienceProps, EducationProps, SkillProps, LanguageProps, InterestProps } from '@/types/form-types';
+import type { PersonalInfoProps, ExperienceProps, EducationProps, SkillProps, LanguageProps, InterestProps, GdprConsentProps } from '@/types/form-types';
 
 export interface CVData {
   personalInfo: PersonalInfoProps;
@@ -7,6 +7,7 @@ export interface CVData {
   skills: SkillProps[];
   languages: LanguageProps[];
   interests: InterestProps[];
+  gdprConsent?: GdprConsentProps;
 }
 
 // Developer-focused sample data (for Developer template)

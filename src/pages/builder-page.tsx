@@ -5,6 +5,7 @@ import { EducationSection } from '@/components/form-sections/education-section';
 import { SkillsSection } from '@/components/form-sections/skills-section';
 import { LanguagesSection } from '@/components/form-sections/languages-section';
 import { InterestsSection } from '@/components/form-sections/interests-section';
+import { GdprConsentSection } from '@/components/form-sections/gdpr-consent-section';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import type {
@@ -75,6 +76,8 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         ...parsedData,
         // Always use URL templateId when explicitly provided, otherwise fall back to stored value
         templateId: search.templateId || parsedData.templateId || activeTemplateId,
+        // Ensure gdprConsent has defaults for older saved data
+        gdprConsent: parsedData.gdprConsent ?? { enabled: false, companyName: '' },
       };
     }
 
@@ -97,6 +100,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
       skills: [] as SkillProps[],
       languages: [] as LanguageProps[],
       interests: [] as InterestProps[],
+      gdprConsent: { enabled: false, companyName: '' },
     };
   };
 
@@ -539,6 +543,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             removeInterest={removeInterest}
             reorderInterests={reorderInterests}
           />
+
+          {/* GDPR Consent Section */}
+          <GdprConsentSection form={form} />
 
           {/* Submit Button */}
           <div className="flex justify-between items-center pt-6">

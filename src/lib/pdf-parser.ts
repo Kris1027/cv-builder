@@ -574,6 +574,7 @@ function createEmptyCV(templateId: TemplateType): CVFormValues {
     skills: [],
     languages: [],
     interests: [],
+    gdprConsent: { enabled: false, companyName: '' },
   };
 }
 

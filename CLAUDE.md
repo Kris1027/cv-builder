@@ -354,3 +354,46 @@ Added ability to load CV data from a previously saved PDF file back into the for
 {
   "pdfjs-dist": "^5.4.530"
 }
+```
+
+## GDPR Consent Clause Feature (2026-02-16)
+
+### Overview
+Added a toggleable GDPR/RODO consent clause section to the CV builder. Required for Polish/EU recruitment, it renders a data processing consent statement at the bottom of all CV templates with the target company name.
+
+### Implementation Details
+
+**Form Data**:
+- New `GdprConsentProps` interface: `{ enabled: boolean; companyName: string }`
+- Added to `CVFormValues` (required) and `CVData` (optional for backward compatibility)
+- Default values: `{ enabled: false, companyName: '' }`
+
+**Form Section**:
+- Card with ShieldCheck icon and green gradient header
+- Checkbox to enable/disable the clause
+- Company name text input (only shown when enabled)
+
+**Template Rendering**:
+- All three templates (developer, default, veterinary) render the clause at the very bottom
+- Style: small (`text-xs`), italic, gray (`text-gray-400`) text with top border separator
+- Uses `t('cv.gdprConsent', { companyName })` for localized text
+- Falls back to `[...]` if company name is empty
+- Only renders when `gdprConsent?.enabled` is true (safe for old data without the field)
+
+**Translations**:
+- EN: Full GDPR regulation reference with `{{companyName}}` interpolation
+- PL: Full RODO regulation reference with `{{companyName}}` interpolation
+- Section labels in both languages under `sections.gdprConsent.*`
+
+### Files Created/Modified
+- `/src/types/form-types.ts` - Added `GdprConsentProps` interface, added to `CVFormValues`
+- `/src/data/sample-cv-data.ts` - Added optional `gdprConsent` to `CVData` interface
+- `/src/locales/en/translation.json` - EN translations for section + clause text
+- `/src/locales/pl/translation.json` - PL translations for section + clause text
+- `/src/components/form-sections/gdpr-consent-section.tsx` - NEW: form section component
+- `/src/pages/builder-page.tsx` - Imported and rendered GdprConsentSection, added defaults
+- `/src/components/templates/developer-template.tsx` - Renders GDPR clause at bottom
+- `/src/components/templates/default-template.tsx` - Renders GDPR clause at bottom
+- `/src/components/templates/veterinary-template.tsx` - Renders GDPR clause at bottom
+- `/src/pages/preview-page.tsx` - Passes `gdprConsent` to templates from localStorage
+- `/src/lib/pdf-parser.ts` - Added `gdprConsent` default to `createEmptyCV`

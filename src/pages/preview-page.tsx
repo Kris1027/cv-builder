@@ -38,6 +38,7 @@ export function PreviewPage() {
         skills: parsedData.skills || [],
         languages: parsedData.languages || [],
         interests: parsedData.interests || [],
+        gdprConsent: parsedData.gdprConsent,
       };
       setCvData(transformedData);
     }
