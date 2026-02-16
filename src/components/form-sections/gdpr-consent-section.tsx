@@ -29,7 +29,7 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="gdpr-enabled"
-                  checked={field.state.value}
+                  checked={field.state.value as boolean}
                   onCheckedChange={(checked) => field.handleChange(!!checked)}
                   className="border-green-400"
                 />
@@ -42,7 +42,7 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
 
           <form.Field name="gdprConsent.enabled">
             {(enabledField) =>
-              enabledField.state.value ? (
+              (enabledField.state.value as boolean) ? (
                 <form.Field name="gdprConsent.companyName">
                   {(field) => (
                     <div className="space-y-2">
@@ -52,7 +52,7 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
                       <Input
                         id="gdpr-company"
                         placeholder={t('sections.gdprConsent.companyNamePlaceholder')}
-                        value={field.state.value}
+                        value={field.state.value as string}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className="focus:ring-green-500"

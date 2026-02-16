@@ -1,18 +1,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { User, AlertCircle } from 'lucide-react';
+import { FieldError } from '@/components/ui/field-error';
+import { User } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
 import { formatPolishPhone } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 
-interface PersonalInfoSectionProps {
+type PersonalInfoSectionProps = {
   form: FormApi;
-  validationErrors: Record<string, string>;
-  setValidationErrors: (errors: Record<string, string>) => void;
-}
+};
 
-export const PersonalInfoSection = ({ form, validationErrors, setValidationErrors }: PersonalInfoSectionProps) => {
+export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
   const { t } = useTranslation();
 
   return (
@@ -36,23 +35,13 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                 <Input
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    if (validationErrors['firstName']) {
-                      setValidationErrors({ ...validationErrors, firstName: '' });
-                    }
-                  }}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.firstName')}
-                  className={`transition-all ${validationErrors['firstName'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                  className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
-                {validationErrors['firstName'] && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {validationErrors['firstName']}
-                  </p>
-                )}
+                <FieldError errors={field.state.meta.errors} isTouched={field.state.meta.isTouched} />
               </div>
             )}
           </form.Field>
@@ -66,23 +55,13 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                 <Input
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    if (validationErrors['lastName']) {
-                      setValidationErrors({ ...validationErrors, lastName: '' });
-                    }
-                  }}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.lastName')}
-                  className={`transition-all ${validationErrors['lastName'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                  className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
-                {validationErrors['lastName'] && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {validationErrors['lastName']}
-                  </p>
-                )}
+                <FieldError errors={field.state.meta.errors} isTouched={field.state.meta.isTouched} />
               </div>
             )}
           </form.Field>
@@ -97,7 +76,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                 <Input
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.professionalTitle')}
@@ -117,7 +96,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                 <Input
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.location')}
@@ -137,23 +116,13 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   id={field.name}
                   name={field.name}
                   type='email'
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                    if (validationErrors['email']) {
-                      setValidationErrors({ ...validationErrors, email: '' });
-                    }
-                  }}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.email')}
-                  className={`transition-all ${validationErrors['email'] ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                  className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 />
-                {validationErrors['email'] && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {validationErrors['email']}
-                  </p>
-                )}
+                <FieldError errors={field.state.meta.errors} isTouched={field.state.meta.isTouched} />
               </div>
             )}
           </form.Field>
@@ -166,7 +135,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   id={field.name}
                   name={field.name}
                   type='tel'
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={(e) => {
                     field.handleBlur();
                     // Format on blur only if there are digits
@@ -194,7 +163,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   id={field.name}
                   name={field.name}
                   type='url'
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.website')}
@@ -212,7 +181,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   id={field.name}
                   name={field.name}
                   type='url'
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.linkedin')}
@@ -230,7 +199,7 @@ export const PersonalInfoSection = ({ form, validationErrors, setValidationError
                   id={field.name}
                   name={field.name}
                   type='url'
-                  value={field.state.value}
+                  value={field.state.value as string}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder={t('placeholders.github')}

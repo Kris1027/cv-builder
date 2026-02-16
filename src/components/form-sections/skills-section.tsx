@@ -96,7 +96,7 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
 
   const handleAddSkill = () => {
     if (skillInput.trim()) {
-      form.setFieldValue('skills', [...form.getFieldValue('skills'), { name: skillInput.trim() }]);
+      form.setFieldValue('skills', [...(form.getFieldValue('skills') as SkillProps[]), { name: skillInput.trim() }]);
       setSkillInput('');
     }
   };
@@ -157,40 +157,43 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
           </div>
 
           <form.Field name='skills'>
-            {(field) => (
-              <div>
-                {field.state.value.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    <Code className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                    <p>{t('sections.skills.empty')}</p>
-                    <p className="text-sm mt-1">{t('sections.skills.emptyHint')}</p>
-                  </div>
-                ) : (
-                  <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}
-                  >
-                    <SortableContext
-                      items={field.state.value.map((_: SkillProps, index: number) => `skill-${index}`)}
-                      strategy={horizontalListSortingStrategy}
+            {(field) => {
+              const skillItems = field.state.value as SkillProps[];
+              return (
+                <div>
+                  {skillItems.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                      <Code className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                      <p>{t('sections.skills.empty')}</p>
+                      <p className="text-sm mt-1">{t('sections.skills.emptyHint')}</p>
+                    </div>
+                  ) : (
+                    <DndContext
+                      sensors={sensors}
+                      collisionDetection={closestCenter}
+                      onDragEnd={handleDragEnd}
                     >
-                      <div className='flex flex-wrap gap-2'>
-                        {field.state.value.map((skill: SkillProps, index: number) => (
-                          <SortableSkillItem
-                            key={`skill-${index}`}
-                            id={`skill-${index}`}
-                            index={index}
-                            skill={skill}
-                            removeSkill={removeSkill}
-                          />
-                        ))}
-                      </div>
-                    </SortableContext>
-                  </DndContext>
-                )}
-              </div>
-            )}
+                      <SortableContext
+                        items={skillItems.map((_: SkillProps, index: number) => `skill-${index}`)}
+                        strategy={horizontalListSortingStrategy}
+                      >
+                        <div className='flex flex-wrap gap-2'>
+                          {skillItems.map((skill: SkillProps, index: number) => (
+                            <SortableSkillItem
+                              key={`skill-${index}`}
+                              id={`skill-${index}`}
+                              index={index}
+                              skill={skill}
+                              removeSkill={removeSkill}
+                            />
+                          ))}
+                        </div>
+                      </SortableContext>
+                    </DndContext>
+                  )}
+                </div>
+              );
+            }}
           </form.Field>
         </div>
       </CardContent>

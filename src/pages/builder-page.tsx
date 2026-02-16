@@ -9,6 +9,7 @@ import { GdprConsentSection } from '@/components/form-sections/gdpr-consent-sect
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import type {
+  CVFormValues,
   EducationProps,
   ExperienceProps,
   InterestProps,
@@ -18,6 +19,7 @@ import type {
   SkillProps,
 } from '@/types/form-types';
 import { useForm } from '@tanstack/react-form';
+import { cvFormSchema } from '@/schemas/cv-schema';
 import { ArrowLeft, CheckCircle, Save, RotateCcw, AlertTriangle, Upload, FileWarning } from 'lucide-react';
 import {
   AlertDialog,
@@ -45,7 +47,6 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   const search = useSearch({ from: '/builder' }) as { templateId?: string };
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoadingPDF, setIsLoadingPDF] = useState(false);
   const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -106,24 +107,10 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
   const form = useForm({
     defaultValues: getInitialValues(),
+    validators: {
+      onChange: cvFormSchema,
+    },
     onSubmit: async ({ value }) => {
-      // Validate required fields
-      const errors: Record<string, string> = {};
-
-      if (!value.personalInfo.firstName) errors['firstName'] = t('validation.firstNameRequired');
-      if (!value.personalInfo.lastName) errors['lastName'] = t('validation.lastNameRequired');
-      if (!value.personalInfo.email) errors['email'] = t('validation.emailRequired');
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.personalInfo.email)) {
-        errors['email'] = t('validation.invalidEmail');
-      }
-
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-        // Scroll to the first error
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
       setIsSaving(true);
       // Store data in localStorage for persistence
       localStorage.setItem('cvData', JSON.stringify(value));
@@ -139,7 +126,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
   // Sync form templateId when URL parameter changes
   useEffect(() => {
-    if (search.templateId && form.getFieldValue('templateId') !== search.templateId) {
+    if (search.templateId && (form.getFieldValue('templateId') as string) !== search.templateId) {
       form.setFieldValue('templateId', search.templateId);
     }
   }, [search.templateId, form]);
@@ -147,7 +134,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   // Manual save function
   const handleManualSave = () => {
     setIsSaving(true);
-    const formData = form.state.values;
+    const formData = form.state.values as CVFormValues;
     localStorage.setItem('cvData', JSON.stringify(formData));
     localStorage.setItem('cvData_backup', JSON.stringify(formData));
     const now = new Date();
@@ -162,7 +149,6 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     localStorage.removeItem('cvData_backup');
     localStorage.removeItem('cvData_lastSaved');
     setLastSaved(null);
-    setValidationErrors({});
     form.reset();
   };
 
@@ -184,8 +170,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
       form.setFieldValue('languages', cvData.languages);
       form.setFieldValue('interests', cvData.interests);
 
-      // Clear validation errors - user can manually save when ready
-      setValidationErrors({});
+      // PDF loaded - user can manually save when ready
     } catch (error) {
       console.error('Error loading PDF:', error);
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
@@ -210,20 +195,20 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         current: false,
         description: '',
       },
-      ...form.getFieldValue('experiences'),
+      ...(form.getFieldValue('experiences') as ExperienceProps[]),
     ]);
   };
 
   const removeExperience = (index: number) => {
-    const experiences = form.getFieldValue('experiences');
+    const experiences = form.getFieldValue('experiences') as ExperienceProps[];
     form.setFieldValue(
       'experiences',
-      experiences.filter((_: ExperienceProps, i: number) => i !== index)
+      experiences.filter((_, i) => i !== index)
     );
   };
 
   const reorderExperiences = (oldIndex: number, newIndex: number) => {
-    const experiences = [...form.getFieldValue('experiences')];
+    const experiences = [...(form.getFieldValue('experiences') as ExperienceProps[])];
     const [removed] = experiences.splice(oldIndex, 1);
     experiences.splice(newIndex, 0, removed);
     form.setFieldValue('experiences', experiences);
@@ -231,7 +216,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
   const addEducation = () => {
     form.setFieldValue('education', [
-      ...form.getFieldValue('education'),
+      ...(form.getFieldValue('education') as EducationProps[]),
       {
         institution: '',
         degree: '',
@@ -244,34 +229,34 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
   };
 
   const removeEducation = (index: number) => {
-    const education = form.getFieldValue('education');
+    const education = form.getFieldValue('education') as EducationProps[];
     form.setFieldValue(
       'education',
-      education.filter((_: EducationProps, i: number) => i !== index)
+      education.filter((_, i) => i !== index)
     );
   };
 
   const reorderEducation = (oldIndex: number, newIndex: number) => {
-    const education = [...form.getFieldValue('education')];
+    const education = [...(form.getFieldValue('education') as EducationProps[])];
     const [removed] = education.splice(oldIndex, 1);
     education.splice(newIndex, 0, removed);
     form.setFieldValue('education', education);
   };
 
   const addSkill = () => {
-    form.setFieldValue('skills', [...form.getFieldValue('skills'), { name: '' }]);
+    form.setFieldValue('skills', [...(form.getFieldValue('skills') as SkillProps[]), { name: '' }]);
   };
 
   const removeSkill = (index: number) => {
-    const skills = form.getFieldValue('skills');
+    const skills = form.getFieldValue('skills') as SkillProps[];
     form.setFieldValue(
       'skills',
-      skills.filter((_: SkillProps, i: number) => i !== index)
+      skills.filter((_, i) => i !== index)
     );
   };
 
   const reorderSkills = (oldIndex: number, newIndex: number) => {
-    const skills = [...form.getFieldValue('skills')];
+    const skills = [...(form.getFieldValue('skills') as SkillProps[])];
     const [removed] = skills.splice(oldIndex, 1);
     skills.splice(newIndex, 0, removed);
     form.setFieldValue('skills', skills);
@@ -279,40 +264,40 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
   const addLanguage = () => {
     form.setFieldValue('languages', [
-      ...form.getFieldValue('languages'),
+      ...(form.getFieldValue('languages') as LanguageProps[]),
       { language: '', proficiency: 'A1' as LanguageLevelProps },
     ]);
   };
 
   const removeLanguage = (index: number) => {
-    const languages = form.getFieldValue('languages');
+    const languages = form.getFieldValue('languages') as LanguageProps[];
     form.setFieldValue(
       'languages',
-      languages.filter((_: LanguageProps, i: number) => i !== index)
+      languages.filter((_, i) => i !== index)
     );
   };
 
   const reorderLanguages = (oldIndex: number, newIndex: number) => {
-    const languages = [...form.getFieldValue('languages')];
+    const languages = [...(form.getFieldValue('languages') as LanguageProps[])];
     const [removed] = languages.splice(oldIndex, 1);
     languages.splice(newIndex, 0, removed);
     form.setFieldValue('languages', languages);
   };
 
   const addInterest = () => {
-    form.setFieldValue('interests', [...form.getFieldValue('interests'), { name: '' }]);
+    form.setFieldValue('interests', [...(form.getFieldValue('interests') as InterestProps[]), { name: '' }]);
   };
 
   const removeInterest = (index: number) => {
-    const interests = form.getFieldValue('interests');
+    const interests = form.getFieldValue('interests') as InterestProps[];
     form.setFieldValue(
       'interests',
-      interests.filter((_: InterestProps, i: number) => i !== index)
+      interests.filter((_, i) => i !== index)
     );
   };
 
   const reorderInterests = (oldIndex: number, newIndex: number) => {
-    const interests = [...form.getFieldValue('interests')];
+    const interests = [...(form.getFieldValue('interests') as InterestProps[])];
     const [removed] = interests.splice(oldIndex, 1);
     interests.splice(newIndex, 0, removed);
     form.setFieldValue('interests', interests);
@@ -320,7 +305,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
   // Calculate form progress
   const calculateProgress = () => {
-    const values = form.state.values;
+    const values = form.state.values as CVFormValues;
     let progress = 0;
 
     // Personal info (30%)
@@ -499,11 +484,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         >
           {/* Personal Information Section */}
           <div className="animate-fade-in-up delay-1">
-            <PersonalInfoSection
-              form={form}
-              validationErrors={validationErrors}
-              setValidationErrors={setValidationErrors}
-            />
+            <PersonalInfoSection form={form} />
           </div>
 
           {/* Work Experience Section */}
@@ -563,22 +544,24 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
           {/* Submit Button */}
           <div className="flex justify-between items-center pt-6">
-            <div className="text-sm text-gray-500">
-              {validationErrors && Object.keys(validationErrors).length > 0 && (
-                <span className="text-red-500">{t('builder.validation.fixErrors')}</span>
-              )}
-            </div>
             <form.Subscribe
-              selector={(state) => [state.canSubmit, state.isSubmitting]}
-              children={([canSubmit, isSubmitting]) => (
-                <Button
-                  type='submit'
-                  disabled={!canSubmit || calculateProgress() < 30}
-                  size="lg"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all"
-                >
-                  {isSubmitting ? t('builder.processing') : `${t('builder.previewCv')} →`}
-                </Button>
+              selector={(state) => [state.canSubmit, state.isSubmitting, state.isValid]}
+              children={([canSubmit, isSubmitting, isValid]) => (
+                <>
+                  <div className="text-sm text-gray-500">
+                    {!isValid && (
+                      <span className="text-red-500">{t('builder.validation.fixErrors')}</span>
+                    )}
+                  </div>
+                  <Button
+                    type='submit'
+                    disabled={!canSubmit || calculateProgress() < 30}
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all"
+                  >
+                    {isSubmitting ? t('builder.processing') : `${t('builder.previewCv')} →`}
+                  </Button>
+                </>
               )}
             />
           </div>

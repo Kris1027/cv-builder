@@ -96,7 +96,7 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
 
   const handleAddInterest = () => {
     if (interestInput.trim()) {
-      form.setFieldValue('interests', [...form.getFieldValue('interests'), { name: interestInput.trim() }]);
+      form.setFieldValue('interests', [...(form.getFieldValue('interests') as InterestProps[]), { name: interestInput.trim() }]);
       setInterestInput('');
     }
   };
@@ -157,40 +157,43 @@ export const InterestsSection = ({ form, removeInterest, reorderInterests }: Int
           </div>
 
           <form.Field name='interests'>
-            {(field) => (
-              <div>
-                {field.state.value.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                    <p>{t('sections.interests.empty')}</p>
-                    <p className="text-sm mt-1">{t('sections.interests.emptyHint')}</p>
-                  </div>
-                ) : (
-                  <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}
-                  >
-                    <SortableContext
-                      items={field.state.value.map((_: InterestProps, index: number) => `interest-${index}`)}
-                      strategy={horizontalListSortingStrategy}
+            {(field) => {
+              const interestItems = field.state.value as InterestProps[];
+              return (
+                <div>
+                  {interestItems.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                      <Heart className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                      <p>{t('sections.interests.empty')}</p>
+                      <p className="text-sm mt-1">{t('sections.interests.emptyHint')}</p>
+                    </div>
+                  ) : (
+                    <DndContext
+                      sensors={sensors}
+                      collisionDetection={closestCenter}
+                      onDragEnd={handleDragEnd}
                     >
-                      <div className='flex flex-wrap gap-2'>
-                        {field.state.value.map((interest: InterestProps, index: number) => (
-                          <SortableInterestItem
-                            key={`interest-${index}`}
-                            id={`interest-${index}`}
-                            index={index}
-                            interest={interest}
-                            removeInterest={removeInterest}
-                          />
-                        ))}
-                      </div>
-                    </SortableContext>
-                  </DndContext>
-                )}
-              </div>
-            )}
+                      <SortableContext
+                        items={interestItems.map((_: InterestProps, index: number) => `interest-${index}`)}
+                        strategy={horizontalListSortingStrategy}
+                      >
+                        <div className='flex flex-wrap gap-2'>
+                          {interestItems.map((interest: InterestProps, index: number) => (
+                            <SortableInterestItem
+                              key={`interest-${index}`}
+                              id={`interest-${index}`}
+                              index={index}
+                              interest={interest}
+                              removeInterest={removeInterest}
+                            />
+                          ))}
+                        </div>
+                      </SortableContext>
+                    </DndContext>
+                  )}
+                </div>
+              );
+            }}
           </form.Field>
         </div>
       </CardContent>

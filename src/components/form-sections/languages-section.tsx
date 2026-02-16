@@ -103,7 +103,7 @@ const SortableLanguageItem = ({ id, index, form, removeLanguage }: SortableLangu
               <Input
                 id={subField.name}
                 name={subField.name}
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onBlur={subField.handleBlur}
                 onChange={(e) => subField.handleChange(e.target.value)}
                 placeholder={t('placeholders.language')}
@@ -118,7 +118,7 @@ const SortableLanguageItem = ({ id, index, form, removeLanguage }: SortableLangu
             <div className='space-y-2'>
               <Label htmlFor={subField.name}>{t('form.proficiency')}</Label>
               <Select
-                value={subField.state.value}
+                value={subField.state.value as string}
                 onValueChange={(value) =>
                   subField.handleChange(value as LanguageLevelProps)
                 }
@@ -192,41 +192,44 @@ export const LanguagesSection = ({ form, addLanguage, removeLanguage, reorderLan
       </CardHeader>
       <CardContent className="pt-6">
         <form.Field name='languages'>
-          {(field) => (
-            <div className='space-y-4'>
-              {field.state.value.length === 0 && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  <Globe className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                  <p>{t('sections.languages.empty')}</p>
-                  <p className="text-sm mt-1">{t('sections.languages.emptyHint')}</p>
-                </div>
-              )}
-              {field.state.value.length > 0 && (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext
-                    items={field.state.value.map((_: LanguageProps, index: number) => `language-${index}`)}
-                    strategy={verticalListSortingStrategy}
+          {(field) => {
+            const languageItems = field.state.value as LanguageProps[];
+            return (
+              <div className='space-y-4'>
+                {languageItems.length === 0 && (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <Globe className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                    <p>{t('sections.languages.empty')}</p>
+                    <p className="text-sm mt-1">{t('sections.languages.emptyHint')}</p>
+                  </div>
+                )}
+                {languageItems.length > 0 && (
+                  <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
                   >
-                    <div className='space-y-4'>
-                      {field.state.value.map((_: LanguageProps, index: number) => (
-                        <SortableLanguageItem
-                          key={`language-${index}`}
-                          id={`language-${index}`}
-                          index={index}
-                          form={form}
-                          removeLanguage={removeLanguage}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-              )}
-            </div>
-          )}
+                    <SortableContext
+                      items={languageItems.map((_: LanguageProps, index: number) => `language-${index}`)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className='space-y-4'>
+                        {languageItems.map((_: LanguageProps, index: number) => (
+                          <SortableLanguageItem
+                            key={`language-${index}`}
+                            id={`language-${index}`}
+                            index={index}
+                            form={form}
+                            removeLanguage={removeLanguage}
+                          />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
+            );
+          }}
         </form.Field>
       </CardContent>
     </Card>
