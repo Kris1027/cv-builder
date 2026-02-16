@@ -57,6 +57,9 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
                         onChange={(e) => field.handleChange(e.target.value)}
                         className="focus:ring-green-500"
                       />
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {t('sections.gdprConsent.companyNameHint')}
+                      </p>
                     </div>
                   )}
                 </form.Field>
