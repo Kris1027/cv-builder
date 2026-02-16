@@ -44,6 +44,11 @@ export interface InterestProps {
   name: string;
 }
 
+export interface GdprConsentProps {
+  enabled: boolean;
+  companyName: string;
+}
+
 // Form values type for the entire CV form
 export interface CVFormValues {
   templateId: string;
@@ -53,4 +58,5 @@ export interface CVFormValues {
   skills: SkillProps[];
   languages: LanguageProps[];
   interests: InterestProps[];
+  gdprConsent: GdprConsentProps;
 }

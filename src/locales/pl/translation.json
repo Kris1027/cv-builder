@@ -175,6 +175,13 @@
       "add": "Dodaj zainteresowanie",
       "empty": "Nie dodano jeszcze zainteresowań",
       "emptyHint": "Kliknij \"Dodaj zainteresowanie\", aby rozpocząć"
+    },
+    "gdprConsent": {
+      "title": "Klauzula RODO",
+      "description": "Dodaj klauzulę zgody na przetwarzanie danych osobowych na dole CV",
+      "enable": "Dołącz klauzulę RODO do CV",
+      "companyName": "Nazwa firmy",
+      "companyNamePlaceholder": "Wpisz nazwę firmy"
     }
   },
   "validation": {
@@ -236,7 +243,8 @@
     "coreCompetencies": "Kluczowe kompetencje",
     "educationTraining": "Wykształcenie i szkolenia",
     "specialInterests": "Zainteresowania",
-    "present": "obecnie"
+    "present": "obecnie",
+    "gdprConsent": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji prowadzonego przez {{companyName}} zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO)."
   },
   "language": {
     "en": "English",

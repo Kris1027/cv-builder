@@ -10,7 +10,7 @@ interface DefaultTemplateProps {
 
 export function DefaultTemplate({ data }: DefaultTemplateProps) {
   const { t } = useTranslation();
-  const { personalInfo, experiences, education, skills, languages, interests } = data;
+  const { personalInfo, experiences, education, skills, languages, interests, gdprConsent } = data;
 
   const formatDate = (dateString: string): string => {
     if (!dateString) return '';
@@ -165,6 +165,15 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
               {interests.map((interest) => interest.name).join(' • ')}
             </p>
           </section>
+        )}
+
+        {/* GDPR Consent Clause */}
+        {gdprConsent?.enabled && (
+          <div className="mt-8 pt-4 border-t border-gray-200">
+            <p className="text-xs text-gray-400 italic leading-relaxed font-light">
+              {t('cv.gdprConsent', { companyName: gdprConsent.companyName || '[...]' })}
+            </p>
+          </div>
         )}
       </div>
     </div>
