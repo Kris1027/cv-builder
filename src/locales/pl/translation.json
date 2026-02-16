@@ -181,7 +181,8 @@
       "description": "Dodaj klauzulę zgody na przetwarzanie danych osobowych na dole CV",
       "enable": "Dołącz klauzulę RODO do CV",
       "companyName": "Nazwa firmy",
-      "companyNamePlaceholder": "Wpisz nazwę firmy"
+      "companyNamePlaceholder": "Wpisz nazwę firmy",
+      "companyNameHint": "Pozostaw puste, aby użyć ogólnej klauzuli bez nazwy firmy"
     }
   },
   "validation": {
@@ -244,7 +245,8 @@
     "educationTraining": "Wykształcenie i szkolenia",
     "specialInterests": "Zainteresowania",
     "present": "obecnie",
-    "gdprConsent": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji prowadzonego przez {{companyName}} zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO)."
+    "gdprConsent": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji prowadzonego przez {{companyName}} zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).",
+    "gdprConsentGeneric": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO)."
   },
   "language": {
     "en": "English",

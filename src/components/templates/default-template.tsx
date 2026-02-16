@@ -168,10 +168,12 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
         )}
 
         {/* GDPR Consent Clause */}
-        {gdprConsent?.enabled && gdprConsent.companyName?.trim() && (
+        {gdprConsent?.enabled && (
           <div className="mt-8 pt-4 border-t border-gray-200">
             <p className="text-xs text-gray-400 italic leading-relaxed font-light">
-              {t('cv.gdprConsent', { companyName: gdprConsent.companyName })}
+              {gdprConsent.companyName?.trim()
+                ? t('cv.gdprConsent', { companyName: gdprConsent.companyName })
+                : t('cv.gdprConsentGeneric')}
             </p>
           </div>
         )}
