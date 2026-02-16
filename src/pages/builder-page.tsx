@@ -471,14 +471,14 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Progress Indicator */}
-        <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm dark:shadow-gray-900/50 transition-colors">
+        <div className="animate-fade-in-up mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm dark:shadow-gray-900/50 transition-colors">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('builder.progress.title')}</span>
             <span className="text-sm font-bold text-gray-600 dark:text-gray-400">{calculateProgress()}%</span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all duration-500 ease-out"
+              className="animate-grow-width bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all duration-500 ease-out"
               style={{ width: `${calculateProgress()}%` }}
             />
           </div>
@@ -498,54 +498,68 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
           className="space-y-8"
         >
           {/* Personal Information Section */}
-          <PersonalInfoSection
-            form={form}
-            validationErrors={validationErrors}
-            setValidationErrors={setValidationErrors}
-          />
+          <div className="animate-fade-in-up delay-1">
+            <PersonalInfoSection
+              form={form}
+              validationErrors={validationErrors}
+              setValidationErrors={setValidationErrors}
+            />
+          </div>
 
           {/* Work Experience Section */}
-          <ExperienceSection
-            form={form}
-            addExperience={addExperience}
-            removeExperience={removeExperience}
-            reorderExperiences={reorderExperiences}
-          />
+          <div className="animate-fade-in-up delay-2">
+            <ExperienceSection
+              form={form}
+              addExperience={addExperience}
+              removeExperience={removeExperience}
+              reorderExperiences={reorderExperiences}
+            />
+          </div>
 
           {/* Education Section */}
-          <EducationSection
-            form={form}
-            addEducation={addEducation}
-            removeEducation={removeEducation}
-            reorderEducation={reorderEducation}
-          />
+          <div className="animate-fade-in-up delay-3">
+            <EducationSection
+              form={form}
+              addEducation={addEducation}
+              removeEducation={removeEducation}
+              reorderEducation={reorderEducation}
+            />
+          </div>
 
           {/* Skills Section */}
-          <SkillsSection
-            form={form}
-            addSkill={addSkill}
-            removeSkill={removeSkill}
-            reorderSkills={reorderSkills}
-          />
+          <div className="animate-fade-in-up delay-4">
+            <SkillsSection
+              form={form}
+              addSkill={addSkill}
+              removeSkill={removeSkill}
+              reorderSkills={reorderSkills}
+            />
+          </div>
 
           {/* Languages Section */}
-          <LanguagesSection
-            form={form}
-            addLanguage={addLanguage}
-            removeLanguage={removeLanguage}
-            reorderLanguages={reorderLanguages}
-          />
+          <div className="animate-fade-in-up delay-5">
+            <LanguagesSection
+              form={form}
+              addLanguage={addLanguage}
+              removeLanguage={removeLanguage}
+              reorderLanguages={reorderLanguages}
+            />
+          </div>
 
           {/* Interests Section */}
-          <InterestsSection
-            form={form}
-            addInterest={addInterest}
-            removeInterest={removeInterest}
-            reorderInterests={reorderInterests}
-          />
+          <div className="animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+            <InterestsSection
+              form={form}
+              addInterest={addInterest}
+              removeInterest={removeInterest}
+              reorderInterests={reorderInterests}
+            />
+          </div>
 
           {/* GDPR Consent Section */}
-          <GdprConsentSection form={form} />
+          <div className="animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+            <GdprConsentSection form={form} />
+          </div>
 
           {/* Submit Button */}
           <div className="flex justify-between items-center pt-6">

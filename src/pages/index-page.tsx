@@ -19,25 +19,25 @@ export const IndexPage = () => {
       {/* Hero Section */}
       <section className='container mx-auto px-4 py-20'>
         <div className='mx-auto max-w-4xl text-center'>
-          <h1 className='mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl'>
+          <h1 className='animate-blur-in mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl'>
             {t('home.hero.title')}{' '}
             <span className='bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent'>
               {t('home.hero.titleHighlight')}
             </span>
           </h1>
-          <p className='mb-10 text-xl text-muted-foreground'>
+          <p className='animate-fade-in-up delay-1 mb-10 text-xl text-muted-foreground'>
             {t('home.hero.subtitle')}
           </p>
-          <div className='flex justify-center'>
+          <div className='animate-fade-in-up delay-2 flex justify-center'>
             <Link to='/templates'>
-              <Button size='lg' className='group'>
+              <Button size='lg' className='group hover-lift'>
                 <Edit3 className='mr-2 h-5 w-5' />
                 {t('home.hero.cta')}
                 <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
               </Button>
             </Link>
           </div>
-          <div className='mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground'>
+          <div className='animate-fade-in-up delay-3 mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground'>
             <div className='flex items-center gap-2'>
               <CheckCircle2 className='h-4 w-4 text-green-500' />
               <span>{t('home.features.noSignup')}</span>
@@ -57,7 +57,7 @@ export const IndexPage = () => {
       {/* How It Works Section */}
       <section className='py-20'>
         <div className='container mx-auto px-4'>
-          <div className='mx-auto max-w-2xl text-center mb-16'>
+          <div className='animate-fade-in-up mx-auto max-w-2xl text-center mb-16'>
             <h2 className='text-3xl font-bold mb-4'>{t('home.howItWorks.title')}</h2>
             <p className='text-muted-foreground'>
               {t('home.howItWorks.subtitle')}
@@ -67,7 +67,7 @@ export const IndexPage = () => {
           <div className='mx-auto max-w-5xl'>
             <div className='flex flex-col md:flex-row gap-8 md:gap-4 items-start justify-between'>
               {/* Step 1 */}
-              <div className='flex-1 text-center relative'>
+              <div className='animate-fade-in-up delay-1 flex-1 text-center relative'>
                 <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
                   1
                 </div>
@@ -80,7 +80,7 @@ export const IndexPage = () => {
               </div>
 
               {/* Step 2 */}
-              <div className='flex-1 text-center relative'>
+              <div className='animate-fade-in-up delay-2 flex-1 text-center relative'>
                 <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
                   2
                 </div>
@@ -93,7 +93,7 @@ export const IndexPage = () => {
               </div>
 
               {/* Step 3 */}
-              <div className='flex-1 text-center'>
+              <div className='animate-fade-in-up delay-3 flex-1 text-center'>
                 <div className='mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium mb-4'>
                   3
                 </div>
@@ -107,15 +107,15 @@ export const IndexPage = () => {
 
           {/* Simple Features */}
           <div className='mx-auto max-w-3xl mt-20 grid grid-cols-3 gap-8 text-center'>
-            <div>
+            <div className='animate-fade-in-scale delay-1'>
               <p className='text-2xl font-bold mb-1'>{t('home.stats.avgTime')}</p>
               <p className='text-sm text-muted-foreground'>{t('home.stats.avgTimeLabel')}</p>
             </div>
-            <div>
+            <div className='animate-fade-in-scale delay-2'>
               <p className='text-2xl font-bold mb-1'>{t('home.stats.freeForever')}</p>
               <p className='text-sm text-muted-foreground'>{t('home.stats.freeForeverLabel')}</p>
             </div>
-            <div>
+            <div className='animate-fade-in-scale delay-3'>
               <p className='text-2xl font-bold mb-1'>{t('home.stats.languages')}</p>
               <p className='text-sm text-muted-foreground'>{t('home.stats.languagesLabel')}</p>
             </div>

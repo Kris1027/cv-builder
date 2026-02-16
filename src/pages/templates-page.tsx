@@ -111,7 +111,7 @@ export function TemplatesPage() {
       </div>
 
       <div className='container mx-auto px-4 py-8'>
-        <div className='mb-8'>
+        <div className='animate-fade-in-up mb-8'>
           <h1 className='text-3xl font-bold mb-2 dark:text-gray-100'>{t('templates.pageTitle')}</h1>
           <p className='text-gray-600 dark:text-gray-400'>
             {t('templates.pageSubtitle')}
@@ -120,7 +120,7 @@ export function TemplatesPage() {
 
         {/* Saved Data Info */}
         {hasSavedData && (
-          <div className='mb-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
+          <div className='animate-fade-in-up delay-1 mb-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
                 <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50'>
@@ -177,8 +177,8 @@ export function TemplatesPage() {
           {templates.map((template, index) => (
             <Card
               key={template.id}
-              className='group overflow-hidden border-0 shadow-sm hover:shadow-xl dark:bg-gray-800 dark:hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1'
-              style={{ animationDelay: `${index * 100}ms` }}
+              className='animate-fade-in-up group overflow-hidden border-0 shadow-sm hover:shadow-xl dark:bg-gray-800 dark:hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1'
+              style={{ animationDelay: `${(index + 1) * 100}ms` }}
             >
               {/* Image Section */}
               <Link to='/templates/$templateId' params={{ templateId: template.id }}>
