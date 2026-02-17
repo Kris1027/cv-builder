@@ -432,6 +432,81 @@ export const IndexPage = () => {
                     </div>
                 </div>
             </section>
+            {/* ===== STATS SECTION ===== */}
+            <section className="relative overflow-hidden bg-slate-50/50 py-20 dark:bg-slate-900/50">
+                <div className="container mx-auto px-4">
+                    <div className="mx-auto grid max-w-4xl grid-cols-3 gap-8 text-center">
+                        {(
+                            [
+                                {
+                                    value: 'home.stats.avgTime',
+                                    label: 'home.stats.avgTimeLabel',
+                                    gradient: 'from-indigo-500 to-blue-600',
+                                },
+                                {
+                                    value: 'home.stats.freeForever',
+                                    label: 'home.stats.freeForeverLabel',
+                                    gradient: 'from-violet-500 to-purple-600',
+                                },
+                                {
+                                    value: 'home.stats.languages',
+                                    label: 'home.stats.languagesLabel',
+                                    gradient: 'from-emerald-500 to-teal-600',
+                                },
+                            ] as const
+                        ).map(({ value, label, gradient }, i) => (
+                            <div
+                                key={value}
+                                className={`animate-fade-in-scale delay-${i + 1}`}
+                            >
+                                <p
+                                    className={`mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl`}
+                                    style={{ fontFamily: 'Syne, sans-serif' }}
+                                >
+                                    {t(value)}
+                                </p>
+                                <p className="text-muted-foreground text-sm font-medium uppercase tracking-wider">
+                                    {t(label)}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ===== BOTTOM CTA SECTION ===== */}
+            <section className="relative overflow-hidden bg-white py-24 dark:bg-slate-950">
+                {/* Gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-indigo-950/30 dark:via-slate-950 dark:to-violet-950/20" />
+                {/* Decorative shapes */}
+                <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+                    <div className="animate-float absolute top-12 left-[10%] h-32 w-32 rounded-full bg-indigo-500/5 blur-2xl dark:bg-indigo-500/10" />
+                    <div className="animate-float-reverse absolute right-[10%] bottom-12 h-40 w-40 rounded-full bg-violet-500/5 blur-2xl dark:bg-violet-500/10" />
+                </div>
+
+                <div className="relative container mx-auto px-4 text-center">
+                    <div className="animate-fade-in-up mx-auto max-w-2xl">
+                        <h2
+                            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl"
+                            style={{ fontFamily: 'Syne, sans-serif' }}
+                        >
+                            {t('home.cta.title')}
+                        </h2>
+                        <p className="text-muted-foreground mb-10 text-lg">
+                            {t('home.cta.subtitle')}
+                        </p>
+                        <Link to="/builder">
+                            <Button
+                                size="lg"
+                                className="animate-pulse-glow group h-14 cursor-pointer rounded-xl px-10 text-lg"
+                            >
+                                {t('home.cta.button')}
+                                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };
