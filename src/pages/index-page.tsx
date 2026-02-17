@@ -5,7 +5,6 @@ import {
     ClipboardList,
     Download,
     Edit3,
-    Eye,
     FileDown,
     Globe,
     Layout,
@@ -114,8 +113,8 @@ export const IndexPage = () => {
                             <p className="animate-fade-in-up text-muted-foreground mb-10 max-w-lg text-lg delay-1 sm:text-xl">
                                 {t('home.hero.subtitle')}
                             </p>
-                            <div className="animate-fade-in-up flex flex-wrap gap-4 delay-2">
-                                <Link to="/builder">
+                            <div className="animate-fade-in-up delay-2">
+                                <Link to="/templates">
                                     <Button
                                         size="lg"
                                         className="animate-pulse-glow group h-12 cursor-pointer rounded-xl px-8 text-base"
@@ -123,16 +122,6 @@ export const IndexPage = () => {
                                         <Edit3 className="mr-2 h-5 w-5" />
                                         {t('home.hero.cta')}
                                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                    </Button>
-                                </Link>
-                                <Link to="/templates">
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        className="hover-lift group h-12 cursor-pointer rounded-xl px-8 text-base"
-                                    >
-                                        <Eye className="mr-2 h-5 w-5" />
-                                        {t('home.hero.ctaSecondary')}
                                     </Button>
                                 </Link>
                             </div>
