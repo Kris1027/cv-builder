@@ -13,215 +13,237 @@ import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 import { useTranslation } from 'react-i18next';
 
 export function PreviewPage() {
-  const { t } = useTranslation();
-  const search = useSearch({ from: '/preview' }) as { templateId?: string };
-  const templateId = search.templateId || 'developer';
-  const [cvData, setCvData] = useState<CVData | null>(null);
-  const [isExporting, setIsExporting] = useState(false);
-  const [singlePageMode, setSinglePageMode] = useState(false);
-  const [scaleInfo, setScaleInfo] = useState({ scale: 1, isScaled: false, atMinScale: false });
+    const { t } = useTranslation();
+    const search = useSearch({ from: '/preview' }) as { templateId?: string };
+    const templateId = search.templateId || 'developer';
+    const [cvData, setCvData] = useState<CVData | null>(null);
+    const [isExporting, setIsExporting] = useState(false);
+    const [singlePageMode, setSinglePageMode] = useState(false);
+    const [scaleInfo, setScaleInfo] = useState({ scale: 1, isScaled: false, atMinScale: false });
 
-  const handleScaleChange = useCallback((scale: number, isScaled: boolean, atMinScale: boolean) => {
-    setScaleInfo({ scale, isScaled, atMinScale });
-  }, []);
-
-  useEffect(() => {
-    // Get data from localStorage
-    const storedData = localStorage.getItem('cvData');
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      // Ensure all arrays have default values
-      const transformedData: CVData = {
-        personalInfo: parsedData.personalInfo,
-        experiences: parsedData.experiences || [],
-        education: parsedData.education || [],
-        skills: parsedData.skills || [],
-        languages: parsedData.languages || [],
-        interests: parsedData.interests || [],
-        gdprConsent: parsedData.gdprConsent,
-      };
-      setCvData(transformedData);
-    }
-  }, []);
-
-  const handleDownloadPDF = async () => {
-    const element = document.getElementById('cv-content');
-    if (!element || !cvData) return;
-
-    setIsExporting(true);
-
-    // Store original styles for restoration
-    const scaledParent = element.parentElement;
-    const originalStyles = scaledParent ? {
-      transform: scaledParent.style.transform,
-      width: scaledParent.style.width,
-    } : null;
-
-    const disableScaling = () => {
-      if (scaledParent && singlePageMode) {
-        scaledParent.style.transform = 'none';
-        scaledParent.style.width = '';
-      }
-    };
-
-    const restoreScaling = () => {
-      if (scaledParent && singlePageMode && originalStyles) {
-        scaledParent.style.transform = originalStyles.transform;
-        scaledParent.style.width = originalStyles.width;
-      }
-    };
-
-    try {
-      // Temporarily disable CSS transform scaling for accurate capture
-      disableScaling();
-
-      const filename = generateCVFilename(
-        cvData.personalInfo?.firstName,
-        cvData.personalInfo?.lastName
-      );
-      await exportToPDF(element, {
-        filename,
-        singlePage: singlePageMode,
-        cvData: JSON.stringify(cvData),
-      });
-    } catch (error) {
-      console.error('Failed to export PDF:', error);
-      alert(t('preview.exportError'));
-    } finally {
-      restoreScaling();
-      setIsExporting(false);
-    }
-  };
-
-  if (!cvData) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">{t('preview.noData')}</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('preview.noDataHint')}</p>
-          <Link to="/templates">
-            <Button>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('preview.startBuilding')}
-            </Button>
-          </Link>
-        </div>
-      </div>
+    const handleScaleChange = useCallback(
+        (scale: number, isScaled: boolean, atMinScale: boolean) => {
+            setScaleInfo({ scale, isScaled, atMinScale });
+        },
+        [],
     );
-  }
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      {/* Actions Bar */}
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm print:hidden">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link to="/builder" search={{ templateId, edit: true }}>
-                <Button variant="outline" size="sm" className="dark:hover:bg-gray-800">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  {t('nav.backToEditor')}
-                </Button>
-              </Link>
-              <h1 className="text-xl font-semibold dark:text-gray-100">{t('preview.title')}</h1>
+    useEffect(() => {
+        // Get data from localStorage
+        const storedData = localStorage.getItem('cvData');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            // Ensure all arrays have default values
+            const transformedData: CVData = {
+                personalInfo: parsedData.personalInfo,
+                experiences: parsedData.experiences || [],
+                education: parsedData.education || [],
+                skills: parsedData.skills || [],
+                languages: parsedData.languages || [],
+                interests: parsedData.interests || [],
+                gdprConsent: parsedData.gdprConsent,
+            };
+            setCvData(transformedData);
+        }
+    }, []);
+
+    const handleDownloadPDF = async () => {
+        const element = document.getElementById('cv-content');
+        if (!element || !cvData) return;
+
+        setIsExporting(true);
+
+        // Store original styles for restoration
+        const scaledParent = element.parentElement;
+        const originalStyles = scaledParent
+            ? {
+                  transform: scaledParent.style.transform,
+                  width: scaledParent.style.width,
+              }
+            : null;
+
+        const disableScaling = () => {
+            if (scaledParent && singlePageMode) {
+                scaledParent.style.transform = 'none';
+                scaledParent.style.width = '';
+            }
+        };
+
+        const restoreScaling = () => {
+            if (scaledParent && singlePageMode && originalStyles) {
+                scaledParent.style.transform = originalStyles.transform;
+                scaledParent.style.width = originalStyles.width;
+            }
+        };
+
+        try {
+            // Temporarily disable CSS transform scaling for accurate capture
+            disableScaling();
+
+            const filename = generateCVFilename(
+                cvData.personalInfo?.firstName,
+                cvData.personalInfo?.lastName,
+            );
+            await exportToPDF(element, {
+                filename,
+                singlePage: singlePageMode,
+                cvData: JSON.stringify(cvData),
+            });
+        } catch (error) {
+            console.error('Failed to export PDF:', error);
+            alert(t('preview.exportError'));
+        } finally {
+            restoreScaling();
+            setIsExporting(false);
+        }
+    };
+
+    if (!cvData) {
+        return (
+            <div className="container mx-auto px-4 py-8">
+                <div className="text-center">
+                    <h1 className="mb-4 text-2xl font-bold dark:text-gray-100">
+                        {t('preview.noData')}
+                    </h1>
+                    <p className="mb-4 text-gray-600 dark:text-gray-400">
+                        {t('preview.noDataHint')}
+                    </p>
+                    <Link to="/templates">
+                        <Button>
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                            {t('preview.startBuilding')}
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-gray-50 transition-colors dark:bg-gray-900">
+            {/* Actions Bar */}
+            <div className="sticky top-0 z-10 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900 print:hidden">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <Link to="/builder" search={{ templateId, edit: true }}>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="dark:hover:bg-gray-800"
+                                >
+                                    <ArrowLeft className="mr-2 h-4 w-4" />
+                                    {t('nav.backToEditor')}
+                                </Button>
+                            </Link>
+                            <h1 className="text-xl font-semibold dark:text-gray-100">
+                                {t('preview.title')}
+                            </h1>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            {/* Page Mode Toggle */}
+                            <div className="flex items-center overflow-hidden rounded-lg border dark:border-gray-700">
+                                <Button
+                                    variant={!singlePageMode ? 'default' : 'ghost'}
+                                    size="sm"
+                                    onClick={() => setSinglePageMode(false)}
+                                    className={`rounded-none border-0 ${!singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
+                                >
+                                    <Files className="mr-1 h-4 w-4" />
+                                    {t('preview.multiPage')}
+                                </Button>
+                                <Button
+                                    variant={singlePageMode ? 'default' : 'ghost'}
+                                    size="sm"
+                                    onClick={() => setSinglePageMode(true)}
+                                    className={`rounded-none border-0 ${singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
+                                >
+                                    <FileDown className="mr-1 h-4 w-4" />
+                                    {t('preview.singlePage')}
+                                </Button>
+                            </div>
+
+                            {/* Scale indicator */}
+                            {singlePageMode && scaleInfo.isScaled && (
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                    {Math.round(scaleInfo.scale * 100)}%
+                                </span>
+                            )}
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={handleDownloadPDF}
+                                disabled={isExporting}
+                                className="dark:hover:bg-gray-800"
+                            >
+                                {isExporting ? (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                ) : (
+                                    <Download className="mr-2 h-4 w-4" />
+                                )}
+                                {isExporting ? t('preview.exporting') : t('preview.downloadPdf')}
+                            </Button>
+                            <Link to="/builder" search={{ templateId, edit: true }}>
+                                <Button size="sm" variant="default">
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    {t('preview.editCv')}
+                                </Button>
+                            </Link>
+                            <LanguageToggle />
+                            <ThemeToggle />
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              {/* Page Mode Toggle */}
-              <div className="flex items-center border rounded-lg overflow-hidden dark:border-gray-700">
-                <Button
-                  variant={!singlePageMode ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setSinglePageMode(false)}
-                  className={`rounded-none border-0 ${!singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
-                >
-                  <Files className="w-4 h-4 mr-1" />
-                  {t('preview.multiPage')}
-                </Button>
-                <Button
-                  variant={singlePageMode ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setSinglePageMode(true)}
-                  className={`rounded-none border-0 ${singlePageMode ? '' : 'dark:hover:bg-gray-800'}`}
-                >
-                  <FileDown className="w-4 h-4 mr-1" />
-                  {t('preview.singlePage')}
-                </Button>
-              </div>
-
-              {/* Scale indicator */}
-              {singlePageMode && scaleInfo.isScaled && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {Math.round(scaleInfo.scale * 100)}%
-                </span>
-              )}
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDownloadPDF}
-                disabled={isExporting}
-                className="dark:hover:bg-gray-800"
-              >
-                {isExporting ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                ) : (
-                  <Download className="w-4 h-4 mr-2" />
-                )}
-                {isExporting ? t('preview.exporting') : t('preview.downloadPdf')}
-              </Button>
-              <Link to="/builder" search={{ templateId, edit: true }}>
-                <Button size="sm" variant="default">
-                  <Edit className="w-4 h-4 mr-2" />
-                  {t('preview.editCv')}
-                </Button>
-              </Link>
-              <LanguageToggle />
-              <ThemeToggle />
+            {/* Success Message */}
+            <div className="container mx-auto px-4 py-4 print:hidden">
+                <div className="animate-fade-in-up rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
+                    <p className="font-medium text-green-800 dark:text-green-300">
+                        {t('preview.success.title')}
+                    </p>
+                    <p className="mt-1 text-sm text-green-700 dark:text-green-400">
+                        {t('preview.success.subtitle')}
+                    </p>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Success Message */}
-      <div className="container mx-auto px-4 py-4 print:hidden">
-        <div className="animate-fade-in-up bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-          <p className="text-green-800 dark:text-green-300 font-medium">{t('preview.success.title')}</p>
-          <p className="text-green-700 dark:text-green-400 text-sm mt-1">
-            {t('preview.success.subtitle')}
-          </p>
-        </div>
-      </div>
+            {/* Warning for minimum scale */}
+            {singlePageMode && scaleInfo.atMinScale && (
+                <div className="container mx-auto px-4 print:hidden">
+                    <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+                        <p className="font-medium text-amber-800 dark:text-amber-300">
+                            {t('preview.contentWarning.title')}
+                        </p>
+                        <p className="mt-1 text-sm text-amber-700 dark:text-amber-400">
+                            {t('preview.contentWarning.subtitle')}
+                        </p>
+                    </div>
+                </div>
+            )}
 
-      {/* Warning for minimum scale */}
-      {singlePageMode && scaleInfo.atMinScale && (
-        <div className="container mx-auto px-4 print:hidden">
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
-            <p className="text-amber-800 dark:text-amber-300 font-medium">{t('preview.contentWarning.title')}</p>
-            <p className="text-amber-700 dark:text-amber-400 text-sm mt-1">
-              {t('preview.contentWarning.subtitle')}
-            </p>
-          </div>
-        </div>
-      )}
+            {/* Template Preview */}
+            <div className="py-8" id="print-container">
+                <ScaleToFitContainer
+                    enabled={singlePageMode}
+                    onScaleChange={handleScaleChange}
+                    className="mx-auto max-w-[210mm]"
+                >
+                    <div
+                        id="cv-content"
+                        className="animate-fade-in-scale overflow-hidden bg-white text-gray-900 shadow-xl delay-1"
+                    >
+                        {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
+                        {templateId === 'default' && <DefaultTemplate data={cvData} />}
+                        {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
+                    </div>
+                </ScaleToFitContainer>
+            </div>
 
-      {/* Template Preview */}
-      <div className="py-8" id="print-container">
-        <ScaleToFitContainer
-          enabled={singlePageMode}
-          onScaleChange={handleScaleChange}
-          className="max-w-[210mm] mx-auto"
-        >
-          <div id="cv-content" className="animate-fade-in-scale delay-1 bg-white text-gray-900 shadow-xl overflow-hidden">
-            {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
-            {templateId === 'default' && <DefaultTemplate data={cvData} />}
-            {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
-          </div>
-        </ScaleToFitContainer>
-      </div>
-
-      {/* Print Styles */}
-      <style>{`
+            {/* Print Styles */}
+            <style>{`
         @media print {
           @page {
             size: A4;
@@ -250,6 +272,6 @@ export function PreviewPage() {
           }
         }
       `}</style>
-    </div>
-  );
+        </div>
+    );
 }

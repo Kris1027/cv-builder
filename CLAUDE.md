@@ -11,6 +11,8 @@ pnpm run dev      # Dev server at http://localhost:5173/
 pnpm run build    # Production build to dist/
 pnpm run preview  # Preview production build
 pnpm lint         # TypeScript + ESLint checks
+pnpm format       # Format all files with Prettier
+pnpm format:check # Check formatting (CI uses this)
 ```
 
 ## Project Structure
@@ -46,13 +48,13 @@ src/
 
 ## Routes
 
-| Path | Description |
-|------|-------------|
-| `/` | Home page |
-| `/templates` | Template selection gallery |
+| Path                     | Description                 |
+| ------------------------ | --------------------------- |
+| `/`                      | Home page                   |
+| `/templates`             | Template selection gallery  |
 | `/templates/:templateId` | Individual template preview |
-| `/builder` | CV form builder |
-| `/preview` | CV preview with PDF export |
+| `/builder`               | CV form builder             |
+| `/preview`               | CV preview with PDF export  |
 
 ## Tech Stack
 
@@ -65,6 +67,21 @@ src/
 - **Validation**: Zod (schemas) + TanStack Form validators
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
+
+## CI/CD
+
+- **GitHub Actions** runs on push to `main` and pull requests to `main`
+- Pipeline: format check → lint → build (job name: "Lint, Format & Build")
+- Concurrency: in-progress runs are cancelled when a new commit is pushed to the same ref
+- **Dependabot** updates npm and GitHub Actions dependencies weekly
+
+## Code Formatting
+
+- **Prettier** with `prettier-plugin-tailwindcss` for automatic Tailwind class sorting
+- Config: `.prettierrc` — single quotes, tabWidth 4, printWidth 100
+- Ignored: `dist/`, `pnpm-lock.yaml`, `src/routeTree.gen.ts` (see `.prettierignore`)
+- **eslint-config-prettier** disables ESLint rules that conflict with Prettier (last entry in `eslint.config.js`)
+- Run `pnpm format` before committing to avoid CI failures
 
 ## Architecture & Conventions
 
@@ -110,11 +127,11 @@ Form section components accept a `FormApi` type from `/src/types/form-component-
 
 Three templates, each in `/src/components/templates/`:
 
-| Template | Font | Color | Audience |
-|----------|------|-------|----------|
-| `developer` | JetBrains Mono | Purple/blue | Tech professionals |
-| `default` | Montserrat | Gray | All industries |
-| `veterinary` | Lato + Merriweather | Emerald/teal | Animal healthcare |
+| Template     | Font                | Color        | Audience           |
+| ------------ | ------------------- | ------------ | ------------------ |
+| `developer`  | JetBrains Mono      | Purple/blue  | Tech professionals |
+| `default`    | Montserrat          | Gray         | All industries     |
+| `veterinary` | Lato + Merriweather | Emerald/teal | Animal healthcare  |
 
 Google Fonts are imported in `/src/index.css`. Atkinson Hyperlegible is used for UI elements.
 
@@ -128,6 +145,7 @@ Google Fonts are imported in `/src/index.css`. Atkinson Hyperlegible is used for
 ### Template Detection (PDF Import)
 
 The PDF parser (`/src/lib/pdf-parser.ts`) detects templates by section markers:
+
 - Developer: `// WORK EXPERIENCE`, `// TECH STACK`
 - Default: `PROFESSIONAL EXPERIENCE`, `CORE COMPETENCIES`
 - Veterinary: `SPECIAL INTERESTS`
@@ -160,11 +178,11 @@ Uses the browser-native **View Transition API** via TanStack Router's `defaultVi
 
 - **Page transitions**: Crossfade + subtle slide between routes (200-250ms), configured via `::view-transition-old`/`::view-transition-new` pseudo-selectors in `/src/index.css`
 - **Entrance animations**: CSS `@keyframes` utility classes applied to page elements:
-  - `animate-fade-in-up` — slide up + fade (sections, cards, headings)
-  - `animate-fade-in-scale` — scale from 95% + fade (stats, preview)
-  - `animate-blur-in` — blur-to-sharp entrance (hero title)
-  - `animate-grow-width` — progress bar fill animation
-  - `animate-slide-in-left` / `animate-slide-in-right` — horizontal slides
+    - `animate-fade-in-up` — slide up + fade (sections, cards, headings)
+    - `animate-fade-in-scale` — scale from 95% + fade (stats, preview)
+    - `animate-blur-in` — blur-to-sharp entrance (hero title)
+    - `animate-grow-width` — progress bar fill animation
+    - `animate-slide-in-left` / `animate-slide-in-right` — horizontal slides
 - **Stagger delays**: `.delay-1` through `.delay-5` (100ms increments), or inline `animationDelay` style for 6+
 - **Micro-interactions**: `.hover-lift` class for button/card hover (scale + shadow)
 - **Accessibility**: All animations disabled when `prefers-reduced-motion: reduce` is set

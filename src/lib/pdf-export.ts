@@ -75,7 +75,7 @@ function extractSectionBoundaries(element: HTMLElement): SectionBoundary[] {
 function calculatePageBreaks(
     totalHeightPx: number,
     pageHeightPx: number,
-    sections: SectionBoundary[]
+    sections: SectionBoundary[],
 ): number[] {
     const breaks: number[] = [];
     let currentPageEnd = pageHeightPx;
@@ -108,7 +108,7 @@ function cropCanvas(
     sourceCanvas: HTMLCanvasElement,
     startY: number,
     height: number,
-    quality: number = 0.92
+    quality: number = 0.92,
 ): string {
     const croppedCanvas = document.createElement('canvas');
     croppedCanvas.width = sourceCanvas.width;
@@ -122,8 +122,14 @@ function cropCanvas(
         // Draw the cropped portion
         ctx.drawImage(
             sourceCanvas,
-            0, startY, sourceCanvas.width, height,
-            0, 0, sourceCanvas.width, height
+            0,
+            startY,
+            sourceCanvas.width,
+            height,
+            0,
+            0,
+            sourceCanvas.width,
+            height,
         );
     }
 
@@ -132,7 +138,7 @@ function cropCanvas(
 
 export async function exportToPDF(
     element: HTMLElement,
-    options: PDFExportOptions = {}
+    options: PDFExportOptions = {},
 ): Promise<void> {
     const {
         filename = 'cv.pdf',
@@ -140,7 +146,7 @@ export async function exportToPDF(
         singlePage = false,
         cvData,
         imageQuality = 0.92, // High quality JPEG (significantly reduces file size compared to PNG)
-        compression = 'MEDIUM' // jsPDF compression level
+        compression = 'MEDIUM', // jsPDF compression level
     } = options;
 
     // Extract links and section boundaries before rendering to canvas
@@ -184,7 +190,7 @@ export async function exportToPDF(
 
     // Calculate page height in canvas pixels and scale section boundaries
     const pageHeightPx = (pageHeight / imgHeight) * canvas.height;
-    const scaledSections = sections.map(s => ({
+    const scaledSections = sections.map((s) => ({
         top: s.top * scale,
         bottom: s.bottom * scale,
     }));
@@ -198,7 +204,16 @@ export async function exportToPDF(
         // Center horizontally
         linkXOffset = (A4_WIDTH_MM - finalWidth) / 2;
 
-        pdf.addImage(imgData, 'JPEG', linkXOffset, 0, finalWidth, finalHeight, undefined, compression);
+        pdf.addImage(
+            imgData,
+            'JPEG',
+            linkXOffset,
+            0,
+            finalWidth,
+            finalHeight,
+            undefined,
+            compression,
+        );
 
         // Update scale factors for links
         scaleX = finalWidth / elementWidth;
@@ -232,12 +247,23 @@ export async function exportToPDF(
 
             // Add the cropped image - with top margin on subsequent pages
             const topMargin = i > 0 ? PAGE_TOP_MARGIN_MM : 0;
-            pdf.addImage(croppedImgData, 'JPEG', 0, topMargin, imgWidth, cropHeightMm, undefined, compression);
+            pdf.addImage(
+                croppedImgData,
+                'JPEG',
+                0,
+                topMargin,
+                imgWidth,
+                cropHeightMm,
+                undefined,
+                compression,
+            );
         }
     }
 
     // Add clickable links to the PDF
-    const linkPageBreaks = singlePage ? [] : calculatePageBreaks(canvas.height, pageHeightPx, scaledSections);
+    const linkPageBreaks = singlePage
+        ? []
+        : calculatePageBreaks(canvas.height, pageHeightPx, scaledSections);
     const linkAllBreaks = [0, ...linkPageBreaks];
 
     links.forEach((link) => {
@@ -293,10 +319,7 @@ export async function exportToPDF(
     pdf.save(filename);
 }
 
-export function generateCVFilename(
-    firstName?: string,
-    lastName?: string
-): string {
+export function generateCVFilename(firstName?: string, lastName?: string): string {
     const nameParts = [firstName, lastName].filter(Boolean);
     const name = nameParts.length > 0 ? nameParts.join('-') : 'my';
     return `${name}-CV.pdf`;
