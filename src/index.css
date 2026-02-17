@@ -346,6 +346,10 @@
     animation: gradient-shift 8s ease infinite;
 }
 
+.font-display {
+    font-family: 'Syne', sans-serif;
+}
+
 .delay-6 {
     animation-delay: 600ms;
 }

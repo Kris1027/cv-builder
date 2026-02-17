@@ -55,7 +55,7 @@ const GeometricShapes = () => (
         {/* Top-left triangle */}
         <div className="animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10" />
         {/* Top-right circle */}
-        <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/8" />
+        <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10" />
         {/* Bottom-left dot cluster */}
         <div className="absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10">
             {Array.from({ length: 9 }).map((_, i) => (
@@ -65,7 +65,7 @@ const GeometricShapes = () => (
         {/* Mid-right line */}
         <div className="animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
         {/* Bottom-right square */}
-        <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/8" />
+        <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10" />
     </div>
 );
 
@@ -101,10 +101,7 @@ export const IndexPage = () => {
                     <div className="grid w-full items-center gap-12 lg:grid-cols-2 lg:gap-16">
                         {/* Left: Text Content */}
                         <div className="max-w-2xl">
-                            <h1
-                                className="animate-blur-in mb-6 text-5xl leading-[1.1] font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
-                                style={{ fontFamily: 'Syne, sans-serif' }}
-                            >
+                            <h1 className="font-display animate-blur-in mb-6 text-5xl leading-[1.1] font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
                                 {t('home.hero.title')}{' '}
                                 <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400">
                                     {t('home.hero.titleHighlight')}
@@ -114,16 +111,17 @@ export const IndexPage = () => {
                                 {t('home.hero.subtitle')}
                             </p>
                             <div className="animate-fade-in-up delay-2">
-                                <Link to="/templates">
-                                    <Button
-                                        size="lg"
-                                        className="animate-pulse-glow group h-12 cursor-pointer rounded-xl px-8 text-base"
-                                    >
+                                <Button
+                                    asChild
+                                    size="lg"
+                                    className="animate-pulse-glow group h-12 cursor-pointer rounded-xl px-8 text-base"
+                                >
+                                    <Link to="/templates">
                                         <Edit3 className="mr-2 h-5 w-5" />
                                         {t('home.hero.cta')}
                                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                    </Button>
-                                </Link>
+                                    </Link>
+                                </Button>
                             </div>
                             {/* Trust badges */}
                             <div className="animate-fade-in-up text-muted-foreground mt-10 flex flex-wrap items-center gap-6 text-sm delay-3">
@@ -157,10 +155,7 @@ export const IndexPage = () => {
             <section className="relative bg-white py-24 dark:bg-slate-950">
                 <div className="container mx-auto px-4">
                     <div className="animate-fade-in-up mx-auto mb-16 max-w-2xl text-center">
-                        <h2
-                            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
-                            style={{ fontFamily: 'Syne, sans-serif' }}
-                        >
+                        <h2 className="font-display mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
                             {t('home.features.title')}
                         </h2>
                         <p className="text-muted-foreground text-lg">
@@ -242,10 +237,7 @@ export const IndexPage = () => {
 
                 <div className="relative container mx-auto px-4">
                     <div className="animate-fade-in-up mx-auto mb-20 max-w-2xl text-center">
-                        <h2
-                            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
-                            style={{ fontFamily: 'Syne, sans-serif' }}
-                        >
+                        <h2 className="font-display mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
                             {t('home.howItWorks.title')}
                         </h2>
                         <p className="text-muted-foreground text-lg">
@@ -299,10 +291,7 @@ export const IndexPage = () => {
                                             {step}
                                         </span>
                                     </div>
-                                    <h3
-                                        className="mb-2 text-lg font-semibold"
-                                        style={{ fontFamily: 'Syne, sans-serif' }}
-                                    >
+                                    <h3 className="font-display mb-2 text-lg font-semibold">
                                         {t(`home.howItWorks.${titleKey}`)}
                                     </h3>
                                     <p className="text-muted-foreground mx-auto max-w-xs text-sm leading-relaxed">
@@ -340,8 +329,7 @@ export const IndexPage = () => {
                         ).map(({ value, label, gradient }, i) => (
                             <div key={value} className={`animate-fade-in-scale delay-${i + 1}`}>
                                 <p
-                                    className={`mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl`}
-                                    style={{ fontFamily: 'Syne, sans-serif' }}
+                                    className={`font-display mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl`}
                                 >
                                     {t(value)}
                                 </p>
@@ -366,24 +354,22 @@ export const IndexPage = () => {
 
                 <div className="relative container mx-auto px-4 text-center">
                     <div className="animate-fade-in-up mx-auto max-w-2xl">
-                        <h2
-                            className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl"
-                            style={{ fontFamily: 'Syne, sans-serif' }}
-                        >
+                        <h2 className="font-display mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
                             {t('home.cta.title')}
                         </h2>
                         <p className="text-muted-foreground mb-10 text-lg">
                             {t('home.cta.subtitle')}
                         </p>
-                        <Link to="/templates">
-                            <Button
-                                size="lg"
-                                className="animate-pulse-glow group h-14 cursor-pointer rounded-xl px-10 text-lg"
-                            >
+                        <Button
+                            asChild
+                            size="lg"
+                            className="animate-pulse-glow group h-14 cursor-pointer rounded-xl px-10 text-lg"
+                        >
+                            <Link to="/templates">
                                 {t('home.cta.button')}
                                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </section>
