@@ -11,6 +11,8 @@ pnpm run dev      # Dev server at http://localhost:5173/
 pnpm run build    # Production build to dist/
 pnpm run preview  # Preview production build
 pnpm lint         # TypeScript + ESLint checks
+pnpm format       # Format all files with Prettier
+pnpm format:check # Check formatting (CI uses this)
 ```
 
 ## Project Structure
@@ -65,6 +67,21 @@ src/
 - **Validation**: Zod (schemas) + TanStack Form validators
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
+
+## CI/CD
+
+- **GitHub Actions** runs on push to `main` and pull requests to `main`
+- Pipeline: format check → lint → build (job name: "Lint, Format & Build")
+- Concurrency: in-progress runs are cancelled when a new commit is pushed to the same ref
+- **Dependabot** updates npm and GitHub Actions dependencies weekly
+
+## Code Formatting
+
+- **Prettier** with `prettier-plugin-tailwindcss` for automatic Tailwind class sorting
+- Config: `.prettierrc` — single quotes, tabWidth 4, printWidth 100
+- Ignored: `dist/`, `pnpm-lock.yaml`, `src/routeTree.gen.ts` (see `.prettierignore`)
+- **eslint-config-prettier** disables ESLint rules that conflict with Prettier (last entry in `eslint.config.js`)
+- Run `pnpm format` before committing to avoid CI failures
 
 ## Architecture & Conventions
 
