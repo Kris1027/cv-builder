@@ -2,12 +2,15 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
     ArrowRight,
+    ClipboardList,
     Download,
     Edit3,
     Eye,
+    FileDown,
     Globe,
     Layout,
     Moon,
+    Palette,
     Save,
     Shield,
 } from 'lucide-react';
@@ -231,6 +234,93 @@ export const IndexPage = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ===== HOW IT WORKS SECTION ===== */}
+            <section className="relative overflow-hidden bg-slate-50/50 py-24 dark:bg-slate-900/50">
+                {/* Subtle background texture */}
+                <div
+                    className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+                    style={{
+                        backgroundImage:
+                            'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                        backgroundSize: '32px 32px',
+                    }}
+                />
+
+                <div className="relative container mx-auto px-4">
+                    <div className="animate-fade-in-up mx-auto mb-20 max-w-2xl text-center">
+                        <h2
+                            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
+                            style={{ fontFamily: 'Syne, sans-serif' }}
+                        >
+                            {t('home.howItWorks.title')}
+                        </h2>
+                        <p className="text-muted-foreground text-lg">
+                            {t('home.howItWorks.subtitle')}
+                        </p>
+                    </div>
+
+                    <div className="mx-auto max-w-4xl">
+                        <div className="relative grid gap-8 md:grid-cols-3 md:gap-12">
+                            {/* Animated connector line (desktop) */}
+                            <div className="animate-draw-line absolute top-14 left-[calc(16.67%+24px)] hidden h-0.5 w-[calc(66.66%-48px)] bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 delay-3 md:block" />
+
+                            {(
+                                [
+                                    {
+                                        icon: Palette,
+                                        step: 1,
+                                        titleKey: 'step1Title',
+                                        descKey: 'step1Desc',
+                                        gradient: 'from-indigo-500 to-blue-600',
+                                    },
+                                    {
+                                        icon: ClipboardList,
+                                        step: 2,
+                                        titleKey: 'step2Title',
+                                        descKey: 'step2Desc',
+                                        gradient: 'from-violet-500 to-purple-600',
+                                    },
+                                    {
+                                        icon: FileDown,
+                                        step: 3,
+                                        titleKey: 'step3Title',
+                                        descKey: 'step3Desc',
+                                        gradient: 'from-purple-500 to-pink-600',
+                                    },
+                                ] as const
+                            ).map(({ icon: Icon, step, titleKey, descKey, gradient }, i) => (
+                                <div
+                                    key={step}
+                                    className={`animate-fade-in-up text-center delay-${i + 1}`}
+                                >
+                                    {/* Step circle with icon */}
+                                    <div className="relative mx-auto mb-6">
+                                        <div
+                                            className={`mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
+                                        >
+                                            <Icon className="h-6 w-6" />
+                                        </div>
+                                        {/* Step number badge */}
+                                        <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-700 shadow-md dark:bg-slate-800 dark:text-slate-200">
+                                            {step}
+                                        </span>
+                                    </div>
+                                    <h3
+                                        className="mb-2 text-lg font-semibold"
+                                        style={{ fontFamily: 'Syne, sans-serif' }}
+                                    >
+                                        {t(`home.howItWorks.${titleKey}`)}
+                                    </h3>
+                                    <p className="text-muted-foreground mx-auto max-w-xs text-sm leading-relaxed">
+                                        {t(`home.howItWorks.${descKey}`)}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
