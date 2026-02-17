@@ -64,7 +64,7 @@ const GeometricShapes = () => (
             ))}
         </div>
         {/* Mid-right line */}
-        <div className="animate-float absolute right-[5%] top-1/2 h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+        <div className="animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
         {/* Bottom-right square */}
         <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/8" />
     </div>
@@ -90,7 +90,8 @@ export const IndexPage = () => {
                 <div
                     className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                        backgroundImage:
+                            'radial-gradient(circle, currentColor 1px, transparent 1px)',
                         backgroundSize: '24px 24px',
                     }}
                 />
@@ -455,17 +456,14 @@ export const IndexPage = () => {
                                 },
                             ] as const
                         ).map(({ value, label, gradient }, i) => (
-                            <div
-                                key={value}
-                                className={`animate-fade-in-scale delay-${i + 1}`}
-                            >
+                            <div key={value} className={`animate-fade-in-scale delay-${i + 1}`}>
                                 <p
                                     className={`mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl`}
                                     style={{ fontFamily: 'Syne, sans-serif' }}
                                 >
                                     {t(value)}
                                 </p>
-                                <p className="text-muted-foreground text-sm font-medium uppercase tracking-wider">
+                                <p className="text-muted-foreground text-sm font-medium tracking-wider uppercase">
                                     {t(label)}
                                 </p>
                             </div>
