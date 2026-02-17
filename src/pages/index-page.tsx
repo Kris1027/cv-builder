@@ -1,136 +1,153 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2, Edit3 } from 'lucide-react';
+import { ArrowRight, Edit3, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageToggle } from '@/components/language-toggle';
 import { ThemeToggle } from '@/components/theme-toggle';
+
+const FloatingCvMockup = () => (
+    <div className="animate-float relative" aria-hidden="true">
+        {/* CV Document */}
+        <div className="relative w-64 rounded-lg border border-white/20 bg-white p-6 shadow-2xl sm:w-72 lg:w-80 dark:border-white/10 dark:bg-white">
+            {/* Header bar */}
+            <div className="mb-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500" />
+                <div className="flex-1 space-y-1.5">
+                    <div className="h-2.5 w-24 rounded-full bg-slate-800" />
+                    <div className="h-2 w-16 rounded-full bg-slate-400" />
+                </div>
+            </div>
+            {/* Section bars */}
+            <div className="mb-3 h-2 w-20 rounded-full bg-indigo-500/70" />
+            <div className="mb-1.5 h-1.5 w-full rounded-full bg-slate-200" />
+            <div className="mb-1.5 h-1.5 w-11/12 rounded-full bg-slate-200" />
+            <div className="mb-4 h-1.5 w-3/4 rounded-full bg-slate-200" />
+            <div className="mb-3 h-2 w-16 rounded-full bg-indigo-500/70" />
+            <div className="mb-1.5 h-1.5 w-full rounded-full bg-slate-200" />
+            <div className="mb-1.5 h-1.5 w-10/12 rounded-full bg-slate-200" />
+            <div className="mb-4 h-1.5 w-2/3 rounded-full bg-slate-200" />
+            <div className="mb-3 h-2 w-14 rounded-full bg-indigo-500/70" />
+            <div className="flex gap-2">
+                <div className="h-5 w-14 rounded-full bg-slate-100" />
+                <div className="h-5 w-12 rounded-full bg-slate-100" />
+                <div className="h-5 w-16 rounded-full bg-slate-100" />
+            </div>
+        </div>
+        {/* Decorative glow behind the mockup */}
+        <div className="absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-br from-indigo-500/20 via-violet-500/10 to-transparent blur-2xl" />
+    </div>
+);
+
+const GeometricShapes = () => (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* Top-left triangle */}
+        <div className="animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10" />
+        {/* Top-right circle */}
+        <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/8" />
+        {/* Bottom-left dot cluster */}
+        <div className="absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10">
+            {Array.from({ length: 9 }).map((_, i) => (
+                <div key={i} className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+            ))}
+        </div>
+        {/* Mid-right line */}
+        <div className="animate-float absolute right-[5%] top-1/2 h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+        {/* Bottom-right square */}
+        <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/8" />
+    </div>
+);
 
 export const IndexPage = () => {
     const { t } = useTranslation();
 
     return (
-        <div className="from-background to-muted/20 min-h-screen bg-gradient-to-b">
+        <div className="min-h-screen overflow-hidden">
             {/* Language and Theme Toggle */}
-            <div className="absolute top-4 right-4 flex items-center gap-2">
+            <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
                 <LanguageToggle />
                 <ThemeToggle />
             </div>
 
-            {/* Hero Section */}
-            <section className="container mx-auto px-4 py-20">
-                <div className="mx-auto max-w-4xl text-center">
-                    <h1 className="animate-blur-in mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-                        {t('home.hero.title')}{' '}
-                        <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
-                            {t('home.hero.titleHighlight')}
-                        </span>
-                    </h1>
-                    <p className="animate-fade-in-up text-muted-foreground mb-10 text-xl delay-1">
-                        {t('home.hero.subtitle')}
-                    </p>
-                    <div className="animate-fade-in-up flex justify-center delay-2">
-                        <Link to="/templates">
-                            <Button size="lg" className="group hover-lift">
-                                <Edit3 className="mr-2 h-5 w-5" />
-                                {t('home.hero.cta')}
-                                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            </Button>
-                        </Link>
-                    </div>
-                    <div className="animate-fade-in-up text-muted-foreground mt-12 flex items-center justify-center gap-8 text-sm delay-3">
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <span>{t('home.features.noSignup')}</span>
+            {/* ===== HERO SECTION ===== */}
+            <section className="relative min-h-[90vh] overflow-hidden">
+                {/* Background gradient mesh */}
+                <div className="animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80" />
+
+                {/* Dot grid pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                        backgroundSize: '24px 24px',
+                    }}
+                />
+
+                <GeometricShapes />
+
+                <div className="relative z-10 container mx-auto flex min-h-[90vh] items-center px-4 py-20">
+                    <div className="grid w-full items-center gap-12 lg:grid-cols-2 lg:gap-16">
+                        {/* Left: Text Content */}
+                        <div className="max-w-2xl">
+                            <h1
+                                className="animate-blur-in mb-6 text-5xl leading-[1.1] font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
+                                style={{ fontFamily: 'Syne, sans-serif' }}
+                            >
+                                {t('home.hero.title')}{' '}
+                                <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400">
+                                    {t('home.hero.titleHighlight')}
+                                </span>
+                            </h1>
+                            <p className="animate-fade-in-up text-muted-foreground mb-10 max-w-lg text-lg delay-1 sm:text-xl">
+                                {t('home.hero.subtitle')}
+                            </p>
+                            <div className="animate-fade-in-up flex flex-wrap gap-4 delay-2">
+                                <Link to="/builder">
+                                    <Button
+                                        size="lg"
+                                        className="animate-pulse-glow group h-12 cursor-pointer rounded-xl px-8 text-base"
+                                    >
+                                        <Edit3 className="mr-2 h-5 w-5" />
+                                        {t('home.hero.cta')}
+                                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                    </Button>
+                                </Link>
+                                <Link to="/templates">
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="hover-lift group h-12 cursor-pointer rounded-xl px-8 text-base"
+                                    >
+                                        <Eye className="mr-2 h-5 w-5" />
+                                        {t('home.hero.ctaSecondary')}
+                                    </Button>
+                                </Link>
+                            </div>
+                            {/* Trust badges */}
+                            <div className="animate-fade-in-up text-muted-foreground mt-10 flex flex-wrap items-center gap-6 text-sm delay-3">
+                                <span className="flex items-center gap-2">
+                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                    {t('home.features.noSignup')}
+                                </span>
+                                <span className="flex items-center gap-2">
+                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                    {t('home.features.free')}
+                                </span>
+                                <span className="flex items-center gap-2">
+                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                    {t('home.features.exportPdf')}
+                                </span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <span>{t('home.features.free')}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <span>{t('home.features.exportPdf')}</span>
+
+                        {/* Right: Floating CV Mockup */}
+                        <div className="animate-fade-in-scale hidden justify-center delay-3 lg:flex">
+                            <FloatingCvMockup />
                         </div>
                     </div>
                 </div>
-            </section>
 
-            {/* How It Works Section */}
-            <section className="py-20">
-                <div className="container mx-auto px-4">
-                    <div className="animate-fade-in-up mx-auto mb-16 max-w-2xl text-center">
-                        <h2 className="mb-4 text-3xl font-bold">{t('home.howItWorks.title')}</h2>
-                        <p className="text-muted-foreground">{t('home.howItWorks.subtitle')}</p>
-                    </div>
-
-                    <div className="mx-auto max-w-5xl">
-                        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:gap-4">
-                            {/* Step 1 */}
-                            <div className="animate-fade-in-up relative flex-1 text-center delay-1">
-                                <div className="bg-muted mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium">
-                                    1
-                                </div>
-                                <h3 className="mb-2 font-semibold">
-                                    {t('home.howItWorks.step1Title')}
-                                </h3>
-                                <p className="text-muted-foreground text-sm">
-                                    {t('home.howItWorks.step1Desc')}
-                                </p>
-                                {/* Connector Line for desktop */}
-                                <div className="bg-border absolute top-5 left-[calc(50%+20px)] hidden h-px w-[calc(100%-40px)] md:block" />
-                            </div>
-
-                            {/* Step 2 */}
-                            <div className="animate-fade-in-up relative flex-1 text-center delay-2">
-                                <div className="bg-muted mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium">
-                                    2
-                                </div>
-                                <h3 className="mb-2 font-semibold">
-                                    {t('home.howItWorks.step2Title')}
-                                </h3>
-                                <p className="text-muted-foreground text-sm">
-                                    {t('home.howItWorks.step2Desc')}
-                                </p>
-                                {/* Connector Line for desktop */}
-                                <div className="bg-border absolute top-5 left-[calc(50%+20px)] hidden h-px w-[calc(100%-40px)] md:block" />
-                            </div>
-
-                            {/* Step 3 */}
-                            <div className="animate-fade-in-up flex-1 text-center delay-3">
-                                <div className="bg-muted mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium">
-                                    3
-                                </div>
-                                <h3 className="mb-2 font-semibold">
-                                    {t('home.howItWorks.step3Title')}
-                                </h3>
-                                <p className="text-muted-foreground text-sm">
-                                    {t('home.howItWorks.step3Desc')}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Simple Features */}
-                    <div className="mx-auto mt-20 grid max-w-3xl grid-cols-3 gap-8 text-center">
-                        <div className="animate-fade-in-scale delay-1">
-                            <p className="mb-1 text-2xl font-bold">{t('home.stats.avgTime')}</p>
-                            <p className="text-muted-foreground text-sm">
-                                {t('home.stats.avgTimeLabel')}
-                            </p>
-                        </div>
-                        <div className="animate-fade-in-scale delay-2">
-                            <p className="mb-1 text-2xl font-bold">{t('home.stats.freeForever')}</p>
-                            <p className="text-muted-foreground text-sm">
-                                {t('home.stats.freeForeverLabel')}
-                            </p>
-                        </div>
-                        <div className="animate-fade-in-scale delay-3">
-                            <p className="mb-1 text-2xl font-bold">{t('home.stats.languages')}</p>
-                            <p className="text-muted-foreground text-sm">
-                                {t('home.stats.languagesLabel')}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {/* Bottom fade */}
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent dark:from-slate-950" />
             </section>
         </div>
     );
