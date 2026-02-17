@@ -375,7 +375,7 @@ export const IndexPage = () => {
                         <p className="text-muted-foreground mb-10 text-lg">
                             {t('home.cta.subtitle')}
                         </p>
-                        <Link to="/builder">
+                        <Link to="/templates">
                             <Button
                                 size="lg"
                                 className="animate-pulse-glow group h-14 cursor-pointer rounded-xl px-10 text-lg"
