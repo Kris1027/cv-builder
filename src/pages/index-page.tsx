@@ -1,6 +1,16 @@
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Edit3, Eye } from 'lucide-react';
+import {
+    ArrowRight,
+    Download,
+    Edit3,
+    Eye,
+    Globe,
+    Layout,
+    Moon,
+    Save,
+    Shield,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageToggle } from '@/components/language-toggle';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -148,6 +158,81 @@ export const IndexPage = () => {
 
                 {/* Bottom fade */}
                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent dark:from-slate-950" />
+            </section>
+
+            {/* ===== FEATURES SECTION ===== */}
+            <section className="relative bg-white py-24 dark:bg-slate-950">
+                <div className="container mx-auto px-4">
+                    <div className="animate-fade-in-up mx-auto mb-16 max-w-2xl text-center">
+                        <h2
+                            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
+                            style={{ fontFamily: 'Syne, sans-serif' }}
+                        >
+                            {t('home.features.title')}
+                        </h2>
+                        <p className="text-muted-foreground text-lg">
+                            {t('home.features.subtitle')}
+                        </p>
+                    </div>
+
+                    <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {(
+                            [
+                                {
+                                    icon: Layout,
+                                    key: 'templates' as const,
+                                    gradient: 'from-indigo-500 to-blue-600',
+                                },
+                                {
+                                    icon: Moon,
+                                    key: 'darkMode' as const,
+                                    gradient: 'from-violet-500 to-purple-600',
+                                },
+                                {
+                                    icon: Download,
+                                    key: 'pdf' as const,
+                                    gradient: 'from-cyan-500 to-blue-600',
+                                },
+                                {
+                                    icon: Globe,
+                                    key: 'i18n' as const,
+                                    gradient: 'from-emerald-500 to-teal-600',
+                                },
+                                {
+                                    icon: Save,
+                                    key: 'autosave' as const,
+                                    gradient: 'from-amber-500 to-orange-600',
+                                },
+                                {
+                                    icon: Shield,
+                                    key: 'privacy' as const,
+                                    gradient: 'from-rose-500 to-pink-600',
+                                },
+                            ] as const
+                        ).map(({ icon: Icon, key, gradient }, i) => (
+                            <div
+                                key={key}
+                                className={`animate-fade-in-up group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-white/5 dark:bg-white/[0.03] dark:hover:border-indigo-500/20 dark:hover:shadow-indigo-500/5 delay-${i + 1}`}
+                            >
+                                {/* Hover gradient glow */}
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-50/0 to-violet-50/0 transition-colors duration-300 group-hover:from-indigo-50/50 group-hover:to-violet-50/30 dark:group-hover:from-indigo-500/5 dark:group-hover:to-violet-500/5" />
+                                <div className="relative">
+                                    <div
+                                        className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${gradient} p-2.5 text-white shadow-lg`}
+                                    >
+                                        <Icon className="h-5 w-5" />
+                                    </div>
+                                    <h3 className="mb-2 text-lg font-semibold">
+                                        {t(`home.features.${key}.title`)}
+                                    </h3>
+                                    <p className="text-muted-foreground text-sm leading-relaxed">
+                                        {t(`home.features.${key}.desc`)}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </section>
         </div>
     );
