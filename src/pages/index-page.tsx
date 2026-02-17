@@ -324,6 +324,114 @@ export const IndexPage = () => {
                     </div>
                 </div>
             </section>
+
+            {/* ===== TEMPLATE SHOWCASE ===== */}
+            <section className="relative bg-white py-24 dark:bg-slate-950">
+                <div className="container mx-auto px-4">
+                    <div className="animate-fade-in-up mx-auto mb-16 max-w-2xl text-center">
+                        <h2
+                            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
+                            style={{ fontFamily: 'Syne, sans-serif' }}
+                        >
+                            {t('home.templateShowcase.title')}
+                        </h2>
+                        <p className="text-muted-foreground text-lg">
+                            {t('home.templateShowcase.subtitle')}
+                        </p>
+                    </div>
+
+                    <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-3">
+                        {(
+                            [
+                                {
+                                    id: 'developer',
+                                    font: 'JetBrains Mono',
+                                    color: 'from-violet-500 to-indigo-600',
+                                    accentBar: 'bg-violet-500',
+                                },
+                                {
+                                    id: 'default',
+                                    font: 'Montserrat',
+                                    color: 'from-slate-500 to-gray-700',
+                                    accentBar: 'bg-slate-500',
+                                },
+                                {
+                                    id: 'veterinary',
+                                    font: 'Lato',
+                                    color: 'from-emerald-500 to-teal-600',
+                                    accentBar: 'bg-emerald-500',
+                                },
+                            ] as const
+                        ).map(({ id, font, color, accentBar }, i) => (
+                            <Link
+                                key={id}
+                                to="/templates/$templateId"
+                                params={{ templateId: id }}
+                                className={`animate-fade-in-up group delay-${i + 1}`}
+                            >
+                                <div className="hover-lift relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white transition-all duration-300 hover:border-indigo-200/60 hover:shadow-xl dark:border-white/5 dark:bg-slate-900/50 dark:hover:border-indigo-500/20">
+                                    {/* Template mini preview */}
+                                    <div className="relative aspect-[3/4] overflow-hidden bg-slate-50 p-4 dark:bg-slate-800/50">
+                                        {/* Accent bar */}
+                                        <div
+                                            className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${color}`}
+                                        />
+                                        {/* Skeleton CV */}
+                                        <div className="mx-auto w-full max-w-[140px] rounded bg-white p-3 shadow-sm dark:bg-white">
+                                            <div className="mb-2 flex items-center gap-2">
+                                                <div
+                                                    className={`h-5 w-5 rounded-full bg-gradient-to-br ${color}`}
+                                                />
+                                                <div className="space-y-1">
+                                                    <div className="h-1.5 w-12 rounded-full bg-slate-700" />
+                                                    <div className="h-1 w-8 rounded-full bg-slate-400" />
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={`mb-1.5 h-1 w-10 rounded-full ${accentBar}/60`}
+                                            />
+                                            <div className="mb-0.5 h-0.5 w-full rounded-full bg-slate-200" />
+                                            <div className="mb-0.5 h-0.5 w-11/12 rounded-full bg-slate-200" />
+                                            <div className="mb-2 h-0.5 w-3/4 rounded-full bg-slate-200" />
+                                            <div
+                                                className={`mb-1.5 h-1 w-8 rounded-full ${accentBar}/60`}
+                                            />
+                                            <div className="mb-0.5 h-0.5 w-full rounded-full bg-slate-200" />
+                                            <div className="mb-0.5 h-0.5 w-10/12 rounded-full bg-slate-200" />
+                                            <div className="h-0.5 w-2/3 rounded-full bg-slate-200" />
+                                        </div>
+                                    </div>
+                                    {/* Template info */}
+                                    <div className="p-4">
+                                        <h3 className="mb-1 font-semibold">
+                                            {t(`templates.${id}.name`)}
+                                        </h3>
+                                        <p
+                                            className="text-muted-foreground text-xs"
+                                            style={{ fontFamily: font }}
+                                        >
+                                            {font}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="animate-fade-in-up mt-12 text-center delay-4">
+                        <Link to="/templates">
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="hover-lift group rounded-xl"
+                            >
+                                {t('home.templateShowcase.cta')}
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };
