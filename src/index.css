@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Merriweather:wght@300;400;700&display=swap');
@@ -228,6 +229,66 @@
     }
 }
 
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-16px) rotate(2deg);
+    }
+}
+
+@keyframes float-reverse {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(12px) rotate(-1.5deg);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 20px oklch(0.65 0.25 265 / 0.15);
+    }
+    50% {
+        box-shadow: 0 0 40px oklch(0.65 0.25 265 / 0.3);
+    }
+}
+
+@keyframes draw-line {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .root-transition {
     view-transition-name: root;
 }
@@ -258,6 +319,43 @@
     animation: grow-width 0.8s ease-out both;
 }
 
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+    animation: float-reverse 5s ease-in-out infinite;
+}
+
+.animate-shimmer {
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.animate-draw-line {
+    animation: draw-line 0.8s ease-out both;
+    transform-origin: left;
+}
+
+.animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+}
+
+.delay-6 {
+    animation-delay: 600ms;
+}
+.delay-7 {
+    animation-delay: 700ms;
+}
+.delay-8 {
+    animation-delay: 800ms;
+}
+
 .delay-1 {
     animation-delay: 100ms;
 }
@@ -284,7 +382,13 @@
     .animate-slide-in-left,
     .animate-slide-in-right,
     .animate-blur-in,
-    .animate-grow-width {
+    .animate-grow-width,
+    .animate-float,
+    .animate-float-reverse,
+    .animate-shimmer,
+    .animate-pulse-glow,
+    .animate-draw-line,
+    .animate-gradient-shift {
         animation: none !important;
     }
 }
