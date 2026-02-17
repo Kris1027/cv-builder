@@ -1,287 +1,287 @@
 {
-  "nav": {
-    "backToTemplates": "Powrót do szablonów",
-    "backToHome": "Powrót do strony głównej",
-    "backToEditor": "Powrót do edytora"
-  },
-  "home": {
-    "hero": {
-      "title": "Stwórz idealne CV w",
-      "titleHighlight": "kilka minut",
-      "subtitle": "Twórz profesjonalne CV z naszym kreatorem. Wyróżnij się i zdobądź wymarzoną pracę.",
-      "cta": "Zacznij tworzyć CV"
+    "nav": {
+        "backToTemplates": "Powrót do szablonów",
+        "backToHome": "Powrót do strony głównej",
+        "backToEditor": "Powrót do edytora"
     },
-    "features": {
-      "noSignup": "Bez rejestracji",
-      "free": "100% za darmo",
-      "exportPdf": "Eksport do PDF"
+    "home": {
+        "hero": {
+            "title": "Stwórz idealne CV w",
+            "titleHighlight": "kilka minut",
+            "subtitle": "Twórz profesjonalne CV z naszym kreatorem. Wyróżnij się i zdobądź wymarzoną pracę.",
+            "cta": "Zacznij tworzyć CV"
+        },
+        "features": {
+            "noSignup": "Bez rejestracji",
+            "free": "100% za darmo",
+            "exportPdf": "Eksport do PDF"
+        },
+        "howItWorks": {
+            "title": "Jak to działa",
+            "subtitle": "Stwórz profesjonalne CV w trzech prostych krokach",
+            "step1Title": "Wybierz szablon",
+            "step1Desc": "Wybierz spośród naszych profesjonalnych wzorów",
+            "step2Title": "Uzupełnij dane",
+            "step2Desc": "Dodaj informacje za pomocą prostego formularza",
+            "step3Title": "Pobierz CV",
+            "step3Desc": "Eksportuj jako PDF i zacznij aplikować"
+        },
+        "stats": {
+            "avgTime": "5 min",
+            "avgTimeLabel": "Średni czas",
+            "freeForever": "100%",
+            "freeForeverLabel": "Zawsze za darmo",
+            "languages": "PL/EN",
+            "languagesLabel": "Obsługa języków"
+        }
     },
-    "howItWorks": {
-      "title": "Jak to działa",
-      "subtitle": "Stwórz profesjonalne CV w trzech prostych krokach",
-      "step1Title": "Wybierz szablon",
-      "step1Desc": "Wybierz spośród naszych profesjonalnych wzorów",
-      "step2Title": "Uzupełnij dane",
-      "step2Desc": "Dodaj informacje za pomocą prostego formularza",
-      "step3Title": "Pobierz CV",
-      "step3Desc": "Eksportuj jako PDF i zacznij aplikować"
+    "templates": {
+        "title": "Szablony CV",
+        "pageTitle": "Wybierz szablon CV",
+        "pageSubtitle": "Wybierz szablon, który najlepiej reprezentuje Twój profesjonalny styl",
+        "preview": "Podgląd",
+        "useTemplate": "Użyj szablonu",
+        "developer": {
+            "name": "Szablon dla programistów",
+            "description": "Techniczny design z fontem monospace i stylem przyjaznym dla programistów"
+        },
+        "default": {
+            "name": "Szablon domyślny",
+            "description": "Nowoczesny minimalistyczny design z fontem Montserrat dla profesjonalistów"
+        },
+        "veterinary": {
+            "name": "Szablon weterynaryjny",
+            "description": "Profesjonalny medyczny design z ciepłymi akcentami dla specjalistów opieki nad zwierzętami"
+        },
+        "notFound": "Nie znaleziono szablonu"
     },
-    "stats": {
-      "avgTime": "5 min",
-      "avgTimeLabel": "Średni czas",
-      "freeForever": "100%",
-      "freeForeverLabel": "Zawsze za darmo",
-      "languages": "PL/EN",
-      "languagesLabel": "Obsługa języków"
-    }
-  },
-  "templates": {
-    "title": "Szablony CV",
-    "pageTitle": "Wybierz szablon CV",
-    "pageSubtitle": "Wybierz szablon, który najlepiej reprezentuje Twój profesjonalny styl",
-    "preview": "Podgląd",
-    "useTemplate": "Użyj szablonu",
-    "developer": {
-      "name": "Szablon dla programistów",
-      "description": "Techniczny design z fontem monospace i stylem przyjaznym dla programistów"
+    "savedData": {
+        "title": "Masz zapisane dane CV",
+        "lastSaved": "Ostatnio zapisano {{time}}",
+        "justNow": "przed chwilą",
+        "minuteAgo": "{{count}} minutę temu",
+        "minutesAgo": "{{count}} minut temu",
+        "hourAgo": "{{count}} godzinę temu",
+        "hoursAgo": "{{count}} godzin temu",
+        "dayAgo": "{{count}} dzień temu",
+        "daysAgo": "{{count}} dni temu"
     },
-    "default": {
-      "name": "Szablon domyślny",
-      "description": "Nowoczesny minimalistyczny design z fontem Montserrat dla profesjonalistów"
+    "builder": {
+        "title": "Stwórz swoje CV",
+        "template": "Szablon",
+        "loadPdf": "Wczytaj PDF",
+        "loading": "Wczytywanie...",
+        "save": "Zapisz",
+        "saving": "Zapisywanie...",
+        "saved": "Zapisano {{time}}",
+        "reset": "Resetuj",
+        "previewCv": "Podgląd CV",
+        "processing": "Przetwarzanie...",
+        "progress": {
+            "title": "Postęp formularza",
+            "complete": "Świetnie! Twoje CV jest kompletne. Kliknij 'Podgląd CV', aby zobaczyć wynik.",
+            "incomplete": "Uzupełnij wszystkie sekcje, aby zmaksymalizować potencjał CV."
+        },
+        "validation": {
+            "fixErrors": "Proszę naprawić błędy powyżej przed kontynuowaniem."
+        }
     },
-    "veterinary": {
-      "name": "Szablon weterynaryjny",
-      "description": "Profesjonalny medyczny design z ciepłymi akcentami dla specjalistów opieki nad zwierzętami"
+    "form": {
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "location": "Lokalizacja",
+        "website": "Strona internetowa",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "professionalTitle": "Stanowisko",
+        "company": "Firma",
+        "position": "Stanowisko",
+        "startDate": "Data rozpoczęcia",
+        "endDate": "Data zakończenia",
+        "currentlyWorking": "Obecnie tu pracuję",
+        "description": "Opis",
+        "institution": "Uczelnia",
+        "degree": "Stopień",
+        "field": "Kierunek studiów",
+        "language": "Język",
+        "proficiency": "Poziom",
+        "skill": "Umiejętność",
+        "interest": "Zainteresowanie"
     },
-    "notFound": "Nie znaleziono szablonu"
-  },
-  "savedData": {
-    "title": "Masz zapisane dane CV",
-    "lastSaved": "Ostatnio zapisano {{time}}",
-    "justNow": "przed chwilą",
-    "minuteAgo": "{{count}} minutę temu",
-    "minutesAgo": "{{count}} minut temu",
-    "hourAgo": "{{count}} godzinę temu",
-    "hoursAgo": "{{count}} godzin temu",
-    "dayAgo": "{{count}} dzień temu",
-    "daysAgo": "{{count}} dni temu"
-  },
-  "builder": {
-    "title": "Stwórz swoje CV",
-    "template": "Szablon",
-    "loadPdf": "Wczytaj PDF",
-    "loading": "Wczytywanie...",
-    "save": "Zapisz",
-    "saving": "Zapisywanie...",
-    "saved": "Zapisano {{time}}",
-    "reset": "Resetuj",
-    "previewCv": "Podgląd CV",
-    "processing": "Przetwarzanie...",
-    "progress": {
-      "title": "Postęp formularza",
-      "complete": "Świetnie! Twoje CV jest kompletne. Kliknij 'Podgląd CV', aby zobaczyć wynik.",
-      "incomplete": "Uzupełnij wszystkie sekcje, aby zmaksymalizować potencjał CV."
+    "placeholders": {
+        "firstName": "Jan",
+        "lastName": "Kowalski",
+        "email": "jan.kowalski@example.com",
+        "phone": "+48 123 456 789",
+        "location": "Warszawa",
+        "website": "https://jankowalski.pl",
+        "linkedin": "https://linkedin.com/in/jankowalski",
+        "github": "https://github.com/jankowalski",
+        "professionalTitle": "Programista",
+        "company": "Nazwa firmy",
+        "position": "Stanowisko",
+        "locationJob": "Miasto, Kraj",
+        "description": "Zacznij pisać, aby dodać pierwszy punkt...",
+        "institution": "Nazwa uczelni",
+        "degree": "Licencjat",
+        "field": "Informatyka",
+        "skill": "Wpisz umiejętność",
+        "interest": "Wpisz zainteresowanie",
+        "language": "Język",
+        "selectProficiency": "Wybierz poziom"
+    },
+    "sections": {
+        "personalInfo": {
+            "title": "Dane osobowe",
+            "description": "Podstawowe dane kontaktowe i podsumowanie zawodowe"
+        },
+        "experience": {
+            "title": "Doświadczenie zawodowe",
+            "description": "Dodaj swoje doświadczenie zawodowe (przeciągnij aby zmienić kolejność)",
+            "add": "Dodaj doświadczenie",
+            "empty": "Nie dodano jeszcze doświadczenia",
+            "emptyHint": "Kliknij \"Dodaj doświadczenie\", aby rozpocząć",
+            "item": "Doświadczenie {{number}}",
+            "bulletHint": "Punkty są dodawane automatycznie"
+        },
+        "education": {
+            "title": "Wykształcenie",
+            "description": "Dodaj swoje wykształcenie (przeciągnij aby zmienić kolejność)",
+            "add": "Dodaj wykształcenie",
+            "empty": "Nie dodano jeszcze wykształcenia",
+            "emptyHint": "Kliknij \"Dodaj wykształcenie\", aby rozpocząć",
+            "item": "Wykształcenie {{number}}"
+        },
+        "skills": {
+            "title": "Umiejętności",
+            "description": "Dodaj swoje umiejętności zawodowe (przeciągnij aby zmienić kolejność)",
+            "add": "Dodaj umiejętność",
+            "empty": "Nie dodano jeszcze umiejętności",
+            "emptyHint": "Kliknij \"Dodaj umiejętność\", aby rozpocząć"
+        },
+        "languages": {
+            "title": "Języki",
+            "description": "Dodaj języki, którymi się posługujesz (przeciągnij aby zmienić kolejność)",
+            "add": "Dodaj język",
+            "empty": "Nie dodano jeszcze języków",
+            "emptyHint": "Kliknij \"Dodaj język\", aby rozpocząć",
+            "item": "Język {{number}}"
+        },
+        "interests": {
+            "title": "Zainteresowania",
+            "description": "Dodaj swoje hobby i zainteresowania (przeciągnij aby zmienić kolejność)",
+            "add": "Dodaj zainteresowanie",
+            "empty": "Nie dodano jeszcze zainteresowań",
+            "emptyHint": "Kliknij \"Dodaj zainteresowanie\", aby rozpocząć"
+        },
+        "gdprConsent": {
+            "title": "Klauzula RODO",
+            "description": "Dodaj klauzulę zgody na przetwarzanie danych osobowych na dole CV",
+            "enable": "Dołącz klauzulę RODO do CV",
+            "companyName": "Nazwa firmy",
+            "companyNamePlaceholder": "Wpisz nazwę firmy",
+            "companyNameHint": "Pozostaw puste, aby użyć ogólnej klauzuli bez nazwy firmy"
+        }
     },
     "validation": {
-      "fixErrors": "Proszę naprawić błędy powyżej przed kontynuowaniem."
+        "required": "{{field}} jest wymagane",
+        "invalidEmail": "Proszę wprowadzić poprawny adres e-mail",
+        "firstNameRequired": "Imię jest wymagane",
+        "lastNameRequired": "Nazwisko jest wymagane",
+        "emailRequired": "E-mail jest wymagany"
+    },
+    "dialogs": {
+        "reset": {
+            "title": "Resetuj dane CV",
+            "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Tej akcji nie można cofnąć, a wszystkie informacje zostaną trwale usunięte.",
+            "cancel": "Anuluj",
+            "confirm": "Resetuj wszystkie dane"
+        },
+        "pdfError": {
+            "title": "Nie można wczytać PDF",
+            "ok": "OK"
+        }
+    },
+    "preview": {
+        "title": "Podgląd Twojego CV",
+        "noData": "Nie znaleziono danych CV",
+        "noDataHint": "Proszę najpierw wypełnić formularz, aby zobaczyć podgląd CV.",
+        "startBuilding": "Zacznij tworzyć CV",
+        "multiPage": "Wiele stron",
+        "singlePage": "Jedna strona",
+        "downloadPdf": "Pobierz PDF",
+        "exporting": "Eksportowanie...",
+        "editCv": "Edytuj CV",
+        "success": {
+            "title": "Gratulacje! Twoje CV jest gotowe.",
+            "subtitle": "Możesz teraz pobrać jako PDF lub kontynuować edycję."
+        },
+        "contentWarning": {
+            "title": "Treść jest bardzo długa",
+            "subtitle": "Twoje CV zostało przeskalowane do minimum (50%). Rozważ skrócenie treści dla lepszej czytelności."
+        },
+        "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie."
+    },
+    "proficiency": {
+        "A1": "A1 - Początkujący",
+        "A2": "A2 - Podstawowy",
+        "B1": "B1 - Średniozaawansowany",
+        "B2": "B2 - Zaawansowany",
+        "C1": "C1 - Biegły",
+        "C2": "C2 - Biegły (native-like)",
+        "NATIVE": "Ojczysty"
+    },
+    "cv": {
+        "workExperience": "Doświadczenie zawodowe",
+        "education": "Wykształcenie",
+        "skills": "Umiejętności",
+        "languages": "Języki",
+        "interests": "Zainteresowania",
+        "techStack": "Technologie",
+        "professionalExperience": "Doświadczenie zawodowe",
+        "coreCompetencies": "Kluczowe kompetencje",
+        "educationTraining": "Wykształcenie i szkolenia",
+        "specialInterests": "Zainteresowania",
+        "present": "obecnie",
+        "gdprConsent": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji prowadzonego przez {{companyName}} zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).",
+        "gdprConsentGeneric": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO)."
+    },
+    "language": {
+        "en": "English",
+        "pl": "Polski"
+    },
+    "months": {
+        "0": "Styczeń",
+        "1": "Luty",
+        "2": "Marzec",
+        "3": "Kwiecień",
+        "4": "Maj",
+        "5": "Czerwiec",
+        "6": "Lipiec",
+        "7": "Sierpień",
+        "8": "Wrzesień",
+        "9": "Październik",
+        "10": "Listopad",
+        "11": "Grudzień"
+    },
+    "monthsShort": {
+        "0": "Sty",
+        "1": "Lut",
+        "2": "Mar",
+        "3": "Kwi",
+        "4": "Maj",
+        "5": "Cze",
+        "6": "Lip",
+        "7": "Sie",
+        "8": "Wrz",
+        "9": "Paź",
+        "10": "Lis",
+        "11": "Gru"
+    },
+    "accessibility": {
+        "toggleLanguage": "Zmień język",
+        "toggleTheme": "Zmień motyw"
     }
-  },
-  "form": {
-    "firstName": "Imię",
-    "lastName": "Nazwisko",
-    "email": "E-mail",
-    "phone": "Telefon",
-    "location": "Lokalizacja",
-    "website": "Strona internetowa",
-    "linkedin": "LinkedIn",
-    "github": "GitHub",
-    "professionalTitle": "Stanowisko",
-    "company": "Firma",
-    "position": "Stanowisko",
-    "startDate": "Data rozpoczęcia",
-    "endDate": "Data zakończenia",
-    "currentlyWorking": "Obecnie tu pracuję",
-    "description": "Opis",
-    "institution": "Uczelnia",
-    "degree": "Stopień",
-    "field": "Kierunek studiów",
-    "language": "Język",
-    "proficiency": "Poziom",
-    "skill": "Umiejętność",
-    "interest": "Zainteresowanie"
-  },
-  "placeholders": {
-    "firstName": "Jan",
-    "lastName": "Kowalski",
-    "email": "jan.kowalski@example.com",
-    "phone": "+48 123 456 789",
-    "location": "Warszawa",
-    "website": "https://jankowalski.pl",
-    "linkedin": "https://linkedin.com/in/jankowalski",
-    "github": "https://github.com/jankowalski",
-    "professionalTitle": "Programista",
-    "company": "Nazwa firmy",
-    "position": "Stanowisko",
-    "locationJob": "Miasto, Kraj",
-    "description": "Zacznij pisać, aby dodać pierwszy punkt...",
-    "institution": "Nazwa uczelni",
-    "degree": "Licencjat",
-    "field": "Informatyka",
-    "skill": "Wpisz umiejętność",
-    "interest": "Wpisz zainteresowanie",
-    "language": "Język",
-    "selectProficiency": "Wybierz poziom"
-  },
-  "sections": {
-    "personalInfo": {
-      "title": "Dane osobowe",
-      "description": "Podstawowe dane kontaktowe i podsumowanie zawodowe"
-    },
-    "experience": {
-      "title": "Doświadczenie zawodowe",
-      "description": "Dodaj swoje doświadczenie zawodowe (przeciągnij aby zmienić kolejność)",
-      "add": "Dodaj doświadczenie",
-      "empty": "Nie dodano jeszcze doświadczenia",
-      "emptyHint": "Kliknij \"Dodaj doświadczenie\", aby rozpocząć",
-      "item": "Doświadczenie {{number}}",
-      "bulletHint": "Punkty są dodawane automatycznie"
-    },
-    "education": {
-      "title": "Wykształcenie",
-      "description": "Dodaj swoje wykształcenie (przeciągnij aby zmienić kolejność)",
-      "add": "Dodaj wykształcenie",
-      "empty": "Nie dodano jeszcze wykształcenia",
-      "emptyHint": "Kliknij \"Dodaj wykształcenie\", aby rozpocząć",
-      "item": "Wykształcenie {{number}}"
-    },
-    "skills": {
-      "title": "Umiejętności",
-      "description": "Dodaj swoje umiejętności zawodowe (przeciągnij aby zmienić kolejność)",
-      "add": "Dodaj umiejętność",
-      "empty": "Nie dodano jeszcze umiejętności",
-      "emptyHint": "Kliknij \"Dodaj umiejętność\", aby rozpocząć"
-    },
-    "languages": {
-      "title": "Języki",
-      "description": "Dodaj języki, którymi się posługujesz (przeciągnij aby zmienić kolejność)",
-      "add": "Dodaj język",
-      "empty": "Nie dodano jeszcze języków",
-      "emptyHint": "Kliknij \"Dodaj język\", aby rozpocząć",
-      "item": "Język {{number}}"
-    },
-    "interests": {
-      "title": "Zainteresowania",
-      "description": "Dodaj swoje hobby i zainteresowania (przeciągnij aby zmienić kolejność)",
-      "add": "Dodaj zainteresowanie",
-      "empty": "Nie dodano jeszcze zainteresowań",
-      "emptyHint": "Kliknij \"Dodaj zainteresowanie\", aby rozpocząć"
-    },
-    "gdprConsent": {
-      "title": "Klauzula RODO",
-      "description": "Dodaj klauzulę zgody na przetwarzanie danych osobowych na dole CV",
-      "enable": "Dołącz klauzulę RODO do CV",
-      "companyName": "Nazwa firmy",
-      "companyNamePlaceholder": "Wpisz nazwę firmy",
-      "companyNameHint": "Pozostaw puste, aby użyć ogólnej klauzuli bez nazwy firmy"
-    }
-  },
-  "validation": {
-    "required": "{{field}} jest wymagane",
-    "invalidEmail": "Proszę wprowadzić poprawny adres e-mail",
-    "firstNameRequired": "Imię jest wymagane",
-    "lastNameRequired": "Nazwisko jest wymagane",
-    "emailRequired": "E-mail jest wymagany"
-  },
-  "dialogs": {
-    "reset": {
-      "title": "Resetuj dane CV",
-      "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Tej akcji nie można cofnąć, a wszystkie informacje zostaną trwale usunięte.",
-      "cancel": "Anuluj",
-      "confirm": "Resetuj wszystkie dane"
-    },
-    "pdfError": {
-      "title": "Nie można wczytać PDF",
-      "ok": "OK"
-    }
-  },
-  "preview": {
-    "title": "Podgląd Twojego CV",
-    "noData": "Nie znaleziono danych CV",
-    "noDataHint": "Proszę najpierw wypełnić formularz, aby zobaczyć podgląd CV.",
-    "startBuilding": "Zacznij tworzyć CV",
-    "multiPage": "Wiele stron",
-    "singlePage": "Jedna strona",
-    "downloadPdf": "Pobierz PDF",
-    "exporting": "Eksportowanie...",
-    "editCv": "Edytuj CV",
-    "success": {
-      "title": "Gratulacje! Twoje CV jest gotowe.",
-      "subtitle": "Możesz teraz pobrać jako PDF lub kontynuować edycję."
-    },
-    "contentWarning": {
-      "title": "Treść jest bardzo długa",
-      "subtitle": "Twoje CV zostało przeskalowane do minimum (50%). Rozważ skrócenie treści dla lepszej czytelności."
-    },
-    "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie."
-  },
-  "proficiency": {
-    "A1": "A1 - Początkujący",
-    "A2": "A2 - Podstawowy",
-    "B1": "B1 - Średniozaawansowany",
-    "B2": "B2 - Zaawansowany",
-    "C1": "C1 - Biegły",
-    "C2": "C2 - Biegły (native-like)",
-    "NATIVE": "Ojczysty"
-  },
-  "cv": {
-    "workExperience": "Doświadczenie zawodowe",
-    "education": "Wykształcenie",
-    "skills": "Umiejętności",
-    "languages": "Języki",
-    "interests": "Zainteresowania",
-    "techStack": "Technologie",
-    "professionalExperience": "Doświadczenie zawodowe",
-    "coreCompetencies": "Kluczowe kompetencje",
-    "educationTraining": "Wykształcenie i szkolenia",
-    "specialInterests": "Zainteresowania",
-    "present": "obecnie",
-    "gdprConsent": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji prowadzonego przez {{companyName}} zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).",
-    "gdprConsentGeneric": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w moim CV dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO)."
-  },
-  "language": {
-    "en": "English",
-    "pl": "Polski"
-  },
-  "months": {
-    "0": "Styczeń",
-    "1": "Luty",
-    "2": "Marzec",
-    "3": "Kwiecień",
-    "4": "Maj",
-    "5": "Czerwiec",
-    "6": "Lipiec",
-    "7": "Sierpień",
-    "8": "Wrzesień",
-    "9": "Październik",
-    "10": "Listopad",
-    "11": "Grudzień"
-  },
-  "monthsShort": {
-    "0": "Sty",
-    "1": "Lut",
-    "2": "Mar",
-    "3": "Kwi",
-    "4": "Maj",
-    "5": "Cze",
-    "6": "Lip",
-    "7": "Sie",
-    "8": "Wrz",
-    "9": "Paź",
-    "10": "Lis",
-    "11": "Gru"
-  },
-  "accessibility": {
-    "toggleLanguage": "Zmień język",
-    "toggleTheme": "Zmień motyw"
-  }
 }

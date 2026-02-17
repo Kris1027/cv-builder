@@ -2,30 +2,30 @@ import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 type FieldErrorProps = {
-  errors: ReadonlyArray<string | { message: string } | undefined>;
-  isTouched: boolean;
+    errors: ReadonlyArray<string | { message: string } | undefined>;
+    isTouched: boolean;
 };
 
 export const FieldError = ({ errors, isTouched }: FieldErrorProps) => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  const validErrors = errors.filter(
-    (err): err is string | { message: string } => err !== undefined,
-  );
+    const validErrors = errors.filter(
+        (err): err is string | { message: string } => err !== undefined,
+    );
 
-  if (!isTouched || validErrors.length === 0) return null;
+    if (!isTouched || validErrors.length === 0) return null;
 
-  const message = validErrors
-    .map((err) => {
-      const msg = typeof err === 'string' ? err : err.message;
-      return t(msg);
-    })
-    .join(', ');
+    const message = validErrors
+        .map((err) => {
+            const msg = typeof err === 'string' ? err : err.message;
+            return t(msg);
+        })
+        .join(', ');
 
-  return (
-    <p className="text-sm text-red-500 flex items-center gap-1">
-      <AlertCircle className="w-3 h-3" />
-      {message}
-    </p>
-  );
+    return (
+        <p className="flex items-center gap-1 text-sm text-red-500">
+            <AlertCircle className="h-3 w-3" />
+            {message}
+        </p>
+    );
 };

@@ -86,12 +86,12 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production (TypeScript check + Vite build) |
-| `pnpm preview` | Preview production build |
-| `pnpm lint` | Run ESLint |
+| Script         | Description                                          |
+| -------------- | ---------------------------------------------------- |
+| `pnpm dev`     | Start development server                             |
+| `pnpm build`   | Build for production (TypeScript check + Vite build) |
+| `pnpm preview` | Preview production build                             |
+| `pnpm lint`    | Run ESLint                                           |
 
 ## How It Works
 
@@ -102,11 +102,11 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## Templates
 
-| Template | Font | Color Scheme | Audience |
-|----------|------|--------------|----------|
-| Developer | JetBrains Mono | Purple/blue | Tech professionals |
-| Default | Montserrat | Gray | All industries |
-| Veterinary | Lato + Merriweather | Emerald/teal | Animal healthcare |
+| Template   | Font                | Color Scheme | Audience           |
+| ---------- | ------------------- | ------------ | ------------------ |
+| Developer  | JetBrains Mono      | Purple/blue  | Tech professionals |
+| Default    | Montserrat          | Gray         | All industries     |
+| Veterinary | Lato + Merriweather | Emerald/teal | Animal healthcare  |
 
 ## Project Structure
 
@@ -139,6 +139,7 @@ This project is provided for viewing and reference purposes only. No permission 
 For issues, questions, or suggestions, please [open an issue on GitHub](https://github.com/Kris1027/cv-builder/issues).
 
 <!-- Shields -->
+
 [stars-shield]: https://img.shields.io/github/stars/Kris1027/cv-builder.svg?style=for-the-badge
 [stars-url]: https://github.com/Kris1027/cv-builder/stargazers
 [forks-shield]: https://img.shields.io/github/forks/Kris1027/cv-builder.svg?style=for-the-badge
@@ -147,6 +148,7 @@ For issues, questions, or suggestions, please [open an issue on GitHub](https://
 [issues-url]: https://github.com/Kris1027/cv-builder/issues
 
 <!-- Tech Badges -->
+
 [React-badge]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://react.dev/
 [TypeScript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white

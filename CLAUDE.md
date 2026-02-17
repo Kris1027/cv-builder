@@ -46,13 +46,13 @@ src/
 
 ## Routes
 
-| Path | Description |
-|------|-------------|
-| `/` | Home page |
-| `/templates` | Template selection gallery |
+| Path                     | Description                 |
+| ------------------------ | --------------------------- |
+| `/`                      | Home page                   |
+| `/templates`             | Template selection gallery  |
 | `/templates/:templateId` | Individual template preview |
-| `/builder` | CV form builder |
-| `/preview` | CV preview with PDF export |
+| `/builder`               | CV form builder             |
+| `/preview`               | CV preview with PDF export  |
 
 ## Tech Stack
 
@@ -110,11 +110,11 @@ Form section components accept a `FormApi` type from `/src/types/form-component-
 
 Three templates, each in `/src/components/templates/`:
 
-| Template | Font | Color | Audience |
-|----------|------|-------|----------|
-| `developer` | JetBrains Mono | Purple/blue | Tech professionals |
-| `default` | Montserrat | Gray | All industries |
-| `veterinary` | Lato + Merriweather | Emerald/teal | Animal healthcare |
+| Template     | Font                | Color        | Audience           |
+| ------------ | ------------------- | ------------ | ------------------ |
+| `developer`  | JetBrains Mono      | Purple/blue  | Tech professionals |
+| `default`    | Montserrat          | Gray         | All industries     |
+| `veterinary` | Lato + Merriweather | Emerald/teal | Animal healthcare  |
 
 Google Fonts are imported in `/src/index.css`. Atkinson Hyperlegible is used for UI elements.
 
@@ -128,6 +128,7 @@ Google Fonts are imported in `/src/index.css`. Atkinson Hyperlegible is used for
 ### Template Detection (PDF Import)
 
 The PDF parser (`/src/lib/pdf-parser.ts`) detects templates by section markers:
+
 - Developer: `// WORK EXPERIENCE`, `// TECH STACK`
 - Default: `PROFESSIONAL EXPERIENCE`, `CORE COMPETENCIES`
 - Veterinary: `SPECIAL INTERESTS`
@@ -160,11 +161,11 @@ Uses the browser-native **View Transition API** via TanStack Router's `defaultVi
 
 - **Page transitions**: Crossfade + subtle slide between routes (200-250ms), configured via `::view-transition-old`/`::view-transition-new` pseudo-selectors in `/src/index.css`
 - **Entrance animations**: CSS `@keyframes` utility classes applied to page elements:
-  - `animate-fade-in-up` — slide up + fade (sections, cards, headings)
-  - `animate-fade-in-scale` — scale from 95% + fade (stats, preview)
-  - `animate-blur-in` — blur-to-sharp entrance (hero title)
-  - `animate-grow-width` — progress bar fill animation
-  - `animate-slide-in-left` / `animate-slide-in-right` — horizontal slides
+    - `animate-fade-in-up` — slide up + fade (sections, cards, headings)
+    - `animate-fade-in-scale` — scale from 95% + fade (stats, preview)
+    - `animate-blur-in` — blur-to-sharp entrance (hero title)
+    - `animate-grow-width` — progress bar fill animation
+    - `animate-slide-in-left` / `animate-slide-in-right` — horizontal slides
 - **Stagger delays**: `.delay-1` through `.delay-5` (100ms increments), or inline `animationDelay` style for 6+
 - **Micro-interactions**: `.hover-lift` class for button/card hover (scale + shadow)
 - **Accessibility**: All animations disabled when `prefers-reduced-motion: reduce` is set
