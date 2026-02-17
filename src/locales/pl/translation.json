@@ -9,12 +9,39 @@
             "title": "Stwórz idealne CV w",
             "titleHighlight": "kilka minut",
             "subtitle": "Twórz profesjonalne CV z naszym kreatorem. Wyróżnij się i zdobądź wymarzoną pracę.",
-            "cta": "Zacznij tworzyć CV"
+            "cta": "Zacznij tworzyć CV",
+            "ctaSecondary": "Przeglądaj szablony"
         },
         "features": {
             "noSignup": "Bez rejestracji",
             "free": "100% za darmo",
-            "exportPdf": "Eksport do PDF"
+            "exportPdf": "Eksport do PDF",
+            "title": "Wszystko czego potrzebujesz",
+            "subtitle": "Profesjonalne narzędzia do tworzenia wyróżniających się CV",
+            "templates": {
+                "title": "Profesjonalne szablony",
+                "desc": "Wybierz spośród starannie zaprojektowanych wzorów dla każdej branży"
+            },
+            "darkMode": {
+                "title": "Tryb ciemny",
+                "desc": "Pracuj komfortowo dniem i nocą z pełnym wsparciem motywów"
+            },
+            "pdf": {
+                "title": "Eksport PDF",
+                "desc": "Pobierz CV jako perfekcyjny PDF gotowy do wysłania"
+            },
+            "i18n": {
+                "title": "Wsparcie dwujęzyczne",
+                "desc": "Twórz CV po angielsku lub polsku jednym kliknięciem"
+            },
+            "autosave": {
+                "title": "Autozapis",
+                "desc": "Twój postęp jest automatycznie zapisywany — nigdy nie stracisz pracy"
+            },
+            "privacy": {
+                "title": "Prywatność przede wszystkim",
+                "desc": "Wszystkie dane zostają w Twojej przeglądarce — nic nie jest wysyłane na serwer"
+            }
         },
         "howItWorks": {
             "title": "Jak to działa",
@@ -26,6 +53,11 @@
             "step3Title": "Pobierz CV",
             "step3Desc": "Eksportuj jako PDF i zacznij aplikować"
         },
+        "templateShowcase": {
+            "title": "Wybierz swój styl",
+            "subtitle": "Trzy profesjonalnie zaprojektowane szablony dla różnych branż",
+            "cta": "Zobacz wszystkie szablony"
+        },
         "stats": {
             "avgTime": "5 min",
             "avgTimeLabel": "Średni czas",
@@ -33,6 +65,11 @@
             "freeForeverLabel": "Zawsze za darmo",
             "languages": "PL/EN",
             "languagesLabel": "Obsługa języków"
+        },
+        "cta": {
+            "title": "Gotowy na stworzenie CV?",
+            "subtitle": "Stwórz profesjonalne CV w kilka minut — całkowicie za darmo, bez rejestracji.",
+            "button": "Zacznij za darmo"
         }
     },
     "templates": {

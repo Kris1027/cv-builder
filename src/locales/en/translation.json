@@ -9,12 +9,39 @@
             "title": "Build Your Perfect CV in",
             "titleHighlight": "Minutes",
             "subtitle": "Create professional resumes with our CV builder. Stand out from the crowd and land your dream job.",
-            "cta": "Start Building Your CV"
+            "cta": "Start Building Your CV",
+            "ctaSecondary": "Browse Templates"
         },
         "features": {
             "noSignup": "No sign-up required",
             "free": "100% Free",
-            "exportPdf": "Export to PDF"
+            "exportPdf": "Export to PDF",
+            "title": "Everything you need",
+            "subtitle": "Professional tools to create standout resumes",
+            "templates": {
+                "title": "Professional Templates",
+                "desc": "Choose from carefully crafted designs for every industry"
+            },
+            "darkMode": {
+                "title": "Dark Mode",
+                "desc": "Work comfortably day or night with full theme support"
+            },
+            "pdf": {
+                "title": "PDF Export",
+                "desc": "Download your CV as a pixel-perfect PDF ready to send"
+            },
+            "i18n": {
+                "title": "Bilingual Support",
+                "desc": "Create your CV in English or Polish with one click"
+            },
+            "autosave": {
+                "title": "Auto-Save",
+                "desc": "Your progress is automatically saved — never lose your work"
+            },
+            "privacy": {
+                "title": "Privacy First",
+                "desc": "All data stays in your browser — nothing is sent to any server"
+            }
         },
         "howItWorks": {
             "title": "How it works",
@@ -26,6 +53,11 @@
             "step3Title": "Download your CV",
             "step3Desc": "Export as PDF and start applying to jobs"
         },
+        "templateShowcase": {
+            "title": "Choose Your Style",
+            "subtitle": "Three professionally designed templates for different industries",
+            "cta": "View All Templates"
+        },
         "stats": {
             "avgTime": "5 min",
             "avgTimeLabel": "Average time",
@@ -33,6 +65,11 @@
             "freeForeverLabel": "Free forever",
             "languages": "PL/EN",
             "languagesLabel": "Language support"
+        },
+        "cta": {
+            "title": "Ready to build your CV?",
+            "subtitle": "Create a professional resume in minutes — completely free, no sign-up required.",
+            "button": "Get Started — It's Free"
         }
     },
     "templates": {
