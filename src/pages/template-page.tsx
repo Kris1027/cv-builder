@@ -13,6 +13,18 @@ import { ArrowLeft, Edit } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useTranslation } from 'react-i18next';
+import { motion, useReducedMotion } from 'motion/react';
+import { useParallax } from '@/hooks/use-parallax';
+
+const fadeInScale = (delay: number, shouldReduceMotion: boolean | null) =>
+    shouldReduceMotion
+        ? {}
+        : {
+              initial: { opacity: 0, scale: 0.95 } as const,
+              whileInView: { opacity: 1, scale: 1 } as const,
+              viewport: { once: true } as const,
+              transition: { duration: 0.5, delay, ease: 'easeOut' } as const,
+          };
 
 const GeometricShapes = () => (
     <div className='pointer-events-none absolute inset-0 overflow-hidden' aria-hidden='true'>
@@ -32,6 +44,11 @@ export function TemplatePage() {
     const { t, i18n } = useTranslation();
     const { templateId } = useParams({ from: '/templates_/$templateId' });
     const isPolish = i18n.language === 'pl';
+    const shouldReduceMotion = useReducedMotion();
+
+    const bgGradient = useParallax({ yRange: 30 });
+    const bgDots = useParallax({ yRange: 15 });
+    const bgShapes = useParallax({ yRange: 40 });
 
     const getTemplateName = () => {
         switch (templateId) {
@@ -87,18 +104,27 @@ export function TemplatePage() {
     return (
         <div className='relative min-h-screen overflow-hidden'>
             {/* Background gradient mesh */}
-            <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
+            <motion.div
+                ref={bgGradient.ref}
+                style={{ y: bgGradient.y }}
+                className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80'
+            />
 
             {/* Dot grid pattern */}
-            <div
-                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+            <motion.div
+                ref={bgDots.ref}
                 style={{
+                    y: bgDots.y,
                     backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
                 }}
+                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                aria-hidden='true'
             />
 
-            <GeometricShapes />
+            <motion.div ref={bgShapes.ref} style={{ y: bgShapes.y }}>
+                <GeometricShapes />
+            </motion.div>
 
             {/* Navigation Bar */}
             <div className='sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80'>
@@ -137,9 +163,12 @@ export function TemplatePage() {
             {/* Template Preview */}
             <div className='relative z-[1]'>
                 <div className='py-8'>
-                    <div className='animate-fade-in-scale mx-auto max-w-[210mm] overflow-hidden bg-white text-gray-900 shadow-xl delay-1'>
+                    <motion.div
+                        className='mx-auto max-w-[210mm] overflow-hidden bg-white text-gray-900 shadow-xl'
+                        {...fadeInScale(0.1, shouldReduceMotion)}
+                    >
                         {renderTemplate()}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>
