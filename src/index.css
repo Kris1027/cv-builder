@@ -129,38 +129,6 @@
     }
 }
 
-/* ===== View Transition API ===== */
-
-::view-transition-old(root) {
-    animation: vt-fade-out 200ms ease-out;
-}
-
-::view-transition-new(root) {
-    animation: vt-fade-in 250ms ease-in;
-}
-
-@keyframes vt-fade-out {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes vt-fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* ===== Keyframe Animations ===== */
 
 @keyframes fade-in-up {
@@ -375,8 +343,6 @@
 /* ===== Reduced Motion ===== */
 
 @media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root),
-    ::view-transition-new(root),
     .animate-fade-in-up,
     .animate-fade-in-scale,
     .animate-slide-in-left,

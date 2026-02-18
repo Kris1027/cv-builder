@@ -40,7 +40,7 @@ export const TemplateCardPreview = ({ children }: TemplateCardPreviewProps) => {
                 </div>
             )}
             {/* Bottom fade to hide the hard clip edge */}
-            <div className='absolute right-0 bottom-0 left-0 h-1/4 bg-gradient-to-t from-slate-100 to-transparent dark:from-slate-900/80' />
+            <div className='absolute right-0 bottom-0 left-0 h-1/4 bg-gradient-to-t from-slate-100 via-slate-100/80 to-transparent dark:from-slate-900/90 dark:via-slate-900/60' />
         </div>
     );
 };

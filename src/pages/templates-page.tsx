@@ -28,6 +28,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { motion, useReducedMotion } from 'motion/react';
+import { useParallax } from '@/hooks/use-parallax';
+import { GeometricShapes } from '@/components/geometric-shapes';
+import { fadeInUp } from '@/lib/animation-variants';
 
 const templates = [
     {
@@ -56,25 +60,16 @@ const templates = [
     },
 ];
 
-const GeometricShapes = () => (
-    <div className='pointer-events-none absolute inset-0 overflow-hidden' aria-hidden='true'>
-        <div className='animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10' />
-        <div className='animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10' />
-        <div className='absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10'>
-            {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className='h-1.5 w-1.5 rounded-full bg-indigo-500' />
-            ))}
-        </div>
-        <div className='animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent' />
-        <div className='animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10' />
-    </div>
-);
-
 export function TemplatesPage() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const shouldReduceMotion = useReducedMotion();
     const [hasSavedData, setHasSavedData] = useState(false);
     const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+    const bgGradient = useParallax({ yRange: 30 });
+    const bgDots = useParallax({ yRange: 15 });
+    const bgShapes = useParallax({ yRange: 40 });
 
     useEffect(() => {
         const savedData = localStorage.getItem('cvData');
@@ -122,18 +117,27 @@ export function TemplatesPage() {
     return (
         <div className='relative min-h-screen overflow-hidden'>
             {/* Background gradient mesh */}
-            <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
+            <motion.div
+                ref={bgGradient.ref}
+                style={{ y: bgGradient.y }}
+                className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80'
+            />
 
             {/* Dot grid pattern */}
-            <div
-                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+            <motion.div
+                ref={bgDots.ref}
                 style={{
+                    y: bgDots.y,
                     backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
                 }}
+                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                aria-hidden='true'
             />
 
-            <GeometricShapes />
+            <motion.div ref={bgShapes.ref} style={{ y: bgShapes.y }}>
+                <GeometricShapes />
+            </motion.div>
 
             {/* Navigation Bar */}
             <div className='sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80'>
@@ -175,7 +179,10 @@ export function TemplatesPage() {
 
                 {/* Saved Data Info */}
                 {hasSavedData && (
-                    <div className='animate-fade-in-up mx-auto mb-10 max-w-3xl delay-1'>
+                    <motion.div
+                        className='mx-auto mb-10 max-w-3xl'
+                        {...fadeInUp(0, shouldReduceMotion)}
+                    >
                         <div className='rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'>
                             <div className='flex items-center justify-between'>
                                 <div className='flex items-center gap-3'>
@@ -235,16 +242,16 @@ export function TemplatesPage() {
                                 </AlertDialog>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
 
                 {/* Template Cards Grid */}
                 <div className='mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
                     {templates.map((template, index) => (
-                        <div
+                        <motion.div
                             key={template.id}
-                            className={`animate-fade-in-up group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/10 dark:border-white/5 dark:bg-white/[0.03] dark:hover:border-indigo-500/20 dark:hover:shadow-indigo-500/5 delay-${index + 1}`}
-                            style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                            className='group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/10 dark:border-white/5 dark:bg-white/[0.03] dark:hover:border-indigo-500/20 dark:hover:shadow-indigo-500/5'
+                            {...fadeInUp(index * 0.1, shouldReduceMotion)}
                         >
                             {/* Hover gradient glow */}
                             <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-50/0 to-violet-50/0 transition-colors duration-300 group-hover:from-indigo-50/50 group-hover:to-violet-50/30 dark:group-hover:from-indigo-500/5 dark:group-hover:to-violet-500/5' />
@@ -348,7 +355,7 @@ export function TemplatesPage() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

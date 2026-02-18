@@ -27,7 +27,7 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - **3 Professional Templates** — Developer, Default, and Veterinary with unique fonts, colors, and layouts
 - **Bilingual (PL/EN)** — Full Polish and English language support with one-click toggle
 - **Dark Mode** — Light, Dark, and System theme options
-- **Smooth Animations** — Browser-native View Transition API for page transitions + CSS entrance animations
+- **Smooth Animations** — Scroll-linked parallax on decorative layers + scroll-triggered entrance animations via Motion (Framer Motion)
 - **PDF Export & Import** — Download your CV as PDF, or import a previously exported PDF to continue editing
 - **GDPR Consent Clause** — Optional GDPR/RODO consent text with or without a company name
 - **Drag & Drop Reordering** — Reorder experience, education, skills, languages, and interests sections
@@ -66,6 +66,7 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - [react-i18next](https://react.i18next.com/) — Internationalization (PL + EN)
 - [pdfjs-dist](https://mozilla.github.io/pdf.js/) — PDF parsing for import
 - [html2canvas](https://html2canvas.hertzen.com/) + [jsPDF](https://rawgit.com/MrRio/jsPDF/master/docs/index.html) — PDF export
+- [Motion](https://motion.dev/) — Scroll-linked parallax and whileInView entrance animations
 - [date-fns](https://date-fns.org/) — Date utilities
 - [DOMPurify](https://github.com/cure53/DOMPurify) — HTML sanitization
 
@@ -124,7 +125,7 @@ src/
 │   └── ui/                # Reusable UI components (shadcn/ui)
 ├── contexts/              # React Context providers (theme)
 ├── data/                  # Sample data and CV data types
-├── hooks/                 # Custom hooks (use-theme)
+├── hooks/                 # Custom hooks (use-theme, use-parallax)
 ├── i18n/                  # i18n configuration
 ├── lib/                   # Utilities (pdf-parser, pdf-export, helpers)
 ├── locales/               # Translation files (en/, pl/)

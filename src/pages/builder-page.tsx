@@ -44,6 +44,9 @@ import { useState, useRef, useEffect } from 'react';
 import { loadCVFromPDF } from '@/lib/pdf-parser';
 import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { motion, useReducedMotion } from 'motion/react';
+import { useParallax } from '@/hooks/use-parallax';
+import { fadeInUp } from '@/lib/animation-variants';
 
 interface BuilderPageProps {
     templateId?: string;
@@ -53,6 +56,12 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const search = useSearch({ from: '/builder' }) as { templateId?: string };
+    const shouldReduceMotion = useReducedMotion();
+
+    const bgGradient = useParallax({ yRange: 30 });
+    const bgDots = useParallax({ yRange: 15 });
+    const bgShapes = useParallax({ yRange: 40 });
+
     const [isSaving, setIsSaving] = useState(false);
     const [lastSaved, setLastSaved] = useState<Date | null>(null);
     const [isLoadingPDF, setIsLoadingPDF] = useState(false);
@@ -392,19 +401,28 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     return (
         <div className='relative min-h-screen overflow-hidden'>
             {/* Background gradient mesh */}
-            <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
+            <motion.div
+                ref={bgGradient.ref}
+                style={{ y: bgGradient.y }}
+                className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80'
+            />
 
             {/* Dot grid pattern */}
-            <div
-                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+            <motion.div
+                ref={bgDots.ref}
                 style={{
+                    y: bgDots.y,
                     backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
                 }}
+                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                aria-hidden='true'
             />
 
             {/* Geometric shapes */}
-            <div
+            <motion.div
+                ref={bgShapes.ref}
+                style={{ y: bgShapes.y }}
                 className='pointer-events-none absolute inset-0 overflow-hidden'
                 aria-hidden='true'
             >
@@ -417,7 +435,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 </div>
                 <div className='animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent' />
                 <div className='animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10' />
-            </div>
+            </motion.div>
 
             {/* Navigation Bar */}
             <div className='sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80'>
@@ -557,7 +575,10 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
             <div className='relative z-[1] container mx-auto max-w-5xl px-4 py-8'>
                 {/* Progress Indicator */}
-                <div className='animate-fade-in-up mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'>
+                <motion.div
+                    className='mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'
+                    {...fadeInUp(0, shouldReduceMotion)}
+                >
                     <div className='mb-3 flex items-center justify-between'>
                         <div className='flex items-center gap-3'>
                             <div
@@ -585,7 +606,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                             ? t('builder.progress.complete')
                             : t('builder.progress.incomplete')}
                     </div>
-                </div>
+                </motion.div>
 
                 <form
                     onSubmit={(e) => {
@@ -596,67 +617,70 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     className='space-y-8'
                 >
                     {/* Personal Information Section */}
-                    <div className='animate-fade-in-up delay-1'>
+                    <motion.div {...fadeInUp(0, shouldReduceMotion)}>
                         <PersonalInfoSection form={form} />
-                    </div>
+                    </motion.div>
 
                     {/* Work Experience Section */}
-                    <div className='animate-fade-in-up delay-2'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <ExperienceSection
                             form={form}
                             addExperience={addExperience}
                             removeExperience={removeExperience}
                             reorderExperiences={reorderExperiences}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Education Section */}
-                    <div className='animate-fade-in-up delay-3'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <EducationSection
                             form={form}
                             addEducation={addEducation}
                             removeEducation={removeEducation}
                             reorderEducation={reorderEducation}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Skills Section */}
-                    <div className='animate-fade-in-up delay-4'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <SkillsSection
                             form={form}
                             addSkill={addSkill}
                             removeSkill={removeSkill}
                             reorderSkills={reorderSkills}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Languages Section */}
-                    <div className='animate-fade-in-up delay-5'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <LanguagesSection
                             form={form}
                             addLanguage={addLanguage}
                             removeLanguage={removeLanguage}
                             reorderLanguages={reorderLanguages}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Interests Section */}
-                    <div className='animate-fade-in-up delay-6'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <InterestsSection
                             form={form}
                             addInterest={addInterest}
                             removeInterest={removeInterest}
                             reorderInterests={reorderInterests}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* GDPR Consent Section */}
-                    <div className='animate-fade-in-up delay-7'>
+                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
                         <GdprConsentSection form={form} />
-                    </div>
+                    </motion.div>
 
                     {/* Submit Button */}
-                    <div className='animate-fade-in-up flex items-center justify-between pt-6 delay-8'>
+                    <motion.div
+                        className='flex items-center justify-between pt-6'
+                        {...fadeInUp(0.05, shouldReduceMotion)}
+                    >
                         <form.Subscribe
                             selector={(state) => [
                                 state.canSubmit,
@@ -685,7 +709,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                 </>
                             )}
                         />
-                    </div>
+                    </motion.div>
                 </form>
             </div>
         </div>

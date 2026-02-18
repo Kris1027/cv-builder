@@ -16,6 +16,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { LanguageToggle } from '@/components/language-toggle';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { motion, useReducedMotion } from 'motion/react';
+import { useParallax } from '@/hooks/use-parallax';
+import { GeometricShapes } from '@/components/geometric-shapes';
+import { fadeInUp, fadeInScale } from '@/lib/animation-variants';
 
 const FloatingCvMockup = () => (
     <div className='animate-float relative' aria-hidden='true'>
@@ -50,27 +54,22 @@ const FloatingCvMockup = () => (
     </div>
 );
 
-const GeometricShapes = () => (
-    <div className='pointer-events-none absolute inset-0 overflow-hidden' aria-hidden='true'>
-        {/* Top-left triangle */}
-        <div className='animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10' />
-        {/* Top-right circle */}
-        <div className='animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10' />
-        {/* Bottom-left dot cluster */}
-        <div className='absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10'>
-            {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className='h-1.5 w-1.5 rounded-full bg-indigo-500' />
-            ))}
-        </div>
-        {/* Mid-right line */}
-        <div className='animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent' />
-        {/* Bottom-right square */}
-        <div className='animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10' />
-    </div>
-);
-
 export const IndexPage = () => {
     const { t } = useTranslation();
+    const shouldReduceMotion = useReducedMotion();
+
+    // Parallax for hero decorative layers
+    const heroGradient = useParallax({ yRange: 30 });
+    const heroDots = useParallax({ yRange: 15 });
+    const heroShapes = useParallax({ yRange: 40 });
+    const heroMockup = useParallax({ yRange: 20 });
+
+    // Parallax for how-it-works background
+    const howItWorksDots = useParallax({ yRange: 10 });
+
+    // Parallax for CTA decorative circles
+    const ctaCircleLeft = useParallax({ yRange: 25 });
+    const ctaCircleRight = useParallax({ yRange: -25 });
 
     return (
         <div className='min-h-screen overflow-hidden'>
@@ -83,19 +82,28 @@ export const IndexPage = () => {
             {/* ===== HERO SECTION ===== */}
             <section className='relative min-h-[90vh] overflow-hidden'>
                 {/* Background gradient mesh */}
-                <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
+                <motion.div
+                    ref={heroGradient.ref}
+                    style={{ y: heroGradient.y }}
+                    className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80'
+                />
 
                 {/* Dot grid pattern */}
-                <div
-                    className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                <motion.div
+                    ref={heroDots.ref}
                     style={{
+                        y: heroDots.y,
                         backgroundImage:
                             'radial-gradient(circle, currentColor 1px, transparent 1px)',
                         backgroundSize: '24px 24px',
                     }}
+                    className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                    aria-hidden='true'
                 />
 
-                <GeometricShapes />
+                <motion.div ref={heroShapes.ref} style={{ y: heroShapes.y }}>
+                    <GeometricShapes />
+                </motion.div>
 
                 <div className='relative z-10 container mx-auto flex min-h-[90vh] items-center px-4 py-20'>
                     <div className='grid w-full items-center gap-12 lg:grid-cols-2 lg:gap-16'>
@@ -141,9 +149,13 @@ export const IndexPage = () => {
                         </div>
 
                         {/* Right: Floating CV Mockup */}
-                        <div className='animate-fade-in-scale hidden justify-center delay-3 lg:flex'>
+                        <motion.div
+                            ref={heroMockup.ref}
+                            style={{ y: heroMockup.y }}
+                            className='hidden justify-center lg:flex'
+                        >
                             <FloatingCvMockup />
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
 
@@ -154,14 +166,17 @@ export const IndexPage = () => {
             {/* ===== FEATURES SECTION ===== */}
             <section className='relative bg-white py-24 dark:bg-slate-950'>
                 <div className='container mx-auto px-4'>
-                    <div className='animate-fade-in-up mx-auto mb-16 max-w-2xl text-center'>
+                    <motion.div
+                        className='mx-auto mb-16 max-w-2xl text-center'
+                        {...fadeInUp(0, shouldReduceMotion)}
+                    >
                         <h2 className='font-display mb-4 text-3xl font-bold tracking-tight sm:text-4xl'>
                             {t('home.features.title')}
                         </h2>
                         <p className='text-muted-foreground text-lg'>
                             {t('home.features.subtitle')}
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className='mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                         {(
@@ -198,9 +213,10 @@ export const IndexPage = () => {
                                 },
                             ] as const
                         ).map(({ icon: Icon, key, gradient }, i) => (
-                            <div
+                            <motion.div
                                 key={key}
-                                className={`animate-fade-in-up group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-white/5 dark:bg-white/[0.03] dark:hover:border-indigo-500/20 dark:hover:shadow-indigo-500/5 delay-${i + 1}`}
+                                className='group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-white/5 dark:bg-white/[0.03] dark:hover:border-indigo-500/20 dark:hover:shadow-indigo-500/5'
+                                {...fadeInUp(i * 0.1, shouldReduceMotion)}
                             >
                                 {/* Hover gradient glow */}
                                 <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-50/0 to-violet-50/0 transition-colors duration-300 group-hover:from-indigo-50/50 group-hover:to-violet-50/30 dark:group-hover:from-indigo-500/5 dark:group-hover:to-violet-500/5' />
@@ -217,7 +233,7 @@ export const IndexPage = () => {
                                         {t(`home.features.${key}.desc`)}
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -226,24 +242,30 @@ export const IndexPage = () => {
             {/* ===== HOW IT WORKS SECTION ===== */}
             <section className='relative overflow-hidden bg-slate-50/50 py-24 dark:bg-slate-900/50'>
                 {/* Subtle background texture */}
-                <div
-                    className='absolute inset-0 opacity-[0.015] dark:opacity-[0.03]'
+                <motion.div
+                    ref={howItWorksDots.ref}
                     style={{
+                        y: howItWorksDots.y,
                         backgroundImage:
                             'radial-gradient(circle, currentColor 1px, transparent 1px)',
                         backgroundSize: '32px 32px',
                     }}
+                    className='absolute inset-0 opacity-[0.015] dark:opacity-[0.03]'
+                    aria-hidden='true'
                 />
 
                 <div className='relative container mx-auto px-4'>
-                    <div className='animate-fade-in-up mx-auto mb-20 max-w-2xl text-center'>
+                    <motion.div
+                        className='mx-auto mb-20 max-w-2xl text-center'
+                        {...fadeInUp(0, shouldReduceMotion)}
+                    >
                         <h2 className='font-display mb-4 text-3xl font-bold tracking-tight sm:text-4xl'>
                             {t('home.howItWorks.title')}
                         </h2>
                         <p className='text-muted-foreground text-lg'>
                             {t('home.howItWorks.subtitle')}
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className='mx-auto max-w-4xl'>
                         <div className='relative grid gap-8 md:grid-cols-3 md:gap-12'>
@@ -275,9 +297,10 @@ export const IndexPage = () => {
                                     },
                                 ] as const
                             ).map(({ icon: Icon, step, titleKey, descKey, gradient }, i) => (
-                                <div
+                                <motion.div
                                     key={step}
-                                    className={`animate-fade-in-up text-center delay-${i + 1}`}
+                                    className='text-center'
+                                    {...fadeInUp(i * 0.15, shouldReduceMotion)}
                                 >
                                     {/* Step circle with icon */}
                                     <div className='relative mx-auto mb-6'>
@@ -297,7 +320,7 @@ export const IndexPage = () => {
                                     <p className='text-muted-foreground mx-auto max-w-xs text-sm leading-relaxed'>
                                         {t(`home.howItWorks.${descKey}`)}
                                     </p>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </div>
@@ -327,7 +350,7 @@ export const IndexPage = () => {
                                 },
                             ] as const
                         ).map(({ value, label, gradient }, i) => (
-                            <div key={value} className={`animate-fade-in-scale delay-${i + 1}`}>
+                            <motion.div key={value} {...fadeInScale(i * 0.1, shouldReduceMotion)}>
                                 <p
                                     className={`font-display mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl`}
                                 >
@@ -336,7 +359,7 @@ export const IndexPage = () => {
                                 <p className='text-muted-foreground text-sm font-medium tracking-wider uppercase'>
                                     {t(label)}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -348,12 +371,20 @@ export const IndexPage = () => {
                 <div className='absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-indigo-950/30 dark:via-slate-950 dark:to-violet-950/20' />
                 {/* Decorative shapes */}
                 <div className='pointer-events-none absolute inset-0' aria-hidden='true'>
-                    <div className='animate-float absolute top-12 left-[10%] h-32 w-32 rounded-full bg-indigo-500/5 blur-2xl dark:bg-indigo-500/10' />
-                    <div className='animate-float-reverse absolute right-[10%] bottom-12 h-40 w-40 rounded-full bg-violet-500/5 blur-2xl dark:bg-violet-500/10' />
+                    <motion.div
+                        ref={ctaCircleLeft.ref}
+                        style={{ y: ctaCircleLeft.y }}
+                        className='animate-float absolute top-12 left-[10%] h-32 w-32 rounded-full bg-indigo-500/5 blur-2xl dark:bg-indigo-500/10'
+                    />
+                    <motion.div
+                        ref={ctaCircleRight.ref}
+                        style={{ y: ctaCircleRight.y }}
+                        className='animate-float-reverse absolute right-[10%] bottom-12 h-40 w-40 rounded-full bg-violet-500/5 blur-2xl dark:bg-violet-500/10'
+                    />
                 </div>
 
                 <div className='relative container mx-auto px-4 text-center'>
-                    <div className='animate-fade-in-up mx-auto max-w-2xl'>
+                    <motion.div className='mx-auto max-w-2xl' {...fadeInUp(0, shouldReduceMotion)}>
                         <h2 className='font-display mb-6 text-4xl font-bold tracking-tight sm:text-5xl'>
                             {t('home.cta.title')}
                         </h2>
@@ -370,7 +401,7 @@ export const IndexPage = () => {
                                 <ArrowRight className='ml-2 h-5 w-5 transition-transform group-hover:translate-x-1' />
                             </Link>
                         </Button>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         </div>

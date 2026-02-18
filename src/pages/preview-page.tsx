@@ -20,11 +20,20 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { exportToPDF, generateCVFilename } from '@/lib/pdf-export';
 import { useTranslation } from 'react-i18next';
+import { motion, useReducedMotion } from 'motion/react';
+import { useParallax } from '@/hooks/use-parallax';
+import { fadeInUp, fadeInScale } from '@/lib/animation-variants';
 
 export function PreviewPage() {
     const { t } = useTranslation();
     const search = useSearch({ from: '/preview' }) as { templateId?: string };
     const templateId = search.templateId || 'developer';
+    const shouldReduceMotion = useReducedMotion();
+
+    const bgGradient = useParallax({ yRange: 30 });
+    const bgDots = useParallax({ yRange: 15 });
+    const bgShapes = useParallax({ yRange: 40 });
+
     const [cvData, setCvData] = useState<CVData | null>(null);
     const [isExporting, setIsExporting] = useState(false);
     const [singlePageMode, setSinglePageMode] = useState(false);
@@ -147,19 +156,28 @@ export function PreviewPage() {
     return (
         <div className='relative min-h-screen overflow-hidden'>
             {/* Background gradient mesh */}
-            <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
+            <motion.div
+                ref={bgGradient.ref}
+                style={{ y: bgGradient.y }}
+                className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80'
+            />
 
             {/* Dot grid pattern */}
-            <div
-                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+            <motion.div
+                ref={bgDots.ref}
                 style={{
+                    y: bgDots.y,
                     backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
                 }}
+                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
+                aria-hidden='true'
             />
 
             {/* Geometric shapes */}
-            <div
+            <motion.div
+                ref={bgShapes.ref}
+                style={{ y: bgShapes.y }}
                 className='pointer-events-none absolute inset-0 overflow-hidden print:hidden'
                 aria-hidden='true'
             >
@@ -172,7 +190,7 @@ export function PreviewPage() {
                 </div>
                 <div className='animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent' />
                 <div className='animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10' />
-            </div>
+            </motion.div>
 
             {/* Actions Bar */}
             <div className='sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80 print:hidden'>
@@ -254,7 +272,10 @@ export function PreviewPage() {
             <div className='relative z-[1]'>
                 {/* Success Message */}
                 <div className='container mx-auto px-4 py-4 print:hidden'>
-                    <div className='animate-fade-in-up rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'>
+                    <motion.div
+                        className='rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'
+                        {...fadeInUp(0, shouldReduceMotion)}
+                    >
                         <div className='flex items-center gap-3'>
                             <div
                                 className='inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 p-2.5 text-white shadow-lg'
@@ -271,13 +292,16 @@ export function PreviewPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Warning for minimum scale */}
                 {singlePageMode && scaleInfo.atMinScale && (
                     <div className='container mx-auto px-4 print:hidden'>
-                        <div className='animate-fade-in-up mb-4 rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'>
+                        <motion.div
+                            className='mb-4 rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'
+                            {...fadeInUp(0, shouldReduceMotion)}
+                        >
                             <div className='flex items-center gap-3'>
                                 <div
                                     className='inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white shadow-lg'
@@ -294,7 +318,7 @@ export function PreviewPage() {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 )}
 
@@ -305,14 +329,15 @@ export function PreviewPage() {
                         onScaleChange={handleScaleChange}
                         className='mx-auto max-w-[210mm]'
                     >
-                        <div
+                        <motion.div
                             id='cv-content'
-                            className='animate-fade-in-scale overflow-hidden bg-white text-gray-900 shadow-xl delay-1'
+                            className='overflow-hidden bg-white text-gray-900 shadow-xl'
+                            {...fadeInScale(0.1, shouldReduceMotion)}
                         >
                             {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
                             {templateId === 'default' && <DefaultTemplate data={cvData} />}
                             {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
-                        </div>
+                        </motion.div>
                     </ScaleToFitContainer>
                 </div>
             </div>
