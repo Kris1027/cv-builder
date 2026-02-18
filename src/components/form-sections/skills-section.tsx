@@ -55,22 +55,22 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
             className={`group flex items-center gap-1 rounded-full border border-slate-200/60 bg-white/60 px-3 py-1.5 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/10 dark:bg-white/[0.05] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
             <button
-                type="button"
-                className="cursor-grab touch-none rounded p-0.5 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
+                type='button'
+                className='cursor-grab touch-none rounded p-0.5 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
                 {...attributes}
                 {...listeners}
             >
-                <GripVertical className="h-3 w-3 text-slate-400" />
+                <GripVertical className='h-3 w-3 text-slate-400' />
             </button>
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            <span className='text-sm font-medium text-slate-700 dark:text-slate-300'>
                 {skill.name}
             </span>
             <button
-                type="button"
+                type='button'
                 onClick={() => removeSkill(index)}
-                className="opacity-0 transition-opacity group-hover:opacity-100"
+                className='opacity-0 transition-opacity group-hover:opacity-100'
             >
-                <X className="h-3 w-3 text-slate-400 hover:text-red-500" />
+                <X className='h-3 w-3 text-slate-400 hover:text-red-500' />
             </button>
         </div>
     );
@@ -125,12 +125,12 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
     return (
         <FormSectionCard
             icon={Code}
-            iconGradient="from-amber-500 to-orange-600"
+            iconGradient='from-amber-500 to-orange-600'
             title={t('sections.skills.title')}
             description={t('sections.skills.description')}
         >
-            <div className="space-y-4">
-                <div className="flex gap-2">
+            <div className='space-y-4'>
+                <div className='flex gap-2'>
                     <Input
                         placeholder={t('placeholders.skill')}
                         value={skillInput}
@@ -138,30 +138,30 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
                         onKeyPress={handleKeyPress}
                     />
                     <Button
-                        type="button"
+                        type='button'
                         onClick={handleAddSkill}
                         disabled={!skillInput.trim()}
-                        className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700"
+                        className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700'
                     >
-                        <Plus className="mr-2 h-4 w-4" />
+                        <Plus className='mr-2 h-4 w-4' />
                         {t('sections.skills.add')}
                     </Button>
                 </div>
 
-                <form.Field name="skills">
+                <form.Field name='skills'>
                     {(field) => {
                         const skillItems = field.state.value as SkillProps[];
                         return (
                             <div>
                                 {skillItems.length === 0 ? (
-                                    <div className="py-8 text-center">
-                                        <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white/60 shadow-inner">
-                                            <Code className="h-6 w-6" />
+                                    <div className='py-8 text-center'>
+                                        <div className='mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white/60 shadow-inner'>
+                                            <Code className='h-6 w-6' />
                                         </div>
-                                        <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                        <p className='font-display font-medium text-slate-500 dark:text-slate-400'>
                                             {t('sections.skills.empty')}
                                         </p>
-                                        <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                        <p className='mt-1 text-sm text-slate-400 dark:text-slate-500'>
                                             {t('sections.skills.emptyHint')}
                                         </p>
                                     </div>
@@ -177,7 +177,7 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
                                             )}
                                             strategy={horizontalListSortingStrategy}
                                         >
-                                            <div className="flex flex-wrap gap-2">
+                                            <div className='flex flex-wrap gap-2'>
                                                 {skillItems.map(
                                                     (skill: SkillProps, index: number) => (
                                                         <SortableSkillItem

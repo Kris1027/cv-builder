@@ -63,35 +63,35 @@ const SortableEducationItem = ({
             style={style}
             className={`space-y-4 rounded-xl border border-slate-200/60 bg-white/40 p-6 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/5 dark:bg-white/[0.02] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
-            <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+            <div className='mb-4 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
                     <button
-                        type="button"
-                        className="cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
+                        type='button'
+                        className='cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
                         {...attributes}
                         {...listeners}
                     >
-                        <GripVertical className="h-5 w-5 text-slate-400" />
+                        <GripVertical className='h-5 w-5 text-slate-400' />
                     </button>
-                    <h4 className="font-display text-lg font-semibold text-slate-700 dark:text-slate-300">
+                    <h4 className='font-display text-lg font-semibold text-slate-700 dark:text-slate-300'>
                         {t('sections.education.item', { number: index + 1 })}
                     </h4>
                 </div>
                 <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
+                    type='button'
+                    variant='ghost'
+                    size='sm'
                     onClick={() => removeEducation(index)}
-                    className="text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400"
+                    className='text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400'
                 >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className='h-4 w-4' />
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <form.Field name={`education[${index}].institution`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.institution')}</Label>
                             <Input
                                 id={subField.name}
@@ -107,7 +107,7 @@ const SortableEducationItem = ({
 
                 <form.Field name={`education[${index}].degree`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.degree')}</Label>
                             <Input
                                 id={subField.name}
@@ -123,7 +123,7 @@ const SortableEducationItem = ({
 
                 <form.Field name={`education[${index}].field`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.field')}</Label>
                             <Input
                                 id={subField.name}
@@ -137,10 +137,10 @@ const SortableEducationItem = ({
                     )}
                 </form.Field>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className='grid grid-cols-2 gap-2'>
                     <form.Field name={`education[${index}].startDate`}>
                         {(subField) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={subField.name}>{t('form.startDate')}</Label>
                                 <DatePicker
                                     id={subField.name}
@@ -150,7 +150,7 @@ const SortableEducationItem = ({
                                         subField.handleChange(date ? date.toISOString() : '')
                                     }
                                     yearOnly
-                                    placeholder="Select year"
+                                    placeholder='Select year'
                                 />
                             </div>
                         )}
@@ -158,7 +158,7 @@ const SortableEducationItem = ({
 
                     <form.Field name={`education[${index}].endDate`}>
                         {(subField) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={subField.name}>{t('form.endDate')}</Label>
                                 <DatePicker
                                     id={subField.name}
@@ -168,7 +168,7 @@ const SortableEducationItem = ({
                                         subField.handleChange(date ? date.toISOString() : '')
                                     }
                                     yearOnly
-                                    placeholder="Select year"
+                                    placeholder='Select year'
                                 />
                             </div>
                         )}
@@ -178,7 +178,7 @@ const SortableEducationItem = ({
 
             <form.Field name={`education[${index}].description`}>
                 {(subField) => (
-                    <div className="space-y-2">
+                    <div className='space-y-2'>
                         <Label htmlFor={subField.name}>{t('form.description')}</Label>
                         <Textarea
                             id={subField.name}
@@ -186,8 +186,8 @@ const SortableEducationItem = ({
                             value={subField.state.value as string}
                             onBlur={subField.handleBlur}
                             onChange={(e) => subField.handleChange(e.target.value)}
-                            placeholder="GPA, relevant coursework, achievements..."
-                            className="min-h-[100px] resize-none"
+                            placeholder='GPA, relevant coursework, achievements...'
+                            className='min-h-[100px] resize-none'
                         />
                     </div>
                 )}
@@ -231,34 +231,34 @@ export const EducationSection = ({
     return (
         <FormSectionCard
             icon={GraduationCap}
-            iconGradient="from-violet-500 to-purple-600"
+            iconGradient='from-violet-500 to-purple-600'
             title={t('sections.education.title')}
             description={t('sections.education.description')}
             headerAction={
                 <Button
-                    type="button"
+                    type='button'
                     onClick={addEducation}
-                    className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg"
+                    className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg'
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className='mr-2 h-4 w-4' />
                     {t('sections.education.add')}
                 </Button>
             }
         >
-            <form.Field name="education">
+            <form.Field name='education'>
                 {(field) => {
                     const educationItems = field.state.value as EducationProps[];
                     return (
-                        <div className="space-y-6">
+                        <div className='space-y-6'>
                             {educationItems.length === 0 && (
-                                <div className="py-8 text-center">
-                                    <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 text-white/60 shadow-inner">
-                                        <GraduationCap className="h-6 w-6" />
+                                <div className='py-8 text-center'>
+                                    <div className='mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 text-white/60 shadow-inner'>
+                                        <GraduationCap className='h-6 w-6' />
                                     </div>
-                                    <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                    <p className='font-display font-medium text-slate-500 dark:text-slate-400'>
                                         {t('sections.education.empty')}
                                     </p>
-                                    <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                    <p className='mt-1 text-sm text-slate-400 dark:text-slate-500'>
                                         {t('sections.education.emptyHint')}
                                     </p>
                                 </div>
@@ -276,7 +276,7 @@ export const EducationSection = ({
                                         )}
                                         strategy={verticalListSortingStrategy}
                                     >
-                                        <div className="space-y-6">
+                                        <div className='space-y-6'>
                                             {educationItems.map(
                                                 (_: EducationProps, index: number) => (
                                                     <SortableEducationItem

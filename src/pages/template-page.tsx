@@ -50,11 +50,11 @@ export function TemplatePage() {
                 );
             default:
                 return (
-                    <div className="py-8 text-center">
-                        <h1 className="mb-4 text-2xl font-bold">{t('templates.notFound')}</h1>
-                        <Link to="/templates">
+                    <div className='py-8 text-center'>
+                        <h1 className='mb-4 text-2xl font-bold'>{t('templates.notFound')}</h1>
+                        <Link to='/templates'>
                             <Button>
-                                <ArrowLeft className="mr-2 h-4 w-4" />
+                                <ArrowLeft className='mr-2 h-4 w-4' />
                                 {t('nav.backToTemplates')}
                             </Button>
                         </Link>
@@ -64,31 +64,31 @@ export function TemplatePage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 transition-colors dark:bg-gray-900">
+        <div className='min-h-screen bg-gray-50 transition-colors dark:bg-gray-900'>
             {/* Actions Bar */}
-            <div className="sticky top-0 z-10 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <Link to="/templates">
+            <div className='sticky top-0 z-10 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900'>
+                <div className='container mx-auto px-4 py-4'>
+                    <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-4'>
+                            <Link to='/templates'>
                                 <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="dark:hover:bg-gray-800"
+                                    variant='outline'
+                                    size='sm'
+                                    className='dark:hover:bg-gray-800'
                                 >
-                                    <ArrowLeft className="mr-2 h-4 w-4" />
+                                    <ArrowLeft className='mr-2 h-4 w-4' />
                                     {t('nav.backToTemplates')}
                                 </Button>
                             </Link>
-                            <h1 className="text-xl font-semibold dark:text-gray-100">
+                            <h1 className='text-xl font-semibold dark:text-gray-100'>
                                 {getTemplateName()} {t('templates.preview')}
                             </h1>
                         </div>
 
-                        <div className="flex items-center gap-3">
-                            <Link to="/builder" search={{ templateId }}>
-                                <Button size="sm">
-                                    <Edit className="mr-2 h-4 w-4" />
+                        <div className='flex items-center gap-3'>
+                            <Link to='/builder' search={{ templateId }}>
+                                <Button size='sm'>
+                                    <Edit className='mr-2 h-4 w-4' />
                                     {t('templates.useTemplate')}
                                 </Button>
                             </Link>
@@ -100,8 +100,8 @@ export function TemplatePage() {
             </div>
 
             {/* Template Preview */}
-            <div className="py-8">
-                <div className="mx-auto max-w-[210mm] overflow-hidden bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50">
+            <div className='py-8'>
+                <div className='mx-auto max-w-[210mm] overflow-hidden bg-white text-gray-900 shadow-xl dark:shadow-gray-900/50'>
                     {renderTemplate()}
                 </div>
             </div>

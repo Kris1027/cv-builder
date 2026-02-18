@@ -27,10 +27,10 @@ export const TemplateCardPreview = ({ children }: TemplateCardPreviewProps) => {
     }, []);
 
     return (
-        <div ref={containerRef} className="relative h-full w-full overflow-hidden">
+        <div ref={containerRef} className='relative h-full w-full overflow-hidden'>
             {scale > 0 && (
                 <div
-                    className="pointer-events-none absolute top-0 left-0 origin-top-left"
+                    className='pointer-events-none absolute top-0 left-0 origin-top-left'
                     style={{
                         width: A4_WIDTH_PX,
                         transform: `scale(${scale})`,
@@ -40,7 +40,7 @@ export const TemplateCardPreview = ({ children }: TemplateCardPreviewProps) => {
                 </div>
             )}
             {/* Bottom fade to hide the hard clip edge */}
-            <div className="absolute right-0 bottom-0 left-0 h-1/4 bg-gradient-to-t from-slate-100 to-transparent dark:from-slate-900/80" />
+            <div className='absolute right-0 bottom-0 left-0 h-1/4 bg-gradient-to-t from-slate-100 to-transparent dark:from-slate-900/80' />
         </div>
     );
 };

@@ -64,35 +64,35 @@ const SortableExperienceItem = ({
             style={style}
             className={`space-y-4 rounded-xl border border-slate-200/60 bg-white/40 p-6 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/5 dark:bg-white/[0.02] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
-            <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+            <div className='mb-4 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
                     <button
-                        type="button"
-                        className="cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
+                        type='button'
+                        className='cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
                         {...attributes}
                         {...listeners}
                     >
-                        <GripVertical className="h-5 w-5 text-slate-400" />
+                        <GripVertical className='h-5 w-5 text-slate-400' />
                     </button>
-                    <h4 className="font-display text-lg font-semibold text-slate-700 dark:text-slate-300">
+                    <h4 className='font-display text-lg font-semibold text-slate-700 dark:text-slate-300'>
                         {t('sections.experience.item', { number: index + 1 })}
                     </h4>
                 </div>
                 <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
+                    type='button'
+                    variant='ghost'
+                    size='sm'
                     onClick={() => removeExperience(index)}
-                    className="text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400"
+                    className='text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400'
                 >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className='h-4 w-4' />
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <form.Field name={`experiences[${index}].company`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.company')}</Label>
                             <Input
                                 id={subField.name}
@@ -108,7 +108,7 @@ const SortableExperienceItem = ({
 
                 <form.Field name={`experiences[${index}].position`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.position')}</Label>
                             <Input
                                 id={subField.name}
@@ -124,7 +124,7 @@ const SortableExperienceItem = ({
 
                 <form.Field name={`experiences[${index}].location`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.location')}</Label>
                             <Input
                                 id={subField.name}
@@ -140,7 +140,7 @@ const SortableExperienceItem = ({
 
                 <form.Field name={`experiences[${index}].startDate`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.startDate')}</Label>
                             <DatePicker
                                 id={subField.name}
@@ -156,7 +156,7 @@ const SortableExperienceItem = ({
 
                 <form.Field name={`experiences[${index}].endDate`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.endDate')}</Label>
                             <DatePicker
                                 id={subField.name}
@@ -176,7 +176,7 @@ const SortableExperienceItem = ({
 
             <form.Field name={`experiences[${index}].current`}>
                 {(subField) => (
-                    <div className="flex items-center space-x-2 rounded-lg border border-slate-200/60 bg-slate-50/60 p-3 dark:border-white/5 dark:bg-white/[0.03]">
+                    <div className='flex items-center space-x-2 rounded-lg border border-slate-200/60 bg-slate-50/60 p-3 dark:border-white/5 dark:bg-white/[0.03]'>
                         <Checkbox
                             id={subField.name}
                             name={subField.name}
@@ -185,7 +185,7 @@ const SortableExperienceItem = ({
                         />
                         <Label
                             htmlFor={subField.name}
-                            className="cursor-pointer text-slate-700 dark:text-slate-300"
+                            className='cursor-pointer text-slate-700 dark:text-slate-300'
                         >
                             {t('form.currentlyWorking')}
                         </Label>
@@ -195,7 +195,7 @@ const SortableExperienceItem = ({
 
             <form.Field name={`experiences[${index}].description`}>
                 {(subField) => (
-                    <div className="space-y-2">
+                    <div className='space-y-2'>
                         <Label htmlFor={subField.name}>{t('form.description')}</Label>
                         <Textarea
                             id={subField.name}
@@ -241,9 +241,9 @@ const SortableExperienceItem = ({
                                 }
                             }}
                             placeholder={t('placeholders.description')}
-                            className="min-h-[120px] resize-none"
+                            className='min-h-[120px] resize-none'
                         />
-                        <p className="text-xs text-slate-500">
+                        <p className='text-xs text-slate-500'>
                             {t('sections.experience.bulletHint')}
                         </p>
                     </div>
@@ -288,34 +288,34 @@ export const ExperienceSection = ({
     return (
         <FormSectionCard
             icon={Briefcase}
-            iconGradient="from-emerald-500 to-teal-600"
+            iconGradient='from-emerald-500 to-teal-600'
             title={t('sections.experience.title')}
             description={t('sections.experience.description')}
             headerAction={
                 <Button
-                    type="button"
+                    type='button'
                     onClick={addExperience}
-                    className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg"
+                    className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg'
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className='mr-2 h-4 w-4' />
                     {t('sections.experience.add')}
                 </Button>
             }
         >
-            <form.Field name="experiences">
+            <form.Field name='experiences'>
                 {(field) => {
                     const experiences = field.state.value as ExperienceProps[];
                     return (
-                        <div className="space-y-6">
+                        <div className='space-y-6'>
                             {experiences.length === 0 && (
-                                <div className="py-8 text-center">
-                                    <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 text-white/60 shadow-inner">
-                                        <Briefcase className="h-6 w-6" />
+                                <div className='py-8 text-center'>
+                                    <div className='mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 text-white/60 shadow-inner'>
+                                        <Briefcase className='h-6 w-6' />
                                     </div>
-                                    <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                    <p className='font-display font-medium text-slate-500 dark:text-slate-400'>
                                         {t('sections.experience.empty')}
                                     </p>
-                                    <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                    <p className='mt-1 text-sm text-slate-400 dark:text-slate-500'>
                                         {t('sections.experience.emptyHint')}
                                     </p>
                                 </div>
@@ -333,7 +333,7 @@ export const ExperienceSection = ({
                                         )}
                                         strategy={verticalListSortingStrategy}
                                     >
-                                        <div className="space-y-6">
+                                        <div className='space-y-6'>
                                             {experiences.map(
                                                 (_: ExperienceProps, index: number) => (
                                                     <SortableExperienceItem
