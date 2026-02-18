@@ -32,6 +32,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { GeometricShapes } from '@/components/geometric-shapes';
 import { fadeInUp } from '@/lib/animation-variants';
+import { safeStorage } from '@/lib/storage';
 
 const templates = [
     {
@@ -72,8 +73,8 @@ export function TemplatesPage() {
     const bgShapes = useParallax({ yRange: 40 });
 
     useEffect(() => {
-        const savedData = localStorage.getItem('cvData');
-        const savedTime = localStorage.getItem('cvData_lastSaved');
+        const savedData = safeStorage.getItem('cvData');
+        const savedTime = safeStorage.getItem('cvData_lastSaved');
 
         if (savedData) {
             setHasSavedData(true);
@@ -84,9 +85,9 @@ export function TemplatesPage() {
     }, []);
 
     const handleReset = () => {
-        localStorage.removeItem('cvData');
-        localStorage.removeItem('cvData_backup');
-        localStorage.removeItem('cvData_lastSaved');
+        safeStorage.removeItem('cvData');
+        safeStorage.removeItem('cvData_backup');
+        safeStorage.removeItem('cvData_lastSaved');
         setHasSavedData(false);
         setLastSaved(null);
     };

@@ -48,6 +48,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { fadeInUp } from '@/lib/animation-variants';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { safeStorage } from '@/lib/storage';
 
 interface BuilderPageProps {
     templateId?: string;
@@ -103,7 +104,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
     // Get initial values - load from localStorage if available, otherwise defaults
     const getInitialValues = () => {
-        const storedData = localStorage.getItem('cvData');
+        const storedData = safeStorage.getItem('cvData');
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             return {
@@ -144,9 +145,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         onSubmit: async ({ value }) => {
             setIsSaving(true);
             // Store data in localStorage for persistence
-            localStorage.setItem('cvData', JSON.stringify(value));
+            safeStorage.setItem('cvData', JSON.stringify(value));
             const now = new Date();
-            localStorage.setItem('cvData_lastSaved', now.toISOString());
+            safeStorage.setItem('cvData_lastSaved', now.toISOString());
             setLastSaved(now);
             setIsSaving(false);
 
@@ -169,19 +170,19 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     const handleManualSave = () => {
         setIsSaving(true);
         const formData = form.state.values as CVFormValues;
-        localStorage.setItem('cvData', JSON.stringify(formData));
-        localStorage.setItem('cvData_backup', JSON.stringify(formData));
+        safeStorage.setItem('cvData', JSON.stringify(formData));
+        safeStorage.setItem('cvData_backup', JSON.stringify(formData));
         const now = new Date();
-        localStorage.setItem('cvData_lastSaved', now.toISOString());
+        safeStorage.setItem('cvData_lastSaved', now.toISOString());
         setLastSaved(now);
         setTimeout(() => setIsSaving(false), 500);
     };
 
     // Reset form function
     const handleReset = () => {
-        localStorage.removeItem('cvData');
-        localStorage.removeItem('cvData_backup');
-        localStorage.removeItem('cvData_lastSaved');
+        safeStorage.removeItem('cvData');
+        safeStorage.removeItem('cvData_backup');
+        safeStorage.removeItem('cvData_lastSaved');
         setLastSaved(null);
         form.reset({
             templateId: activeTemplateId,
@@ -225,7 +226,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
             // Persist first so getInitialValues() returns matching data on
             // re-render, preventing useForm's update() from overwriting the reset
-            localStorage.setItem('cvData', JSON.stringify(newValues));
+            safeStorage.setItem('cvData', JSON.stringify(newValues));
 
             // Reset the form with all values at once — no intermediate
             // validation states and no stale errors

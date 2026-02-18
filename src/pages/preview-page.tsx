@@ -24,6 +24,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { fadeInUp, fadeInScale } from '@/lib/animation-variants';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { safeStorage } from '@/lib/storage';
 
 export function PreviewPage() {
     const { t } = useTranslation();
@@ -49,9 +50,15 @@ export function PreviewPage() {
 
     useEffect(() => {
         // Get data from localStorage
-        const storedData = localStorage.getItem('cvData');
+        const storedData = safeStorage.getItem('cvData');
         if (storedData) {
-            const parsedData = JSON.parse(storedData);
+            let parsedData;
+            try {
+                parsedData = JSON.parse(storedData);
+            } catch {
+                console.warn('Failed to parse stored CV data');
+                return;
+            }
             // Ensure all arrays have default values
             const transformedData: CVData = {
                 personalInfo: parsedData.personalInfo,

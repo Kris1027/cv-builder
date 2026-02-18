@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Theme } from '@/types/theme-context-types';
 import { ThemeContext } from '@/types/theme-context-types';
+import { safeStorage } from '@/lib/storage';
 
 interface ThemeProviderProps {
     children: React.ReactNode;
@@ -10,7 +11,7 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children, defaultTheme = 'system' }: ThemeProviderProps) => {
     const [theme, setThemeState] = useState<Theme>(() => {
         // Get saved theme from localStorage
-        const savedTheme = localStorage.getItem('theme') as Theme;
+        const savedTheme = safeStorage.getItem('theme') as Theme;
         return savedTheme || defaultTheme;
     });
 
@@ -44,7 +45,7 @@ export const ThemeProvider = ({ children, defaultTheme = 'system' }: ThemeProvid
     // Set theme function
     const setTheme = (newTheme: Theme) => {
         setThemeState(newTheme);
-        localStorage.setItem('theme', newTheme);
+        safeStorage.setItem('theme', newTheme);
 
         const effectiveTheme = newTheme === 'system' ? getSystemTheme() : newTheme;
         applyTheme(effectiveTheme);
