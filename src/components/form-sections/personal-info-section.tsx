@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FieldError } from '@/components/ui/field-error';
+import { FormSectionCard } from '@/components/form-sections/form-section-card';
 import { User } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
 import { formatPolishPhone } from '@/lib/utils';
@@ -15,19 +15,13 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
     const { t } = useTranslation();
 
     return (
-        <Card className="border-0 shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-gray-900/50">
-            <CardHeader className="rounded-t-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-                <div className="flex items-center gap-2">
-                    <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                    <CardTitle className="text-xl dark:text-gray-100">
-                        {t('sections.personalInfo.title')}
-                    </CardTitle>
-                </div>
-                <CardDescription className="dark:text-gray-400">
-                    {t('sections.personalInfo.description')}
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6 pt-6">
+        <FormSectionCard
+            icon={User}
+            iconGradient="from-blue-500 to-indigo-600"
+            title={t('sections.personalInfo.title')}
+            description={t('sections.personalInfo.description')}
+        >
+            <div className="space-y-6">
                 {/* Row 1: First Name, Last Name */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <form.Field name="personalInfo.firstName">
@@ -43,7 +37,7 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.firstName')}
-                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500' : ''}`}
                                 />
                                 <FieldError
                                     errors={field.state.meta.errors}
@@ -66,7 +60,7 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.lastName')}
-                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500' : ''}`}
                                 />
                                 <FieldError
                                     errors={field.state.meta.errors}
@@ -90,7 +84,6 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.professionalTitle')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
@@ -110,7 +103,6 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.location')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
@@ -130,7 +122,7 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.email')}
-                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
+                                    className={`transition-all ${field.state.meta.isTouched && !field.state.meta.isValid ? 'border-red-500' : ''}`}
                                 />
                                 <FieldError
                                     errors={field.state.meta.errors}
@@ -159,7 +151,6 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     }}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.phone')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
@@ -180,7 +171,6 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.website')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
@@ -198,7 +188,6 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.linkedin')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
@@ -216,13 +205,12 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.github')}
-                                    className="focus:ring-blue-500"
                                 />
                             </div>
                         )}
                     </form.Field>
                 </div>
-            </CardContent>
-        </Card>
+            </div>
+        </FormSectionCard>
     );
 };

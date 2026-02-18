@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { FormSectionCard } from '@/components/form-sections/form-section-card';
 import type { SkillProps } from '@/types/form-types';
 import { Plus, Code, X, GripVertical } from 'lucide-react';
 import { useState } from 'react';
@@ -52,17 +52,17 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
         <div
             ref={setNodeRef}
             style={style}
-            className={`group flex items-center gap-1 rounded-full border border-orange-200 bg-gradient-to-r from-orange-100 to-yellow-100 px-3 py-1.5 transition-all hover:shadow-md dark:border-orange-800 dark:from-orange-900/20 dark:to-yellow-900/20 dark:hover:shadow-gray-900/50 ${isDragging ? 'opacity-90 shadow-lg' : ''}`}
+            className={`group flex items-center gap-1 rounded-full border border-slate-200/60 bg-white/60 px-3 py-1.5 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/10 dark:bg-white/[0.05] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
             <button
                 type="button"
-                className="cursor-grab touch-none rounded p-0.5 transition-colors hover:bg-orange-200 active:cursor-grabbing dark:hover:bg-orange-800/50"
+                className="cursor-grab touch-none rounded p-0.5 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
                 {...attributes}
                 {...listeners}
             >
-                <GripVertical className="h-3 w-3 text-gray-400" />
+                <GripVertical className="h-3 w-3 text-slate-400" />
             </button>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {skill.name}
             </span>
             <button
@@ -70,7 +70,7 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
                 onClick={() => removeSkill(index)}
                 className="opacity-0 transition-opacity group-hover:opacity-100"
             >
-                <X className="h-3 w-3 text-red-500 hover:text-red-700" />
+                <X className="h-3 w-3 text-slate-400 hover:text-red-500" />
             </button>
         </div>
     );
@@ -123,91 +123,81 @@ export const SkillsSection = ({ form, removeSkill, reorderSkills }: SkillsSectio
     };
 
     return (
-        <Card className="border-0 shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-gray-900/50">
-            <CardHeader className="rounded-t-lg bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <Code className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                            <CardTitle className="text-xl dark:text-gray-100">
-                                {t('sections.skills.title')}
-                            </CardTitle>
-                        </div>
-                        <CardDescription className="mt-1 dark:text-gray-400">
-                            {t('sections.skills.description')}
-                        </CardDescription>
-                    </div>
+        <FormSectionCard
+            icon={Code}
+            iconGradient="from-amber-500 to-orange-600"
+            title={t('sections.skills.title')}
+            description={t('sections.skills.description')}
+        >
+            <div className="space-y-4">
+                <div className="flex gap-2">
+                    <Input
+                        placeholder={t('placeholders.skill')}
+                        value={skillInput}
+                        onChange={(e) => setSkillInput(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                    />
+                    <Button
+                        type="button"
+                        onClick={handleAddSkill}
+                        disabled={!skillInput.trim()}
+                        className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700"
+                    >
+                        <Plus className="mr-2 h-4 w-4" />
+                        {t('sections.skills.add')}
+                    </Button>
                 </div>
-            </CardHeader>
-            <CardContent className="pt-6">
-                <div className="space-y-4">
-                    <div className="flex gap-2">
-                        <Input
-                            placeholder={t('placeholders.skill')}
-                            value={skillInput}
-                            onChange={(e) => setSkillInput(e.target.value)}
-                            onKeyPress={handleKeyPress}
-                            className="focus:ring-orange-500"
-                        />
-                        <Button
-                            type="button"
-                            onClick={handleAddSkill}
-                            disabled={!skillInput.trim()}
-                            className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white hover:from-orange-600 hover:to-yellow-600"
-                        >
-                            <Plus className="mr-2 h-4 w-4" />
-                            {t('sections.skills.add')}
-                        </Button>
-                    </div>
 
-                    <form.Field name="skills">
-                        {(field) => {
-                            const skillItems = field.state.value as SkillProps[];
-                            return (
-                                <div>
-                                    {skillItems.length === 0 ? (
-                                        <div className="py-8 text-center text-gray-500 dark:text-gray-400">
-                                            <Code className="mx-auto mb-3 h-12 w-12 text-gray-300 dark:text-gray-600" />
-                                            <p>{t('sections.skills.empty')}</p>
-                                            <p className="mt-1 text-sm">
-                                                {t('sections.skills.emptyHint')}
-                                            </p>
+                <form.Field name="skills">
+                    {(field) => {
+                        const skillItems = field.state.value as SkillProps[];
+                        return (
+                            <div>
+                                {skillItems.length === 0 ? (
+                                    <div className="py-8 text-center">
+                                        <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white/60 shadow-inner">
+                                            <Code className="h-6 w-6" />
                                         </div>
-                                    ) : (
-                                        <DndContext
-                                            sensors={sensors}
-                                            collisionDetection={closestCenter}
-                                            onDragEnd={handleDragEnd}
+                                        <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                            {t('sections.skills.empty')}
+                                        </p>
+                                        <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                            {t('sections.skills.emptyHint')}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <DndContext
+                                        sensors={sensors}
+                                        collisionDetection={closestCenter}
+                                        onDragEnd={handleDragEnd}
+                                    >
+                                        <SortableContext
+                                            items={skillItems.map(
+                                                (_: SkillProps, index: number) => `skill-${index}`,
+                                            )}
+                                            strategy={horizontalListSortingStrategy}
                                         >
-                                            <SortableContext
-                                                items={skillItems.map(
-                                                    (_: SkillProps, index: number) =>
-                                                        `skill-${index}`,
+                                            <div className="flex flex-wrap gap-2">
+                                                {skillItems.map(
+                                                    (skill: SkillProps, index: number) => (
+                                                        <SortableSkillItem
+                                                            key={`skill-${index}`}
+                                                            id={`skill-${index}`}
+                                                            index={index}
+                                                            skill={skill}
+                                                            removeSkill={removeSkill}
+                                                        />
+                                                    ),
                                                 )}
-                                                strategy={horizontalListSortingStrategy}
-                                            >
-                                                <div className="flex flex-wrap gap-2">
-                                                    {skillItems.map(
-                                                        (skill: SkillProps, index: number) => (
-                                                            <SortableSkillItem
-                                                                key={`skill-${index}`}
-                                                                id={`skill-${index}`}
-                                                                index={index}
-                                                                skill={skill}
-                                                                removeSkill={removeSkill}
-                                                            />
-                                                        ),
-                                                    )}
-                                                </div>
-                                            </SortableContext>
-                                        </DndContext>
-                                    )}
-                                </div>
-                            );
-                        }}
-                    </form.Field>
-                </div>
-            </CardContent>
-        </Card>
+                                            </div>
+                                        </SortableContext>
+                                    </DndContext>
+                                )}
+                            </div>
+                        );
+                    }}
+                </form.Field>
+            </div>
+        </FormSectionCard>
     );
 };

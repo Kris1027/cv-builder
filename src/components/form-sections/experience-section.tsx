@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { FormSectionCard } from '@/components/form-sections/form-section-card';
 import type { ExperienceProps } from '@/types/form-types';
 import { Trash2, Plus, Briefcase, GripVertical } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
@@ -62,19 +62,19 @@ const SortableExperienceItem = ({
         <div
             ref={setNodeRef}
             style={style}
-            className={`space-y-4 rounded-xl border border-gray-200 bg-gradient-to-r from-gray-50 to-white p-6 transition-shadow hover:shadow-md dark:border-gray-700 dark:from-gray-700/50 dark:to-gray-800/50 dark:hover:shadow-gray-900/50 ${isDragging ? 'opacity-90 shadow-lg' : ''}`}
+            className={`space-y-4 rounded-xl border border-slate-200/60 bg-white/40 p-6 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/5 dark:bg-white/[0.02] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
             <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <button
                         type="button"
-                        className="cursor-grab touch-none rounded p-1 transition-colors hover:bg-gray-200 active:cursor-grabbing dark:hover:bg-gray-600"
+                        className="cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
                         {...attributes}
                         {...listeners}
                     >
-                        <GripVertical className="h-5 w-5 text-gray-400" />
+                        <GripVertical className="h-5 w-5 text-slate-400" />
                     </button>
-                    <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                    <h4 className="font-display text-lg font-semibold text-slate-700 dark:text-slate-300">
                         {t('sections.experience.item', { number: index + 1 })}
                     </h4>
                 </div>
@@ -83,7 +83,7 @@ const SortableExperienceItem = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => removeExperience(index)}
-                    className="text-red-500 hover:bg-red-50 hover:text-red-700"
+                    className="text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400"
                 >
                     <Trash2 className="h-4 w-4" />
                 </Button>
@@ -101,7 +101,6 @@ const SortableExperienceItem = ({
                                 onBlur={subField.handleBlur}
                                 onChange={(e) => subField.handleChange(e.target.value)}
                                 placeholder={t('placeholders.company')}
-                                className="focus:ring-green-500"
                             />
                         </div>
                     )}
@@ -118,7 +117,6 @@ const SortableExperienceItem = ({
                                 onBlur={subField.handleBlur}
                                 onChange={(e) => subField.handleChange(e.target.value)}
                                 placeholder={t('placeholders.position')}
-                                className="focus:ring-green-500"
                             />
                         </div>
                     )}
@@ -135,7 +133,6 @@ const SortableExperienceItem = ({
                                 onBlur={subField.handleBlur}
                                 onChange={(e) => subField.handleChange(e.target.value)}
                                 placeholder={t('placeholders.locationJob')}
-                                className="focus:ring-green-500"
                             />
                         </div>
                     )}
@@ -179,17 +176,16 @@ const SortableExperienceItem = ({
 
             <form.Field name={`experiences[${index}].current`}>
                 {(subField) => (
-                    <div className="flex items-center space-x-2 rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
+                    <div className="flex items-center space-x-2 rounded-lg border border-slate-200/60 bg-slate-50/60 p-3 dark:border-white/5 dark:bg-white/[0.03]">
                         <Checkbox
                             id={subField.name}
                             name={subField.name}
                             checked={subField.state.value as boolean}
                             onCheckedChange={(checked) => subField.handleChange(!!checked)}
-                            className="border-blue-400"
                         />
                         <Label
                             htmlFor={subField.name}
-                            className="cursor-pointer text-blue-700 dark:text-blue-400"
+                            className="cursor-pointer text-slate-700 dark:text-slate-300"
                         >
                             {t('form.currentlyWorking')}
                         </Label>
@@ -245,9 +241,9 @@ const SortableExperienceItem = ({
                                 }
                             }}
                             placeholder={t('placeholders.description')}
-                            className="min-h-[120px] resize-none focus:ring-green-500"
+                            className="min-h-[120px] resize-none"
                         />
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-slate-500">
                             {t('sections.experience.bulletHint')}
                         </p>
                     </div>
@@ -290,79 +286,73 @@ export const ExperienceSection = ({
     };
 
     return (
-        <Card className="border-0 shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-gray-900/50">
-            <CardHeader className="rounded-t-lg bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <Briefcase className="h-5 w-5 text-green-600 dark:text-green-400" />
-                            <CardTitle className="text-xl dark:text-gray-100">
-                                {t('sections.experience.title')}
-                            </CardTitle>
-                        </div>
-                        <CardDescription className="mt-1 dark:text-gray-400">
-                            {t('sections.experience.description')}
-                        </CardDescription>
-                    </div>
-                    <Button
-                        type="button"
-                        onClick={addExperience}
-                        className="bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-md transition-all hover:from-green-600 hover:to-blue-600 hover:shadow-lg"
-                    >
-                        <Plus className="mr-2 h-4 w-4" />
-                        {t('sections.experience.add')}
-                    </Button>
-                </div>
-            </CardHeader>
-            <CardContent className="pt-6">
-                <form.Field name="experiences">
-                    {(field) => {
-                        const experiences = field.state.value as ExperienceProps[];
-                        return (
-                            <div className="space-y-6">
-                                {experiences.length === 0 && (
-                                    <div className="py-8 text-center text-gray-500 dark:text-gray-400">
-                                        <Briefcase className="mx-auto mb-3 h-12 w-12 text-gray-300 dark:text-gray-600" />
-                                        <p>{t('sections.experience.empty')}</p>
-                                        <p className="mt-1 text-sm">
-                                            {t('sections.experience.emptyHint')}
-                                        </p>
+        <FormSectionCard
+            icon={Briefcase}
+            iconGradient="from-emerald-500 to-teal-600"
+            title={t('sections.experience.title')}
+            description={t('sections.experience.description')}
+            headerAction={
+                <Button
+                    type="button"
+                    onClick={addExperience}
+                    className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg"
+                >
+                    <Plus className="mr-2 h-4 w-4" />
+                    {t('sections.experience.add')}
+                </Button>
+            }
+        >
+            <form.Field name="experiences">
+                {(field) => {
+                    const experiences = field.state.value as ExperienceProps[];
+                    return (
+                        <div className="space-y-6">
+                            {experiences.length === 0 && (
+                                <div className="py-8 text-center">
+                                    <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 text-white/60 shadow-inner">
+                                        <Briefcase className="h-6 w-6" />
                                     </div>
-                                )}
-                                {experiences.length > 0 && (
-                                    <DndContext
-                                        sensors={sensors}
-                                        collisionDetection={closestCenter}
-                                        onDragEnd={handleDragEnd}
+                                    <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                        {t('sections.experience.empty')}
+                                    </p>
+                                    <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                        {t('sections.experience.emptyHint')}
+                                    </p>
+                                </div>
+                            )}
+                            {experiences.length > 0 && (
+                                <DndContext
+                                    sensors={sensors}
+                                    collisionDetection={closestCenter}
+                                    onDragEnd={handleDragEnd}
+                                >
+                                    <SortableContext
+                                        items={experiences.map(
+                                            (_: ExperienceProps, index: number) =>
+                                                `experience-${index}`,
+                                        )}
+                                        strategy={verticalListSortingStrategy}
                                     >
-                                        <SortableContext
-                                            items={experiences.map(
-                                                (_: ExperienceProps, index: number) =>
-                                                    `experience-${index}`,
+                                        <div className="space-y-6">
+                                            {experiences.map(
+                                                (_: ExperienceProps, index: number) => (
+                                                    <SortableExperienceItem
+                                                        key={`experience-${index}`}
+                                                        id={`experience-${index}`}
+                                                        index={index}
+                                                        form={form}
+                                                        removeExperience={removeExperience}
+                                                    />
+                                                ),
                                             )}
-                                            strategy={verticalListSortingStrategy}
-                                        >
-                                            <div className="space-y-6">
-                                                {experiences.map(
-                                                    (_: ExperienceProps, index: number) => (
-                                                        <SortableExperienceItem
-                                                            key={`experience-${index}`}
-                                                            id={`experience-${index}`}
-                                                            index={index}
-                                                            form={form}
-                                                            removeExperience={removeExperience}
-                                                        />
-                                                    ),
-                                                )}
-                                            </div>
-                                        </SortableContext>
-                                    </DndContext>
-                                )}
-                            </div>
-                        );
-                    }}
-                </form.Field>
-            </CardContent>
-        </Card>
+                                        </div>
+                                    </SortableContext>
+                                </DndContext>
+                            )}
+                        </div>
+                    );
+                }}
+            </form.Field>
+        </FormSectionCard>
     );
 };
