@@ -32,7 +32,7 @@ export const ThemeToggle = () => {
                 <Button
                     variant='outline'
                     size='icon'
-                    className='h-9 w-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800'
+                    className='hover:bg-accent h-9 w-9 transition-all dark:hover:bg-white/10'
                 >
                     <Sun className='h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90' />
                     <Moon className='absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0' />

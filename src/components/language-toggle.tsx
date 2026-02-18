@@ -38,7 +38,7 @@ export const LanguageToggle = () => {
                 <Button
                     variant='outline'
                     size='icon'
-                    className='h-9 w-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800'
+                    className='hover:bg-accent h-9 w-9 transition-all dark:hover:bg-white/10'
                 >
                     <Languages className='h-4 w-4' />
                     <span className='sr-only'>{t('accessibility.toggleLanguage')}</span>
