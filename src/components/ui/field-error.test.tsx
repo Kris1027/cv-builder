@@ -23,12 +23,7 @@ describe('FieldError', () => {
     });
 
     it('handles object errors with message property', () => {
-        render(
-            <FieldError
-                errors={[{ message: 'validation.invalidEmail' }]}
-                isTouched={true}
-            />,
-        );
+        render(<FieldError errors={[{ message: 'validation.invalidEmail' }]} isTouched={true} />);
         expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument();
     });
 

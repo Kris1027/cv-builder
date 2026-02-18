@@ -61,9 +61,9 @@ describe('formatGithubDisplay', () => {
 
 describe('formatLinkedinDisplay', () => {
     it('extracts profile name from LinkedIn URL', () => {
-        expect(
-            formatLinkedinDisplay('https://www.linkedin.com/in/krzysztof-obarzanek/'),
-        ).toBe('krzysztof-obarzanek');
+        expect(formatLinkedinDisplay('https://www.linkedin.com/in/krzysztof-obarzanek/')).toBe(
+            'krzysztof-obarzanek',
+        );
     });
 
     it('returns original if no match', () => {

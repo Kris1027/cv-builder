@@ -91,11 +91,11 @@ src/
 
 ### Test Utilities
 
-| File | Purpose |
-|------|---------|
-| `src/test/setup.ts` | jest-dom matchers + ResizeObserver polyfill |
+| File                      | Purpose                                                          |
+| ------------------------- | ---------------------------------------------------------------- |
+| `src/test/setup.ts`       | jest-dom matchers + ResizeObserver polyfill                      |
 | `src/test/test-utils.tsx` | Custom `render` with I18nextProvider, re-exports RTL + userEvent |
-| `src/test/i18n-test.ts` | Lightweight i18n instance with real EN translations |
+| `src/test/i18n-test.ts`   | Lightweight i18n instance with real EN translations              |
 
 ## CI/CD
 

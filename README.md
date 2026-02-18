@@ -92,17 +92,17 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Available Scripts
 
-| Script              | Description                                          |
-| ------------------- | ---------------------------------------------------- |
-| `pnpm dev`          | Start development server                             |
-| `pnpm build`        | Build for production (TypeScript check + Vite build) |
-| `pnpm preview`      | Preview production build                             |
-| `pnpm lint`         | Run ESLint                                           |
-| `pnpm format`       | Format all files with Prettier                       |
-| `pnpm format:check` | Check formatting (used in CI)                        |
-| `pnpm test`         | Run all tests once                                   |
-| `pnpm test:watch`   | Run tests in watch mode                              |
-| `pnpm test:coverage`| Run tests with coverage report                       |
+| Script               | Description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `pnpm dev`           | Start development server                             |
+| `pnpm build`         | Build for production (TypeScript check + Vite build) |
+| `pnpm preview`       | Preview production build                             |
+| `pnpm lint`          | Run ESLint                                           |
+| `pnpm format`        | Format all files with Prettier                       |
+| `pnpm format:check`  | Check formatting (used in CI)                        |
+| `pnpm test`          | Run all tests once                                   |
+| `pnpm test:watch`    | Run tests in watch mode                              |
+| `pnpm test:coverage` | Run tests with coverage report                       |
 
 ## How It Works
 
