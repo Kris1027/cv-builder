@@ -390,24 +390,47 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 transition-colors dark:from-gray-900 dark:via-gray-900 dark:to-indigo-950/30">
+        <div className="relative min-h-screen overflow-hidden">
+            {/* Background gradient mesh */}
+            <div className="animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80" />
+
+            {/* Dot grid pattern */}
+            <div
+                className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+                style={{
+                    backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                    backgroundSize: '24px 24px',
+                }}
+            />
+
+            {/* Geometric shapes */}
+            <div
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+                aria-hidden="true"
+            >
+                <div className="animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10" />
+                <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10" />
+                <div className="absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                        <div key={i} className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                    ))}
+                </div>
+                <div className="animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+                <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10" />
+            </div>
+
             {/* Navigation Bar */}
-            <div className="sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/5 dark:bg-gray-900/80">
+            <div className="sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <Link to="/templates">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    type="button"
-                                    className="transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                                >
+                            <Button asChild variant="outline" size="sm">
+                                <Link to="/templates">
                                     <ArrowLeft className="mr-2 h-4 w-4" />
                                     {t('nav.backToTemplates')}
-                                </Button>
-                            </Link>
-                            <h1 className="font-display bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-2xl font-bold text-transparent">
+                                </Link>
+                            </Button>
+                            <h1 className="font-display bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400">
                                 {t('builder.title')}
                             </h1>
                         </div>
@@ -437,7 +460,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                 size="sm"
                                 onClick={handleManualSave}
                                 disabled={isSaving}
-                                className="transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+                                className="transition-colors hover:border-green-300 hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
                             >
                                 <Save className="mr-2 h-4 w-4" />
                                 {isSaving ? t('builder.saving') : t('builder.save')}
@@ -519,7 +542,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                     </span>
                                 </div>
                             )}
-                            <div className="rounded-full border border-slate-200/60 bg-white/60 px-3 py-1 text-sm text-slate-600 backdrop-blur-sm dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-400">
+                            <div className="rounded-full border border-indigo-200/60 bg-indigo-50/80 px-3 py-1 text-sm text-indigo-700 backdrop-blur-sm dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
                                 <span className="hidden sm:inline">{t('builder.template')}: </span>
                                 <span className="font-medium">
                                     {getTemplateName(activeTemplateId)}
@@ -532,24 +555,29 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 </div>
             </div>
 
-            <div className="container mx-auto max-w-5xl px-4 py-8">
+            <div className="relative z-[1] container mx-auto max-w-5xl px-4 py-8">
                 {/* Progress Indicator */}
-                <div className="animate-fade-in-up mb-8 rounded-2xl border border-slate-200/60 bg-white/60 p-4 backdrop-blur-sm transition-colors dark:border-white/5 dark:bg-white/[0.03]">
-                    <div className="mb-2 flex items-center justify-between">
-                        <span className="font-display text-sm font-medium text-slate-700 dark:text-slate-300">
-                            {t('builder.progress.title')}
-                        </span>
-                        <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
+                <div className="animate-fade-in-up mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]">
+                    <div className="mb-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2 text-white shadow-lg">
+                                <CheckCircle className="h-4 w-4" />
+                            </div>
+                            <span className="font-display text-sm font-semibold dark:text-slate-200">
+                                {t('builder.progress.title')}
+                            </span>
+                        </div>
+                        <span className="rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-0.5 text-xs font-bold text-white shadow-sm">
                             {calculateProgress()}%
                         </span>
                     </div>
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+                    <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200/80 dark:bg-white/10">
                         <div
-                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500 ease-out"
+                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 shadow-sm shadow-indigo-500/25 transition-all duration-500 ease-out"
                             style={{ width: `${calculateProgress()}%` }}
                         />
                     </div>
-                    <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                    <div className="text-muted-foreground mt-2 text-xs">
                         {calculateProgress() === 100
                             ? t('builder.progress.complete')
                             : t('builder.progress.incomplete')}
@@ -625,7 +653,10 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Submit Button */}
-                    <div className="flex items-center justify-between pt-6">
+                    <div
+                        className="animate-fade-in-up flex items-center justify-between pt-6"
+                        style={{ animationDelay: '800ms' }}
+                    >
                         <form.Subscribe
                             selector={(state) => [
                                 state.canSubmit,
@@ -634,9 +665,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                             ]}
                             children={([canSubmit, isSubmitting, isValid]) => (
                                 <>
-                                    <div className="text-sm text-gray-500">
+                                    <div className="text-sm">
                                         {!isValid && (
-                                            <span className="text-red-500">
+                                            <span className="font-medium text-red-500">
                                                 {t('builder.validation.fixErrors')}
                                             </span>
                                         )}
