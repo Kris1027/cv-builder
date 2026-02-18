@@ -47,6 +47,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { fadeInUp } from '@/lib/animation-variants';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
 
 interface BuilderPageProps {
     templateId?: string;
@@ -608,6 +609,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
                 </motion.div>
 
+                <ErrorBoundary>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
@@ -711,6 +713,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                         />
                     </motion.div>
                 </form>
+                </ErrorBoundary>
             </div>
         </div>
     );

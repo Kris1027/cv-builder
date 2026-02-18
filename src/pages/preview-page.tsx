@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { fadeInUp, fadeInScale } from '@/lib/animation-variants';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
 
 export function PreviewPage() {
     const { t } = useTranslation();
@@ -324,21 +325,25 @@ export function PreviewPage() {
 
                 {/* Template Preview */}
                 <div className='py-8' id='print-container'>
-                    <ScaleToFitContainer
-                        enabled={singlePageMode}
-                        onScaleChange={handleScaleChange}
-                        className='mx-auto max-w-[210mm]'
-                    >
-                        <motion.div
-                            id='cv-content'
-                            className='overflow-hidden bg-white text-gray-900 shadow-xl'
-                            {...fadeInScale(0.1, shouldReduceMotion)}
+                    <ErrorBoundary>
+                        <ScaleToFitContainer
+                            enabled={singlePageMode}
+                            onScaleChange={handleScaleChange}
+                            className='mx-auto max-w-[210mm]'
                         >
-                            {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
-                            {templateId === 'default' && <DefaultTemplate data={cvData} />}
-                            {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
-                        </motion.div>
-                    </ScaleToFitContainer>
+                            <motion.div
+                                id='cv-content'
+                                className='overflow-hidden bg-white text-gray-900 shadow-xl'
+                                {...fadeInScale(0.1, shouldReduceMotion)}
+                            >
+                                {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
+                                {templateId === 'default' && <DefaultTemplate data={cvData} />}
+                                {templateId === 'veterinary' && (
+                                    <VeterinaryTemplate data={cvData} />
+                                )}
+                            </motion.div>
+                        </ScaleToFitContainer>
+                    </ErrorBoundary>
                 </div>
             </div>
 
