@@ -250,7 +250,8 @@ export function TemplatesPage() {
                             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-50/0 to-violet-50/0 transition-colors duration-300 group-hover:from-indigo-50/50 group-hover:to-violet-50/30 dark:group-hover:from-indigo-500/5 dark:group-hover:to-violet-500/5" />
 
                             <div className="relative">
-                                {/* Preview Area */}
+                                {/* Preview Area — uses div+navigate instead of <Link> because
+                                   template previews contain <a> tags and nested anchors are invalid HTML */}
                                 <div
                                     role="link"
                                     tabIndex={0}

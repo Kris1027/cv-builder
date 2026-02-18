@@ -199,8 +199,11 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             const normalizedGdprConsent = { ...emptyGdprConsent, ...cvData.gdprConsent };
 
             // Build the complete new form values
+            // PDF metadata (CVData) doesn't include templateId — fall back to
+            // the currently active template so form.reset() gets a valid string
+            // and the Zod schema doesn't trigger a "fix errors" validation message.
             const newValues = {
-                templateId: cvData.templateId,
+                templateId: cvData.templateId || activeTemplateId,
                 personalInfo: normalizedPersonalInfo,
                 experiences: cvData.experiences ?? [],
                 education: cvData.education ?? [],
