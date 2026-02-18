@@ -67,6 +67,7 @@ src/
 - **Validation**: Zod (schemas) + TanStack Form validators
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
+- **Animations**: motion (Framer Motion) — scroll-linked parallax + whileInView entrance animations
 
 ## CI/CD
 
@@ -187,6 +188,18 @@ Page transitions rely on CSS entrance animations — no View Transition API (dis
 - **Accessibility**: All animations disabled when `prefers-reduced-motion: reduce` is set
 - **Browser support**: Modern browsers. Animations gracefully degrade with `prefers-reduced-motion`.
 - CV templates are NOT animated — they stay print-clean with white backgrounds
+
+### Scroll-linked Parallax (Home Page Only)
+
+- **Dependency**: `motion` (Framer Motion) — auto code-split to index route via TanStack Router `autoCodeSplitting`
+- **Hook**: `useParallax` (`/src/hooks/use-parallax.ts`) — wraps `useScroll` + `useTransform` + `useReducedMotion`
+    - Takes `yRange` (px of movement) and optional `opacityRange`
+    - Returns `{ ref, y, opacity }` to spread onto `motion.div`
+    - Returns static values when `prefers-reduced-motion` is active
+- **Parallax targets**: Only decorative/background layers (gradients, dot grids, geometric shapes, decorative circles) — never text
+- **whileInView animations**: Replace CSS `animate-fade-in-up` / `animate-fade-in-scale` on below-fold sections (features, how-it-works, stats, CTA) so they fire when scrolled into view, not on mount
+- **`viewport: { once: true }`** on all `whileInView` — fire once then disconnect observer
+- Other pages still use CSS entrance animations unchanged
 
 ## PDF Import
 
