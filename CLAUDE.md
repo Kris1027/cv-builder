@@ -13,6 +13,9 @@ pnpm run preview  # Preview production build
 pnpm lint         # TypeScript + ESLint checks
 pnpm format       # Format all files with Prettier
 pnpm format:check # Check formatting (CI uses this)
+pnpm test         # Run all tests once
+pnpm test:watch   # Run tests in watch mode
+pnpm test:coverage # Run tests with coverage report
 ```
 
 ## Project Structure
@@ -68,11 +71,36 @@ src/
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
 - **Animations**: motion (Framer Motion) — scroll-linked parallax + whileInView entrance animations
+- **Testing**: Vitest + React Testing Library
+
+## Testing
+
+- **Framework**: Vitest with jsdom environment
+- **Component testing**: React Testing Library + `@testing-library/user-event`
+- **Assertions**: `@testing-library/jest-dom` for DOM matchers
+- **Coverage**: `@vitest/coverage-v8` with 50% thresholds (lines, functions, branches, statements)
+- **Config**: `vitest.config.ts` (separate from Vite config to avoid loading Vite plugins in tests)
+
+### Conventions
+
+- **Co-located tests**: `foo.test.ts` next to `foo.ts` — no separate `__tests__/` directories
+- **Custom render**: Use `import { render, screen } from '@/test/test-utils'` instead of RTL directly — wraps with I18nextProvider using real EN translations
+- **Real translations**: Tests use actual EN translation file, not mocked `t()` — catches missing translation keys
+- **Test names**: `describe` per unit, `it('should ... when ...')` pattern
+- **Test behavior, not implementation**: Query by role, label, text — not CSS classes or test IDs
+
+### Test Utilities
+
+| File                      | Purpose                                                          |
+| ------------------------- | ---------------------------------------------------------------- |
+| `src/test/setup.ts`       | jest-dom matchers + ResizeObserver polyfill                      |
+| `src/test/test-utils.tsx` | Custom `render` with I18nextProvider, re-exports RTL + userEvent |
+| `src/test/i18n-test.ts`   | Lightweight i18n instance with real EN translations              |
 
 ## CI/CD
 
 - **GitHub Actions** runs on push to `main` and pull requests to `main`
-- Pipeline: format check → lint → build (job name: "Lint, Format & Build")
+- Pipeline: format check → lint → test → build (job name: "Lint, Format, Test & Build")
 - Concurrency: in-progress runs are cancelled when a new commit is pushed to the same ref
 - **Dependabot** updates npm and GitHub Actions dependencies weekly
 

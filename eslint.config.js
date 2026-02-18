@@ -21,5 +21,11 @@ export default tseslint.config([
             globals: globals.browser,
         },
     },
+    {
+        files: ['src/test/**/*.{ts,tsx}', '**/*.test.{ts,tsx}'],
+        rules: {
+            'react-refresh/only-export-components': 'off',
+        },
+    },
     eslintConfigPrettier,
 ]);

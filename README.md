@@ -58,7 +58,9 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 
 - [Prettier](https://prettier.io/) — Code formatting with Tailwind CSS class sorting
 - [ESLint](https://eslint.org/) — Linting with TypeScript and React plugins
-- [GitHub Actions](https://github.com/features/actions) — CI pipeline (format check, lint, build)
+- [Vitest](https://vitest.dev/) — Unit and component testing
+- [React Testing Library](https://testing-library.com/react) — Component testing utilities
+- [GitHub Actions](https://github.com/features/actions) — CI pipeline (format check, lint, test, build)
 - [Dependabot](https://docs.github.com/en/code-security/dependabot) — Automated dependency updates
 
 ### Additional Libraries
@@ -90,14 +92,17 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Available Scripts
 
-| Script              | Description                                          |
-| ------------------- | ---------------------------------------------------- |
-| `pnpm dev`          | Start development server                             |
-| `pnpm build`        | Build for production (TypeScript check + Vite build) |
-| `pnpm preview`      | Preview production build                             |
-| `pnpm lint`         | Run ESLint                                           |
-| `pnpm format`       | Format all files with Prettier                       |
-| `pnpm format:check` | Check formatting (used in CI)                        |
+| Script               | Description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `pnpm dev`           | Start development server                             |
+| `pnpm build`         | Build for production (TypeScript check + Vite build) |
+| `pnpm preview`       | Preview production build                             |
+| `pnpm lint`          | Run ESLint                                           |
+| `pnpm format`        | Format all files with Prettier                       |
+| `pnpm format:check`  | Check formatting (used in CI)                        |
+| `pnpm test`          | Run all tests once                                   |
+| `pnpm test:watch`    | Run tests in watch mode                              |
+| `pnpm test:coverage` | Run tests with coverage report                       |
 
 ## How It Works
 
