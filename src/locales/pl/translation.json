@@ -321,5 +321,11 @@
     "accessibility": {
         "toggleLanguage": "Zmień język",
         "toggleTheme": "Zmień motyw"
+    },
+    "errorBoundary": {
+        "title": "Coś poszło nie tak",
+        "description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+        "tryAgain": "Spróbuj ponownie",
+        "details": "Szczegóły błędu"
     }
 }

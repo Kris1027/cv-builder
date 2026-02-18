@@ -321,5 +321,11 @@
     "accessibility": {
         "toggleLanguage": "Toggle language",
         "toggleTheme": "Toggle theme"
+    },
+    "errorBoundary": {
+        "title": "Something went wrong",
+        "description": "An unexpected error occurred. Please try again.",
+        "tryAgain": "Try Again",
+        "details": "Error details"
     }
 }
