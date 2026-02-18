@@ -20,8 +20,8 @@ export const ThemeToggle = () => {
 
     if (!mounted) {
         return (
-            <Button variant="outline" size="icon" className="h-9 w-9">
-                <div className="h-4 w-4" />
+            <Button variant='outline' size='icon' className='h-9 w-9'>
+                <div className='h-4 w-4' />
             </Button>
         );
     }
@@ -30,30 +30,30 @@ export const ThemeToggle = () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-9 w-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+                    variant='outline'
+                    size='icon'
+                    className='h-9 w-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800'
                 >
-                    <Sun className="h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                    <Moon className="absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-                    <span className="sr-only">Toggle theme</span>
+                    <Sun className='h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90' />
+                    <Moon className='absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0' />
+                    <span className='sr-only'>Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36">
-                <DropdownMenuItem onClick={() => setTheme('light')} className="cursor-pointer">
-                    <Sun className="mr-2 h-4 w-4" />
+            <DropdownMenuContent align='end' className='w-36'>
+                <DropdownMenuItem onClick={() => setTheme('light')} className='cursor-pointer'>
+                    <Sun className='mr-2 h-4 w-4' />
                     <span>Light</span>
-                    {theme === 'light' && <Check className="ml-auto h-4 w-4" />}
+                    {theme === 'light' && <Check className='ml-auto h-4 w-4' />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')} className="cursor-pointer">
-                    <Moon className="mr-2 h-4 w-4" />
+                <DropdownMenuItem onClick={() => setTheme('dark')} className='cursor-pointer'>
+                    <Moon className='mr-2 h-4 w-4' />
                     <span>Dark</span>
-                    {theme === 'dark' && <Check className="ml-auto h-4 w-4" />}
+                    {theme === 'dark' && <Check className='ml-auto h-4 w-4' />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('system')} className="cursor-pointer">
-                    <Monitor className="mr-2 h-4 w-4" />
+                <DropdownMenuItem onClick={() => setTheme('system')} className='cursor-pointer'>
+                    <Monitor className='mr-2 h-4 w-4' />
                     <span>System</span>
-                    {theme === 'system' && <Check className="ml-auto h-4 w-4" />}
+                    {theme === 'system' && <Check className='ml-auto h-4 w-4' />}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

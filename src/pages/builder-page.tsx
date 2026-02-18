@@ -390,13 +390,13 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden">
+        <div className='relative min-h-screen overflow-hidden'>
             {/* Background gradient mesh */}
-            <div className="animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80" />
+            <div className='animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80' />
 
             {/* Dot grid pattern */}
             <div
-                className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+                className='absolute inset-0 opacity-[0.03] dark:opacity-[0.04]'
                 style={{
                     backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
@@ -405,89 +405,89 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
             {/* Geometric shapes */}
             <div
-                className="pointer-events-none absolute inset-0 overflow-hidden"
-                aria-hidden="true"
+                className='pointer-events-none absolute inset-0 overflow-hidden'
+                aria-hidden='true'
             >
-                <div className="animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10" />
-                <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10" />
-                <div className="absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10">
+                <div className='animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10' />
+                <div className='animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10' />
+                <div className='absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10'>
                     {Array.from({ length: 9 }).map((_, i) => (
-                        <div key={i} className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                        <div key={i} className='h-1.5 w-1.5 rounded-full bg-indigo-500' />
                     ))}
                 </div>
-                <div className="animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
-                <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10" />
+                <div className='animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent' />
+                <div className='animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10' />
             </div>
 
             {/* Navigation Bar */}
-            <div className="sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <Button asChild variant="outline" size="sm">
-                                <Link to="/templates">
-                                    <ArrowLeft className="mr-2 h-4 w-4" />
+            <div className='sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/80'>
+                <div className='container mx-auto px-4 py-4'>
+                    <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-4'>
+                            <Button asChild variant='outline' size='sm'>
+                                <Link to='/templates'>
+                                    <ArrowLeft className='mr-2 h-4 w-4' />
                                     {t('nav.backToTemplates')}
                                 </Link>
                             </Button>
-                            <h1 className="font-display bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400">
+                            <h1 className='font-display bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400'>
                                 {t('builder.title')}
                             </h1>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className='flex items-center gap-3'>
                             {/* Hidden file input for PDF loading */}
                             <input
-                                type="file"
+                                type='file'
                                 ref={fileInputRef}
                                 onChange={handleLoadPDF}
-                                accept=".pdf"
-                                className="hidden"
+                                accept='.pdf'
+                                className='hidden'
                             />
                             <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
+                                type='button'
+                                variant='outline'
+                                size='sm'
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isLoadingPDF}
-                                className="transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
+                                className='transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400'
                             >
-                                <Upload className="mr-2 h-4 w-4" />
+                                <Upload className='mr-2 h-4 w-4' />
                                 {isLoadingPDF ? t('builder.loading') : t('builder.loadPdf')}
                             </Button>
                             <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
+                                type='button'
+                                variant='outline'
+                                size='sm'
                                 onClick={handleManualSave}
                                 disabled={isSaving}
-                                className="transition-colors hover:border-green-300 hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
+                                className='transition-colors hover:border-green-300 hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400'
                             >
-                                <Save className="mr-2 h-4 w-4" />
+                                <Save className='mr-2 h-4 w-4' />
                                 {isSaving ? t('builder.saving') : t('builder.save')}
                             </Button>
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
                                     <Button
-                                        type="button"
-                                        variant="outline"
-                                        size="sm"
-                                        className="transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                                        type='button'
+                                        variant='outline'
+                                        size='sm'
+                                        className='transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400'
                                     >
-                                        <RotateCcw className="mr-2 h-4 w-4" />
+                                        <RotateCcw className='mr-2 h-4 w-4' />
                                         {t('builder.reset')}
                                     </Button>
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
-                                                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                                        <div className='flex items-center gap-3'>
+                                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30'>
+                                                <AlertTriangle className='h-5 w-5 text-red-600 dark:text-red-400' />
                                             </div>
                                             <AlertDialogTitle>
                                                 {t('dialogs.reset.title')}
                                             </AlertDialogTitle>
                                         </div>
-                                        <AlertDialogDescription className="pt-2">
+                                        <AlertDialogDescription className='pt-2'>
                                             {t('dialogs.reset.description')}
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
@@ -497,7 +497,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                         </AlertDialogCancel>
                                         <AlertDialogAction
                                             onClick={handleReset}
-                                            className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                                            className='bg-red-600 hover:bg-red-700 focus:ring-red-600'
                                         >
                                             {t('dialogs.reset.confirm')}
                                         </AlertDialogAction>
@@ -512,15 +512,15 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                             >
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
-                                                <FileWarning className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                                        <div className='flex items-center gap-3'>
+                                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30'>
+                                                <FileWarning className='h-5 w-5 text-orange-600 dark:text-orange-400' />
                                             </div>
                                             <AlertDialogTitle>
                                                 {t('dialogs.pdfError.title')}
                                             </AlertDialogTitle>
                                         </div>
-                                        <AlertDialogDescription className="pt-2">
+                                        <AlertDialogDescription className='pt-2'>
                                             {pdfLoadError}
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
@@ -533,18 +533,18 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                             </AlertDialog>
 
                             {lastSaved && (
-                                <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-                                    <CheckCircle className="h-4 w-4" />
-                                    <span className="hidden sm:inline">
+                                <div className='flex items-center gap-2 text-sm text-green-600 dark:text-green-400'>
+                                    <CheckCircle className='h-4 w-4' />
+                                    <span className='hidden sm:inline'>
                                         {t('builder.saved', {
                                             time: lastSaved.toLocaleTimeString(),
                                         })}
                                     </span>
                                 </div>
                             )}
-                            <div className="rounded-full border border-indigo-200/60 bg-indigo-50/80 px-3 py-1 text-sm text-indigo-700 backdrop-blur-sm dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
-                                <span className="hidden sm:inline">{t('builder.template')}: </span>
-                                <span className="font-medium">
+                            <div className='rounded-full border border-indigo-200/60 bg-indigo-50/80 px-3 py-1 text-sm text-indigo-700 backdrop-blur-sm dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300'>
+                                <span className='hidden sm:inline'>{t('builder.template')}: </span>
+                                <span className='font-medium'>
                                     {getTemplateName(activeTemplateId)}
                                 </span>
                             </div>
@@ -555,32 +555,32 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 </div>
             </div>
 
-            <div className="relative z-[1] container mx-auto max-w-5xl px-4 py-8">
+            <div className='relative z-[1] container mx-auto max-w-5xl px-4 py-8'>
                 {/* Progress Indicator */}
-                <div className="animate-fade-in-up mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]">
-                    <div className="mb-3 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                <div className='animate-fade-in-up mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]'>
+                    <div className='mb-3 flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
                             <div
-                                className="inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2 text-white shadow-lg"
-                                aria-hidden="true"
+                                className='inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2 text-white shadow-lg'
+                                aria-hidden='true'
                             >
-                                <CheckCircle className="h-4 w-4" />
+                                <CheckCircle className='h-4 w-4' />
                             </div>
-                            <span className="font-display text-sm font-semibold dark:text-slate-200">
+                            <span className='font-display text-sm font-semibold dark:text-slate-200'>
                                 {t('builder.progress.title')}
                             </span>
                         </div>
-                        <span className="rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-0.5 text-xs font-bold text-white shadow-sm">
+                        <span className='rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-3 py-0.5 text-xs font-bold text-white shadow-sm'>
                             {calculateProgress()}%
                         </span>
                     </div>
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200/80 dark:bg-white/10">
+                    <div className='h-3 w-full overflow-hidden rounded-full bg-slate-200/80 dark:bg-white/10'>
                         <div
-                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 shadow-sm shadow-indigo-500/25 transition-all duration-500 ease-out"
+                            className='h-full rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 shadow-sm shadow-indigo-500/25 transition-all duration-500 ease-out'
                             style={{ width: `${calculateProgress()}%` }}
                         />
                     </div>
-                    <div className="text-muted-foreground mt-2 text-xs">
+                    <div className='text-muted-foreground mt-2 text-xs'>
                         {calculateProgress() === 100
                             ? t('builder.progress.complete')
                             : t('builder.progress.incomplete')}
@@ -593,15 +593,15 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                         e.stopPropagation();
                         form.handleSubmit();
                     }}
-                    className="space-y-8"
+                    className='space-y-8'
                 >
                     {/* Personal Information Section */}
-                    <div className="animate-fade-in-up delay-1">
+                    <div className='animate-fade-in-up delay-1'>
                         <PersonalInfoSection form={form} />
                     </div>
 
                     {/* Work Experience Section */}
-                    <div className="animate-fade-in-up delay-2">
+                    <div className='animate-fade-in-up delay-2'>
                         <ExperienceSection
                             form={form}
                             addExperience={addExperience}
@@ -611,7 +611,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Education Section */}
-                    <div className="animate-fade-in-up delay-3">
+                    <div className='animate-fade-in-up delay-3'>
                         <EducationSection
                             form={form}
                             addEducation={addEducation}
@@ -621,7 +621,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Skills Section */}
-                    <div className="animate-fade-in-up delay-4">
+                    <div className='animate-fade-in-up delay-4'>
                         <SkillsSection
                             form={form}
                             addSkill={addSkill}
@@ -631,7 +631,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Languages Section */}
-                    <div className="animate-fade-in-up delay-5">
+                    <div className='animate-fade-in-up delay-5'>
                         <LanguagesSection
                             form={form}
                             addLanguage={addLanguage}
@@ -641,7 +641,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Interests Section */}
-                    <div className="animate-fade-in-up delay-6">
+                    <div className='animate-fade-in-up delay-6'>
                         <InterestsSection
                             form={form}
                             addInterest={addInterest}
@@ -651,12 +651,12 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* GDPR Consent Section */}
-                    <div className="animate-fade-in-up delay-7">
+                    <div className='animate-fade-in-up delay-7'>
                         <GdprConsentSection form={form} />
                     </div>
 
                     {/* Submit Button */}
-                    <div className="animate-fade-in-up flex items-center justify-between pt-6 delay-8">
+                    <div className='animate-fade-in-up flex items-center justify-between pt-6 delay-8'>
                         <form.Subscribe
                             selector={(state) => [
                                 state.canSubmit,
@@ -665,18 +665,18 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                             ]}
                             children={([canSubmit, isSubmitting, isValid]) => (
                                 <>
-                                    <div className="text-sm">
+                                    <div className='text-sm'>
                                         {!isValid && (
-                                            <span className="font-medium text-red-500">
+                                            <span className='font-medium text-red-500'>
                                                 {t('builder.validation.fixErrors')}
                                             </span>
                                         )}
                                     </div>
                                     <Button
-                                        type="submit"
+                                        type='submit'
                                         disabled={!canSubmit || calculateProgress() < 30}
-                                        size="lg"
-                                        className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-xl"
+                                        size='lg'
+                                        className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-xl'
                                     >
                                         {isSubmitting
                                             ? t('builder.processing')

@@ -65,35 +65,35 @@ const SortableLanguageItem = ({ id, index, form, removeLanguage }: SortableLangu
             style={style}
             className={`rounded-xl border border-slate-200/60 bg-white/40 p-6 backdrop-blur-sm transition-all hover:shadow-md dark:border-white/5 dark:bg-white/[0.02] dark:hover:shadow-indigo-500/5 ${isDragging ? 'shadow-lg ring-2 ring-indigo-500/20' : ''}`}
         >
-            <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+            <div className='mb-4 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
                     <button
-                        type="button"
-                        className="cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10"
+                        type='button'
+                        className='cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
                         {...attributes}
                         {...listeners}
                     >
-                        <GripVertical className="h-5 w-5 text-slate-400" />
+                        <GripVertical className='h-5 w-5 text-slate-400' />
                     </button>
-                    <h4 className="font-display text-lg font-semibold text-slate-700 dark:text-slate-300">
+                    <h4 className='font-display text-lg font-semibold text-slate-700 dark:text-slate-300'>
                         {t('sections.languages.item', { number: index + 1 })}
                     </h4>
                 </div>
                 <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
+                    type='button'
+                    variant='ghost'
+                    size='sm'
                     onClick={() => removeLanguage(index)}
-                    className="text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400"
+                    className='text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400'
                 >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className='h-4 w-4' />
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <form.Field name={`languages[${index}].language`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.language')}</Label>
                             <Input
                                 id={subField.name}
@@ -109,7 +109,7 @@ const SortableLanguageItem = ({ id, index, form, removeLanguage }: SortableLangu
 
                 <form.Field name={`languages[${index}].proficiency`}>
                     {(subField) => (
-                        <div className="space-y-2">
+                        <div className='space-y-2'>
                             <Label htmlFor={subField.name}>{t('form.proficiency')}</Label>
                             <Select
                                 value={subField.state.value as string}
@@ -173,34 +173,34 @@ export const LanguagesSection = ({
     return (
         <FormSectionCard
             icon={Globe}
-            iconGradient="from-cyan-500 to-blue-600"
+            iconGradient='from-cyan-500 to-blue-600'
             title={t('sections.languages.title')}
             description={t('sections.languages.description')}
             headerAction={
                 <Button
-                    type="button"
+                    type='button'
                     onClick={addLanguage}
-                    className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg"
+                    className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-lg'
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className='mr-2 h-4 w-4' />
                     {t('sections.languages.add')}
                 </Button>
             }
         >
-            <form.Field name="languages">
+            <form.Field name='languages'>
                 {(field) => {
                     const languageItems = field.state.value as LanguageProps[];
                     return (
-                        <div className="space-y-4">
+                        <div className='space-y-4'>
                             {languageItems.length === 0 && (
-                                <div className="py-8 text-center">
-                                    <div className="mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 p-2.5 text-white/60 shadow-inner">
-                                        <Globe className="h-6 w-6" />
+                                <div className='py-8 text-center'>
+                                    <div className='mx-auto mb-3 inline-flex rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 p-2.5 text-white/60 shadow-inner'>
+                                        <Globe className='h-6 w-6' />
                                     </div>
-                                    <p className="font-display font-medium text-slate-500 dark:text-slate-400">
+                                    <p className='font-display font-medium text-slate-500 dark:text-slate-400'>
                                         {t('sections.languages.empty')}
                                     </p>
-                                    <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                                    <p className='mt-1 text-sm text-slate-400 dark:text-slate-500'>
                                         {t('sections.languages.emptyHint')}
                                     </p>
                                 </div>
@@ -218,7 +218,7 @@ export const LanguagesSection = ({
                                         )}
                                         strategy={verticalListSortingStrategy}
                                     >
-                                        <div className="space-y-4">
+                                        <div className='space-y-4'>
                                             {languageItems.map(
                                                 (_: LanguageProps, index: number) => (
                                                     <SortableLanguageItem

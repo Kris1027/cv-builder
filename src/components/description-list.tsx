@@ -20,8 +20,8 @@ export function DescriptionList({ description, className = '' }: DescriptionList
                     const bullet = bulletMatch[1];
                     const text = trimmedLine.slice(bulletMatch[0].length);
                     return (
-                        <div key={index} className="flex gap-2">
-                            <span className="flex-shrink-0">{bullet}</span>
+                        <div key={index} className='flex gap-2'>
+                            <span className='flex-shrink-0'>{bullet}</span>
                             <span>{text}</span>
                         </div>
                     );

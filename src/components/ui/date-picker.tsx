@@ -143,37 +143,37 @@ export function DatePicker({
                 <Button
                     id={id}
                     name={name}
-                    variant="outline"
+                    variant='outline'
                     className={cn(
                         'w-full justify-start text-left font-normal',
                         !dateValue && 'text-muted-foreground',
                     )}
                     onBlur={onBlur}
                     disabled={disabled}
-                    type="button"
+                    type='button'
                 >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className='mr-2 h-4 w-4' />
                     <span>{formatDisplay()}</span>
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-4" align="start">
-                <div className="space-y-4">
+            <PopoverContent className='w-auto p-4' align='start'>
+                <div className='space-y-4'>
                     {/* Year selector */}
-                    <div className="flex items-center justify-between">
+                    <div className='flex items-center justify-between'>
                         <Button
-                            variant="ghost"
-                            size="icon"
+                            variant='ghost'
+                            size='icon'
                             onClick={decrementYear}
                             disabled={selectedYear <= fromYear}
-                            type="button"
+                            type='button'
                         >
-                            <ChevronLeft className="h-4 w-4" />
+                            <ChevronLeft className='h-4 w-4' />
                         </Button>
                         <Select
                             value={selectedYear.toString()}
                             onValueChange={(value) => handleYearChange(Number(value))}
                         >
-                            <SelectTrigger className="w-32">
+                            <SelectTrigger className='w-32'>
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -188,29 +188,29 @@ export function DatePicker({
                             </SelectContent>
                         </Select>
                         <Button
-                            variant="ghost"
-                            size="icon"
+                            variant='ghost'
+                            size='icon'
                             onClick={incrementYear}
                             disabled={selectedYear >= toYear}
-                            type="button"
+                            type='button'
                         >
-                            <ChevronRight className="h-4 w-4" />
+                            <ChevronRight className='h-4 w-4' />
                         </Button>
                     </div>
 
                     {/* Month grid - only shown when not in yearOnly mode */}
                     {!yearOnly && (
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className='grid grid-cols-3 gap-2'>
                             {months.map((month, index) => (
                                 <Button
                                     key={month}
                                     variant={
                                         selectedMonth === index && dateValue ? 'default' : 'outline'
                                     }
-                                    size="sm"
+                                    size='sm'
                                     onClick={() => handleMonthSelect(index)}
-                                    className="h-9"
-                                    type="button"
+                                    className='h-9'
+                                    type='button'
                                 >
                                     {month.slice(0, 3)}
                                 </Button>

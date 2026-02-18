@@ -17,18 +17,18 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
     return (
         <FormSectionCard
             icon={User}
-            iconGradient="from-blue-500 to-indigo-600"
+            iconGradient='from-blue-500 to-indigo-600'
             title={t('sections.personalInfo.title')}
             description={t('sections.personalInfo.description')}
         >
-            <div className="space-y-6">
+            <div className='space-y-6'>
                 {/* Row 1: First Name, Last Name */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <form.Field name="personalInfo.firstName">
+                <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                    <form.Field name='personalInfo.firstName'>
                         {(field) => (
-                            <div className="space-y-2">
-                                <Label htmlFor={field.name} className="flex items-center gap-1">
-                                    {t('form.firstName')} <span className="text-red-500">*</span>
+                            <div className='space-y-2'>
+                                <Label htmlFor={field.name} className='flex items-center gap-1'>
+                                    {t('form.firstName')} <span className='text-red-500'>*</span>
                                 </Label>
                                 <Input
                                     id={field.name}
@@ -47,11 +47,11 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                         )}
                     </form.Field>
 
-                    <form.Field name="personalInfo.lastName">
+                    <form.Field name='personalInfo.lastName'>
                         {(field) => (
-                            <div className="space-y-2">
-                                <Label htmlFor={field.name} className="flex items-center gap-1">
-                                    {t('form.lastName')} <span className="text-red-500">*</span>
+                            <div className='space-y-2'>
+                                <Label htmlFor={field.name} className='flex items-center gap-1'>
+                                    {t('form.lastName')} <span className='text-red-500'>*</span>
                                 </Label>
                                 <Input
                                     id={field.name}
@@ -72,10 +72,10 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                 </div>
 
                 {/* Row 2: Professional Title (full width) */}
-                <div className="grid grid-cols-1 gap-6">
-                    <form.Field name="personalInfo.title">
+                <div className='grid grid-cols-1 gap-6'>
+                    <form.Field name='personalInfo.title'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.professionalTitle')}</Label>
                                 <Input
                                     id={field.name}
@@ -91,10 +91,10 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                 </div>
 
                 {/* Row 3: Location, Email, Phone */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                    <form.Field name="personalInfo.location">
+                <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
+                    <form.Field name='personalInfo.location'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.location')}</Label>
                                 <Input
                                     id={field.name}
@@ -108,16 +108,16 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                         )}
                     </form.Field>
 
-                    <form.Field name="personalInfo.email">
+                    <form.Field name='personalInfo.email'>
                         {(field) => (
-                            <div className="space-y-2">
-                                <Label htmlFor={field.name} className="flex items-center gap-1">
-                                    {t('form.email')} <span className="text-red-500">*</span>
+                            <div className='space-y-2'>
+                                <Label htmlFor={field.name} className='flex items-center gap-1'>
+                                    {t('form.email')} <span className='text-red-500'>*</span>
                                 </Label>
                                 <Input
                                     id={field.name}
                                     name={field.name}
-                                    type="email"
+                                    type='email'
                                     value={field.state.value as string}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
@@ -132,14 +132,14 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                         )}
                     </form.Field>
 
-                    <form.Field name="personalInfo.phone">
+                    <form.Field name='personalInfo.phone'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.phone')}</Label>
                                 <Input
                                     id={field.name}
                                     name={field.name}
-                                    type="tel"
+                                    type='tel'
                                     value={field.state.value as string}
                                     onBlur={(e) => {
                                         field.handleBlur();
@@ -158,15 +158,15 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                 </div>
 
                 {/* Row 4: Website, LinkedIn, GitHub */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                    <form.Field name="personalInfo.website">
+                <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
+                    <form.Field name='personalInfo.website'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.website')}</Label>
                                 <Input
                                     id={field.name}
                                     name={field.name}
-                                    type="url"
+                                    type='url'
                                     value={field.state.value as string}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
@@ -176,14 +176,14 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                         )}
                     </form.Field>
 
-                    <form.Field name="personalInfo.linkedin">
+                    <form.Field name='personalInfo.linkedin'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.linkedin')}</Label>
                                 <Input
                                     id={field.name}
                                     name={field.name}
-                                    type="url"
+                                    type='url'
                                     value={field.state.value as string}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
@@ -193,14 +193,14 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                         )}
                     </form.Field>
 
-                    <form.Field name="personalInfo.github">
+                    <form.Field name='personalInfo.github'>
                         {(field) => (
-                            <div className="space-y-2">
+                            <div className='space-y-2'>
                                 <Label htmlFor={field.name}>{t('form.github')}</Label>
                                 <Input
                                     id={field.name}
                                     name={field.name}
-                                    type="url"
+                                    type='url'
                                     value={field.state.value as string}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
