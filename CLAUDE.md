@@ -174,9 +174,8 @@ The PDF parser (`/src/lib/pdf-parser.ts`) detects templates by section markers:
 
 ## Animations
 
-Uses the browser-native **View Transition API** via TanStack Router's `defaultViewTransition: true` — zero extra dependencies.
+Page transitions rely on CSS entrance animations — no View Transition API (disabled because it caused visual artifacts with animated backgrounds).
 
-- **Page transitions**: Crossfade + subtle slide between routes (200-250ms), configured via `::view-transition-old`/`::view-transition-new` pseudo-selectors in `/src/index.css`
 - **Entrance animations**: CSS `@keyframes` utility classes applied to page elements:
     - `animate-fade-in-up` — slide up + fade (sections, cards, headings)
     - `animate-fade-in-scale` — scale from 95% + fade (stats, preview)
@@ -186,7 +185,7 @@ Uses the browser-native **View Transition API** via TanStack Router's `defaultVi
 - **Stagger delays**: `.delay-1` through `.delay-5` (100ms increments), or inline `animationDelay` style for 6+
 - **Micro-interactions**: `.hover-lift` class for button/card hover (scale + shadow)
 - **Accessibility**: All animations disabled when `prefers-reduced-motion: reduce` is set
-- **Browser support**: Chrome 111+, Edge 111+, Safari 18+, Firefox 132+. Unsupported browsers gracefully skip animations.
+- **Browser support**: Modern browsers. Animations gracefully degrade with `prefers-reduced-motion`.
 - CV templates are NOT animated — they stay print-clean with white backgrounds
 
 ## PDF Import
