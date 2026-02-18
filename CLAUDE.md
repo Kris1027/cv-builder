@@ -189,17 +189,17 @@ Page transitions rely on CSS entrance animations — no View Transition API (dis
 - **Browser support**: Modern browsers. Animations gracefully degrade with `prefers-reduced-motion`.
 - CV templates are NOT animated — they stay print-clean with white backgrounds
 
-### Scroll-linked Parallax (Home Page Only)
+### Scroll-linked Parallax & whileInView
 
-- **Dependency**: `motion` (Framer Motion) — auto code-split to index route via TanStack Router `autoCodeSplitting`
+- **Dependency**: `motion` (Framer Motion) — shared chunk used by all page routes
 - **Hook**: `useParallax` (`/src/hooks/use-parallax.ts`) — wraps `useScroll` + `useTransform` + `useReducedMotion`
     - Takes `yRange` (px of movement) and optional `opacityRange`
     - Returns `{ ref, y, opacity }` to spread onto `motion.div`
     - Returns static values when `prefers-reduced-motion` is active
 - **Parallax targets**: Only decorative/background layers (gradients, dot grids, geometric shapes, decorative circles) — never text
-- **whileInView animations**: Replace CSS `animate-fade-in-up` / `animate-fade-in-scale` on below-fold sections (features, how-it-works, stats, CTA) so they fire when scrolled into view, not on mount
+- **whileInView animations**: Replace CSS `animate-fade-in-up` / `animate-fade-in-scale` on below-fold content so animations fire when scrolled into view, not on mount
 - **`viewport: { once: true }`** on all `whileInView` — fire once then disconnect observer
-- Other pages still use CSS entrance animations unchanged
+- Applied to all pages: home, templates, template preview, builder, and preview
 
 ## PDF Import
 
