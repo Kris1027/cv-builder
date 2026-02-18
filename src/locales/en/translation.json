@@ -327,5 +327,10 @@
         "description": "An unexpected error occurred. Please try again.",
         "tryAgain": "Try Again",
         "details": "Error details"
+    },
+    "privacy": {
+        "notice": "Your data stays private",
+        "details": "All your CV data is stored locally in your browser. Nothing is sent to any server.",
+        "accept": "Got it"
     }
 }

@@ -1,6 +1,7 @@
 import { Outlet } from '@tanstack/react-router';
 import { ThemeProvider } from '@/contexts/theme-context';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { PrivacyNotice } from '@/components/privacy-notice';
 
 export const RootLayout = () => {
     return (
@@ -12,6 +13,7 @@ export const RootLayout = () => {
                     </ErrorBoundary>
                 </main>
             </div>
+            <PrivacyNotice />
         </ThemeProvider>
     );
 };

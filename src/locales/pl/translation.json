@@ -327,5 +327,10 @@
         "description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
         "tryAgain": "Spróbuj ponownie",
         "details": "Szczegóły błędu"
+    },
+    "privacy": {
+        "notice": "Twoje dane są prywatne",
+        "details": "Wszystkie dane CV są przechowywane lokalnie w Twojej przeglądarce. Nic nie jest wysyłane na żaden serwer.",
+        "accept": "Rozumiem"
     }
 }
