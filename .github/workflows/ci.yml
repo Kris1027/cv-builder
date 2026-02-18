@@ -11,8 +11,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    lint-format-build:
-        name: Lint, Format & Build
+    lint-format-test-build:
+        name: Lint, Format, Test & Build
         runs-on: ubuntu-latest
 
         steps:
@@ -33,9 +33,8 @@ jobs:
             - name: Lint
               run: pnpm lint
 
+            - name: Test
+              run: pnpm test
+
             - name: Build
               run: pnpm build
-
-            # - name: Test
-            #   run: pnpm test
-            #   TODO: Enable once test framework is set up (#27)
