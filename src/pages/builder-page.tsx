@@ -173,7 +173,16 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         localStorage.removeItem('cvData_backup');
         localStorage.removeItem('cvData_lastSaved');
         setLastSaved(null);
-        form.reset();
+        form.reset({
+            templateId: activeTemplateId,
+            personalInfo: emptyPersonalInfo as PersonalInfoProps,
+            experiences: [] as ExperienceProps[],
+            education: [] as EducationProps[],
+            skills: [] as SkillProps[],
+            languages: [] as LanguageProps[],
+            interests: [] as InterestProps[],
+            gdprConsent: emptyGdprConsent,
+        });
     };
 
     // Load CV from PDF
@@ -189,15 +198,28 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             const normalizedPersonalInfo = { ...emptyPersonalInfo, ...cvData.personalInfo };
             const normalizedGdprConsent = { ...emptyGdprConsent, ...cvData.gdprConsent };
 
-            // Update form with normalized data
-            form.setFieldValue('templateId', cvData.templateId);
-            form.setFieldValue('personalInfo', normalizedPersonalInfo);
-            form.setFieldValue('experiences', cvData.experiences ?? []);
-            form.setFieldValue('education', cvData.education ?? []);
-            form.setFieldValue('skills', cvData.skills ?? []);
-            form.setFieldValue('languages', cvData.languages ?? []);
-            form.setFieldValue('interests', cvData.interests ?? []);
-            form.setFieldValue('gdprConsent', normalizedGdprConsent);
+            // Build the complete new form values
+            // PDF metadata (CVData) doesn't include templateId — fall back to
+            // the currently active template so form.reset() gets a valid string
+            // and the Zod schema doesn't trigger a "fix errors" validation message.
+            const newValues = {
+                templateId: cvData.templateId || activeTemplateId,
+                personalInfo: normalizedPersonalInfo,
+                experiences: cvData.experiences ?? [],
+                education: cvData.education ?? [],
+                skills: cvData.skills ?? [],
+                languages: cvData.languages ?? [],
+                interests: cvData.interests ?? [],
+                gdprConsent: normalizedGdprConsent,
+            };
+
+            // Persist first so getInitialValues() returns matching data on
+            // re-render, preventing useForm's update() from overwriting the reset
+            localStorage.setItem('cvData', JSON.stringify(newValues));
+
+            // Reset the form with all values at once — no intermediate
+            // validation states and no stale errors
+            form.reset(newValues);
 
             // PDF loaded - user can manually save when ready
         } catch (error) {
@@ -368,9 +390,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 transition-colors dark:from-gray-900 dark:to-gray-800">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 transition-colors dark:from-gray-900 dark:via-gray-900 dark:to-indigo-950/30">
             {/* Navigation Bar */}
-            <div className="sticky top-0 z-10 border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/95">
+            <div className="sticky top-0 z-10 border-b border-white/20 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/5 dark:bg-gray-900/80">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
@@ -385,7 +407,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                     {t('nav.backToTemplates')}
                                 </Button>
                             </Link>
-                            <h1 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent">
+                            <h1 className="font-display bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-2xl font-bold text-transparent">
                                 {t('builder.title')}
                             </h1>
                         </div>
@@ -497,7 +519,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                     </span>
                                 </div>
                             )}
-                            <div className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                            <div className="rounded-full border border-slate-200/60 bg-white/60 px-3 py-1 text-sm text-slate-600 backdrop-blur-sm dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-400">
                                 <span className="hidden sm:inline">{t('builder.template')}: </span>
                                 <span className="font-medium">
                                     {getTemplateName(activeTemplateId)}
@@ -512,22 +534,22 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
             <div className="container mx-auto max-w-5xl px-4 py-8">
                 {/* Progress Indicator */}
-                <div className="animate-fade-in-up mb-8 rounded-xl bg-white p-4 shadow-sm transition-colors dark:bg-gray-800 dark:shadow-gray-900/50">
+                <div className="animate-fade-in-up mb-8 rounded-2xl border border-slate-200/60 bg-white/60 p-4 backdrop-blur-sm transition-colors dark:border-white/5 dark:bg-white/[0.03]">
                     <div className="mb-2 flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="font-display text-sm font-medium text-slate-700 dark:text-slate-300">
                             {t('builder.progress.title')}
                         </span>
-                        <span className="text-sm font-bold text-gray-600 dark:text-gray-400">
+                        <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
                             {calculateProgress()}%
                         </span>
                     </div>
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                    <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
                         <div
-                            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
+                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500 ease-out"
                             style={{ width: `${calculateProgress()}%` }}
                         />
                     </div>
-                    <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
                         {calculateProgress() === 100
                             ? t('builder.progress.complete')
                             : t('builder.progress.incomplete')}
@@ -623,7 +645,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                         type="submit"
                                         disabled={!canSubmit || calculateProgress() < 30}
                                         size="lg"
-                                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
+                                        className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-xl"
                                     >
                                         {isSubmitting
                                             ? t('builder.processing')
