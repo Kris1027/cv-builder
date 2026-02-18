@@ -46,16 +46,7 @@ import { useNavigate, Link, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
-
-const fadeInUp = (delay: number, shouldReduceMotion: boolean | null) =>
-    shouldReduceMotion
-        ? {}
-        : {
-              initial: { opacity: 0, y: 24 } as const,
-              whileInView: { opacity: 1, y: 0 } as const,
-              viewport: { once: true } as const,
-              transition: { duration: 0.5, delay, ease: 'easeOut' } as const,
-          };
+import { fadeInUp } from '@/lib/animation-variants';
 
 interface BuilderPageProps {
     templateId?: string;

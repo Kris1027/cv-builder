@@ -9,8 +9,8 @@ type UseParallaxOptions = {
 
 type UseParallaxReturn<T extends HTMLElement> = {
     ref: React.RefObject<T | null>;
-    y: MotionValue<number> | number;
-    opacity: MotionValue<number> | number;
+    y: MotionValue<number>;
+    opacity: MotionValue<number>;
 };
 
 export const useParallax = <T extends HTMLElement = HTMLDivElement>({
@@ -25,12 +25,17 @@ export const useParallax = <T extends HTMLElement = HTMLDivElement>({
         offset: ['start end', 'end start'],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], [-yRange, yRange]);
-    const opacity = useTransform(scrollYProgress, [0, 1], opacityRange ?? [1, 1]);
+    const y = useTransform(
+        scrollYProgress,
+        [0, 1],
+        shouldReduceMotion ? [0, 0] : [-yRange, yRange],
+    );
 
-    if (shouldReduceMotion) {
-        return { ref, y: 0, opacity: 1 };
-    }
+    const opacity = useTransform(
+        scrollYProgress,
+        [0, 1],
+        shouldReduceMotion ? [1, 1] : (opacityRange ?? [1, 1]),
+    );
 
     return { ref, y, opacity };
 };
