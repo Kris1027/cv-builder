@@ -197,9 +197,19 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     };
 
     // Load CV from PDF
+    const MAX_PDF_SIZE = 10 * 1024 * 1024; // 10MB
+
     const handleLoadPDF = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
+
+        if (file.size > MAX_PDF_SIZE) {
+            setPdfLoadError(t('builder.pdfTooLarge'));
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
+            return;
+        }
 
         setIsLoadingPDF(true);
         try {

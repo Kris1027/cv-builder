@@ -122,7 +122,8 @@
         },
         "validation": {
             "fixErrors": "Proszę naprawić błędy powyżej przed kontynuowaniem."
-        }
+        },
+        "pdfTooLarge": "Plik PDF jest zbyt duży. Maksymalny rozmiar to 10MB."
     },
     "form": {
         "firstName": "Imię",
