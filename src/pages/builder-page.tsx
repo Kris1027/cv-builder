@@ -560,7 +560,10 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 <div className="animate-fade-in-up mb-8 rounded-2xl border border-white/20 bg-white/60 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]">
                     <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2 text-white shadow-lg">
+                            <div
+                                className="inline-flex rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2 text-white shadow-lg"
+                                aria-hidden="true"
+                            >
                                 <CheckCircle className="h-4 w-4" />
                             </div>
                             <span className="font-display text-sm font-semibold dark:text-slate-200">
@@ -638,7 +641,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* Interests Section */}
-                    <div className="animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                    <div className="animate-fade-in-up delay-6">
                         <InterestsSection
                             form={form}
                             addInterest={addInterest}
@@ -648,15 +651,12 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                     </div>
 
                     {/* GDPR Consent Section */}
-                    <div className="animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                    <div className="animate-fade-in-up delay-7">
                         <GdprConsentSection form={form} />
                     </div>
 
                     {/* Submit Button */}
-                    <div
-                        className="animate-fade-in-up flex items-center justify-between pt-6"
-                        style={{ animationDelay: '800ms' }}
-                    >
+                    <div className="animate-fade-in-up flex items-center justify-between pt-6 delay-8">
                         <form.Subscribe
                             selector={(state) => [
                                 state.canSubmit,
