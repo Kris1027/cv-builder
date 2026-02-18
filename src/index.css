@@ -289,10 +289,6 @@
     }
 }
 
-.root-transition {
-    view-transition-name: root;
-}
-
 /* ===== Utility Classes ===== */
 
 .animate-fade-in-up {

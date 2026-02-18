@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
     Eye,
@@ -72,6 +72,7 @@ const GeometricShapes = () => (
 
 export function TemplatesPage() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [hasSavedData, setHasSavedData] = useState(false);
     const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
@@ -250,9 +251,25 @@ export function TemplatesPage() {
 
                             <div className="relative">
                                 {/* Preview Area */}
-                                <Link
-                                    to="/templates/$templateId"
-                                    params={{ templateId: template.id }}
+                                <div
+                                    role="link"
+                                    tabIndex={0}
+                                    onClick={() =>
+                                        navigate({
+                                            to: '/templates/$templateId',
+                                            params: { templateId: template.id },
+                                        })
+                                    }
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            navigate({
+                                                to: '/templates/$templateId',
+                                                params: { templateId: template.id },
+                                            });
+                                        }
+                                    }}
+                                    className="cursor-pointer"
                                 >
                                     <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 p-4 dark:from-slate-800/50 dark:to-slate-900/50">
                                         <div className="h-full w-full text-gray-900 transition-transform duration-500 group-hover:scale-105">
@@ -274,7 +291,7 @@ export function TemplatesPage() {
                                             </div>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
 
                                 {/* Card Body */}
                                 <div className="p-5">
