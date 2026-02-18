@@ -113,6 +113,16 @@ export function PreviewPage() {
                 {/* Background gradient mesh */}
                 <div className="animate-gradient-shift absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-violet-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80" />
 
+                {/* Dot grid pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+                    style={{
+                        backgroundImage:
+                            'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                        backgroundSize: '24px 24px',
+                    }}
+                />
+
                 <div className="relative z-[1] container mx-auto px-4 py-24">
                     <div className="animate-fade-in-up mx-auto max-w-md text-center">
                         <h1 className="font-display mb-4 text-2xl font-bold dark:text-gray-100">
@@ -155,6 +165,11 @@ export function PreviewPage() {
             >
                 <div className="animate-float-reverse absolute top-20 left-[8%] h-16 w-16 rotate-12 border-2 border-indigo-500/15 dark:border-indigo-400/10" />
                 <div className="animate-float absolute top-32 right-[12%] h-20 w-20 rounded-full border-2 border-violet-500/10 dark:border-violet-400/10" />
+                <div className="absolute bottom-40 left-[15%] grid grid-cols-3 gap-1.5 opacity-20 dark:opacity-10">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                        <div key={i} className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                    ))}
+                </div>
                 <div className="animate-float absolute top-1/2 right-[5%] h-px w-24 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
                 <div className="animate-float-reverse absolute right-[18%] bottom-24 h-12 w-12 rotate-45 rounded-sm border-2 border-indigo-500/10 dark:border-indigo-400/10" />
             </div>
@@ -179,19 +194,19 @@ export function PreviewPage() {
                             {/* Page Mode Toggle */}
                             <div className="flex items-center overflow-hidden rounded-lg border border-white/20 backdrop-blur-sm dark:border-white/10">
                                 <Button
-                                    variant={!singlePageMode ? 'default' : 'ghost'}
+                                    variant="ghost"
                                     size="sm"
                                     onClick={() => setSinglePageMode(false)}
-                                    className={`rounded-none border-0 ${!singlePageMode ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700' : ''}`}
+                                    className={`rounded-none border-0 ${!singlePageMode ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700 hover:text-white' : ''}`}
                                 >
                                     <Files className="mr-1 h-4 w-4" />
                                     {t('preview.multiPage')}
                                 </Button>
                                 <Button
-                                    variant={singlePageMode ? 'default' : 'ghost'}
+                                    variant="ghost"
                                     size="sm"
                                     onClick={() => setSinglePageMode(true)}
-                                    className={`rounded-none border-0 ${singlePageMode ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700' : ''}`}
+                                    className={`rounded-none border-0 ${singlePageMode ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-700 hover:to-violet-700 hover:text-white' : ''}`}
                                 >
                                     <FileDown className="mr-1 h-4 w-4" />
                                     {t('preview.singlePage')}
@@ -241,7 +256,10 @@ export function PreviewPage() {
                 <div className="container mx-auto px-4 py-4 print:hidden">
                     <div className="animate-fade-in-up rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]">
                         <div className="flex items-center gap-3">
-                            <div className="inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 p-2.5 text-white shadow-lg">
+                            <div
+                                className="inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 p-2.5 text-white shadow-lg"
+                                aria-hidden="true"
+                            >
                                 <CheckCircle2 className="h-5 w-5" />
                             </div>
                             <div>
@@ -261,7 +279,10 @@ export function PreviewPage() {
                     <div className="container mx-auto px-4 print:hidden">
                         <div className="animate-fade-in-up mb-4 rounded-2xl border border-white/20 bg-white/60 p-4 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]">
                             <div className="flex items-center gap-3">
-                                <div className="inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white shadow-lg">
+                                <div
+                                    className="inline-flex rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 text-white shadow-lg"
+                                    aria-hidden="true"
+                                >
                                     <AlertTriangle className="h-5 w-5" />
                                 </div>
                                 <div>
