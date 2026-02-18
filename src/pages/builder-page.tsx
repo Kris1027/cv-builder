@@ -173,7 +173,16 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         localStorage.removeItem('cvData_backup');
         localStorage.removeItem('cvData_lastSaved');
         setLastSaved(null);
-        form.reset();
+        form.reset({
+            templateId: activeTemplateId,
+            personalInfo: emptyPersonalInfo as PersonalInfoProps,
+            experiences: [] as ExperienceProps[],
+            education: [] as EducationProps[],
+            skills: [] as SkillProps[],
+            languages: [] as LanguageProps[],
+            interests: [] as InterestProps[],
+            gdprConsent: emptyGdprConsent,
+        });
     };
 
     // Load CV from PDF
@@ -189,15 +198,25 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             const normalizedPersonalInfo = { ...emptyPersonalInfo, ...cvData.personalInfo };
             const normalizedGdprConsent = { ...emptyGdprConsent, ...cvData.gdprConsent };
 
-            // Update form with normalized data
-            form.setFieldValue('templateId', cvData.templateId);
-            form.setFieldValue('personalInfo', normalizedPersonalInfo);
-            form.setFieldValue('experiences', cvData.experiences ?? []);
-            form.setFieldValue('education', cvData.education ?? []);
-            form.setFieldValue('skills', cvData.skills ?? []);
-            form.setFieldValue('languages', cvData.languages ?? []);
-            form.setFieldValue('interests', cvData.interests ?? []);
-            form.setFieldValue('gdprConsent', normalizedGdprConsent);
+            // Build the complete new form values
+            const newValues = {
+                templateId: cvData.templateId,
+                personalInfo: normalizedPersonalInfo,
+                experiences: cvData.experiences ?? [],
+                education: cvData.education ?? [],
+                skills: cvData.skills ?? [],
+                languages: cvData.languages ?? [],
+                interests: cvData.interests ?? [],
+                gdprConsent: normalizedGdprConsent,
+            };
+
+            // Persist first so getInitialValues() returns matching data on
+            // re-render, preventing useForm's update() from overwriting the reset
+            localStorage.setItem('cvData', JSON.stringify(newValues));
+
+            // Reset the form with all values at once — no intermediate
+            // validation states and no stale errors
+            form.reset(newValues);
 
             // PDF loaded - user can manually save when ready
         } catch (error) {
