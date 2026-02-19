@@ -8,8 +8,35 @@ type ErrorFallbackProps = {
     resetErrorBoundary: () => void;
 };
 
+const FALLBACK_STRINGS = {
+    title: 'Something went wrong',
+    description: 'An unexpected error occurred. Please try again.',
+    details: 'Error details',
+    tryAgain: 'Try Again',
+} as const;
+
+const useSafeTranslation = () => {
+    try {
+        const { t } = useTranslation();
+        // Verify i18n is functional by calling t()
+        const test = t('errorBoundary.title');
+        if (typeof test === 'string' && test !== 'errorBoundary.title') {
+            return (key: string) => t(key);
+        }
+    } catch {
+        // i18n unavailable
+    }
+    const keyMap: Record<string, string> = {
+        'errorBoundary.title': FALLBACK_STRINGS.title,
+        'errorBoundary.description': FALLBACK_STRINGS.description,
+        'errorBoundary.details': FALLBACK_STRINGS.details,
+        'errorBoundary.tryAgain': FALLBACK_STRINGS.tryAgain,
+    };
+    return (key: string) => keyMap[key] ?? key;
+};
+
 const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
-    const { t } = useTranslation();
+    const t = useSafeTranslation();
 
     return (
         <div className='flex min-h-[200px] items-center justify-center p-6'>
