@@ -122,7 +122,8 @@
         },
         "validation": {
             "fixErrors": "Please fix the errors above before proceeding."
-        }
+        },
+        "pdfTooLarge": "The PDF file is too large. Maximum size is 10MB."
     },
     "form": {
         "firstName": "First Name",
@@ -260,7 +261,8 @@
             "title": "Content is very long",
             "subtitle": "Your CV has been scaled to the minimum (50%). Consider reducing content for better readability."
         },
-        "exportError": "Failed to export PDF. Please try again."
+        "exportError": "Failed to export PDF. Please try again.",
+        "exportErrorTitle": "Export Failed"
     },
     "proficiency": {
         "A1": "A1 - Beginner",
@@ -321,5 +323,16 @@
     "accessibility": {
         "toggleLanguage": "Toggle language",
         "toggleTheme": "Toggle theme"
+    },
+    "errorBoundary": {
+        "title": "Something went wrong",
+        "description": "An unexpected error occurred. Please try again.",
+        "tryAgain": "Try Again",
+        "details": "Error details"
+    },
+    "privacy": {
+        "notice": "Your data stays private",
+        "details": "All your CV data is stored locally in your browser. Nothing is sent to any server.",
+        "accept": "Got it"
     }
 }

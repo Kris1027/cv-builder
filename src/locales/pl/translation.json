@@ -122,7 +122,8 @@
         },
         "validation": {
             "fixErrors": "Proszę naprawić błędy powyżej przed kontynuowaniem."
-        }
+        },
+        "pdfTooLarge": "Plik PDF jest zbyt duży. Maksymalny rozmiar to 10MB."
     },
     "form": {
         "firstName": "Imię",
@@ -260,7 +261,8 @@
             "title": "Treść jest bardzo długa",
             "subtitle": "Twoje CV zostało przeskalowane do minimum (50%). Rozważ skrócenie treści dla lepszej czytelności."
         },
-        "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie."
+        "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie.",
+        "exportErrorTitle": "Błąd eksportu"
     },
     "proficiency": {
         "A1": "A1 - Początkujący",
@@ -321,5 +323,16 @@
     "accessibility": {
         "toggleLanguage": "Zmień język",
         "toggleTheme": "Zmień motyw"
+    },
+    "errorBoundary": {
+        "title": "Coś poszło nie tak",
+        "description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+        "tryAgain": "Spróbuj ponownie",
+        "details": "Szczegóły błędu"
+    },
+    "privacy": {
+        "notice": "Twoje dane są prywatne",
+        "details": "Wszystkie dane CV są przechowywane lokalnie w Twojej przeglądarce. Nic nie jest wysyłane na żaden serwer.",
+        "accept": "Rozumiem"
     }
 }

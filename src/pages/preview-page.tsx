@@ -15,6 +15,7 @@ import {
     Files,
     CheckCircle2,
     AlertTriangle,
+    FileWarning,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
@@ -23,8 +24,19 @@ import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'motion/react';
 import { useParallax } from '@/hooks/use-parallax';
 import { fadeInUp, fadeInScale } from '@/lib/animation-variants';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { safeStorage } from '@/lib/storage';
 
-export function PreviewPage() {
+export const PreviewPage = () => {
     const { t } = useTranslation();
     const search = useSearch({ from: '/preview' }) as { templateId?: string };
     const templateId = search.templateId || 'developer';
@@ -36,6 +48,7 @@ export function PreviewPage() {
 
     const [cvData, setCvData] = useState<CVData | null>(null);
     const [isExporting, setIsExporting] = useState(false);
+    const [exportError, setExportError] = useState<string | null>(null);
     const [singlePageMode, setSinglePageMode] = useState(false);
     const [scaleInfo, setScaleInfo] = useState({ scale: 1, isScaled: false, atMinScale: false });
 
@@ -48,9 +61,15 @@ export function PreviewPage() {
 
     useEffect(() => {
         // Get data from localStorage
-        const storedData = localStorage.getItem('cvData');
+        const storedData = safeStorage.getItem('cvData');
         if (storedData) {
-            const parsedData = JSON.parse(storedData);
+            let parsedData;
+            try {
+                parsedData = JSON.parse(storedData);
+            } catch {
+                console.warn('Failed to parse stored CV data');
+                return;
+            }
             // Ensure all arrays have default values
             const transformedData: CVData = {
                 personalInfo: parsedData.personalInfo,
@@ -109,7 +128,7 @@ export function PreviewPage() {
             });
         } catch (error) {
             console.error('Failed to export PDF:', error);
-            alert(t('preview.exportError'));
+            setExportError(t('preview.exportError'));
         } finally {
             restoreScaling();
             setIsExporting(false);
@@ -324,23 +343,52 @@ export function PreviewPage() {
 
                 {/* Template Preview */}
                 <div className='py-8' id='print-container'>
-                    <ScaleToFitContainer
-                        enabled={singlePageMode}
-                        onScaleChange={handleScaleChange}
-                        className='mx-auto max-w-[210mm]'
-                    >
-                        <motion.div
-                            id='cv-content'
-                            className='overflow-hidden bg-white text-gray-900 shadow-xl'
-                            {...fadeInScale(0.1, shouldReduceMotion)}
+                    <ErrorBoundary>
+                        <ScaleToFitContainer
+                            enabled={singlePageMode}
+                            onScaleChange={handleScaleChange}
+                            className='mx-auto max-w-[210mm]'
                         >
-                            {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
-                            {templateId === 'default' && <DefaultTemplate data={cvData} />}
-                            {templateId === 'veterinary' && <VeterinaryTemplate data={cvData} />}
-                        </motion.div>
-                    </ScaleToFitContainer>
+                            <motion.div
+                                id='cv-content'
+                                className='overflow-hidden bg-white text-gray-900 shadow-xl'
+                                {...fadeInScale(0.1, shouldReduceMotion)}
+                            >
+                                {templateId === 'developer' && <DeveloperTemplate data={cvData} />}
+                                {templateId === 'default' && <DefaultTemplate data={cvData} />}
+                                {templateId === 'veterinary' && (
+                                    <VeterinaryTemplate data={cvData} />
+                                )}
+                            </motion.div>
+                        </ScaleToFitContainer>
+                    </ErrorBoundary>
                 </div>
             </div>
+
+            {/* Export Error Dialog */}
+            <AlertDialog
+                open={!!exportError}
+                onOpenChange={(open) => !open && setExportError(null)}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <div className='flex items-center gap-3'>
+                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30'>
+                                <FileWarning className='h-5 w-5 text-orange-600 dark:text-orange-400' />
+                            </div>
+                            <AlertDialogTitle>{t('preview.exportErrorTitle')}</AlertDialogTitle>
+                        </div>
+                        <AlertDialogDescription className='pt-2'>
+                            {exportError}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setExportError(null)}>
+                            {t('dialogs.pdfError.ok')}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
 
             {/* Print Styles */}
             <style>{`
@@ -374,4 +422,4 @@ export function PreviewPage() {
       `}</style>
         </div>
     );
-}
+};
