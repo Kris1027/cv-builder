@@ -40,7 +40,7 @@ export default defineConfig(({ command }) => ({
         }),
         react(),
         tailwindcss(),
-        command === 'build' && htmlCsp(),
+        ...(command === 'build' ? [htmlCsp()] : []),
     ],
     resolve: {
         alias: {
