@@ -15,15 +15,15 @@ declare module '@tanstack/react-router' {
 }
 
 window.addEventListener('error', (event) => {
-    console.error('Unhandled error:', event.error);
+    console.error('Unhandled error:', event.error ?? event.message);
 });
 
 window.addEventListener('unhandledrejection', (event) => {
     console.error('Unhandled promise rejection:', event.reason);
 });
 
-const rootElement = document.getElementById('root')!;
-if (!rootElement.innerHTML) {
+const rootElement = document.getElementById('root');
+if (rootElement && !rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
         <StrictMode>

@@ -261,7 +261,8 @@
             "title": "Content is very long",
             "subtitle": "Your CV has been scaled to the minimum (50%). Consider reducing content for better readability."
         },
-        "exportError": "Failed to export PDF. Please try again."
+        "exportError": "Failed to export PDF. Please try again.",
+        "exportErrorTitle": "Export Failed"
     },
     "proficiency": {
         "A1": "A1 - Beginner",

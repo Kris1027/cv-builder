@@ -261,7 +261,8 @@
             "title": "Treść jest bardzo długa",
             "subtitle": "Twoje CV zostało przeskalowane do minimum (50%). Rozważ skrócenie treści dla lepszej czytelności."
         },
-        "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie."
+        "exportError": "Nie udało się wyeksportować PDF. Spróbuj ponownie.",
+        "exportErrorTitle": "Błąd eksportu"
     },
     "proficiency": {
         "A1": "A1 - Początkujący",

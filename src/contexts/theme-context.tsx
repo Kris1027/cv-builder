@@ -3,10 +3,10 @@ import type { Theme } from '@/types/theme-context-types';
 import { ThemeContext } from '@/types/theme-context-types';
 import { safeStorage } from '@/lib/storage';
 
-interface ThemeProviderProps {
+type ThemeProviderProps = {
     children: React.ReactNode;
     defaultTheme?: Theme;
-}
+};
 
 export const ThemeProvider = ({ children, defaultTheme = 'system' }: ThemeProviderProps) => {
     const [theme, setThemeState] = useState<Theme>(() => {

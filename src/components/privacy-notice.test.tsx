@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, userEvent } from '@/test/test-utils';
 import { PrivacyNotice } from './privacy-notice';
+import { safeStorage } from '@/lib/storage';
 
 describe('PrivacyNotice', () => {
     beforeEach(() => {
@@ -20,7 +21,7 @@ describe('PrivacyNotice', () => {
     });
 
     it('should not show the privacy notice when previously accepted', () => {
-        localStorage.setItem('privacyNoticeAccepted', 'true');
+        safeStorage.setItem('privacyNoticeAccepted', 'true');
 
         render(<PrivacyNotice />);
 
@@ -34,6 +35,6 @@ describe('PrivacyNotice', () => {
         await user.click(screen.getByRole('button', { name: 'Got it' }));
 
         expect(screen.queryByText('Your data stays private')).not.toBeInTheDocument();
-        expect(localStorage.getItem('privacyNoticeAccepted')).toBe('true');
+        expect(safeStorage.getItem('privacyNoticeAccepted')).toBe('true');
     });
 });

@@ -50,9 +50,11 @@ import { fadeInUp } from '@/lib/animation-variants';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { safeStorage } from '@/lib/storage';
 
-interface BuilderPageProps {
+const MAX_PDF_SIZE = 10 * 1024 * 1024; // 10MB
+
+type BuilderPageProps = {
     templateId?: string;
-}
+};
 
 const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     const { t } = useTranslation();
@@ -106,7 +108,22 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     const getInitialValues = () => {
         const storedData = safeStorage.getItem('cvData');
         if (storedData) {
-            const parsedData = JSON.parse(storedData);
+            let parsedData;
+            try {
+                parsedData = JSON.parse(storedData);
+            } catch {
+                console.warn('Failed to parse stored CV data, starting fresh');
+                return {
+                    templateId: activeTemplateId,
+                    personalInfo: emptyPersonalInfo as PersonalInfoProps,
+                    experiences: [] as ExperienceProps[],
+                    education: [] as EducationProps[],
+                    skills: [] as SkillProps[],
+                    languages: [] as LanguageProps[],
+                    interests: [] as InterestProps[],
+                    gdprConsent: emptyGdprConsent,
+                };
+            }
             return {
                 ...parsedData,
                 // Always use URL templateId when explicitly provided, otherwise fall back to stored value
@@ -195,9 +212,6 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             gdprConsent: emptyGdprConsent,
         });
     };
-
-    // Load CV from PDF
-    const MAX_PDF_SIZE = 10 * 1024 * 1024; // 10MB
 
     const handleLoadPDF = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -621,109 +635,109 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                 </motion.div>
 
                 <ErrorBoundary>
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        form.handleSubmit();
-                    }}
-                    className='space-y-8'
-                >
-                    {/* Personal Information Section */}
-                    <motion.div {...fadeInUp(0, shouldReduceMotion)}>
-                        <PersonalInfoSection form={form} />
-                    </motion.div>
-
-                    {/* Work Experience Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <ExperienceSection
-                            form={form}
-                            addExperience={addExperience}
-                            removeExperience={removeExperience}
-                            reorderExperiences={reorderExperiences}
-                        />
-                    </motion.div>
-
-                    {/* Education Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <EducationSection
-                            form={form}
-                            addEducation={addEducation}
-                            removeEducation={removeEducation}
-                            reorderEducation={reorderEducation}
-                        />
-                    </motion.div>
-
-                    {/* Skills Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <SkillsSection
-                            form={form}
-                            addSkill={addSkill}
-                            removeSkill={removeSkill}
-                            reorderSkills={reorderSkills}
-                        />
-                    </motion.div>
-
-                    {/* Languages Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <LanguagesSection
-                            form={form}
-                            addLanguage={addLanguage}
-                            removeLanguage={removeLanguage}
-                            reorderLanguages={reorderLanguages}
-                        />
-                    </motion.div>
-
-                    {/* Interests Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <InterestsSection
-                            form={form}
-                            addInterest={addInterest}
-                            removeInterest={removeInterest}
-                            reorderInterests={reorderInterests}
-                        />
-                    </motion.div>
-
-                    {/* GDPR Consent Section */}
-                    <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
-                        <GdprConsentSection form={form} />
-                    </motion.div>
-
-                    {/* Submit Button */}
-                    <motion.div
-                        className='flex items-center justify-between pt-6'
-                        {...fadeInUp(0.05, shouldReduceMotion)}
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            form.handleSubmit();
+                        }}
+                        className='space-y-8'
                     >
-                        <form.Subscribe
-                            selector={(state) => [
-                                state.canSubmit,
-                                state.isSubmitting,
-                                state.isValid,
-                            ]}
-                            children={([canSubmit, isSubmitting, isValid]) => (
-                                <>
-                                    <div className='text-sm'>
-                                        {!isValid && (
-                                            <span className='font-medium text-red-500'>
-                                                {t('builder.validation.fixErrors')}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <Button
-                                        type='submit'
-                                        disabled={!canSubmit || calculateProgress() < 30}
-                                        size='lg'
-                                        className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-xl'
-                                    >
-                                        {isSubmitting
-                                            ? t('builder.processing')
-                                            : `${t('builder.previewCv')} →`}
-                                    </Button>
-                                </>
-                            )}
-                        />
-                    </motion.div>
-                </form>
+                        {/* Personal Information Section */}
+                        <motion.div {...fadeInUp(0, shouldReduceMotion)}>
+                            <PersonalInfoSection form={form} />
+                        </motion.div>
+
+                        {/* Work Experience Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <ExperienceSection
+                                form={form}
+                                addExperience={addExperience}
+                                removeExperience={removeExperience}
+                                reorderExperiences={reorderExperiences}
+                            />
+                        </motion.div>
+
+                        {/* Education Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <EducationSection
+                                form={form}
+                                addEducation={addEducation}
+                                removeEducation={removeEducation}
+                                reorderEducation={reorderEducation}
+                            />
+                        </motion.div>
+
+                        {/* Skills Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <SkillsSection
+                                form={form}
+                                addSkill={addSkill}
+                                removeSkill={removeSkill}
+                                reorderSkills={reorderSkills}
+                            />
+                        </motion.div>
+
+                        {/* Languages Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <LanguagesSection
+                                form={form}
+                                addLanguage={addLanguage}
+                                removeLanguage={removeLanguage}
+                                reorderLanguages={reorderLanguages}
+                            />
+                        </motion.div>
+
+                        {/* Interests Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <InterestsSection
+                                form={form}
+                                addInterest={addInterest}
+                                removeInterest={removeInterest}
+                                reorderInterests={reorderInterests}
+                            />
+                        </motion.div>
+
+                        {/* GDPR Consent Section */}
+                        <motion.div {...fadeInUp(0.05, shouldReduceMotion)}>
+                            <GdprConsentSection form={form} />
+                        </motion.div>
+
+                        {/* Submit Button */}
+                        <motion.div
+                            className='flex items-center justify-between pt-6'
+                            {...fadeInUp(0.05, shouldReduceMotion)}
+                        >
+                            <form.Subscribe
+                                selector={(state) => [
+                                    state.canSubmit,
+                                    state.isSubmitting,
+                                    state.isValid,
+                                ]}
+                                children={([canSubmit, isSubmitting, isValid]) => (
+                                    <>
+                                        <div className='text-sm'>
+                                            {!isValid && (
+                                                <span className='font-medium text-red-500'>
+                                                    {t('builder.validation.fixErrors')}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <Button
+                                            type='submit'
+                                            disabled={!canSubmit || calculateProgress() < 30}
+                                            size='lg'
+                                            className='bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg transition-all hover:from-indigo-700 hover:to-violet-700 hover:shadow-xl'
+                                        >
+                                            {isSubmitting
+                                                ? t('builder.processing')
+                                                : `${t('builder.previewCv')} →`}
+                                        </Button>
+                                    </>
+                                )}
+                            />
+                        </motion.div>
+                    </form>
                 </ErrorBoundary>
             </div>
         </div>

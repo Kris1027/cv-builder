@@ -18,6 +18,9 @@ const htmlCsp = (): Plugin => ({
                 "font-src 'self'",
                 "connect-src 'self'",
                 "worker-src 'self' blob:",
+                "object-src 'none'",
+                "base-uri 'self'",
+                "form-action 'self'",
             ].join('; ');
 
             return html.replace(

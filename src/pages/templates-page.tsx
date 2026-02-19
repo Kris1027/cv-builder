@@ -61,7 +61,7 @@ const templates = [
     },
 ];
 
-export function TemplatesPage() {
+export const TemplatesPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const shouldReduceMotion = useReducedMotion();
@@ -362,4 +362,4 @@ export function TemplatesPage() {
             </div>
         </div>
     );
-}
+};
