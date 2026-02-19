@@ -15,24 +15,30 @@ const FALLBACK_STRINGS = {
     tryAgain: 'Try Again',
 } as const;
 
+const FALLBACK_KEY_MAP: Record<string, string> = {
+    'errorBoundary.title': FALLBACK_STRINGS.title,
+    'errorBoundary.description': FALLBACK_STRINGS.description,
+    'errorBoundary.details': FALLBACK_STRINGS.details,
+    'errorBoundary.tryAgain': FALLBACK_STRINGS.tryAgain,
+};
+
 const useSafeTranslation = () => {
-    try {
-        const { t } = useTranslation();
-        // Verify i18n is functional by calling t()
-        const test = t('errorBoundary.title');
-        if (typeof test === 'string' && test !== 'errorBoundary.title') {
-            return (key: string) => t(key);
-        }
-    } catch {
-        // i18n unavailable
+    const { t, ready } = useTranslation();
+
+    if (!ready) {
+        return (key: string) => FALLBACK_KEY_MAP[key] ?? key;
     }
-    const keyMap: Record<string, string> = {
-        'errorBoundary.title': FALLBACK_STRINGS.title,
-        'errorBoundary.description': FALLBACK_STRINGS.description,
-        'errorBoundary.details': FALLBACK_STRINGS.details,
-        'errorBoundary.tryAgain': FALLBACK_STRINGS.tryAgain,
+
+    return (key: string) => {
+        try {
+            const result = t(key);
+            return typeof result === 'string' && result !== key
+                ? result
+                : (FALLBACK_KEY_MAP[key] ?? key);
+        } catch {
+            return FALLBACK_KEY_MAP[key] ?? key;
+        }
     };
-    return (key: string) => keyMap[key] ?? key;
 };
 
 const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
