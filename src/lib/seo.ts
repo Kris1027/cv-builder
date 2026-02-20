@@ -1,3 +1,10 @@
+if (!import.meta.env.VITE_SITE_URL) {
+    throw new Error(
+        'VITE_SITE_URL environment variable is not set. ' +
+            'Please configure it in your .env file (see .env.example).',
+    );
+}
+
 export const SITE_URL = import.meta.env.VITE_SITE_URL;
 
 export const SEO_DEFAULTS = {

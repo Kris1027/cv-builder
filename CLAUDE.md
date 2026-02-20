@@ -232,7 +232,7 @@ Page transitions rely on CSS entrance animations — no View Transition API (dis
 ## SEO
 
 - **Head management**: TanStack Router `head()` property + `<HeadContent />` in root layout
-- **Constants**: `/src/lib/seo.ts` — `SITE_URL`, `SEO_DEFAULTS`, `OG_DEFAULTS`, `TEMPLATE_NAMES`
+- **Constants**: `/src/lib/seo.ts` — `SITE_URL` (from `VITE_SITE_URL` env var), `SEO_DEFAULTS`, `OG_DEFAULTS`, `TEMPLATE_NAMES`
 - **Per-route titles**: Each route defines `head()` with unique `title`, `og:title`, `twitter:title`, and `canonical` link
 - **Title convention**: `Page Name | CV Builder` (child routes), `CV Builder - Create Professional Resumes in Minutes` (home)
 - **Static fallbacks**: `index.html` contains static meta/OG/Twitter tags for crawlers that don't execute JS
