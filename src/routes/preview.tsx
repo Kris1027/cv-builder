@@ -1,6 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PreviewPage } from '@/pages/preview-page';
+import { SITE_URL, SEO_DEFAULTS } from '@/lib/seo';
 
 export const Route = createFileRoute('/preview')({
+    head: () => ({
+        meta: [
+            { title: `Preview Your CV | ${SEO_DEFAULTS.siteName}` },
+            { property: 'og:title', content: `Preview Your CV | ${SEO_DEFAULTS.siteName}` },
+            { property: 'og:url', content: `${SITE_URL}/preview` },
+            { name: 'twitter:title', content: `Preview Your CV | ${SEO_DEFAULTS.siteName}` },
+        ],
+        links: [{ rel: 'canonical', href: `${SITE_URL}/preview` }],
+    }),
     component: PreviewPage,
 });
