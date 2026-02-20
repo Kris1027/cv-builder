@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://cv-builder.app';
+export const SITE_URL = import.meta.env.VITE_SITE_URL;
 
 export const SEO_DEFAULTS = {
     siteName: 'CV Builder',
