@@ -229,6 +229,18 @@ Page transitions rely on CSS entrance animations — no View Transition API (dis
 - **`viewport: { once: true }`** on all `whileInView` — fire once then disconnect observer
 - Applied to all pages: home, templates, template preview, builder, and preview
 
+## SEO
+
+- **Head management**: TanStack Router `head()` property + `<HeadContent />` in root layout
+- **Constants**: `/src/lib/seo.ts` — `SITE_URL` (from `VITE_SITE_URL` env var), `SEO_DEFAULTS`, `OG_DEFAULTS`, `TEMPLATE_NAMES`
+- **Per-route titles**: Each route defines `head()` with unique `title`, `og:title`, `twitter:title`, and `canonical` link
+- **Title convention**: `Page Name | CV Builder` (child routes), `CV Builder - Create Professional Resumes in Minutes` (home)
+- **Static fallbacks**: `index.html` contains static meta/OG/Twitter tags for crawlers that don't execute JS
+- **JSON-LD**: Schema.org `WebApplication` structured data in root route `head()` via `script:ld+json`
+- **Open Graph image**: `/public/og-image.png` (1200x630)
+- **Favicons**: `/public/favicon.svg`, `favicon-32x32.png`, `favicon-16x16.png`, `apple-touch-icon.png`
+- **Crawlers**: `/public/robots.txt` + `/public/sitemap.xml` (excludes `/preview` — user-specific data)
+
 ## PDF Import
 
 - Uses `pdfjs-dist` to extract CV data from PDF metadata (Keywords field)
