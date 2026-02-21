@@ -49,14 +49,16 @@ export interface GdprConsentProps {
     companyName: string;
 }
 
-// Form values type for the entire CV form
-export interface CVFormValues {
-    templateId: string;
+// CVData used by sample data and templates (gdprConsent is optional)
+export type CVData = {
     personalInfo: PersonalInfoProps;
     experiences: ExperienceProps[];
     education: EducationProps[];
     skills: SkillProps[];
     languages: LanguageProps[];
     interests: InterestProps[];
-    gdprConsent: GdprConsentProps;
-}
+    gdprConsent?: GdprConsentProps;
+};
+
+// Form values inferred from Zod schema — single source of truth
+export type { CVFormValues } from '@/schemas/cv-schema';

@@ -5,7 +5,7 @@ import { DeveloperTemplate } from '@/components/templates/developer-template';
 import { DefaultTemplate } from '@/components/templates/default-template';
 import { VeterinaryTemplate } from '@/components/templates/veterinary-template';
 import { ScaleToFitContainer } from '@/components/scale-to-fit-container';
-import type { CVData } from '@/data/sample-cv-data';
+import type { CVData } from '@/types/form-types';
 import {
     ArrowLeft,
     Download,

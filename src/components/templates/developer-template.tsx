@@ -1,4 +1,4 @@
-import type { CVData } from '@/data/sample-cv-data';
+import type { CVData } from '@/types/form-types';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';

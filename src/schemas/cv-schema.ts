@@ -67,4 +67,4 @@ export const cvFormSchema = z.object({
     gdprConsent: gdprConsentSchema,
 });
 
-export type CVFormSchemaValues = z.infer<typeof cvFormSchema>;
+export type CVFormValues = z.infer<typeof cvFormSchema>;
