@@ -1,6 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from 'lucide-react';
-import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
+import { formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
 
@@ -75,7 +75,7 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                             className='flex items-center gap-1.5 rounded-full bg-white px-3 py-1 shadow-sm transition-shadow hover:shadow-md'
                         >
                             <Phone className='h-3 w-3 text-emerald-600' />
-                            {formatPolishPhone(personalInfo.phone)}
+                            {personalInfo.phone}
                         </a>
                     )}
                     {personalInfo.linkedin && (

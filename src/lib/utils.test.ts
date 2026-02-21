@@ -1,12 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-    cn,
-    formatGithubDisplay,
-    formatLinkedinDisplay,
-    formatPolishPhone,
-    formatWebsiteDisplay,
-} from './utils';
+import { cn, formatGithubDisplay, formatLinkedinDisplay, formatWebsiteDisplay } from './utils';
 
 describe('cn', () => {
     it('merges class names', () => {
@@ -75,28 +69,3 @@ describe('formatLinkedinDisplay', () => {
     });
 });
 
-describe('formatPolishPhone', () => {
-    it('formats 9 digits', () => {
-        expect(formatPolishPhone('123456789')).toBe('+48 123 456 789');
-    });
-
-    it('strips country code prefix', () => {
-        expect(formatPolishPhone('+48123456789')).toBe('+48 123 456 789');
-    });
-
-    it('strips country code without plus', () => {
-        expect(formatPolishPhone('48123456789')).toBe('+48 123 456 789');
-    });
-
-    it('handles spaces in input', () => {
-        expect(formatPolishPhone('48 123 456 789')).toBe('+48 123 456 789');
-    });
-
-    it('returns empty string for empty input', () => {
-        expect(formatPolishPhone('')).toBe('');
-    });
-
-    it('truncates to 9 digits', () => {
-        expect(formatPolishPhone('1234567890')).toBe('+48 123 456 789');
-    });
-});

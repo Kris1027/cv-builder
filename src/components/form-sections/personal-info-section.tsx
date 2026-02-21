@@ -4,7 +4,6 @@ import { FieldError } from '@/components/ui/field-error';
 import { FormSectionCard } from '@/components/form-sections/form-section-card';
 import { User } from 'lucide-react';
 import type { FormApi } from '@/types/form-component-types';
-import { formatPolishPhone } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 
 type PersonalInfoSectionProps = {
@@ -141,14 +140,7 @@ export const PersonalInfoSection = ({ form }: PersonalInfoSectionProps) => {
                                     name={field.name}
                                     type='tel'
                                     value={field.state.value as string}
-                                    onBlur={(e) => {
-                                        field.handleBlur();
-                                        // Format on blur only if there are digits
-                                        const digits = e.target.value.replace(/\D/g, '');
-                                        if (digits.length > 0) {
-                                            field.handleChange(formatPolishPhone(e.target.value));
-                                        }
-                                    }}
+                                    onBlur={field.handleBlur}
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     placeholder={t('placeholders.phone')}
                                 />
