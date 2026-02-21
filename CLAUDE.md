@@ -1,6 +1,6 @@
 # CV Builder
 
-A CV/Resume builder built with React, TypeScript, and TanStack Router. Supports multiple templates, dark mode, i18n (PL/EN), and PDF export/import.
+A CV/Resume builder built with React, TypeScript, and TanStack Router. Supports multiple templates, dark mode, i18n (PL/EN), PDF export/import, and PWA with offline support.
 
 **Every new feature MUST be documented in this file.**
 
@@ -36,7 +36,10 @@ src/
 │   │   ├── interests-section.tsx
 │   │   └── gdpr-consent-section.tsx
 │   ├── templates/         # CV render templates (developer, default, veterinary)
-│   └── template-previews/ # Template preview cards
+│   ├── template-previews/ # Template preview cards
+│   ├── pwa-reload-prompt.tsx   # SW update notification
+│   ├── pwa-install-prompt.tsx  # Browser install prompt
+│   └── offline-indicator.tsx   # Offline status banner
 ├── contexts/              # React Context providers (theme)
 ├── data/                  # Sample data, type interfaces for CV data
 ├── hooks/                 # Custom hooks (use-theme)
@@ -74,6 +77,7 @@ src/
 - **PDF**: pdfjs-dist (import), html2canvas + jsPDF (export)
 - **i18n**: react-i18next (PL + EN)
 - **Animations**: motion (Framer Motion) — scroll-linked parallax + whileInView entrance animations
+- **PWA**: vite-plugin-pwa + workbox (service worker, offline support, install prompt)
 - **Testing**: Vitest + React Testing Library
 
 ## Testing
@@ -243,6 +247,25 @@ Page transitions rely on CSS entrance animations — no View Transition API (dis
 - **Open Graph image**: `/public/og-image.png` (1200x630)
 - **Favicons**: `/public/favicon.svg`, `favicon-32x32.png`, `favicon-16x16.png`, `apple-touch-icon.png`
 - **Crawlers**: `/public/robots.txt` + `/public/sitemap.xml` (excludes `/preview` — user-specific data)
+
+## PWA (Progressive Web App)
+
+- **Plugin**: `vite-plugin-pwa` with `registerType: 'autoUpdate'` and `generateSW` workbox mode
+- **Config**: `VitePWA()` in `vite.config.ts` — manifest, icons, and workbox settings
+- **Service worker**: Precaches all static assets (`js`, `css`, `html`, `svg`, `png`, `woff2`); runtime caches Google Fonts with `StaleWhileRevalidate`
+- **Manifest**: `dist/manifest.webmanifest` — standalone display, green theme (`#a7f3d0`)
+- **Icons**: `/public/pwa-192x192.png`, `/public/pwa-512x512.png` (generated from `favicon.svg`)
+- **TypeScript**: `"vite-plugin-pwa/react"` in `tsconfig.app.json` types for `virtual:pwa-register/react` module
+
+### PWA Components (in `/src/components/`)
+
+| Component          | File                     | Behavior                                                                                                                    |
+| ------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `PwaReloadPrompt`  | `pwa-reload-prompt.tsx`  | Shows "offline ready" (auto-dismisses after 5s) or "new version available" (with Reload button). Uses `useRegisterSW` hook. |
+| `PwaInstallPrompt` | `pwa-install-prompt.tsx` | Listens for `beforeinstallprompt` event. Shows install banner. Persists dismissal in localStorage (`pwaInstallDismissed`).  |
+| `OfflineIndicator` | `offline-indicator.tsx`  | Amber top banner when `navigator.onLine` is false. Reacts to `online`/`offline` window events.                              |
+
+All three are mounted in `root-layout.tsx` alongside `<PrivacyNotice />`. UI follows the same fixed bottom-bar pattern (except `OfflineIndicator` which is a top bar). Strings use `pwa.*` i18n keys.
 
 ## PDF Import
 
