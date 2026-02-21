@@ -115,7 +115,8 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             try {
                 parsedData = JSON.parse(storedData);
             } catch {
-                console.warn('Failed to parse stored CV data, starting fresh');
+                if (import.meta.env.DEV)
+                    console.warn('Failed to parse stored CV data, starting fresh');
                 return {
                     templateId: activeTemplateId,
                     personalInfo: emptyPersonalInfo as PersonalInfoProps,
@@ -287,9 +288,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
             // PDF loaded - user can manually save when ready
         } catch (error) {
-            console.error('Error loading PDF:', error);
+            if (import.meta.env.DEV) console.error('Error loading PDF:', error);
             const errorMessage =
-                error instanceof Error ? error.message : 'An unexpected error occurred';
+                error instanceof Error ? error.message : t('dialogs.pdfError.unexpected');
             setPdfLoadError(errorMessage);
         } finally {
             setIsLoadingPDF(false);
