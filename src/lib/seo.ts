@@ -1,3 +1,5 @@
+import type { TemplateId } from '@/lib/template-ids';
+
 if (!import.meta.env.VITE_SITE_URL) {
     throw new Error(
         'VITE_SITE_URL environment variable is not set. ' +
@@ -23,7 +25,7 @@ export const OG_DEFAULTS = {
     locale: 'en_US',
 } as const;
 
-export const TEMPLATE_NAMES: Record<string, string> = {
+export const TEMPLATE_NAMES: Record<TemplateId, string> = {
     developer: 'Developer',
     default: 'Default',
     veterinary: 'Veterinary',

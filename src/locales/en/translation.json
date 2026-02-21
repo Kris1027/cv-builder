@@ -346,5 +346,14 @@
         "notice": "Your data stays private",
         "details": "All your CV data is stored locally in your browser. Nothing is sent to any server.",
         "accept": "Got it"
+    },
+    "pwa": {
+        "offlineReady": "App ready to work offline",
+        "newContent": "New version available",
+        "reload": "Reload",
+        "close": "Close",
+        "install": "Install app",
+        "installDescription": "Install CV Builder for quick access and offline use",
+        "offline": "You're offline — all features still work"
     }
 }

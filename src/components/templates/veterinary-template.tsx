@@ -1,4 +1,4 @@
-import type { CVData } from '@/data/sample-cv-data';
+import type { CVData } from '@/types/form-types';
 import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from 'lucide-react';
 import { formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';

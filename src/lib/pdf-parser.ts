@@ -1,4 +1,5 @@
 import type { CVFormValues, LanguageLevelProps } from '@/types/form-types';
+import type { TemplateId } from '@/lib/template-ids';
 import i18n from '@/i18n/config';
 
 let pdfjsPromise: Promise<typeof import('pdfjs-dist')> | null = null;
@@ -12,8 +13,6 @@ function getPdfjs(): Promise<typeof import('pdfjs-dist')> {
     }
     return pdfjsPromise;
 }
-
-type TemplateType = 'developer' | 'default' | 'veterinary';
 
 /**
  * Extract text content from a PDF file
@@ -38,7 +37,7 @@ export async function extractTextFromPDF(file: File): Promise<string> {
 /**
  * Detect which template was used to generate the PDF
  */
-export function detectTemplate(text: string): TemplateType {
+export function detectTemplate(text: string): TemplateId {
     // Developer template uses // prefixes
     if (text.includes('// WORK EXPERIENCE') || text.includes('// TECH STACK')) {
         return 'developer';
@@ -58,7 +57,7 @@ export function detectTemplate(text: string): TemplateType {
 /**
  * Parse CV data from extracted PDF text
  */
-export function parseCVFromText(text: string, templateId: TemplateType): CVFormValues {
+export function parseCVFromText(text: string, templateId: TemplateId): CVFormValues {
     const lines = text
         .split(/\n|\s{2,}/)
         .map((l) => l.trim())
@@ -620,7 +619,7 @@ function parseInterests(lines: string[]): CVFormValues['interests'] {
 
 // Helper functions
 
-function createEmptyCV(templateId: TemplateType): CVFormValues {
+function createEmptyCV(templateId: TemplateId): CVFormValues {
     return {
         templateId,
         personalInfo: {
