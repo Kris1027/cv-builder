@@ -79,13 +79,6 @@ export default defineConfig(({ command }) => ({
             },
             workbox: {
                 globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-                runtimeCaching: [
-                    {
-                        urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-                        handler: 'StaleWhileRevalidate',
-                        options: { cacheName: 'google-fonts-cache' },
-                    },
-                ],
             },
         }),
         ...(command === 'build' ? [htmlCsp()] : []),
