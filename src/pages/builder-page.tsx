@@ -620,14 +620,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                 <div className='flex items-center gap-2 text-sm text-green-600 dark:text-green-400'>
                                     <CheckCircle className='h-4 w-4' />
                                     <span className='hidden sm:inline'>
-                                        {t(
-                                            isAutoSaved
-                                                ? 'builder.autoSaved'
-                                                : 'builder.saved',
-                                            {
-                                                time: lastSaved.toLocaleTimeString(),
-                                            },
-                                        )}
+                                        {t(isAutoSaved ? 'builder.autoSaved' : 'builder.saved', {
+                                            time: lastSaved.toLocaleTimeString(),
+                                        })}
                                     </span>
                                 </div>
                             )}

@@ -68,4 +68,3 @@ describe('formatLinkedinDisplay', () => {
         expect(formatLinkedinDisplay('')).toBe('');
     });
 });
-
