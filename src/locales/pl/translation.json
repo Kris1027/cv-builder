@@ -112,6 +112,7 @@
         "save": "Zapisz",
         "saving": "Zapisywanie...",
         "saved": "Zapisano {{time}}",
+        "autoSaved": "Autozapisano {{time}}",
         "reset": "Resetuj",
         "previewCv": "Podgląd CV",
         "processing": "Przetwarzanie...",

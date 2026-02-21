@@ -112,6 +112,7 @@
         "save": "Save",
         "saving": "Saving...",
         "saved": "Saved {{time}}",
+        "autoSaved": "Auto-saved {{time}}",
         "reset": "Reset",
         "previewCv": "Preview CV",
         "processing": "Processing...",

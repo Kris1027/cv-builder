@@ -68,9 +68,11 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
 
     const [isSaving, setIsSaving] = useState(false);
     const [lastSaved, setLastSaved] = useState<Date | null>(null);
+    const [isAutoSaved, setIsAutoSaved] = useState(false);
     const [isLoadingPDF, setIsLoadingPDF] = useState(false);
     const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const lastSavedJsonRef = useRef<string>('');
 
     // Use search param if available, otherwise fall back to prop
     const activeTemplateId = search.templateId || templateId;
@@ -183,14 +185,35 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         }
     }, [search.templateId, form]);
 
+    // Auto-save every 30 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const formData = form.state.values as CVFormValues;
+            const json = JSON.stringify(formData);
+            if (json === lastSavedJsonRef.current) return;
+
+            safeStorage.setItem('cvData', json);
+            const now = new Date();
+            safeStorage.setItem('cvData_lastSaved', now.toISOString());
+            lastSavedJsonRef.current = json;
+            setIsAutoSaved(true);
+            setLastSaved(now);
+        }, 30_000);
+
+        return () => clearInterval(interval);
+    }, [form]);
+
     // Manual save function
     const handleManualSave = () => {
         setIsSaving(true);
         const formData = form.state.values as CVFormValues;
-        safeStorage.setItem('cvData', JSON.stringify(formData));
-        safeStorage.setItem('cvData_backup', JSON.stringify(formData));
+        const json = JSON.stringify(formData);
+        safeStorage.setItem('cvData', json);
+        safeStorage.setItem('cvData_backup', json);
         const now = new Date();
         safeStorage.setItem('cvData_lastSaved', now.toISOString());
+        lastSavedJsonRef.current = json;
+        setIsAutoSaved(false);
         setLastSaved(now);
         setTimeout(() => setIsSaving(false), 500);
     };
@@ -580,9 +603,14 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                 <div className='flex items-center gap-2 text-sm text-green-600 dark:text-green-400'>
                                     <CheckCircle className='h-4 w-4' />
                                     <span className='hidden sm:inline'>
-                                        {t('builder.saved', {
-                                            time: lastSaved.toLocaleTimeString(),
-                                        })}
+                                        {t(
+                                            isAutoSaved
+                                                ? 'builder.autoSaved'
+                                                : 'builder.saved',
+                                            {
+                                                time: lastSaved.toLocaleTimeString(),
+                                            },
+                                        )}
                                     </span>
                                 </div>
                             )}
