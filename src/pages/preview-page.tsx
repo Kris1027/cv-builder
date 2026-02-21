@@ -67,7 +67,7 @@ export const PreviewPage = () => {
             try {
                 parsedData = JSON.parse(storedData);
             } catch {
-                console.warn('Failed to parse stored CV data');
+                if (import.meta.env.DEV) console.warn('Failed to parse stored CV data');
                 return;
             }
             // Ensure all arrays have default values
@@ -127,7 +127,7 @@ export const PreviewPage = () => {
                 cvData: JSON.stringify(cvData),
             });
         } catch (error) {
-            console.error('Failed to export PDF:', error);
+            if (import.meta.env.DEV) console.error('Failed to export PDF:', error);
             setExportError(t('preview.exportError'));
         } finally {
             restoreScaling();

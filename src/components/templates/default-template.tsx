@@ -3,6 +3,7 @@ import { Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
+import { formatCVDateShort, formatCVYear } from '@/lib/date-utils';
 
 interface DefaultTemplateProps {
     data: CVData;
@@ -12,19 +13,6 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
     const { t } = useTranslation();
     const { personalInfo, experiences, education, skills, languages, interests, gdprConsent } =
         data;
-
-    const formatDate = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year, month] = dateString.split('-');
-        const monthKey = `monthsShort.${parseInt(month) - 1}`;
-        return `${t(monthKey)} ${year}`;
-    };
-
-    const formatYear = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year] = dateString.split('-');
-        return year;
-    };
 
     return (
         <div className="bg-white font-['Montserrat'] text-gray-800">
@@ -103,8 +91,10 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
                                         </span>
                                     </h3>
                                     <span className='text-sm font-light text-gray-500'>
-                                        {formatDate(exp.startDate)} –{' '}
-                                        {exp.current ? t('cv.present') : formatDate(exp.endDate)}
+                                        {formatCVDateShort(exp.startDate)} –{' '}
+                                        {exp.current
+                                            ? t('cv.present')
+                                            : formatCVDateShort(exp.endDate)}
                                     </span>
                                 </div>
                                 {exp.location && (
@@ -138,7 +128,8 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
                                             </span>
                                         </h3>
                                         <span className='text-sm font-light text-gray-500'>
-                                            {formatYear(edu.startDate)} – {formatYear(edu.endDate)}
+                                            {formatCVYear(edu.startDate)} –{' '}
+                                            {formatCVYear(edu.endDate)}
                                         </span>
                                     </div>
                                     <p className='text-sm font-medium text-gray-600'>

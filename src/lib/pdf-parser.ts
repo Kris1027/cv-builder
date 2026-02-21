@@ -1,8 +1,17 @@
-import * as pdfjsLib from 'pdfjs-dist';
 import type { CVFormValues, LanguageLevelProps } from '@/types/form-types';
+import i18n from '@/i18n/config';
 
-// Set up the worker for pdfjs-dist - use local worker file from public folder
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+let pdfjsPromise: Promise<typeof import('pdfjs-dist')> | null = null;
+
+function getPdfjs(): Promise<typeof import('pdfjs-dist')> {
+    if (!pdfjsPromise) {
+        pdfjsPromise = import('pdfjs-dist').then((mod) => {
+            mod.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+            return mod;
+        });
+    }
+    return pdfjsPromise;
+}
 
 type TemplateType = 'developer' | 'default' | 'veterinary';
 
@@ -10,6 +19,7 @@ type TemplateType = 'developer' | 'default' | 'veterinary';
  * Extract text content from a PDF file
  */
 export async function extractTextFromPDF(file: File): Promise<string> {
+    const pdfjsLib = await getPdfjs();
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
@@ -715,6 +725,7 @@ function isCommonWord(word: string): boolean {
  * Extract CV data from PDF metadata (keywords field)
  */
 export async function extractCVDataFromMetadata(file: File): Promise<CVFormValues | null> {
+    const pdfjsLib = await getPdfjs();
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const metadata = await pdf.getMetadata();
@@ -744,7 +755,5 @@ export async function loadCVFromPDF(file: File): Promise<CVFormValues> {
     }
 
     // PDF doesn't have embedded CV data - not created by this app
-    throw new Error(
-        'This PDF was not created by CV Builder. Only PDFs exported from this application can be loaded. You can fill out the form manually instead.',
-    );
+    throw new Error(i18n.t('dialogs.pdfError.notFromApp'));
 }

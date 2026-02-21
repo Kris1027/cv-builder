@@ -10,6 +10,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useTranslation } from 'react-i18next';
+import { getMonthNames } from '@/lib/date-utils';
 
 interface DatePickerProps {
     value?: Date | string;
@@ -24,21 +26,6 @@ interface DatePickerProps {
     yearOnly?: boolean;
 }
 
-const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-];
-
 export function DatePicker({
     value,
     onChange,
@@ -51,6 +38,11 @@ export function DatePicker({
     toYear = new Date().getFullYear() + 10,
     yearOnly = false,
 }: DatePickerProps) {
+    // Re-render on language change so month names update
+    useTranslation();
+    const months = getMonthNames();
+    const monthsShort = getMonthNames(true);
+
     // Convert string value to Date if needed
     const dateValue = React.useMemo(() => {
         if (!value) return undefined;
@@ -201,9 +193,9 @@ export function DatePicker({
                     {/* Month grid - only shown when not in yearOnly mode */}
                     {!yearOnly && (
                         <div className='grid grid-cols-3 gap-2'>
-                            {months.map((month, index) => (
+                            {monthsShort.map((month, index) => (
                                 <Button
-                                    key={month}
+                                    key={index}
                                     variant={
                                         selectedMonth === index && dateValue ? 'default' : 'outline'
                                     }
@@ -212,7 +204,7 @@ export function DatePicker({
                                     className='h-9'
                                     type='button'
                                 >
-                                    {month.slice(0, 3)}
+                                    {month}
                                 </Button>
                             ))}
                         </div>

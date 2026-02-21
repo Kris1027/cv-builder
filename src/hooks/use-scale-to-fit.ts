@@ -66,13 +66,18 @@ export function useScaleToFit(options: UseScaleToFitOptions): UseScaleToFitRetur
             });
         });
 
-        // Recalculate on window resize
+        // Recalculate on window resize (debounced to prevent layout thrashing)
+        let resizeTimer: ReturnType<typeof setTimeout>;
         const handleResize = () => {
-            recalculate();
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(recalculate, 150);
         };
 
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            clearTimeout(resizeTimer);
+        };
     }, [recalculate]);
 
     // Recalculate when enabled changes
