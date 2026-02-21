@@ -2,6 +2,9 @@ import { HeadContent, Outlet } from '@tanstack/react-router';
 import { ThemeProvider } from '@/contexts/theme-context';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { PrivacyNotice } from '@/components/privacy-notice';
+import { PwaReloadPrompt } from '@/components/pwa-reload-prompt';
+import { PwaInstallPrompt } from '@/components/pwa-install-prompt';
+import { OfflineIndicator } from '@/components/offline-indicator';
 import { useTranslation } from 'react-i18next';
 
 export const RootLayout = () => {
@@ -24,7 +27,10 @@ export const RootLayout = () => {
                         </ErrorBoundary>
                     </main>
                 </div>
+                <OfflineIndicator />
                 <PrivacyNotice />
+                <PwaInstallPrompt />
+                <PwaReloadPrompt />
             </ThemeProvider>
         </>
     );

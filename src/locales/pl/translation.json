@@ -346,5 +346,14 @@
         "notice": "Twoje dane są prywatne",
         "details": "Wszystkie dane CV są przechowywane lokalnie w Twojej przeglądarce. Nic nie jest wysyłane na żaden serwer.",
         "accept": "Rozumiem"
+    },
+    "pwa": {
+        "offlineReady": "Aplikacja gotowa do pracy offline",
+        "newContent": "Dostępna nowa wersja",
+        "reload": "Odśwież",
+        "close": "Zamknij",
+        "install": "Zainstaluj aplikację",
+        "installDescription": "Zainstaluj CV Builder, aby mieć szybki dostęp i możliwość pracy offline",
+        "offline": "Jesteś offline — wszystkie funkcje nadal działają"
     }
 }
