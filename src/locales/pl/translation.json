@@ -232,7 +232,7 @@
         "firstNameRequired": "Imię jest wymagane",
         "lastNameRequired": "Nazwisko jest wymagane",
         "emailRequired": "E-mail jest wymagany",
-        "maxLength": "Maksymalnie {{max}} znaków"
+        "maxLength": "Przekroczono maksymalną liczbę znaków"
     },
     "dialogs": {
         "reset": {
