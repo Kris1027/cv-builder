@@ -16,7 +16,10 @@ pnpm format:check # Check formatting (CI uses this)
 pnpm test         # Run all tests once
 pnpm test:watch   # Run tests in watch mode
 pnpm test:coverage # Run tests with coverage report
+pnpm pre-commit   # Format + lint + test + tsc + build (run before every commit)
 ```
+
+**Always run `pnpm pre-commit` before creating a commit.** Do not commit if it fails.
 
 ## Project Structure
 

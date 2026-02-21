@@ -8,7 +8,10 @@ const localeMap: Record<string, Locale> = {
     pl: pl,
 };
 
-const getLocale = (): Locale => localeMap[i18n.language] ?? enUS;
+const getLocale = (): Locale => {
+    const lang = (i18n.resolvedLanguage ?? i18n.language)?.split('-')[0];
+    return (lang ? localeMap[lang] : undefined) ?? enUS;
+};
 
 export const formatCVDate = (dateString: string): string => {
     if (!dateString) return '';
