@@ -322,7 +322,14 @@
     },
     "accessibility": {
         "toggleLanguage": "Zmień język",
-        "toggleTheme": "Zmień motyw"
+        "toggleTheme": "Zmień motyw",
+        "dragToReorder": "Przeciągnij, aby zmienić kolejność",
+        "removeExperience": "Usuń doświadczenie",
+        "removeEducation": "Usuń wykształcenie",
+        "removeLanguage": "Usuń język",
+        "removeSkill": "Usuń umiejętność",
+        "removeInterest": "Usuń zainteresowanie",
+        "skipToContent": "Przejdź do treści głównej"
     },
     "errorBoundary": {
         "title": "Coś poszło nie tak",

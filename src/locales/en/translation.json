@@ -322,7 +322,14 @@
     },
     "accessibility": {
         "toggleLanguage": "Toggle language",
-        "toggleTheme": "Toggle theme"
+        "toggleTheme": "Toggle theme",
+        "dragToReorder": "Drag to reorder",
+        "removeExperience": "Remove experience",
+        "removeEducation": "Remove education",
+        "removeLanguage": "Remove language",
+        "removeSkill": "Remove skill",
+        "removeInterest": "Remove interest",
+        "skipToContent": "Skip to main content"
     },
     "errorBoundary": {
         "title": "Something went wrong",
