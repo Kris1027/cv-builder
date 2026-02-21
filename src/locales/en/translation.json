@@ -235,7 +235,7 @@
     "dialogs": {
         "reset": {
             "title": "Reset CV Data",
-            "description": "Are you sure you want to reset all your CV data? This action cannot be undone and all your information will be permanently deleted.",
+            "description": "Are you sure you want to reset all your CV data? Your last manual save will be kept as a backup.",
             "cancel": "Cancel",
             "confirm": "Reset All Data"
         },

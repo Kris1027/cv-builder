@@ -218,10 +218,9 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         setTimeout(() => setIsSaving(false), 500);
     };
 
-    // Reset form function
+    // Reset form function — keeps backup intact for recovery
     const handleReset = () => {
         safeStorage.removeItem('cvData');
-        safeStorage.removeItem('cvData_backup');
         safeStorage.removeItem('cvData_lastSaved');
         setLastSaved(null);
         form.reset({

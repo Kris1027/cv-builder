@@ -235,7 +235,7 @@
     "dialogs": {
         "reset": {
             "title": "Resetuj dane CV",
-            "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Tej akcji nie można cofnąć, a wszystkie informacje zostaną trwale usunięte.",
+            "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Ostatni ręczny zapis zostanie zachowany jako kopia zapasowa.",
             "cancel": "Anuluj",
             "confirm": "Resetuj wszystkie dane"
         },
