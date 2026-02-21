@@ -3,6 +3,7 @@ import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
 import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
+import { formatCVDate, formatCVYear } from '@/lib/date-utils';
 
 interface DeveloperTemplateProps {
     data: CVData;
@@ -12,19 +13,6 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
     const { t } = useTranslation();
     const { personalInfo, experiences, education, skills, languages, interests, gdprConsent } =
         data;
-
-    const formatDate = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year, month] = dateString.split('-');
-        const monthKey = `months.${parseInt(month) - 1}`;
-        return `${t(monthKey)} ${year}`;
-    };
-
-    const formatYear = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year] = dateString.split('-');
-        return year;
-    };
 
     return (
         <div className="bg-white font-['JetBrains_Mono'] text-gray-800">
@@ -127,10 +115,10 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
                                                     </span>
                                                 </h3>
                                                 <p className='text-sm font-light text-gray-600'>
-                                                    {formatDate(exp.startDate)} -{' '}
+                                                    {formatCVDate(exp.startDate)} -{' '}
                                                     {exp.current
                                                         ? t('cv.present')
-                                                        : formatDate(exp.endDate)}
+                                                        : formatCVDate(exp.endDate)}
                                                     {exp.location && ` | ${exp.location}`}
                                                 </p>
                                             </div>
@@ -157,8 +145,8 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
                                                 {edu.field}
                                             </h3>
                                             <p className='text-gray-700'>
-                                                {formatYear(edu.startDate)} -{' '}
-                                                {formatYear(edu.endDate)} | {edu.institution}
+                                                {formatCVYear(edu.startDate)} -{' '}
+                                                {formatCVYear(edu.endDate)} | {edu.institution}
                                             </p>
                                             {edu.description && (
                                                 <p className='mt-2 text-sm text-gray-700'>

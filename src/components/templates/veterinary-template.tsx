@@ -3,6 +3,7 @@ import { Mail, Phone, Globe, MapPin, Stethoscope, Award, Heart, Briefcase } from
 import { formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
+import { formatCVDateShort, formatCVYear } from '@/lib/date-utils';
 
 interface VeterinaryTemplateProps {
     data: CVData;
@@ -12,19 +13,6 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
     const { t } = useTranslation();
     const { personalInfo, experiences, education, skills, languages, interests, gdprConsent } =
         data;
-
-    const formatDate = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year, month] = dateString.split('-');
-        const monthKey = `monthsShort.${parseInt(month) - 1}`;
-        return `${t(monthKey)} ${year}`;
-    };
-
-    const formatYear = (dateString: string): string => {
-        if (!dateString) return '';
-        const [year] = dateString.split('-');
-        return year;
-    };
 
     return (
         <div className="bg-white font-['Lato'] text-gray-800">
@@ -116,10 +104,10 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                                                 {exp.company}
                                             </p>
                                             <p className='text-sm text-gray-500'>
-                                                {formatDate(exp.startDate)} -{' '}
+                                                {formatCVDateShort(exp.startDate)} -{' '}
                                                 {exp.current
                                                     ? t('cv.present')
-                                                    : formatDate(exp.endDate)}
+                                                    : formatCVDateShort(exp.endDate)}
                                                 {exp.location && ` • ${exp.location}`}
                                             </p>
                                         </div>
@@ -154,8 +142,8 @@ export function VeterinaryTemplate({ data }: VeterinaryTemplateProps) {
                                                 {edu.institution}
                                             </p>
                                             <p className='text-sm text-gray-500'>
-                                                {formatYear(edu.startDate)} -{' '}
-                                                {formatYear(edu.endDate)}
+                                                {formatCVYear(edu.startDate)} -{' '}
+                                                {formatCVYear(edu.endDate)}
                                             </p>
                                             {edu.description && (
                                                 <p className='mt-2 text-sm text-gray-600'>
