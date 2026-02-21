@@ -230,7 +230,8 @@
         "invalidEmail": "Please enter a valid email address",
         "firstNameRequired": "First name is required",
         "lastNameRequired": "Last name is required",
-        "emailRequired": "Email is required"
+        "emailRequired": "Email is required",
+        "maxLength": "Maximum {{max}} characters"
     },
     "dialogs": {
         "reset": {
