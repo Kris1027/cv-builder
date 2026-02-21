@@ -1,6 +1,3 @@
-import html2canvas from 'html2canvas-pro';
-import { jsPDF } from 'jspdf';
-
 // A4 dimensions in mm
 const A4_WIDTH_MM = 210;
 const A4_HEIGHT_MM = 297;
@@ -140,6 +137,11 @@ export async function exportToPDF(
     element: HTMLElement,
     options: PDFExportOptions = {},
 ): Promise<void> {
+    const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import('html2canvas-pro'),
+        import('jspdf'),
+    ]);
+
     const {
         filename = 'cv.pdf',
         scale = 2,
