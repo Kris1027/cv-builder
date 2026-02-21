@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { TEMPLATE_IDS } from '@/lib/template-ids';
 
 const LANGUAGE_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'NATIVE'] as const;
 
@@ -56,7 +57,7 @@ const gdprConsentSchema = z.object({
 });
 
 export const cvFormSchema = z.object({
-    templateId: z.string(),
+    templateId: z.enum(TEMPLATE_IDS),
     personalInfo: personalInfoSchema,
     experiences: z.array(experienceSchema),
     education: z.array(educationSchema),
