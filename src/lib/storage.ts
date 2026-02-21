@@ -29,16 +29,17 @@ export const safeStorage = {
         return fallbackStore.get(key) ?? null;
     },
 
-    setItem(key: string, value: string): void {
+    setItem(key: string, value: string): boolean {
         try {
             if (available) {
                 localStorage.setItem(key, value);
-                return;
+                return true;
             }
         } catch (error) {
             console.warn(`Failed to write "${key}" to localStorage:`, error);
         }
         fallbackStore.set(key, value);
+        return false;
     },
 
     removeItem(key: string): void {

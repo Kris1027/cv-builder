@@ -1,6 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin } from 'lucide-react';
-import { formatLinkedinDisplay, formatPolishPhone } from '@/lib/utils';
+import { formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
 
@@ -68,7 +68,7 @@ export function DefaultTemplate({ data }: DefaultTemplateProps) {
                             className='flex items-center gap-1 hover:underline'
                         >
                             <Phone className='h-3 w-3' />
-                            {formatPolishPhone(personalInfo.phone)}
+                            {personalInfo.phone}
                         </a>
                     )}
                     {personalInfo.linkedin && (

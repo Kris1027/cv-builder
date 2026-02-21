@@ -59,8 +59,12 @@ export const GdprConsentSection = ({ form }: GdprConsentSectionProps) => {
                                             value={field.state.value as string}
                                             onBlur={field.handleBlur}
                                             onChange={(e) => field.handleChange(e.target.value)}
+                                            aria-describedby='gdpr-company-hint'
                                         />
-                                        <p className='text-xs text-slate-500 dark:text-slate-400'>
+                                        <p
+                                            id='gdpr-company-hint'
+                                            className='text-xs text-slate-500 dark:text-slate-400'
+                                        >
                                             {t('sections.gdprConsent.companyNameHint')}
                                         </p>
                                     </div>

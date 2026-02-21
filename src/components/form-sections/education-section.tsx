@@ -68,6 +68,7 @@ const SortableEducationItem = ({
                     <button
                         type='button'
                         className='cursor-grab touch-none rounded p-1 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
+                        aria-label={t('accessibility.dragToReorder')}
                         {...attributes}
                         {...listeners}
                     >
@@ -83,6 +84,7 @@ const SortableEducationItem = ({
                     size='sm'
                     onClick={() => removeEducation(index)}
                     className='text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400'
+                    aria-label={t('accessibility.removeEducation')}
                 >
                     <Trash2 className='h-4 w-4' />
                 </Button>

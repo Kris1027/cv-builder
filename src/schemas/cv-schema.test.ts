@@ -174,6 +174,111 @@ describe('cvFormSchema', () => {
         });
     });
 
+    describe('max-length constraints', () => {
+        it('rejects firstName exceeding 100 characters', () => {
+            const data = {
+                ...validForm,
+                personalInfo: { ...validForm.personalInfo, firstName: 'a'.repeat(101) },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+            if (!result.success) {
+                const messages = result.error.issues.map((i) => i.message);
+                expect(messages).toContain('validation.maxLength');
+            }
+        });
+
+        it('rejects lastName exceeding 100 characters', () => {
+            const data = {
+                ...validForm,
+                personalInfo: { ...validForm.personalInfo, lastName: 'a'.repeat(101) },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects email exceeding 254 characters', () => {
+            const data = {
+                ...validForm,
+                personalInfo: {
+                    ...validForm.personalInfo,
+                    email: 'a'.repeat(243) + '@example.com',
+                },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects phone exceeding 30 characters', () => {
+            const data = {
+                ...validForm,
+                personalInfo: { ...validForm.personalInfo, phone: '1'.repeat(31) },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects website exceeding 200 characters', () => {
+            const data = {
+                ...validForm,
+                personalInfo: { ...validForm.personalInfo, website: 'a'.repeat(201) },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects experience description exceeding 2000 characters', () => {
+            const data = {
+                ...validForm,
+                experiences: [{ ...validForm.experiences[0], description: 'a'.repeat(2001) }],
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects skill name exceeding 100 characters', () => {
+            const data = {
+                ...validForm,
+                skills: [{ name: 'a'.repeat(101) }],
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects language name exceeding 100 characters', () => {
+            const data = {
+                ...validForm,
+                languages: [{ language: 'a'.repeat(101), proficiency: 'C2' as const }],
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('rejects gdprConsent companyName exceeding 200 characters', () => {
+            const data = {
+                ...validForm,
+                gdprConsent: { enabled: true, companyName: 'a'.repeat(201) },
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(false);
+        });
+
+        it('accepts values at the max limit', () => {
+            const data = {
+                ...validForm,
+                personalInfo: {
+                    ...validForm.personalInfo,
+                    firstName: 'a'.repeat(100),
+                    lastName: 'a'.repeat(100),
+                    phone: '1'.repeat(30),
+                },
+                skills: [{ name: 'a'.repeat(100) }],
+            };
+            const result = cvFormSchema.safeParse(data);
+            expect(result.success).toBe(true);
+        });
+    });
+
     it('collects multiple errors on invalid form', () => {
         const data = {
             ...validForm,

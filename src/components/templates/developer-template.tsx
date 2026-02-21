@@ -1,11 +1,6 @@
 import type { CVData } from '@/data/sample-cv-data';
 import { Mail, Phone, Globe, MapPin, Github, Linkedin } from 'lucide-react';
-import {
-    formatWebsiteDisplay,
-    formatGithubDisplay,
-    formatLinkedinDisplay,
-    formatPolishPhone,
-} from '@/lib/utils';
+import { formatWebsiteDisplay, formatGithubDisplay, formatLinkedinDisplay } from '@/lib/utils';
 import { DescriptionList } from '@/components/description-list';
 import { useTranslation } from 'react-i18next';
 
@@ -105,7 +100,7 @@ export function DeveloperTemplate({ data }: DeveloperTemplateProps) {
                             className='flex items-center gap-2 hover:underline'
                         >
                             <Phone className='h-4 w-4' />
-                            <span>{formatPolishPhone(personalInfo.phone)}</span>
+                            <span>{personalInfo.phone}</span>
                         </a>
                     )}
                 </div>

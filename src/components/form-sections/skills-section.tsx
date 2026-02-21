@@ -38,6 +38,7 @@ interface SortableSkillItemProps {
 }
 
 const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemProps) => {
+    const { t } = useTranslation();
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id,
     });
@@ -57,6 +58,7 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
             <button
                 type='button'
                 className='cursor-grab touch-none rounded p-0.5 transition-colors hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-white/10'
+                aria-label={t('accessibility.dragToReorder')}
                 {...attributes}
                 {...listeners}
             >
@@ -69,6 +71,7 @@ const SortableSkillItem = ({ id, index, skill, removeSkill }: SortableSkillItemP
                 type='button'
                 onClick={() => removeSkill(index)}
                 className='opacity-0 transition-opacity group-hover:opacity-100'
+                aria-label={t('accessibility.removeSkill')}
             >
                 <X className='h-3 w-3 text-slate-400 hover:text-red-500' />
             </button>

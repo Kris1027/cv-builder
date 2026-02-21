@@ -22,6 +22,10 @@ export const LanguageToggle = () => {
         setMounted(true);
     }, []);
 
+    useEffect(() => {
+        document.documentElement.lang = i18n.language;
+    }, [i18n.language]);
+
     if (!mounted) {
         return (
             <Button variant='outline' size='icon' className='h-9 w-9'>

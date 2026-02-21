@@ -112,6 +112,8 @@
         "save": "Zapisz",
         "saving": "Zapisywanie...",
         "saved": "Zapisano {{time}}",
+        "autoSaved": "Autozapisano {{time}}",
+        "saveFailed": "Zapis nie powiódł się — pamięć może być pełna",
         "reset": "Resetuj",
         "previewCv": "Podgląd CV",
         "processing": "Przetwarzanie...",
@@ -229,12 +231,13 @@
         "invalidEmail": "Proszę wprowadzić poprawny adres e-mail",
         "firstNameRequired": "Imię jest wymagane",
         "lastNameRequired": "Nazwisko jest wymagane",
-        "emailRequired": "E-mail jest wymagany"
+        "emailRequired": "E-mail jest wymagany",
+        "maxLength": "Przekroczono maksymalną liczbę znaków"
     },
     "dialogs": {
         "reset": {
             "title": "Resetuj dane CV",
-            "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Tej akcji nie można cofnąć, a wszystkie informacje zostaną trwale usunięte.",
+            "description": "Czy na pewno chcesz zresetować wszystkie dane CV? Ostatni ręczny zapis zostanie zachowany jako kopia zapasowa.",
             "cancel": "Anuluj",
             "confirm": "Resetuj wszystkie dane"
         },
@@ -322,7 +325,14 @@
     },
     "accessibility": {
         "toggleLanguage": "Zmień język",
-        "toggleTheme": "Zmień motyw"
+        "toggleTheme": "Zmień motyw",
+        "dragToReorder": "Przeciągnij, aby zmienić kolejność",
+        "removeExperience": "Usuń doświadczenie",
+        "removeEducation": "Usuń wykształcenie",
+        "removeLanguage": "Usuń język",
+        "removeSkill": "Usuń umiejętność",
+        "removeInterest": "Usuń zainteresowanie",
+        "skipToContent": "Przejdź do treści głównej"
     },
     "errorBoundary": {
         "title": "Coś poszło nie tak",
