@@ -34,6 +34,9 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - **Data Persistence** — Auto-save to localStorage with manual save and backup
 - **Single/Multi-Page Mode** — Preview CV in paginated or fit-to-one-page layout
 - **Accessible** — Animations respect `prefers-reduced-motion`, keyboard-navigable
+- **PWA Support** — Install as a native app, offline support, auto-updates
+- **SEO Optimized** — Open Graph, Twitter Cards, JSON-LD structured data, sitemap
+- **Real-time Validation** — Zod schema validation with i18n error messages
 - **No Sign-up Required** — Start building immediately, 100% free
 
 ## Built With
@@ -45,6 +48,7 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - [Vite](https://vite.dev/) — Build tool and dev server
 - [TanStack Router](https://tanstack.com/router) — Type-safe routing with View Transition API support
 - [TanStack Form](https://tanstack.com/form) — Form state management
+- [Zod](https://zod.dev/) — Schema validation
 
 ### UI & Styling
 
@@ -71,12 +75,13 @@ A modern, intuitive CV/Resume builder with multiple templates, dark mode, i18n, 
 - [Motion](https://motion.dev/) — Scroll-linked parallax and whileInView entrance animations
 - [date-fns](https://date-fns.org/) — Date utilities
 - [DOMPurify](https://github.com/cure53/DOMPurify) — HTML sanitization
+- [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) + [Workbox](https://developer.chrome.com/docs/workbox/) — Progressive Web App support
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.19+ (see `.nvmrc` for pinned version)
 - pnpm package manager
 
 ### Installation
@@ -89,6 +94,14 @@ pnpm dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+| Variable        | Description                          | Default                 |
+| --------------- | ------------------------------------ | ----------------------- |
+| `VITE_SITE_URL` | Base site URL (used for SEO/OG tags) | `http://localhost:5173` |
 
 ### Available Scripts
 
@@ -127,21 +140,25 @@ src/
 │   ├── form-sections/     # CV form section components
 │   ├── templates/         # CV render templates (developer, default, veterinary)
 │   ├── template-previews/ # Template preview SVG cards
-│   └── ui/                # Reusable UI components (shadcn/ui)
+│   ├── ui/                # Reusable UI components (shadcn/ui)
+│   ├── pwa-reload-prompt.tsx   # SW update notification
+│   ├── pwa-install-prompt.tsx  # Browser install prompt
+│   └── offline-indicator.tsx   # Offline status banner
 ├── contexts/              # React Context providers (theme)
 ├── data/                  # Sample data and CV data types
 ├── hooks/                 # Custom hooks (use-theme, use-parallax)
 ├── i18n/                  # i18n configuration
-├── lib/                   # Utilities (pdf-parser, pdf-export, helpers)
+├── lib/                   # Utilities (pdf-parser, pdf-export, seo, helpers)
 ├── locales/               # Translation files (en/, pl/)
 ├── pages/                 # Page components
 ├── routes/                # TanStack Router route definitions
+├── schemas/               # Zod validation schemas (cv-schema)
 └── types/                 # TypeScript type definitions
 ```
 
 ## License
 
-Copyright (c) 2025 Kris1027. All rights reserved.
+Copyright (c) 2026 Kris1027. All rights reserved.
 
 This project is provided for viewing and reference purposes only. No permission is granted to copy, modify, distribute, or use this software for any purpose without explicit written consent from the author.
 

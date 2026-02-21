@@ -4,6 +4,19 @@ A CV/Resume builder built with React, TypeScript, and TanStack Router. Supports 
 
 **Every new feature MUST be documented in this file.**
 
+## Requirements
+
+- **Node.js**: >=20.19 (`.nvmrc` pinned to 22)
+- **Package manager**: pnpm
+
+## Environment Variables
+
+Copy `.env.example` to `.env`:
+
+| Variable        | Description                          | Default                 |
+| --------------- | ------------------------------------ | ----------------------- |
+| `VITE_SITE_URL` | Base site URL (used for SEO/OG tags) | `http://localhost:5173` |
+
 ## Scripts
 
 ```bash
