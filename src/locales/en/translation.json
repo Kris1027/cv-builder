@@ -113,6 +113,7 @@
         "saving": "Saving...",
         "saved": "Saved {{time}}",
         "autoSaved": "Auto-saved {{time}}",
+        "saveFailed": "Save failed — storage may be full",
         "reset": "Reset",
         "previewCv": "Preview CV",
         "processing": "Processing...",

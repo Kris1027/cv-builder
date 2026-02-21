@@ -10,7 +10,8 @@ describe('safeStorage', () => {
 
     it('should store and retrieve values', async () => {
         const { safeStorage } = await import('./storage');
-        safeStorage.setItem('test-key', 'test-value');
+        const result = safeStorage.setItem('test-key', 'test-value');
+        expect(result).toBe(true);
         expect(safeStorage.getItem('test-key')).toBe('test-value');
     });
 
@@ -46,8 +47,9 @@ describe('safeStorage', () => {
             throw new DOMException('QuotaExceededError');
         });
 
-        // Should not throw — falls back to in-memory
-        safeStorage.setItem('quota-key', 'value');
+        // Should not throw — falls back to in-memory and returns false
+        const result = safeStorage.setItem('quota-key', 'value');
+        expect(result).toBe(false);
         expect(spy).toHaveBeenCalled();
 
         vi.restoreAllMocks();

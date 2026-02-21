@@ -113,6 +113,7 @@
         "saving": "Zapisywanie...",
         "saved": "Zapisano {{time}}",
         "autoSaved": "Autozapisano {{time}}",
+        "saveFailed": "Zapis nie powiódł się — pamięć może być pełna",
         "reset": "Resetuj",
         "previewCv": "Podgląd CV",
         "processing": "Przetwarzanie...",

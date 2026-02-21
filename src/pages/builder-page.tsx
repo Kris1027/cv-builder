@@ -69,6 +69,7 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
     const [isSaving, setIsSaving] = useState(false);
     const [lastSaved, setLastSaved] = useState<Date | null>(null);
     const [isAutoSaved, setIsAutoSaved] = useState(false);
+    const [saveError, setSaveError] = useState(false);
     const [isLoadingPDF, setIsLoadingPDF] = useState(false);
     const [pdfLoadError, setPdfLoadError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -164,9 +165,13 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         onSubmit: async ({ value }) => {
             setIsSaving(true);
             // Store data in localStorage for persistence
-            safeStorage.setItem('cvData', JSON.stringify(value));
+            const json = JSON.stringify(value);
+            const ok = safeStorage.setItem('cvData', json);
             const now = new Date();
             safeStorage.setItem('cvData_lastSaved', now.toISOString());
+            lastSavedJsonRef.current = json;
+            setSaveError(!ok);
+            setIsAutoSaved(false);
             setLastSaved(now);
             setIsSaving(false);
 
@@ -192,10 +197,11 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
             const json = JSON.stringify(formData);
             if (json === lastSavedJsonRef.current) return;
 
-            safeStorage.setItem('cvData', json);
+            const ok = safeStorage.setItem('cvData', json);
             const now = new Date();
             safeStorage.setItem('cvData_lastSaved', now.toISOString());
             lastSavedJsonRef.current = json;
+            setSaveError(!ok);
             setIsAutoSaved(true);
             setLastSaved(now);
         }, 30_000);
@@ -208,11 +214,12 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
         setIsSaving(true);
         const formData = form.state.values as CVFormValues;
         const json = JSON.stringify(formData);
-        safeStorage.setItem('cvData', json);
+        const ok = safeStorage.setItem('cvData', json);
         safeStorage.setItem('cvData_backup', json);
         const now = new Date();
         safeStorage.setItem('cvData_lastSaved', now.toISOString());
         lastSavedJsonRef.current = json;
+        setSaveError(!ok);
         setIsAutoSaved(false);
         setLastSaved(now);
         setTimeout(() => setIsSaving(false), 500);
@@ -598,7 +605,18 @@ const BuilderPage = ({ templateId = 'developer' }: BuilderPageProps) => {
                                 </AlertDialogContent>
                             </AlertDialog>
 
-                            {lastSaved && (
+                            {saveError && (
+                                <div
+                                    className='flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400'
+                                    role='alert'
+                                >
+                                    <AlertTriangle className='h-4 w-4' />
+                                    <span className='hidden sm:inline'>
+                                        {t('builder.saveFailed')}
+                                    </span>
+                                </div>
+                            )}
+                            {lastSaved && !saveError && (
                                 <div className='flex items-center gap-2 text-sm text-green-600 dark:text-green-400'>
                                     <CheckCircle className='h-4 w-4' />
                                     <span className='hidden sm:inline'>
